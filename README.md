@@ -1,2 +1,2 @@
 # pdf-layout
-Simple API to create PDf
+Simple API to create PDF
