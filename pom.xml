@@ -27,7 +27,7 @@
 		<!-- Core library to write to PDF -->
 		<dependency>
 			<groupId>com.web4enterprise</groupId>
-			<artifactId>pdf.writer</artifactId>
+			<artifactId>pdf-core</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		
