@@ -12,7 +12,7 @@ import com.web4enterprise.pdf.layout.PageFormat;
 import com.web4enterprise.pdf.layout.PageStyle;
 import com.web4enterprise.pdf.layout.Paragraph;
 import com.web4enterprise.pdf.layout.ParagraphStyle;
-import com.web4enterprise.pdf.writer.PdfGenerationException;
+import com.web4enterprise.pdf.core.PdfGenerationException;
 
 public class DocumentTest {
 	@Test

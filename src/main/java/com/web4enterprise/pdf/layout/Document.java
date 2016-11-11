@@ -4,10 +4,10 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.web4enterprise.pdf.writer.Font;
-import com.web4enterprise.pdf.writer.Page;
-import com.web4enterprise.pdf.writer.Pdf;
-import com.web4enterprise.pdf.writer.PdfGenerationException;
+import com.web4enterprise.pdf.core.Font;
+import com.web4enterprise.pdf.core.Page;
+import com.web4enterprise.pdf.core.Pdf;
+import com.web4enterprise.pdf.core.PdfGenerationException;
 
 public class Document {
 	protected Pdf document = new Pdf();
