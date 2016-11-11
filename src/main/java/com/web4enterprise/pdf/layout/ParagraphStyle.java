@@ -1,7 +1,7 @@
 package com.web4enterprise.pdf.layout;
 
 public class ParagraphStyle extends TextStyle {
-	protected Alignment alignment;
+	protected Alignment alignment = Alignment.LEFT;
 	protected float lineSpacing = 1.0f;
 	protected Margins margins = new Margins(0, 0, 0, 0);
 	protected int firstLineMargin = 0;

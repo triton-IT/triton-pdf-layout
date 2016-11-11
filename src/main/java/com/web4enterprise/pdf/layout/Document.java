@@ -4,10 +4,10 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.web4enterprise.pdf.core.Font;
 import com.web4enterprise.pdf.core.Page;
 import com.web4enterprise.pdf.core.Pdf;
 import com.web4enterprise.pdf.core.PdfGenerationException;
+import com.web4enterprise.pdf.core.font.Font;
 
 public class Document {
 	protected Pdf document = new Pdf();
@@ -45,18 +45,30 @@ public class Document {
 			
 			boolean firstSubLine = true;
 			for(String textSubLine : textSubLines) {
-//				blockStart -= textSize * style.lineSpacing;
 				if(blockStart < currentPageStyle.margins.bottom) {
 					addPage();
 					//Add page reinitialize blockStart, so calculate it again.
 					blockStart -= textSize / 2;
 				}
 				
-				int x = currentPageStyle.getMargins().getLeft() + style.margins.left;
-				if(firstLine) {
-					x += style.firstLineMargin;
-					firstLine = false;
+				int x = 0;
+				if(style.alignment == Alignment.LEFT) {
+					x = currentPageStyle.getMargins().getLeft() + style.margins.left;
+					if(firstLine) {
+						x += style.firstLineMargin;
+						firstLine = false;
+					}
+				} else if(style.alignment == Alignment.RIGHT) {
+					x = currentPageStyle.format.getWidth() 
+							- currentPageStyle.getMargins().getRight() 
+							- style.margins.right
+							- Font.getFont(style.getFontName()).getWidth(textSize, textSubLine);
+					
+					if(firstLine) {
+						firstLine = false;
+					}
 				}
+				
 				if(firstSubLine) {
 					firstSubLine = false;
 				} else {
@@ -71,9 +83,6 @@ public class Document {
 				firstLine = false;
 			}
 		}
-		
-		//Cancel last line spacing because this is not a new line but end of paragraph.
-//		blockStart += textSize * style.lineSpacing;
 		
 		//Apply bottom margin to paragraph.
 		blockStart -= style.margins.bottom;
@@ -101,7 +110,7 @@ public class Document {
 	}
 	
 	protected int getFullLineIndex(String fontName, int fontSize, Margins margins, int firstLineMargin, String text, boolean firstLine) {
-		int textWidth = Font.calculateWidth(fontName, fontSize, text);
+		int textWidth = Font.getFont(fontName).getWidth(fontSize, text);
 		
 		int pageMargins = currentPageStyle.getMargins().left + currentPageStyle.getMargins().right;
 		int paragraphMargins = margins.left + margins.right;
@@ -112,8 +121,11 @@ public class Document {
 		
 		if(textWidth > currentPage.getWidth() - pageMargins - paragraphMargins) {
 			int firstLineIndex = text.lastIndexOf(' ');
-			String shortedText = text.substring(0, firstLineIndex);
-			return getFullLineIndex(fontName, fontSize, margins, firstLineMargin, shortedText, firstLine);
+			//If we still have words to split, try to split again. We test against 0 because first character can be a space.
+			if(firstLineIndex != 0 && firstLineIndex != -1) {
+				String shortedText = text.substring(0, firstLineIndex);
+				return getFullLineIndex(fontName, fontSize, margins, firstLineMargin, shortedText, firstLine);
+			}
 		}
 		
 		return text.length();

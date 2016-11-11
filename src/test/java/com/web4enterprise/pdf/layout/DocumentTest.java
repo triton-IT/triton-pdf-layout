@@ -35,6 +35,16 @@ public class DocumentTest {
 				, "Text of this paragraph has a size of 14 instead of 12 in a default one.");
 		document.addParagraph(paragraph);
 		
+		paragraphStyle = new ParagraphStyle();
+		paragraphStyle.setAlignment(Alignment.RIGHT);
+		paragraphStyle.setMargins(new Margins(0, 50, 0, 0));
+		paragraphStyle.setFirstLineMargin(50);
+		paragraph = new Paragraph(paragraphStyle, "This paragraph is aligned to right. This shows that the first line margin is taken into account."
+				+ " So, the text will not be displayed until start of paragraph but with a space of the size of the first line margin."
+				+ " The others line will start with the default paragraph margin."
+				, "This even works with new lines inside a paragraph. New lines will not be sensitive to first line of paragraph margin.");
+		document.addParagraph(paragraph);
+		
 		paragraphStyle = new ParagraphStyle(24);
 		paragraphStyle.setMargins(new Margins(120, 120, 50, 0));
 		paragraph = new Paragraph(paragraphStyle, "This next paragraph is just written in a big font size with anormaly large margins "

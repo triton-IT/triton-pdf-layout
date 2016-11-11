@@ -18,6 +18,7 @@ endobj
 endobj
 3 0 obj
 << /Type /Pages
+    /Parent 2 0 R
     /Kids [
         5 0 R
     ]
@@ -26,169 +27,175 @@ endobj
 >>
 endobj
 4 0 obj
-<< /Length 2410 >>
+<< /Length 2860 >>
 stream
   BT
     /F1 12 Tf
     71 771 Td
-    (This first page is a standard page in A4 format. This first paragraph has nothing) Tj
-  ET
-  BT
-    /F1 12 Tf
-    71 759 Td
-    (special...) Tj
+    (This first page is a standard page in A4 format. This first paragraph has nothing special...) Tj
   ET
   BT
     /F1 14 Tf
-    111 727 Td
+    111 739 Td
     (This paragraph has a margin of 20 on each side plus a first line) Tj
   ET
   BT
     /F1 14 Tf
-    91 713 Td
+    91 725 Td
     (margin of 20.) Tj
   ET
   BT
     /F1 14 Tf
-    91 699 Td
-    (It's also composed of few lines that are part of this same) Tj
+    91 711 Td
+    (It's also composed of few lines that are part of this same paragraph, so) Tj
   ET
   BT
     /F1 14 Tf
-    91 685 Td
-    (paragraph, so this paragraph configuration is applied to all lines of) Tj
+    91 697 Td
+    (this paragraph configuration is applied to all lines of it.) Tj
   ET
   BT
     /F1 14 Tf
-    91 671 Td
-    (it.) Tj
+    91 683 Td
+    (So, the first line is shifted by 40 pt from the left while other lines of the) Tj
   ET
   BT
     /F1 14 Tf
-    91 657 Td
-    (So, the first line is shifted by 40 pt from the left while other lines of) Tj
+    91 669 Td
+    (paragraph are shifted by 20.) Tj
   ET
   BT
     /F1 14 Tf
-    91 643 Td
-    (the paragraph are shifted by 20.) Tj
+    91 655 Td
+    (This paragraph also ends from 20 pt before page margins and have an top) Tj
   ET
   BT
     /F1 14 Tf
-    91 629 Td
-    (This paragraph also ends from 20 pt before page margins and) Tj
+    91 641 Td
+    (and bottom margin of 20 too.) Tj
   ET
   BT
     /F1 14 Tf
-    91 615 Td
-    (have an top and bottom margin of 20 too.) Tj
+    91 627 Td
+    (Text of this paragraph has a size of 14 instead of 12 in a default one.) Tj
   ET
   BT
-    /F1 14 Tf
-    91 601 Td
-    (Text of this paragraph has a size of 14 instead of 12 in a default) Tj
+    /F1 12 Tf
+    124 593 Td
+    (This paragraph is aligned to right. This shows that the first line margin is) Tj
   ET
   BT
-    /F1 14 Tf
-    91 587 Td
-    (one.) Tj
+    /F1 12 Tf
+    88 581 Td
+    (taken into account. So, the text will not be displayed until start of paragraph but) Tj
   ET
   BT
-    /F1 24 Tf
-    191 503 Td
-    (This next) Tj
+    /F1 12 Tf
+    83 569 Td
+    (with a space of the size of the first line margin. The others line will start with the) Tj
   ET
   BT
-    /F1 24 Tf
-    191 479 Td
-    (paragraph is just) Tj
+    /F1 12 Tf
+    347 557 Td
+    (default paragraph margin.) Tj
   ET
   BT
-    /F1 24 Tf
-    191 455 Td
-    (written in a big font) Tj
+    /F1 12 Tf
+    77 545 Td
+    (This even works with new lines inside a paragraph. New lines will not be sensitive) Tj
   ET
   BT
-    /F1 24 Tf
-    191 431 Td
-    (size with anormaly) Tj
-  ET
-  BT
-    /F1 24 Tf
-    191 407 Td
-    (large margins) Tj
+    /F1 12 Tf
+    314 533 Td
+    (to first line of paragraph margin.) Tj
   ET
   BT
     /F1 24 Tf
-    191 383 Td
-    (because it is just) Tj
+    191 471 Td
+    (This next paragraph) Tj
   ET
   BT
     /F1 24 Tf
-    191 359 Td
-    (here to prove that) Tj
+    191 447 Td
+    (is just written in a) Tj
   ET
   BT
     /F1 24 Tf
-    191 335 Td
-    (pages are created) Tj
+    191 423 Td
+    (big font size with) Tj
   ET
   BT
     /F1 24 Tf
-    191 311 Td
+    191 399 Td
+    (anormaly large) Tj
+  ET
+  BT
+    /F1 24 Tf
+    191 375 Td
+    (margins because it is) Tj
+  ET
+  BT
+    /F1 24 Tf
+    191 351 Td
+    (just here to prove) Tj
+  ET
+  BT
+    /F1 24 Tf
+    191 327 Td
+    (that pages are created) Tj
+  ET
+  BT
+    /F1 24 Tf
+    191 303 Td
     (automatically when) Tj
   ET
   BT
     /F1 24 Tf
-    191 287 Td
+    191 279 Td
     (end of page is) Tj
   ET
   BT
     /F1 24 Tf
-    191 263 Td
+    191 255 Td
     (reached.) Tj
   ET
   BT
     /F1 24 Tf
-    191 239 Td
+    191 231 Td
     (Therefore this) Tj
   ET
   BT
     /F1 24 Tf
-    191 215 Td
-    (paragraph is) Tj
+    191 207 Td
+    (paragraph is started) Tj
   ET
   BT
     /F1 24 Tf
-    191 191 Td
-    (started on one) Tj
+    191 183 Td
+    (on one page and the) Tj
   ET
   BT
     /F1 24 Tf
-    191 167 Td
-    (page and the end) Tj
+    191 159 Td
+    (end of it is rendered) Tj
   ET
   BT
     /F1 24 Tf
-    191 143 Td
-    (of it is rendered) Tj
-  ET
-  BT
-    /F1 24 Tf
-    191 119 Td
+    191 135 Td
     (automaticaly on) Tj
   ET
   BT
     /F1 24 Tf
-    191 95 Td
-    (another one) Tj
+    191 111 Td
+    (another one without) Tj
   ET
   BT
     /F1 24 Tf
-    191 71 Td
-    (without coding) Tj
+    191 87 Td
+    (coding anything) Tj
   ET
 endstream
+endobj
 5 0 obj
 <<  /Type /Page
     /Parent 3 0 R
@@ -206,6 +213,7 @@ endstream
 endobj
 6 0 obj
 << /Type /Pages
+    /Parent 2 0 R
     /Kids [
         8 0 R
     ]
@@ -214,12 +222,12 @@ endobj
 >>
 endobj
 7 0 obj
-<< /Length 183 >>
+<< /Length 174 >>
 stream
   BT
     /F1 24 Tf
     191 759 Td
-    (anything special.) Tj
+    (special.) Tj
   ET
   BT
     /F1 12 Tf
@@ -227,6 +235,7 @@ stream
     (The next page will show a page with a different orientation and size.) Tj
   ET
 endstream
+endobj
 8 0 obj
 <<  /Type /Page
     /Parent 6 0 R
@@ -244,6 +253,7 @@ endstream
 endobj
 9 0 obj
 << /Type /Pages
+    /Parent 2 0 R
     /Kids [
         11 0 R
     ]
@@ -252,34 +262,30 @@ endobj
 >>
 endobj
 10 0 obj
-<< /Length 691 >>
+<< /Length 644 >>
 stream
   BT
     /F1 14 Tf
     40 802 Td
-    (This paragraph shows that a vertical line spacing ratio can be applied between each line of a paragraph. The standard line spacing is just the size of the font. The line spacing ratio) Tj
+    (This paragraph shows that a vertical line spacing ratio can be applied between each line of a paragraph. The standard line spacing is just the size of the font. The line spacing ratio is the multication) Tj
   ET
   BT
     /F1 14 Tf
     40 774 Td
-    (is the multication of itself by the font size. So if line spacing is set to 2, an empty space of the size of the font is left blanck between two lines. Both the lines wrapped automatically) Tj
+    (of itself by the font size. So if line spacing is set to 2, an empty space of the size of the font is left blanck between two lines. Both the lines wrapped automatically and) Tj
   ET
   BT
     /F1 14 Tf
     40 746 Td
-    (and) Tj
-  ET
-  BT
-    /F1 14 Tf
-    40 718 Td
     (The ones created specifically) Tj
   ET
   BT
     /F1 14 Tf
-    40 690 Td
+    40 718 Td
     (will be affected by vertical line spacing ratio.) Tj
   ET
 endstream
+endobj
 11 0 obj
 <<  /Type /Page
     /Parent 9 0 R
@@ -301,18 +307,18 @@ xref
 0000000022 00000 n
 0000000075 00000 n
 0000000206 00000 n
-0000000313 00000 n
-0000002767 00000 n
-0000003013 00000 n
-0000003120 00000 n
-0000003346 00000 n
-0000003592 00000 n
-0000003701 00000 n
-0000004436 00000 n
+0000000331 00000 n
+0000003242 00000 n
+0000003488 00000 n
+0000003613 00000 n
+0000003837 00000 n
+0000004083 00000 n
+0000004210 00000 n
+0000004905 00000 n
 trailer
   <<  /Root 1 0 R
       /Size 12
   >>
 startxref
-4684
+5153
 %%EOF
