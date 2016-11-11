@@ -5,6 +5,32 @@
 	<artifactId>pdf-layout</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
+	<name>PDF layout</name>
+	<description>Simple API to create and layout PDF.</description>
+	<url>https://github.com/rramillien/pdf-layout</url>
+
+	<licenses>
+		<license>
+			<name>Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<name>Regis Ramillien</name>
+			<email>regis@web4enterprise.com</email>
+			<organization>web4enterprise</organization>
+			<organizationUrl>http://www.web4enterprise.com</organizationUrl>
+		</developer>
+	</developers>
+
+	<scm>
+		<connection>scm:git:git://github.com/rramillien/pdf-layout.git</connection>
+		<developerConnection>scm:git:ssh://github.com:rramillien/pdf-layout.git</developerConnection>
+		<url>https://github.com/rramillien/pdf-layout/tree/master</url>
+	</scm>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -30,7 +56,7 @@
 			<artifactId>pdf-core</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
