@@ -45,6 +45,14 @@ public class DocumentTest {
 				, "This even works with new lines inside a paragraph. New lines will not be sensitive to first line of paragraph margin.");
 		document.addParagraph(paragraph);
 		
+		paragraphStyle = new ParagraphStyle();
+		paragraphStyle.setAlignment(Alignment.CENTER);
+		paragraphStyle.setMargins(new Margins(50, 50, 0, 0));
+		paragraphStyle.setFirstLineMargin(50);
+		paragraph = new Paragraph(paragraphStyle, "This paragraph is aligned to center with a first line margin."
+				+ " It demonstrate the same principles than the previous paragraph.");
+		document.addParagraph(paragraph);
+		
 		paragraphStyle = new ParagraphStyle(24);
 		paragraphStyle.setMargins(new Margins(120, 120, 50, 0));
 		paragraph = new Paragraph(paragraphStyle, "This next paragraph is just written in a big font size with anormaly large margins "

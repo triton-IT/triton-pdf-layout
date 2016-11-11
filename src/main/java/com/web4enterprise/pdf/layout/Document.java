@@ -56,17 +56,34 @@ public class Document {
 					x = currentPageStyle.getMargins().getLeft() + style.margins.left;
 					if(firstLine) {
 						x += style.firstLineMargin;
-						firstLine = false;
 					}
 				} else if(style.alignment == Alignment.RIGHT) {
 					x = currentPageStyle.format.getWidth() 
 							- currentPageStyle.getMargins().getRight() 
 							- style.margins.right
 							- Font.getFont(style.getFontName()).getWidth(textSize, textSubLine);
-					
+				} else if(style.alignment == Alignment.CENTER) {
+					//Calculate the maximum free space for paragraph.
+					int freeSpace = currentPageStyle.format.getWidth() 
+							- currentPageStyle.getMargins().getRight()
+							- currentPageStyle.getMargins().getLeft()
+							- style.margins.right
+							- style.margins.left;
 					if(firstLine) {
-						firstLine = false;
+						freeSpace -= style.getFirstLineMargin();
 					}
+					
+					// Then calculate the position based to left constraints and text centered on free space.
+					x = currentPageStyle.getMargins().getLeft()
+							+ style.margins.left
+							+ (freeSpace - Font.getFont(style.getFontName()).getWidth(textSize, textSubLine)) / 2;
+					if(firstLine) {
+						x += style.firstLineMargin;
+					}
+				}
+				
+				if(firstLine) {
+					firstLine = false;
 				}
 				
 				if(firstSubLine) {
