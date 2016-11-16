@@ -6,13 +6,12 @@ import java.io.OutputStream;
 
 import org.junit.Test;
 
-import com.web4enterprise.pdf.layout.Document;
-import com.web4enterprise.pdf.layout.Margins;
-import com.web4enterprise.pdf.layout.PageFormat;
-import com.web4enterprise.pdf.layout.PageStyle;
-import com.web4enterprise.pdf.layout.Paragraph;
-import com.web4enterprise.pdf.layout.ParagraphStyle;
 import com.web4enterprise.pdf.core.PdfGenerationException;
+import com.web4enterprise.pdf.core.font.Font;
+
+import static com.web4enterprise.pdf.core.font.Font.TIMES_ROMAN;
+import static com.web4enterprise.pdf.layout.Text.NEW_LINE;
+import static com.web4enterprise.pdf.layout.Text.NEW_TEXT_LINE;
 
 public class DocumentTest {
 	@Test
@@ -25,24 +24,30 @@ public class DocumentTest {
 		Paragraph paragraph = new Paragraph("This first page is a standard page in A4 format. This first paragraph has nothing special...");
 		document.addParagraph(paragraph);
 		
-		ParagraphStyle paragraphStyle = new ParagraphStyle(14);
+		ParagraphStyle paragraphStyle = new ParagraphStyle(Font.TIMES_ROMAN, 14);
 		paragraphStyle.setMargins(new Margins(20, 20, 20, 20));
 		paragraphStyle.setFirstLineMargin(20);
 		paragraph = new Paragraph(paragraphStyle, "This paragraph has a margin of 20 on each side plus a first line margin of 20."
-				, "It's also composed of few lines that are part of this same paragraph, so this paragraph configuration is applied to all lines of it."
-				, "So, the first line is shifted by 40 pt from the left while other lines of the paragraph are shifted by 20."
-				, "This paragraph also ends from 20 pt before page margins and have an top and bottom margin of 20 too."
-				, "Text of this paragraph has a size of 14 instead of 12 in a default one.");
+				, NEW_LINE, "It's also composed of few lines that are part of this same paragraph, so this paragraph configuration is applied to all lines of it."
+				, NEW_LINE, "So, the first line is shifted by 40 pt from the left while other lines of the paragraph are shifted by 20."
+				, NEW_LINE, "This paragraph also ends from 20 pt before page margins and have an top and bottom margin of 20 too."
+				, NEW_LINE, "Text of this paragraph has a size of 14 instead of 12 in a default one.");
+		document.addParagraph(paragraph);
+
+		paragraph = new Paragraph(new Text("This paragraph demonstrate that text can simply be put in ")
+				, new Text("bold, italic and underlined.")
+				, new Text(" Text size can also be changed within a paragraph.", new TextStyle(TIMES_ROMAN, 14))
+				, NEW_TEXT_LINE, new Text("Text styles needs to be used inside a \"Text\" object. A paragraph allow a simple String or Text object as parameter."));
 		document.addParagraph(paragraph);
 		
 		paragraphStyle = new ParagraphStyle();
 		paragraphStyle.setAlignment(Alignment.RIGHT);
-		paragraphStyle.setMargins(new Margins(0, 50, 0, 0));
+		paragraphStyle.setMargins(new Margins(20, 20, 0, 0));
 		paragraphStyle.setFirstLineMargin(50);
 		paragraph = new Paragraph(paragraphStyle, "This paragraph is aligned to right. This shows that the first line margin is taken into account."
 				+ " So, the text will not be displayed until start of paragraph but with a space of the size of the first line margin."
 				+ " The others line will start with the default paragraph margin."
-				, "This even works with new lines inside a paragraph. New lines will not be sensitive to first line of paragraph margin.");
+				, NEW_LINE, "This even works with new lines inside a paragraph. New lines will not be sensitive to first line of paragraph margin.");
 		document.addParagraph(paragraph);
 		
 		paragraphStyle = new ParagraphStyle();
@@ -53,11 +58,11 @@ public class DocumentTest {
 				+ " It demonstrate the same principles than the previous paragraph.");
 		document.addParagraph(paragraph);
 		
-		paragraphStyle = new ParagraphStyle(24);
+		paragraphStyle = new ParagraphStyle(TIMES_ROMAN, 24);
 		paragraphStyle.setMargins(new Margins(120, 120, 50, 0));
 		paragraph = new Paragraph(paragraphStyle, "This next paragraph is just written in a big font size with anormaly large margins "
 				+ "because it is just here to prove that pages are created automatically when end of page is reached."
-				, "Therefore this paragraph is started on one page and the end of it is rendered automaticaly on another one"
+				, NEW_LINE, "Therefore this paragraph is started on one page and the end of it is rendered automaticaly on another one"
 				+ " without coding anything special.");
 		document.addParagraph(paragraph);
 		
@@ -68,14 +73,14 @@ public class DocumentTest {
 		PageStyle pageStyle1 = new PageStyle(PageFormat.A3_LANDSCAPE, new Margins(40, 40, 40, 40));
 		document.addPage(pageStyle1);
 
-		paragraphStyle = new ParagraphStyle(14);
+		paragraphStyle = new ParagraphStyle(TIMES_ROMAN, 14);
 		paragraphStyle.setLineSpacing(2.0f);
 		paragraph = new Paragraph(paragraphStyle, "This paragraph shows that a vertical line spacing ratio can be applied between each line of a paragraph."
 				+ " The standard line spacing is just the size of the font. The line spacing ratio is the multication of itself by the font size."
 				+ " So if line spacing is set to 2, an empty space of the size of the font is left blanck between two lines."
 				+ " Both the lines wrapped automatically and"
-				, "The ones created specifically"
-				, "will be affected by vertical line spacing ratio.");
+				, NEW_LINE, "The ones created specifically"
+				, NEW_LINE, "will be affected by vertical line spacing ratio.");
 		document.addParagraph(paragraph);
 		
 		document.write(out);

@@ -1,8 +1,10 @@
 package com.web4enterprise.pdf.layout;
 
+import com.web4enterprise.pdf.core.font.Font;
+
 public class TextStyle {
-	protected String fontName = "Times-Roman";
-	protected int textSize = 12;
+	protected Font font;
+	protected Integer textSize;
 	protected boolean bold;
 	protected boolean italic;
 	protected boolean underline;
@@ -10,20 +12,21 @@ public class TextStyle {
 	public TextStyle() {
 	}
 	
-	public TextStyle(int textSize) {
+	public TextStyle(Font font, int textSize) {
+		this.font = font;
 		this.textSize = textSize;
 	}
 	
-	public String getFontName() {
-		return fontName;
+	public Font getFont() {
+		return font;
 	}
-	public void setFontName(String fontName) {
-		this.fontName = fontName;
+	public void setFont(Font font) {
+		this.font = font;
 	}
-	public int getTextSize() {
+	public Integer getTextSize() {
 		return textSize;
 	}
-	public void setTextSize(int textSize) {
+	public void setTextSize(Integer textSize) {
 		this.textSize = textSize;
 	}
 	public boolean isBold() {

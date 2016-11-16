@@ -27,7 +27,7 @@ endobj
 >>
 endobj
 4 0 obj
-<< /Length 3018 >>
+<< /Length 4106 >>
 stream
   BT
     /F1 12 Tf
@@ -46,6 +46,16 @@ stream
   ET
   BT
     /F1 14 Tf
+    167 725 Td
+    () Tj
+  ET
+  BT
+    /F1 14 Tf
+    91 711 Td
+    () Tj
+  ET
+  BT
+    /F1 14 Tf
     91 711 Td
     (It's also composed of few lines that are part of this same paragraph, so) Tj
   ET
@@ -53,6 +63,16 @@ stream
     /F1 14 Tf
     91 697 Td
     (this paragraph configuration is applied to all lines of it.) Tj
+  ET
+  BT
+    /F1 14 Tf
+    399 697 Td
+    () Tj
+  ET
+  BT
+    /F1 14 Tf
+    91 683 Td
+    () Tj
   ET
   BT
     /F1 14 Tf
@@ -66,6 +86,16 @@ stream
   ET
   BT
     /F1 14 Tf
+    248 669 Td
+    () Tj
+  ET
+  BT
+    /F1 14 Tf
+    91 655 Td
+    () Tj
+  ET
+  BT
+    /F1 14 Tf
     91 655 Td
     (This paragraph also ends from 20 pt before page margins and have an top) Tj
   ET
@@ -76,128 +106,188 @@ stream
   ET
   BT
     /F1 14 Tf
+    255 641 Td
+    () Tj
+  ET
+  BT
+    /F1 14 Tf
+    91 627 Td
+    () Tj
+  ET
+  BT
+    /F1 14 Tf
     91 627 Td
     (Text of this paragraph has a size of 14 instead of 12 in a default one.) Tj
   ET
   BT
     /F1 12 Tf
-    124 593 Td
+    71 593 Td
+    (This paragraph demonstrate that text can simply be put in ) Tj
+  ET
+  BT
+    /F1 12 Tf
+    350 593 Td
+    (bold, italic and underlined.) Tj
+  ET
+  BT
+    /F1 14 Tf
+    479 593 Td
+    ( Text) Tj
+  ET
+  BT
+    /F1 14 Tf
+    71 581 Td
+    (size can also be changed within a paragraph.) Tj
+  ET
+  BT
+    /F1 12 Tf
+    321 581 Td
+    () Tj
+  ET
+  BT
+    /F1 12 Tf
+    71 569 Td
+    () Tj
+  ET
+  BT
+    /F1 12 Tf
+    71 569 Td
+    (Text styles needs to be used inside a "Text" object. A paragraph allow a simple String or Text) Tj
+  ET
+  BT
+    /F1 12 Tf
+    71 557 Td
+    (object as parameter.) Tj
+  ET
+  BT
+    /F1 12 Tf
+    154 545 Td
     (This paragraph is aligned to right. This shows that the first line margin is) Tj
   ET
   BT
     /F1 12 Tf
-    88 581 Td
-    (taken into account. So, the text will not be displayed until start of paragraph but) Tj
+    94 533 Td
+    (taken into account. So, the text will not be displayed until start of paragraph but with) Tj
   ET
   BT
     /F1 12 Tf
-    83 569 Td
-    (with a space of the size of the first line margin. The others line will start with the) Tj
+    101 521 Td
+    (a space of the size of the first line margin. The others line will start with the default) Tj
   ET
   BT
     /F1 12 Tf
-    347 557 Td
-    (default paragraph margin.) Tj
+    413 509 Td
+    (paragraph margin.) Tj
   ET
   BT
     /F1 12 Tf
-    77 545 Td
-    (This even works with new lines inside a paragraph. New lines will not be sensitive) Tj
+    501 509 Td
+    () Tj
   ET
   BT
     /F1 12 Tf
-    314 533 Td
-    (to first line of paragraph margin.) Tj
+    95 497 Td
+    () Tj
   ET
   BT
     /F1 12 Tf
-    176 521 Td
+    95 497 Td
+    (This even works with new lines inside a paragraph. New lines will not be sensitive to) Tj
+  ET
+  BT
+    /F1 12 Tf
+    357 485 Td
+    (first line of paragraph margin.) Tj
+  ET
+  BT
+    /F1 12 Tf
+    176 473 Td
     (This paragraph is aligned to center with a first line margin. It) Tj
   ET
   BT
     /F1 12 Tf
-    149 509 Td
+    149 461 Td
     (demonstrate the same principles than the previous paragraph.) Tj
   ET
   BT
     /F1 24 Tf
-    191 447 Td
+    191 399 Td
     (This next paragraph) Tj
   ET
   BT
     /F1 24 Tf
-    191 423 Td
+    191 375 Td
     (is just written in a) Tj
   ET
   BT
     /F1 24 Tf
-    191 399 Td
+    191 351 Td
     (big font size with) Tj
   ET
   BT
     /F1 24 Tf
-    191 375 Td
+    191 327 Td
     (anormaly large) Tj
   ET
   BT
     /F1 24 Tf
-    191 351 Td
+    191 303 Td
     (margins because it is) Tj
   ET
   BT
     /F1 24 Tf
-    191 327 Td
+    191 279 Td
     (just here to prove) Tj
   ET
   BT
     /F1 24 Tf
-    191 303 Td
+    191 255 Td
     (that pages are created) Tj
   ET
   BT
     /F1 24 Tf
-    191 279 Td
+    191 231 Td
     (automatically when) Tj
   ET
   BT
     /F1 24 Tf
-    191 255 Td
+    191 207 Td
     (end of page is) Tj
   ET
   BT
     /F1 24 Tf
-    191 231 Td
+    191 183 Td
     (reached.) Tj
   ET
   BT
     /F1 24 Tf
-    191 207 Td
-    (Therefore this) Tj
-  ET
-  BT
-    /F1 24 Tf
-    191 183 Td
-    (paragraph is started) Tj
+    272 183 Td
+    () Tj
   ET
   BT
     /F1 24 Tf
     191 159 Td
-    (on one page and the) Tj
+    () Tj
+  ET
+  BT
+    /F1 24 Tf
+    191 159 Td
+    (Therefore this) Tj
   ET
   BT
     /F1 24 Tf
     191 135 Td
-    (end of it is rendered) Tj
+    (paragraph is started) Tj
   ET
   BT
     /F1 24 Tf
     191 111 Td
-    (automaticaly on) Tj
+    (on one page and the) Tj
   ET
   BT
     /F1 24 Tf
     191 87 Td
-    (another one without) Tj
+    (end of it is rendered) Tj
   ET
 endstream
 endobj
@@ -227,21 +317,31 @@ endobj
 >>
 endobj
 7 0 obj
-<< /Length 238 >>
+<< /Length 370 >>
 stream
   BT
     /F1 24 Tf
     191 759 Td
-    (coding anything) Tj
+    (automaticaly on) Tj
   ET
   BT
     /F1 24 Tf
     191 735 Td
+    (another one without) Tj
+  ET
+  BT
+    /F1 24 Tf
+    191 711 Td
+    (coding anything) Tj
+  ET
+  BT
+    /F1 24 Tf
+    191 687 Td
     (special.) Tj
   ET
   BT
     /F1 12 Tf
-    71 711 Td
+    71 663 Td
     (The next page will show a page with a different orientation and size.) Tj
   ET
 endstream
@@ -272,7 +372,7 @@ endobj
 >>
 endobj
 10 0 obj
-<< /Length 644 >>
+<< /Length 838 >>
 stream
   BT
     /F1 14 Tf
@@ -286,8 +386,28 @@ stream
   ET
   BT
     /F1 14 Tf
+    970 774 Td
+    () Tj
+  ET
+  BT
+    /F1 14 Tf
+    40 746 Td
+    () Tj
+  ET
+  BT
+    /F1 14 Tf
     40 746 Td
     (The ones created specifically) Tj
+  ET
+  BT
+    /F1 14 Tf
+    203 746 Td
+    () Tj
+  ET
+  BT
+    /F1 14 Tf
+    40 718 Td
+    () Tj
   ET
   BT
     /F1 14 Tf
@@ -318,17 +438,17 @@ xref
 0000000075 00000 n
 0000000206 00000 n
 0000000331 00000 n
-0000003400 00000 n
-0000003646 00000 n
-0000003771 00000 n
-0000004059 00000 n
-0000004305 00000 n
-0000004432 00000 n
-0000005127 00000 n
+0000004488 00000 n
+0000004734 00000 n
+0000004859 00000 n
+0000005279 00000 n
+0000005525 00000 n
+0000005652 00000 n
+0000006541 00000 n
 trailer
   <<  /Root 1 0 R
       /Size 12
   >>
 startxref
-5375
+6789
 %%EOF

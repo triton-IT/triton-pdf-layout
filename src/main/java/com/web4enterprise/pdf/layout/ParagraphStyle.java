@@ -1,5 +1,9 @@
 package com.web4enterprise.pdf.layout;
 
+import static com.web4enterprise.pdf.core.font.Font.TIMES_ROMAN;
+
+import com.web4enterprise.pdf.core.font.Font;
+
 public class ParagraphStyle extends TextStyle {
 	protected Alignment alignment = Alignment.LEFT;
 	protected float lineSpacing = 1.0f;
@@ -7,10 +11,11 @@ public class ParagraphStyle extends TextStyle {
 	protected int firstLineMargin = 0;
 	
 	public ParagraphStyle() {
+		super(TIMES_ROMAN, 12);
 	}
 	
-	public ParagraphStyle(int textSize) {
-		super(textSize);
+	public ParagraphStyle(Font font, int textSize) {
+		super(font, textSize);
 	}
 
 	public Alignment getAlignment() {

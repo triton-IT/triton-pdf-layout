@@ -1,7 +1,6 @@
 package com.web4enterprise.pdf.layout;
 
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.web4enterprise.pdf.core.Page;
@@ -31,20 +30,34 @@ public class Document {
 	}
 	
 	public void addParagraph(Paragraph paragraph) {
-		List<String> textLines = paragraph.getTextLines();
+		//Get all lines of text (composed of text of different style).
+		List<TextLine> textLines = paragraph.getTextLines();
+		//Get the paragraph style which is the default style of text which compose it.
 		ParagraphStyle style = paragraph.getStyle();
 		
 		//Apply top margin to paragraph.
 		blockStart -= style.margins.top;
+		
+		//Get this paragraph style. 
 		int textSize = style.getTextSize();
 		
-		boolean firstLine = true;
-		for(String text : textLines) {
-			
-			List<String> textSubLines = splitToPageWidth(style.getFontName(), textSize, style.margins, style.firstLineMargin, text, firstLine);
+		//If this is the first line, some special behavior will have to be performed, so set it to true for now.
+		boolean isFirstLine = true;
+		//Iterate of each line of text to display them.
+		for(TextLine textLine : textLines) {
+			//Calculate the maximum size allowed for text.
+			int maxWidth =  currentPageStyle.getFormat().width 
+					- (currentPageStyle.getMargins().left + currentPageStyle.getMargins().right + style.margins.left + style.margins.right);
+			int firstLineMaxWidth = maxWidth;
+
+			if(isFirstLine) {
+				firstLineMaxWidth -= style.firstLineMargin;
+			}
+			//Split text to get-in maximum space.
+			List<TextLine> textSubLines = textLine.splitToMaxWidth(style.getFont(), textSize, firstLineMaxWidth, maxWidth);
 			
 			boolean firstSubLine = true;
-			for(String textSubLine : textSubLines) {
+			for(TextLine textSubLine : textSubLines) {
 				if(blockStart < currentPageStyle.margins.bottom) {
 					addPage();
 					//Add page reinitialize blockStart, so calculate it again.
@@ -54,14 +67,14 @@ public class Document {
 				int x = 0;
 				if(style.alignment == Alignment.LEFT) {
 					x = currentPageStyle.getMargins().getLeft() + style.margins.left;
-					if(firstLine) {
+					if(isFirstLine) {
 						x += style.firstLineMargin;
 					}
 				} else if(style.alignment == Alignment.RIGHT) {
 					x = currentPageStyle.format.getWidth() 
 							- currentPageStyle.getMargins().getRight() 
 							- style.margins.right
-							- Font.getFont(style.getFontName()).getWidth(textSize, textSubLine);
+							- textSubLine.getWidth(style.getFont(), textSize);
 				} else if(style.alignment == Alignment.CENTER) {
 					//Calculate the maximum free space for paragraph.
 					int freeSpace = currentPageStyle.format.getWidth() 
@@ -69,35 +82,42 @@ public class Document {
 							- currentPageStyle.getMargins().getLeft()
 							- style.margins.right
 							- style.margins.left;
-					if(firstLine) {
+					if(isFirstLine) {
 						freeSpace -= style.getFirstLineMargin();
 					}
 					
 					// Then calculate the position based to left constraints and text centered on free space.
 					x = currentPageStyle.getMargins().getLeft()
 							+ style.margins.left
-							+ (freeSpace - Font.getFont(style.getFontName()).getWidth(textSize, textSubLine)) / 2;
-					if(firstLine) {
+							+ (freeSpace - textSubLine.getWidth(style.getFont(), textSize)) / 2;
+					if(isFirstLine) {
 						x += style.firstLineMargin;
 					}
 				}
 				
-				if(firstLine) {
-					firstLine = false;
+				if(isFirstLine) {
+					isFirstLine = false;
 				}
 				
 				if(firstSubLine) {
 					firstSubLine = false;
 				} else {
 					//If we have split line, we must remove first whitespace which comes from previous subLine.
-					textSubLine = textSubLine.substring(1);
+					textSubLine.get(0).string = textSubLine.get(0).string.substring(1);
 				}
-				currentPage.addText(x, blockStart, textSize, textSubLine);
+				
+				for(Text text : textSubLine) {
+					Font currentFont = (text.style.font != null)?text.style.font:style.font;
+					int currentTextSize = (text.style.textSize != null)?text.style.textSize:textSize;
+					
+					currentPage.addText(x, blockStart, currentTextSize, text.string);
+					x += currentFont.getWidth(currentTextSize, text.string);
+				}
 				blockStart -= textSize * style.lineSpacing;
 			}
 			
-			if(firstLine) {
-				firstLine = false;
+			if(isFirstLine) {
+				isFirstLine = false;
 			}
 		}
 		
@@ -107,44 +127,5 @@ public class Document {
 	
 	public void write(OutputStream out) throws PdfGenerationException {
 		document.write(out);
-	}
-	
-	protected List<String> splitToPageWidth(String fontName, int fontSize, Margins margins, int firstLineMargin, String text, boolean firstLine) {
-		List<String> strings = new ArrayList<String>();
-		splitToPageWidth(fontName, fontSize, margins, firstLineMargin, text, strings, firstLine);
-		
-		return strings;
-	}
-	
-	protected void splitToPageWidth(String fontName, int fontSize, Margins margins, int firstLineMargin, String text, List<String> strings, boolean firstLine) {
-		int index = getFullLineIndex(fontName, fontSize, margins, firstLineMargin, text, firstLine);
-		if(index < text.length()) {
-			strings.add(text.substring(0, index));
-			splitToPageWidth(fontName, fontSize, margins, firstLineMargin, text.substring(index, text.length()), strings, false);
-		} else {
-			strings.add(text);
-		}
-	}
-	
-	protected int getFullLineIndex(String fontName, int fontSize, Margins margins, int firstLineMargin, String text, boolean firstLine) {
-		int textWidth = Font.getFont(fontName).getWidth(fontSize, text);
-		
-		int pageMargins = currentPageStyle.getMargins().left + currentPageStyle.getMargins().right;
-		int paragraphMargins = margins.left + margins.right;
-		
-		if(firstLine) {
-			paragraphMargins += firstLineMargin;
-		}
-		
-		if(textWidth > currentPage.getWidth() - pageMargins - paragraphMargins) {
-			int firstLineIndex = text.lastIndexOf(' ');
-			//If we still have words to split, try to split again. We test against 0 because first character can be a space.
-			if(firstLineIndex != 0 && firstLineIndex != -1) {
-				String shortedText = text.substring(0, firstLineIndex);
-				return getFullLineIndex(fontName, fontSize, margins, firstLineMargin, shortedText, firstLine);
-			}
-		}
-		
-		return text.length();
 	}
 }
