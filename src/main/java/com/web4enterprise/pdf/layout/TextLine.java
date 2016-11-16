@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.web4enterprise.pdf.core.font.Font;
+import com.web4enterprise.pdf.core.font.FontVariant;
 import com.web4enterprise.pdf.layout.Text.SplitInformation;
 
 /*
@@ -43,7 +44,7 @@ public class TextLine extends ArrayList<Text> {
 		return textLines;
 	}
 	
-	protected List<TextLine> splitToMaxWidth(Font font, int fontSize, int firstLineMaxWidth, Integer maxWidth) {
+	protected List<TextLine> splitToMaxWidth(TextStyle defaultStyle, int fontSize, int firstLineMaxWidth, Integer maxWidth) {
 		List<TextLine> textLines = new ArrayList<>();
 		
 		int currentPosition = 0;
@@ -54,13 +55,15 @@ public class TextLine extends ArrayList<Text> {
 		for(Text text : this) {
 			TextStyle textStyle = text.getStyle();
 			//Get font name between paragraph and text ones.
-			Font currentFont = (textStyle.getFont() != null)?textStyle.getFont():font;
+			Font currentFont = (text.style.getFont() != null)?text.style.getFont():defaultStyle.getFont();
+			FontVariant currentFontVariant = currentFont.getVariant((text.style.getFontStyle() != null)?
+					text.style.getFontStyle():defaultStyle.getFontStyle());
 			//Get font size between paragraph and text ones.
-			int currentTextSize = (textStyle.getTextSize() != null)?textStyle.getTextSize():fontSize;
+			int currentTextSize = (textStyle.getFontSize() != null)?textStyle.getFontSize():fontSize;
 			
 			//Split the text on max width.
 			SplitInformation splitInformation = text.new SplitInformation();
-			text.split(currentFont, currentTextSize, currentPosition, firstLineMaxWidth, maxWidth, splitInformation);
+			text.split(currentFontVariant, currentTextSize, currentPosition, firstLineMaxWidth, maxWidth, splitInformation);
 			
 			//Insert end of line on current line.
 			Iterator<Text> iterator = splitInformation.splitTexts.iterator();
@@ -86,14 +89,16 @@ public class TextLine extends ArrayList<Text> {
 		return textLines;
 	}
 
-	public int getWidth(Font font, int textSize) {
+	public int getWidth(TextStyle defaultStyle, int textSize) {
 		int width = 0;
 		
 		for(Text text : this) {
-			Font currentFont = (text.style.font != null)?text.style.font:font;
-			int currentTextSize = (text.style.textSize != null)?text.style.textSize:textSize;
+			Font currentFont = (text.style.getFont() != null)?text.style.getFont():defaultStyle.getFont();
+			FontVariant currentFontVariant = currentFont.getVariant((text.style.getFontStyle() != null)?
+					text.style.getFontStyle():defaultStyle.getFontStyle());
+			int currentTextSize = (text.style.fontSize != null)?text.style.fontSize:textSize;
 			
-			width += currentFont.getWidth(currentTextSize, text.string);
+			width += currentFontVariant.getWidth(currentTextSize, text.string);
 		}
 		
 		return width;

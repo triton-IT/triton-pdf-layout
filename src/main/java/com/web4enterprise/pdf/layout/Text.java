@@ -3,29 +3,21 @@ package com.web4enterprise.pdf.layout;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.web4enterprise.pdf.core.font.Font;
+import com.web4enterprise.pdf.core.font.FontVariant;
 
 public class Text {
 	public static final String NEW_LINE = "\n";	
 	public static final Text NEW_TEXT_LINE = new Text(NEW_LINE);
-	
-	protected String string;
+
 	protected TextStyle style = new TextStyle();
+	protected String string;
 	
 	public Text(String string) {
 		this.string = string;
 	}
 	
-	public Text(String string, TextStyle style) {
-		this.string = string;
-		this.style = style;		
-	}
-
-	public String getString() {
-		return string;
-	}
-
-	public void setString(String string) {
+	public Text(TextStyle style, String string) {
+		this.style = style;
 		this.string = string;
 	}
 
@@ -36,34 +28,42 @@ public class Text {
 	public void setStyle(TextStyle style) {
 		this.style = style;
 	}
+
+	public String getString() {
+		return string;
+	}
+
+	public void setString(String string) {
+		this.string = string;
+	}
 	
 	public List<Text> getLines() {
 		ArrayList<Text> lines = new ArrayList<>();
 
 		//If string starts with a new line, we have to create an empty one.
 		if(string.startsWith(NEW_LINE)) {
-			lines.add(new Text("", style));
+			lines.add(new Text(style, ""));
 		}
 		
 		//Split will return only one entry if regex if at start or end of string.
 		String[] stringLines = string.split(NEW_LINE);
 		for(String stringLine : stringLines) {
-			lines.add(new Text(stringLine, style));
+			lines.add(new Text(style, stringLine));
 		}
 		
 		//If string ends with a new line, we have to create an empty one.
 		if(string.endsWith(NEW_LINE)) {
-			lines.add(new Text("", style));
+			lines.add(new Text(style, ""));
 		}
 		
 		return lines;
 	}
 
-	public void split(Font font, int textSize, int currentPosition, int firstLineMaxWidth, int maxWidth, SplitInformation splitInformation) {
+	public void split(FontVariant font, int textSize, int currentPosition, int firstLineMaxWidth, int maxWidth, SplitInformation splitInformation) {
 		split(string, font, textSize, currentPosition, firstLineMaxWidth, maxWidth, splitInformation, true);
 	}
 	
-	public void split(String stringToSplit, Font font, int textSize, int currentPosition, int firstLineMaxWidth, 
+	public void split(String stringToSplit, FontVariant font, int textSize, int currentPosition, int firstLineMaxWidth, 
 			int maxWidth, SplitInformation splitInformation, boolean isFirstLine) {
 		int textWidth = font.getWidth(textSize, stringToSplit);
 		String keptString = stringToSplit;
@@ -84,7 +84,7 @@ public class Text {
 		}
 		
 		//Add information on current line to split information.
-		splitInformation.splitTexts.add(new Text(keptString, style));
+		splitInformation.splitTexts.add(new Text(style, keptString));
 		splitInformation.newPosition = textWidth;
 		
 		//Try to split the text left.

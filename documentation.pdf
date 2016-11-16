@@ -14,6 +14,30 @@ endobj
     ]
     /Count 3
     /MediaBox [0 0 0 0]
+    /Resources
+    << /Font
+        << /Times-Roman_Plain
+            << /Type /Font
+                /Subtype /Type1
+                /BaseFont /Times-Roman
+            >>
+           /Times-Roman_Bold
+            << /Type /Font
+                /Subtype /Type1
+                /BaseFont /Times-Bold
+            >>
+           /Times-Roman_Italic
+            << /Type /Font
+                /Subtype /Type1
+                /BaseFont /Times-Italic
+            >>
+           /Times-Roman_Bold_Italic
+            << /Type /Font
+                /Subtype /Type1
+                /BaseFont /Times-BoldItalic
+            >>
+        >>
+    >>
 >>
 endobj
 3 0 obj
@@ -27,282 +51,283 @@ endobj
 >>
 endobj
 4 0 obj
-<< /Length 4106 >>
+<< /Length 5037 >>
 stream
   BT
-    /F1 12 Tf
+    /Times-Roman_Plain 12 Tf
     71 771 Td
     (This first page is a standard page in A4 format. This first paragraph has nothing special...) Tj
   ET
   BT
-    /F1 14 Tf
+    /Times-Roman_Plain 14 Tf
     111 739 Td
     (This paragraph has a margin of 20 on each side plus a first line) Tj
   ET
   BT
-    /F1 14 Tf
+    /Times-Roman_Plain 14 Tf
     91 725 Td
     (margin of 20.) Tj
   ET
   BT
-    /F1 14 Tf
-    167 725 Td
+    /Times-Roman_Plain 14 Tf
+    169 725 Td
     () Tj
   ET
   BT
-    /F1 14 Tf
+    /Times-Roman_Plain 14 Tf
     91 711 Td
     () Tj
   ET
   BT
-    /F1 14 Tf
+    /Times-Roman_Plain 14 Tf
     91 711 Td
     (It's also composed of few lines that are part of this same paragraph, so) Tj
   ET
   BT
-    /F1 14 Tf
+    /Times-Roman_Plain 14 Tf
     91 697 Td
     (this paragraph configuration is applied to all lines of it.) Tj
   ET
   BT
-    /F1 14 Tf
-    399 697 Td
+    /Times-Roman_Plain 14 Tf
+    411 697 Td
     () Tj
   ET
   BT
-    /F1 14 Tf
+    /Times-Roman_Plain 14 Tf
     91 683 Td
     () Tj
   ET
   BT
-    /F1 14 Tf
+    /Times-Roman_Plain 14 Tf
     91 683 Td
     (So, the first line is shifted by 40 pt from the left while other lines of the) Tj
   ET
   BT
-    /F1 14 Tf
+    /Times-Roman_Plain 14 Tf
     91 669 Td
     (paragraph are shifted by 20.) Tj
   ET
   BT
-    /F1 14 Tf
-    248 669 Td
+    /Times-Roman_Plain 14 Tf
+    254 669 Td
     () Tj
   ET
   BT
-    /F1 14 Tf
+    /Times-Roman_Plain 14 Tf
     91 655 Td
     () Tj
   ET
   BT
-    /F1 14 Tf
+    /Times-Roman_Plain 14 Tf
     91 655 Td
-    (This paragraph also ends from 20 pt before page margins and have an top) Tj
+    (This paragraph also ends from 20 pt before page margins and have an) Tj
   ET
   BT
-    /F1 14 Tf
+    /Times-Roman_Plain 14 Tf
     91 641 Td
-    (and bottom margin of 20 too.) Tj
+    (top and bottom margin of 20 too.) Tj
   ET
   BT
-    /F1 14 Tf
-    255 641 Td
+    /Times-Roman_Plain 14 Tf
+    280 641 Td
     () Tj
   ET
   BT
-    /F1 14 Tf
+    /Times-Roman_Plain 14 Tf
     91 627 Td
     () Tj
   ET
   BT
-    /F1 14 Tf
+    /Times-Roman_Plain 14 Tf
     91 627 Td
     (Text of this paragraph has a size of 14 instead of 12 in a default one.) Tj
   ET
   BT
-    /F1 12 Tf
+    /Times-Roman_Bold_Italic 12 Tf
     71 593 Td
     (This paragraph demonstrate that text can simply be put in ) Tj
   ET
   BT
-    /F1 12 Tf
-    350 593 Td
-    (bold, italic and underlined.) Tj
+    /Times-Roman_Bold 12 Tf
+    360 593 Td
+    (bold,) Tj
   ET
   BT
-    /F1 14 Tf
-    479 593 Td
+    /Times-Roman_Italic 12 Tf
+    384 593 Td
+    ( italic) Tj
+  ET
+  BT
+    /Times-Roman_Plain 12 Tf
+    412 593 Td
+    ( and underlined.) Tj
+  ET
+  BT
+    /Times-Roman_Bold_Italic 14 Tf
+    494 593 Td
     ( Text) Tj
   ET
   BT
-    /F1 14 Tf
+    /Times-Roman_Bold_Italic 14 Tf
     71 581 Td
     (size can also be changed within a paragraph.) Tj
   ET
   BT
-    /F1 12 Tf
-    321 581 Td
+    /Times-Roman_Bold_Italic 12 Tf
+    331 581 Td
     () Tj
   ET
   BT
-    /F1 12 Tf
+    /Times-Roman_Bold_Italic 12 Tf
     71 569 Td
     () Tj
   ET
   BT
-    /F1 12 Tf
+    /Times-Roman_Bold_Italic 12 Tf
     71 569 Td
-    (Text styles needs to be used inside a "Text" object. A paragraph allow a simple String or Text) Tj
+    (Text styles needs to be used inside a "Text" object. A paragraph allow a simple String or) Tj
   ET
   BT
-    /F1 12 Tf
+    /Times-Roman_Bold_Italic 12 Tf
     71 557 Td
-    (object as parameter.) Tj
+    (Text object as parameter.) Tj
   ET
   BT
-    /F1 12 Tf
-    154 545 Td
+    /Times-Roman_Plain 12 Tf
+    141 545 Td
     (This paragraph is aligned to right. This shows that the first line margin is) Tj
   ET
   BT
-    /F1 12 Tf
-    94 533 Td
-    (taken into account. So, the text will not be displayed until start of paragraph but with) Tj
+    /Times-Roman_Plain 12 Tf
+    106 533 Td
+    (taken into account. So, the text will not be displayed until start of paragraph but) Tj
   ET
   BT
-    /F1 12 Tf
-    101 521 Td
-    (a space of the size of the first line margin. The others line will start with the default) Tj
+    /Times-Roman_Plain 12 Tf
+    104 521 Td
+    (with a space of the size of the first line margin. The others line will start with the) Tj
   ET
   BT
-    /F1 12 Tf
-    413 509 Td
-    (paragraph margin.) Tj
+    /Times-Roman_Plain 12 Tf
+    369 509 Td
+    (default paragraph margin.) Tj
   ET
   BT
-    /F1 12 Tf
+    /Times-Roman_Plain 12 Tf
     501 509 Td
     () Tj
   ET
   BT
-    /F1 12 Tf
-    95 497 Td
+    /Times-Roman_Plain 12 Tf
+    100 497 Td
     () Tj
   ET
   BT
-    /F1 12 Tf
-    95 497 Td
-    (This even works with new lines inside a paragraph. New lines will not be sensitive to) Tj
+    /Times-Roman_Plain 12 Tf
+    100 497 Td
+    (This even works with new lines inside a paragraph. New lines will not be sensitive) Tj
   ET
   BT
-    /F1 12 Tf
-    357 485 Td
-    (first line of paragraph margin.) Tj
+    /Times-Roman_Plain 12 Tf
+    337 485 Td
+    (to first line of paragraph margin.) Tj
   ET
   BT
-    /F1 12 Tf
-    176 473 Td
-    (This paragraph is aligned to center with a first line margin. It) Tj
+    /Times-Roman_Plain 12 Tf
+    175 473 Td
+    (This paragraph is aligned to center with a first line margin.) Tj
   ET
   BT
-    /F1 12 Tf
-    149 461 Td
-    (demonstrate the same principles than the previous paragraph.) Tj
+    /Times-Roman_Plain 12 Tf
+    137 461 Td
+    (It demonstrate the same principles than the previous paragraph.) Tj
   ET
   BT
-    /F1 24 Tf
+    /Times-Roman_Plain 24 Tf
     191 399 Td
     (This next paragraph) Tj
   ET
   BT
-    /F1 24 Tf
+    /Times-Roman_Plain 24 Tf
     191 375 Td
     (is just written in a) Tj
   ET
   BT
-    /F1 24 Tf
+    /Times-Roman_Plain 24 Tf
     191 351 Td
     (big font size with) Tj
   ET
   BT
-    /F1 24 Tf
+    /Times-Roman_Plain 24 Tf
     191 327 Td
     (anormaly large) Tj
   ET
   BT
-    /F1 24 Tf
+    /Times-Roman_Plain 24 Tf
     191 303 Td
     (margins because it is) Tj
   ET
   BT
-    /F1 24 Tf
+    /Times-Roman_Plain 24 Tf
     191 279 Td
     (just here to prove) Tj
   ET
   BT
-    /F1 24 Tf
+    /Times-Roman_Plain 24 Tf
     191 255 Td
-    (that pages are created) Tj
+    (that pages are) Tj
   ET
   BT
-    /F1 24 Tf
+    /Times-Roman_Plain 24 Tf
     191 231 Td
+    (created) Tj
+  ET
+  BT
+    /Times-Roman_Plain 24 Tf
+    191 207 Td
     (automatically when) Tj
   ET
   BT
-    /F1 24 Tf
-    191 207 Td
+    /Times-Roman_Plain 24 Tf
+    191 183 Td
     (end of page is) Tj
   ET
   BT
-    /F1 24 Tf
-    191 183 Td
+    /Times-Roman_Plain 24 Tf
+    191 159 Td
     (reached.) Tj
   ET
   BT
-    /F1 24 Tf
-    272 183 Td
+    /Times-Roman_Plain 24 Tf
+    276 159 Td
     () Tj
   ET
   BT
-    /F1 24 Tf
-    191 159 Td
+    /Times-Roman_Plain 24 Tf
+    191 135 Td
     () Tj
   ET
   BT
-    /F1 24 Tf
-    191 159 Td
+    /Times-Roman_Plain 24 Tf
+    191 135 Td
     (Therefore this) Tj
   ET
   BT
-    /F1 24 Tf
-    191 135 Td
+    /Times-Roman_Plain 24 Tf
+    191 111 Td
     (paragraph is started) Tj
   ET
   BT
-    /F1 24 Tf
-    191 111 Td
-    (on one page and the) Tj
-  ET
-  BT
-    /F1 24 Tf
+    /Times-Roman_Plain 24 Tf
     191 87 Td
-    (end of it is rendered) Tj
+    (on one page and the) Tj
   ET
 endstream
 endobj
 5 0 obj
 <<  /Type /Page
     /Parent 3 0 R
-    /Resources
-    << /Font
-        << /F1
-            << /Type /Font
-                /Subtype /Type1
-                /BaseFont /Times-Roman
-            >>
-        >>
-    >>
     /Contents 4 0 R
 >>
 endobj
@@ -317,31 +342,36 @@ endobj
 >>
 endobj
 7 0 obj
-<< /Length 370 >>
+<< /Length 530 >>
 stream
   BT
-    /F1 24 Tf
+    /Times-Roman_Plain 24 Tf
     191 759 Td
+    (end of it is rendered) Tj
+  ET
+  BT
+    /Times-Roman_Plain 24 Tf
+    191 735 Td
     (automaticaly on) Tj
   ET
   BT
-    /F1 24 Tf
-    191 735 Td
+    /Times-Roman_Plain 24 Tf
+    191 711 Td
     (another one without) Tj
   ET
   BT
-    /F1 24 Tf
-    191 711 Td
+    /Times-Roman_Plain 24 Tf
+    191 687 Td
     (coding anything) Tj
   ET
   BT
-    /F1 24 Tf
-    191 687 Td
+    /Times-Roman_Plain 24 Tf
+    191 663 Td
     (special.) Tj
   ET
   BT
-    /F1 12 Tf
-    71 663 Td
+    /Times-Roman_Plain 12 Tf
+    71 639 Td
     (The next page will show a page with a different orientation and size.) Tj
   ET
 endstream
@@ -349,15 +379,6 @@ endobj
 8 0 obj
 <<  /Type /Page
     /Parent 6 0 R
-    /Resources
-    << /Font
-        << /F1
-            << /Type /Font
-                /Subtype /Type1
-                /BaseFont /Times-Roman
-            >>
-        >>
-    >>
     /Contents 7 0 R
 >>
 endobj
@@ -372,45 +393,45 @@ endobj
 >>
 endobj
 10 0 obj
-<< /Length 838 >>
+<< /Length 959 >>
 stream
   BT
-    /F1 14 Tf
+    /Times-Roman_Plain 14 Tf
     40 802 Td
-    (This paragraph shows that a vertical line spacing ratio can be applied between each line of a paragraph. The standard line spacing is just the size of the font. The line spacing ratio is the multication) Tj
+    (This paragraph shows that a vertical line spacing ratio can be applied between each line of a paragraph. The standard line spacing is just the size of the font. The line spacing ratio is the) Tj
   ET
   BT
-    /F1 14 Tf
+    /Times-Roman_Plain 14 Tf
     40 774 Td
-    (of itself by the font size. So if line spacing is set to 2, an empty space of the size of the font is left blanck between two lines. Both the lines wrapped automatically and) Tj
+    (multication of itself by the font size. So if line spacing is set to 2, an empty space of the size of the font is left blanck between two lines. Both the lines wrapped automatically and) Tj
   ET
   BT
-    /F1 14 Tf
-    970 774 Td
+    /Times-Roman_Plain 14 Tf
+    1054 774 Td
     () Tj
   ET
   BT
-    /F1 14 Tf
+    /Times-Roman_Plain 14 Tf
     40 746 Td
     () Tj
   ET
   BT
-    /F1 14 Tf
+    /Times-Roman_Plain 14 Tf
     40 746 Td
     (The ones created specifically) Tj
   ET
   BT
-    /F1 14 Tf
-    203 746 Td
+    /Times-Roman_Plain 14 Tf
+    206 746 Td
     () Tj
   ET
   BT
-    /F1 14 Tf
+    /Times-Roman_Plain 14 Tf
     40 718 Td
     () Tj
   ET
   BT
-    /F1 14 Tf
+    /Times-Roman_Plain 14 Tf
     40 718 Td
     (will be affected by vertical line spacing ratio.) Tj
   ET
@@ -419,15 +440,6 @@ endobj
 11 0 obj
 <<  /Type /Page
     /Parent 9 0 R
-    /Resources
-    << /Font
-        << /F1
-            << /Type /Font
-                /Subtype /Type1
-                /BaseFont /Times-Roman
-            >>
-        >>
-    >>
     /Contents 10 0 R
 >>
 endobj
@@ -436,19 +448,19 @@ xref
 0000000000 65535 f
 0000000022 00000 n
 0000000075 00000 n
-0000000206 00000 n
-0000000331 00000 n
-0000004488 00000 n
-0000004734 00000 n
-0000004859 00000 n
-0000005279 00000 n
-0000005525 00000 n
-0000005652 00000 n
-0000006541 00000 n
+0000000835 00000 n
+0000000960 00000 n
+0000006048 00000 n
+0000006120 00000 n
+0000006245 00000 n
+0000006825 00000 n
+0000006897 00000 n
+0000007024 00000 n
+0000008034 00000 n
 trailer
   <<  /Root 1 0 R
       /Size 12
   >>
 startxref
-6789
+8108
 %%EOF

@@ -1,20 +1,34 @@
 package com.web4enterprise.pdf.layout;
 
 import com.web4enterprise.pdf.core.font.Font;
+import com.web4enterprise.pdf.core.font.FontStyle;
 
 public class TextStyle {
 	protected Font font;
-	protected Integer textSize;
-	protected boolean bold;
-	protected boolean italic;
-	protected boolean underline;
+	protected FontStyle fontStyle;
+	protected Integer fontSize;
+	protected boolean isUnderline;
 	
 	public TextStyle() {
 	}
 	
-	public TextStyle(Font font, int textSize) {
+	public TextStyle(Font font) {
 		this.font = font;
-		this.textSize = textSize;
+	}
+	
+	public TextStyle(FontStyle fontStyle) {
+		this.fontStyle = fontStyle;
+	}
+	
+	public TextStyle(Font font, int fontSize) {
+		this.font = font;
+		this.fontSize = fontSize;
+	}
+	
+	public TextStyle(Font font, FontStyle fontStyle, int fontSize) {
+		this.font = font;
+		this.fontStyle = fontStyle;
+		this.fontSize = fontSize;
 	}
 	
 	public Font getFont() {
@@ -23,30 +37,28 @@ public class TextStyle {
 	public void setFont(Font font) {
 		this.font = font;
 	}
-	public Integer getTextSize() {
-		return textSize;
-	}
-	public void setTextSize(Integer textSize) {
-		this.textSize = textSize;
-	}
-	public boolean isBold() {
-		return bold;
-	}
-	public void setBold(boolean bold) {
-		this.bold = bold;
-	}
-	public boolean isItalic() {
-		return italic;
-	}
-	public void setItalic(boolean italic) {
-		this.italic = italic;
-	}
-	public boolean isUnderline() {
-		return underline;
-	}
-	public void setUnderline(boolean underline) {
-		this.underline = underline;
+	
+	public FontStyle getFontStyle() {
+		return fontStyle;
 	}
 
+	public void setFontStyle(FontStyle fontStyle) {
+		this.fontStyle = fontStyle;
+	}
+
+	public Integer getFontSize() {
+		return fontSize;
+	}
+
+	public void setFontSize(Integer fontSize) {
+		this.fontSize = fontSize;
+	}
 	
+	public boolean isUnderline() {
+		return isUnderline;
+	}
+	
+	public void setUnderline(boolean isUnderline) {
+		this.isUnderline = isUnderline;
+	}
 }

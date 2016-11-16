@@ -3,6 +3,8 @@ package com.web4enterprise.pdf.layout;
 import static com.web4enterprise.pdf.core.font.Font.TIMES_ROMAN;
 
 import com.web4enterprise.pdf.core.font.Font;
+import com.web4enterprise.pdf.core.font.FontStyle;
+import com.web4enterprise.pdf.core.font.FontVariant;
 
 public class ParagraphStyle extends TextStyle {
 	protected Alignment alignment = Alignment.LEFT;
@@ -14,8 +16,12 @@ public class ParagraphStyle extends TextStyle {
 		super(TIMES_ROMAN, 12);
 	}
 	
-	public ParagraphStyle(Font font, int textSize) {
-		super(font, textSize);
+	public ParagraphStyle(Font font, int fontSize) {
+		super(font, fontSize);
+	}
+	
+	public ParagraphStyle(Font font, FontStyle style, int fontSize) {
+		super(font, style, fontSize);
 	}
 
 	public Alignment getAlignment() {
@@ -48,5 +54,17 @@ public class ParagraphStyle extends TextStyle {
 
 	public void setFirstLineMargin(int firstLineMargin) {
 		this.firstLineMargin = firstLineMargin;
+	}
+	
+	public FontVariant getFontVariant() {
+		return font.getVariant(fontStyle);
+	}
+	
+	/**
+	 * Do not let null as default style but PLAIN.
+	 */
+	@Override
+	public FontStyle getFontStyle() {
+		return (fontStyle!=null)?fontStyle:FontStyle.PLAIN;
 	}
 }

@@ -7,6 +7,7 @@ import com.web4enterprise.pdf.core.Page;
 import com.web4enterprise.pdf.core.Pdf;
 import com.web4enterprise.pdf.core.PdfGenerationException;
 import com.web4enterprise.pdf.core.font.Font;
+import com.web4enterprise.pdf.core.font.FontVariant;
 
 public class Document {
 	protected Pdf document = new Pdf();
@@ -33,13 +34,13 @@ public class Document {
 		//Get all lines of text (composed of text of different style).
 		List<TextLine> textLines = paragraph.getTextLines();
 		//Get the paragraph style which is the default style of text which compose it.
-		ParagraphStyle style = paragraph.getStyle();
+		ParagraphStyle paragraphStyle = paragraph.getStyle();
 		
 		//Apply top margin to paragraph.
-		blockStart -= style.margins.top;
+		blockStart -= paragraphStyle.margins.top;
 		
 		//Get this paragraph style. 
-		int textSize = style.getTextSize();
+		int textSize = paragraphStyle.getFontSize();
 		
 		//If this is the first line, some special behavior will have to be performed, so set it to true for now.
 		boolean isFirstLine = true;
@@ -47,14 +48,14 @@ public class Document {
 		for(TextLine textLine : textLines) {
 			//Calculate the maximum size allowed for text.
 			int maxWidth =  currentPageStyle.getFormat().width 
-					- (currentPageStyle.getMargins().left + currentPageStyle.getMargins().right + style.margins.left + style.margins.right);
+					- (currentPageStyle.getMargins().left + currentPageStyle.getMargins().right + paragraphStyle.margins.left + paragraphStyle.margins.right);
 			int firstLineMaxWidth = maxWidth;
 
 			if(isFirstLine) {
-				firstLineMaxWidth -= style.firstLineMargin;
+				firstLineMaxWidth -= paragraphStyle.firstLineMargin;
 			}
 			//Split text to get-in maximum space.
-			List<TextLine> textSubLines = textLine.splitToMaxWidth(style.getFont(), textSize, firstLineMaxWidth, maxWidth);
+			List<TextLine> textSubLines = textLine.splitToMaxWidth(paragraphStyle, textSize, firstLineMaxWidth, maxWidth);
 			
 			boolean firstSubLine = true;
 			for(TextLine textSubLine : textSubLines) {
@@ -65,33 +66,33 @@ public class Document {
 				}
 				
 				int x = 0;
-				if(style.alignment == Alignment.LEFT) {
-					x = currentPageStyle.getMargins().getLeft() + style.margins.left;
+				if(paragraphStyle.alignment == Alignment.LEFT) {
+					x = currentPageStyle.getMargins().getLeft() + paragraphStyle.margins.left;
 					if(isFirstLine) {
-						x += style.firstLineMargin;
+						x += paragraphStyle.firstLineMargin;
 					}
-				} else if(style.alignment == Alignment.RIGHT) {
+				} else if(paragraphStyle.alignment == Alignment.RIGHT) {
 					x = currentPageStyle.format.getWidth() 
 							- currentPageStyle.getMargins().getRight() 
-							- style.margins.right
-							- textSubLine.getWidth(style.getFont(), textSize);
-				} else if(style.alignment == Alignment.CENTER) {
+							- paragraphStyle.margins.right
+							- textSubLine.getWidth(paragraphStyle, textSize);
+				} else if(paragraphStyle.alignment == Alignment.CENTER) {
 					//Calculate the maximum free space for paragraph.
 					int freeSpace = currentPageStyle.format.getWidth() 
 							- currentPageStyle.getMargins().getRight()
 							- currentPageStyle.getMargins().getLeft()
-							- style.margins.right
-							- style.margins.left;
+							- paragraphStyle.margins.right
+							- paragraphStyle.margins.left;
 					if(isFirstLine) {
-						freeSpace -= style.getFirstLineMargin();
+						freeSpace -= paragraphStyle.getFirstLineMargin();
 					}
 					
 					// Then calculate the position based to left constraints and text centered on free space.
 					x = currentPageStyle.getMargins().getLeft()
-							+ style.margins.left
-							+ (freeSpace - textSubLine.getWidth(style.getFont(), textSize)) / 2;
+							+ paragraphStyle.margins.left
+							+ (freeSpace - textSubLine.getWidth(paragraphStyle, textSize)) / 2;
 					if(isFirstLine) {
-						x += style.firstLineMargin;
+						x += paragraphStyle.firstLineMargin;
 					}
 				}
 				
@@ -107,13 +108,15 @@ public class Document {
 				}
 				
 				for(Text text : textSubLine) {
-					Font currentFont = (text.style.font != null)?text.style.font:style.font;
-					int currentTextSize = (text.style.textSize != null)?text.style.textSize:textSize;
+					Font currentFont = (text.style.getFont() != null)?text.style.getFont():paragraphStyle.getFont();
+					FontVariant currentFontVariant = currentFont.getVariant((text.style.getFontStyle() != null)?
+							text.style.getFontStyle():paragraphStyle.getFontStyle());
+					int currentTextSize = (text.style.fontSize != null)?text.style.fontSize:textSize;
 					
-					currentPage.addText(x, blockStart, currentTextSize, text.string);
-					x += currentFont.getWidth(currentTextSize, text.string);
+					currentPage.addText(x, blockStart, currentTextSize, currentFontVariant, text.string);
+					x += currentFontVariant.getWidth(currentTextSize, text.string);
 				}
-				blockStart -= textSize * style.lineSpacing;
+				blockStart -= textSize * paragraphStyle.lineSpacing;
 			}
 			
 			if(isFirstLine) {
@@ -122,7 +125,7 @@ public class Document {
 		}
 		
 		//Apply bottom margin to paragraph.
-		blockStart -= style.margins.bottom;
+		blockStart -= paragraphStyle.margins.bottom;
 	}
 	
 	public void write(OutputStream out) throws PdfGenerationException {

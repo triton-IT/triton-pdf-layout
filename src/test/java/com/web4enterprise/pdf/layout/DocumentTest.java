@@ -1,5 +1,9 @@
 package com.web4enterprise.pdf.layout;
 
+import static com.web4enterprise.pdf.core.font.Font.TIMES_ROMAN;
+import static com.web4enterprise.pdf.layout.Text.NEW_LINE;
+import static com.web4enterprise.pdf.layout.Text.NEW_TEXT_LINE;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -7,11 +11,7 @@ import java.io.OutputStream;
 import org.junit.Test;
 
 import com.web4enterprise.pdf.core.PdfGenerationException;
-import com.web4enterprise.pdf.core.font.Font;
-
-import static com.web4enterprise.pdf.core.font.Font.TIMES_ROMAN;
-import static com.web4enterprise.pdf.layout.Text.NEW_LINE;
-import static com.web4enterprise.pdf.layout.Text.NEW_TEXT_LINE;
+import com.web4enterprise.pdf.core.font.FontStyle;
 
 public class DocumentTest {
 	@Test
@@ -24,7 +24,7 @@ public class DocumentTest {
 		Paragraph paragraph = new Paragraph("This first page is a standard page in A4 format. This first paragraph has nothing special...");
 		document.addParagraph(paragraph);
 		
-		ParagraphStyle paragraphStyle = new ParagraphStyle(Font.TIMES_ROMAN, 14);
+		ParagraphStyle paragraphStyle = new ParagraphStyle(TIMES_ROMAN, 14);
 		paragraphStyle.setMargins(new Margins(20, 20, 20, 20));
 		paragraphStyle.setFirstLineMargin(20);
 		paragraph = new Paragraph(paragraphStyle, "This paragraph has a margin of 20 on each side plus a first line margin of 20."
@@ -34,9 +34,11 @@ public class DocumentTest {
 				, NEW_LINE, "Text of this paragraph has a size of 14 instead of 12 in a default one.");
 		document.addParagraph(paragraph);
 
-		paragraph = new Paragraph(new Text("This paragraph demonstrate that text can simply be put in ")
-				, new Text("bold, italic and underlined.")
-				, new Text(" Text size can also be changed within a paragraph.", new TextStyle(TIMES_ROMAN, 14))
+		paragraph = new Paragraph(new ParagraphStyle(TIMES_ROMAN, FontStyle.BOLD_ITALIC, 12), new Text("This paragraph demonstrate that text can simply be put in ")
+				, new Text(new TextStyle(FontStyle.BOLD), "bold,")
+				, new Text(new TextStyle(FontStyle.ITALIC), " italic")
+				, new Text(new TextStyle(FontStyle.PLAIN), " and underlined.")
+				, new Text(new TextStyle(TIMES_ROMAN, 14), " Text size can also be changed within a paragraph.")
 				, NEW_TEXT_LINE, new Text("Text styles needs to be used inside a \"Text\" object. A paragraph allow a simple String or Text object as parameter."));
 		document.addParagraph(paragraph);
 		
