@@ -34,10 +34,16 @@ public class DocumentTest {
 				, NEW_LINE, "Text of this paragraph has a size of 14 instead of 12 in a default one.");
 		document.addParagraph(paragraph);
 
+		TextStyle plainUnderlined = new TextStyle(FontStyle.PLAIN);
+		plainUnderlined.setUnderlined(true);
+		
+		TextStyle italicUnderlined = new TextStyle(FontStyle.PLAIN);
+		italicUnderlined.setUnderlined(true);
+		
 		paragraph = new Paragraph(new ParagraphStyle(TIMES_ROMAN, FontStyle.BOLD_ITALIC, 12), new Text("This paragraph demonstrate that text can simply be put in ")
 				, new Text(new TextStyle(FontStyle.BOLD), "bold,")
-				, new Text(new TextStyle(FontStyle.ITALIC), " italic")
-				, new Text(new TextStyle(FontStyle.PLAIN), " and underlined.")
+				, new Text(italicUnderlined, " italic")
+				, new Text(plainUnderlined, " and underlined.")
 				, new Text(new TextStyle(TIMES_ROMAN, 14), " Text size can also be changed within a paragraph.")
 				, NEW_TEXT_LINE, new Text("Text styles needs to be used inside a \"Text\" object. A paragraph allow a simple String or Text object as parameter."));
 		document.addParagraph(paragraph);

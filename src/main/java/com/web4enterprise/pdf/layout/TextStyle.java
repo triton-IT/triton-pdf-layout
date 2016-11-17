@@ -7,7 +7,7 @@ public class TextStyle {
 	protected Font font;
 	protected FontStyle fontStyle;
 	protected Integer fontSize;
-	protected boolean isUnderline;
+	protected Boolean isUnderlined;
 	
 	public TextStyle() {
 	}
@@ -54,11 +54,11 @@ public class TextStyle {
 		this.fontSize = fontSize;
 	}
 	
-	public boolean isUnderline() {
-		return isUnderline;
+	public Boolean isUnderlined() {
+		return isUnderlined;
 	}
 	
-	public void setUnderline(boolean isUnderline) {
-		this.isUnderline = isUnderline;
+	public void setUnderlined(Boolean isUnderlined) {
+		this.isUnderlined = isUnderlined;
 	}
 }
