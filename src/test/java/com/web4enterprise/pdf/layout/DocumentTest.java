@@ -46,6 +46,7 @@ public class DocumentTest {
 		document.addParagraph(paragraph);
 
 		TextStyle plainUnderlined = new TextStyle(FontStyle.PLAIN);
+		plainUnderlined.setFontColor(new Color(200,  0, 200));
 		plainUnderlined.setUnderlined(true);
 		
 		TextStyle italicUnderlined = new TextStyle(FontStyle.PLAIN);

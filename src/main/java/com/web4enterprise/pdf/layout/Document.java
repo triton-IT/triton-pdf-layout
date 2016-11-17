@@ -129,6 +129,7 @@ public class Document {
 						
 						StraightPath line = new StraightPath(new Point(underlineStartX, underlineY), new Point(underlineEndX, underlineY));
 						line.setLineWidth(currentTextSize / 20);
+						line.setStrokeColor(color);
 						currentPage.addPath(line);
 					} else {
 						x += currentFontVariant.getWidth(currentTextSize, text.string);
