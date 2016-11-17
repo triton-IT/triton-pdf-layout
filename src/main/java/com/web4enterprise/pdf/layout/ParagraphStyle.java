@@ -2,6 +2,7 @@ package com.web4enterprise.pdf.layout;
 
 import static com.web4enterprise.pdf.core.font.Font.TIMES_ROMAN;
 
+import com.web4enterprise.pdf.core.Color;
 import com.web4enterprise.pdf.core.font.Font;
 import com.web4enterprise.pdf.core.font.FontStyle;
 import com.web4enterprise.pdf.core.font.FontVariant;
@@ -13,15 +14,19 @@ public class ParagraphStyle extends TextStyle {
 	protected int firstLineMargin = 0;
 	
 	public ParagraphStyle() {
-		super(TIMES_ROMAN, 12);
+		super(TIMES_ROMAN, FontStyle.PLAIN, 12, Color.BLACK);
 	}
 	
 	public ParagraphStyle(Font font, int fontSize) {
-		super(font, fontSize);
+		super(font, FontStyle.PLAIN, fontSize, Color.BLACK);
 	}
 	
 	public ParagraphStyle(Font font, FontStyle style, int fontSize) {
-		super(font, style, fontSize);
+		super(font, style, fontSize, Color.BLACK);
+	}
+	
+	public ParagraphStyle(Font font, FontStyle style, int fontSize, Color fontColor) {
+		super(font, style, fontSize, fontColor);
 	}
 
 	public Alignment getAlignment() {

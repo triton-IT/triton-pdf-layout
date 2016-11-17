@@ -1,5 +1,6 @@
 package com.web4enterprise.pdf.layout;
 
+import com.web4enterprise.pdf.core.Color;
 import com.web4enterprise.pdf.core.font.Font;
 import com.web4enterprise.pdf.core.font.FontStyle;
 
@@ -7,6 +8,7 @@ public class TextStyle {
 	protected Font font;
 	protected FontStyle fontStyle;
 	protected Integer fontSize;
+	protected Color fontColor;
 	protected Boolean isUnderlined;
 	
 	public TextStyle() {
@@ -29,6 +31,13 @@ public class TextStyle {
 		this.font = font;
 		this.fontStyle = fontStyle;
 		this.fontSize = fontSize;
+	}
+	
+	public TextStyle(Font font, FontStyle fontStyle, int fontSize, Color fontColor) {
+		this.font = font;
+		this.fontStyle = fontStyle;
+		this.fontSize = fontSize;
+		this.fontColor = fontColor;
 	}
 	
 	public Font getFont() {
@@ -54,6 +63,14 @@ public class TextStyle {
 		this.fontSize = fontSize;
 	}
 	
+	public Color getFontColor() {
+		return fontColor;
+	}
+
+	public void setFontColor(Color fontColor) {
+		this.fontColor = fontColor;
+	}
+
 	public Boolean isUnderlined() {
 		return isUnderlined;
 	}

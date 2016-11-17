@@ -10,6 +10,7 @@ import java.io.OutputStream;
 
 import org.junit.Test;
 
+import com.web4enterprise.pdf.core.Color;
 import com.web4enterprise.pdf.core.PdfGenerationException;
 import com.web4enterprise.pdf.core.font.FontStyle;
 
@@ -32,6 +33,16 @@ public class DocumentTest {
 				, NEW_LINE, "So, the first line is shifted by 40 pt from the left while other lines of the paragraph are shifted by 20."
 				, NEW_LINE, "This paragraph also ends from 20 pt before page margins and have an top and bottom margin of 20 too."
 				, NEW_LINE, "Text of this paragraph has a size of 14 instead of 12 in a default one.");
+		document.addParagraph(paragraph);
+		
+		TextStyle colorPurple = new TextStyle();
+		colorPurple.setFontColor(new Color(200,  0, 200));
+		
+		paragraphStyle = new ParagraphStyle();
+		paragraphStyle.setFontColor(new Color(0, 100, 150));
+		paragraph = new Paragraph(paragraphStyle, new Text("A color can be defined for an entire paragraph but also for ")
+				, new Text(colorPurple, "a subset")
+				, new Text("of the same paragraph."));
 		document.addParagraph(paragraph);
 
 		TextStyle plainUnderlined = new TextStyle(FontStyle.PLAIN);

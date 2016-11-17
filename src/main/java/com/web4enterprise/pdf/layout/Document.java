@@ -3,6 +3,7 @@ package com.web4enterprise.pdf.layout;
 import java.io.OutputStream;
 import java.util.List;
 
+import com.web4enterprise.pdf.core.Color;
 import com.web4enterprise.pdf.core.Page;
 import com.web4enterprise.pdf.core.Pdf;
 import com.web4enterprise.pdf.core.PdfGenerationException;
@@ -115,15 +116,17 @@ public class Document {
 							text.style.getFontStyle():paragraphStyle.getFontStyle());
 					int currentTextSize = (text.style.fontSize != null)?text.style.fontSize:textSize;
 					
-					currentPage.addText(x, blockStart, currentTextSize, currentFontVariant, text.string);
+					Color color = (text.style.getFontColor() != null)?text.style.getFontColor():paragraphStyle.getFontColor();
+					
+					currentPage.addText(x, blockStart, currentTextSize, currentFontVariant, color, text.string);
 					
 					Boolean isUnderlined = (text.style.isUnderlined != null)?text.style.isUnderlined:paragraphStyle.isUnderlined();
 					if(isUnderlined != null && isUnderlined) {
 						int underlineStartX = x;
 						x += currentFontVariant.getWidth(currentTextSize, text.string);
 						int underlineEndX = x;
-
 						int underlineY = blockStart - currentTextSize / 12;
+						
 						StraightPath line = new StraightPath(new Point(underlineStartX, underlineY), new Point(underlineEndX, underlineY));
 						line.setLineWidth(currentTextSize / 20);
 						currentPage.addPath(line);
