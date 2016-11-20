@@ -6,36 +6,36 @@ import java.util.List;
 
 public class Paragraph {	
 	protected ParagraphStyle style = new ParagraphStyle();
-	protected List<Text> texts = new ArrayList<>();
+	protected List<ParagraphElement> elements = new ArrayList<>();
 	
 	public Paragraph(String... texts) {
 		for(String text : texts) {
-			this.texts.add(new Text(text));
+			this.elements.add(new Text(text));
 		}
 	}
 	
 	public Paragraph(ParagraphStyle style, String... texts) {
 		this.style = style;
 		for(String text : texts) {
-			this.texts.add(new Text(text));
+			this.elements.add(new Text(text));
 		}
 	}
 	
-	public Paragraph(Text... texts) {
-		this.texts.addAll(Arrays.asList(texts));
+	public Paragraph(ParagraphElement... elements) {
+		this.elements.addAll(Arrays.asList(elements));
 	}
 	
-	public Paragraph(ParagraphStyle style, Text... texts) {
+	public Paragraph(ParagraphStyle style, ParagraphElement... elements) {
 		this.style = style;
-		this.texts.addAll(Arrays.asList(texts));
+		this.elements.addAll(Arrays.asList(elements));
 	}
 	
-	public List<Text> getTexts() {
-		return texts;
+	public List<ParagraphElement> getElements() {
+		return elements;
 	}
 	
-	public void addText(Text text) {
-		texts.add(text);
+	public void addElement(ParagraphElement element) {
+		elements.add(element);
 	}
 	
 	public ParagraphStyle getStyle() {
@@ -46,7 +46,7 @@ public class Paragraph {
 		this.style = style;
 	}
 	
-	public List<TextLine> getTextLines() {
-		return TextLine.getTextLines(texts);
+	public List<ElementLine> getElementLines() {
+		return ElementLine.getElementLines(elements);
 	}
 }

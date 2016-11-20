@@ -1,23 +1,21 @@
 package com.web4enterprise.pdf.layout;
 
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 
-import com.web4enterprise.pdf.core.Color;
 import com.web4enterprise.pdf.core.Page;
 import com.web4enterprise.pdf.core.Pdf;
 import com.web4enterprise.pdf.core.PdfGenerationException;
 import com.web4enterprise.pdf.core.Point;
-import com.web4enterprise.pdf.core.StraightPath;
-import com.web4enterprise.pdf.core.font.Font;
-import com.web4enterprise.pdf.core.font.FontVariant;
 
 public class Document {
 	protected Pdf document = new Pdf();
 	protected Page currentPage;
 	protected PageStyle currentPageStyle;
 
-	protected int blockStart;
+	protected int blockStartX = 0;
+	protected int blockStartY = 0;
 	
 	public Document(PageStyle pageStyle) {
 		addPage(pageStyle);
@@ -25,7 +23,7 @@ public class Document {
 	
 	public void addPage() {
 		currentPage = document.createPage(currentPageStyle.getFormat().width, currentPageStyle.getFormat().height);
-		blockStart = currentPageStyle.format.height - currentPageStyle.margins.top;
+		blockStartY = currentPageStyle.format.height - currentPageStyle.margins.top;
 	}
 	
 	public void addPage(PageStyle pageStyle) {
@@ -35,12 +33,12 @@ public class Document {
 	
 	public void addParagraph(Paragraph paragraph) {
 		//Get all lines of text (composed of text of different style).
-		List<TextLine> textLines = paragraph.getTextLines();
+		List<ElementLine> textLines = paragraph.getElementLines();
 		//Get the paragraph style which is the default style of text which compose it.
 		ParagraphStyle paragraphStyle = paragraph.getStyle();
 		
 		//Apply top margin to paragraph.
-		blockStart -= paragraphStyle.margins.top;
+		blockStartY -= paragraphStyle.margins.top;
 		
 		//Get this paragraph style. 
 		int textSize = paragraphStyle.getFontSize();
@@ -48,7 +46,7 @@ public class Document {
 		//If this is the first line, some special behavior will have to be performed, so set it to true for now.
 		boolean isFirstLine = true;
 		//Iterate of each line of text to display them.
-		for(TextLine textLine : textLines) {
+		for(ElementLine textLine : textLines) {
 			//Calculate the maximum size allowed for text.
 			int maxWidth =  currentPageStyle.getFormat().width 
 					- (currentPageStyle.getMargins().left + currentPageStyle.getMargins().right + paragraphStyle.margins.left + paragraphStyle.margins.right);
@@ -58,27 +56,27 @@ public class Document {
 				firstLineMaxWidth -= paragraphStyle.firstLineMargin;
 			}
 			//Split text to get-in maximum space.
-			List<TextLine> textSubLines = textLine.splitToMaxWidth(paragraphStyle, textSize, firstLineMaxWidth, maxWidth);
+			List<ElementLine> elementSubLines = textLine.splitToMaxWidth(paragraphStyle, textSize, firstLineMaxWidth, maxWidth);
 			
 			boolean firstSubLine = true;
-			for(TextLine textSubLine : textSubLines) {
-				if(blockStart < currentPageStyle.margins.bottom) {
+			for(ElementLine elementSubLine : elementSubLines) {
+				if(blockStartY < currentPageStyle.margins.bottom) {
 					addPage();
 					//Add page reinitialize blockStart, so calculate it again.
-					blockStart -= textSize / 2;
+					blockStartY -= textSize / 2;
 				}
 				
-				int x = 0;
+				blockStartX = 0;
 				if(paragraphStyle.alignment == Alignment.LEFT) {
-					x = currentPageStyle.getMargins().getLeft() + paragraphStyle.margins.left;
+					blockStartX = currentPageStyle.getMargins().getLeft() + paragraphStyle.margins.left;
 					if(isFirstLine) {
-						x += paragraphStyle.firstLineMargin;
+						blockStartX += paragraphStyle.firstLineMargin;
 					}
 				} else if(paragraphStyle.alignment == Alignment.RIGHT) {
-					x = currentPageStyle.format.getWidth() 
+					blockStartX = currentPageStyle.format.getWidth() 
 							- currentPageStyle.getMargins().getRight() 
 							- paragraphStyle.margins.right
-							- textSubLine.getWidth(paragraphStyle, textSize);
+							- elementSubLine.getWidth(paragraphStyle, textSize);
 				} else if(paragraphStyle.alignment == Alignment.CENTER) {
 					//Calculate the maximum free space for paragraph.
 					int freeSpace = currentPageStyle.format.getWidth() 
@@ -91,11 +89,11 @@ public class Document {
 					}
 					
 					// Then calculate the position based to left constraints and text centered on free space.
-					x = currentPageStyle.getMargins().getLeft()
+					blockStartX = currentPageStyle.getMargins().getLeft()
 							+ paragraphStyle.margins.left
-							+ (freeSpace - textSubLine.getWidth(paragraphStyle, textSize)) / 2;
+							+ (freeSpace - elementSubLine.getWidth(paragraphStyle, textSize)) / 2;
 					if(isFirstLine) {
-						x += paragraphStyle.firstLineMargin;
+						blockStartX += paragraphStyle.firstLineMargin;
 					}
 				}
 				
@@ -105,37 +103,20 @@ public class Document {
 				
 				if(firstSubLine) {
 					firstSubLine = false;
-				} else {
-					//If we have split line, we must remove first whitespace which comes from previous subLine.
-					textSubLine.get(0).string = textSubLine.get(0).string.substring(1);
 				}
 				
-				for(Text text : textSubLine) {
-					Font currentFont = (text.style.getFont() != null)?text.style.getFont():paragraphStyle.getFont();
-					FontVariant currentFontVariant = currentFont.getVariant((text.style.getFontStyle() != null)?
-							text.style.getFontStyle():paragraphStyle.getFontStyle());
-					int currentTextSize = (text.style.fontSize != null)?text.style.fontSize:textSize;
+				float lineSpacing = 0;
+				for(ParagraphElement element : elementSubLine) {
+					Point elementSize = element.layout(currentPage, paragraphStyle, textSize, blockStartX, blockStartY);
+					blockStartX += elementSize.getX();
 					
-					Color color = (text.style.getFontColor() != null)?text.style.getFontColor():paragraphStyle.getFontColor();
-					
-					currentPage.addText(x, blockStart, currentTextSize, currentFontVariant, color, text.string);
-					
-					Boolean isUnderlined = (text.style.isUnderlined != null)?text.style.isUnderlined:paragraphStyle.isUnderlined();
-					if(isUnderlined != null && isUnderlined) {
-						int underlineStartX = x;
-						x += currentFontVariant.getWidth(currentTextSize, text.string);
-						int underlineEndX = x;
-						int underlineY = blockStart - currentTextSize / 12;
-						
-						StraightPath line = new StraightPath(new Point(underlineStartX, underlineY), new Point(underlineEndX, underlineY));
-						line.setLineWidth(currentTextSize / 20);
-						line.setStrokeColor(color);
-						currentPage.addPath(line);
-					} else {
-						x += currentFontVariant.getWidth(currentTextSize, text.string);
+					//Keep greatest line spacing to not overlap elements of other lines.
+					float currentLineSpacing = element.getLineSpacing(paragraphStyle);
+					if(currentLineSpacing > lineSpacing) {
+						lineSpacing = currentLineSpacing;
 					}
 				}
-				blockStart -= textSize * paragraphStyle.lineSpacing;
+				blockStartY -= lineSpacing;
 			}
 			
 			if(isFirstLine) {
@@ -144,7 +125,11 @@ public class Document {
 		}
 		
 		//Apply bottom margin to paragraph.
-		blockStart -= paragraphStyle.margins.bottom;
+		blockStartY -= paragraphStyle.margins.bottom;
+	}
+
+	public Image createImage(InputStream imageStream) throws PdfGenerationException {
+		return new Image(document.createImage(imageStream));
 	}
 	
 	public void write(OutputStream out) throws PdfGenerationException {

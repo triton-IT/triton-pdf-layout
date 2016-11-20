@@ -35,6 +35,12 @@ public class DocumentTest {
 				, NEW_LINE, "Text of this paragraph has a size of 14 instead of 12 in a default one.");
 		document.addParagraph(paragraph);
 		
+		Image image = document.createImage(this.getClass().getResourceAsStream("/test.png"));
+		paragraphStyle = new ParagraphStyle();
+		paragraph = new Paragraph(paragraphStyle, new Text("A paragraph can contain text but also images like this one:"), image);
+		document.addParagraph(paragraph);
+		
+		
 		TextStyle colorPurple = new TextStyle();
 		colorPurple.setFontColor(new Color(200,  0, 200));
 		
