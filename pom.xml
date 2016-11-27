@@ -2,12 +2,12 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.web4enterprise</groupId>
-	<artifactId>pdf-layout</artifactId>
+	<artifactId>simplypdf-layout</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
-	<name>PDF layout</name>
+	<name>Simply PDF layout</name>
 	<description>Simple API to create and layout PDF.</description>
-	<url>https://github.com/rramillien/pdf-layout</url>
+	<url>https://github.com/rramillien/simplypdf-layout</url>
 
 	<licenses>
 		<license>
@@ -26,9 +26,9 @@
 	</developers>
 
 	<scm>
-		<connection>scm:git:git://github.com/rramillien/pdf-layout.git</connection>
-		<developerConnection>scm:git:ssh://github.com:rramillien/pdf-layout.git</developerConnection>
-		<url>https://github.com/rramillien/pdf-layout/tree/master</url>
+		<connection>scm:git:git://github.com/rramillien/simplypdf-layout.git</connection>
+		<developerConnection>scm:git:ssh://github.com:rramillien/simplypdf-layout.git</developerConnection>
+		<url>https://github.com/rramillien/simplypdf-layout/tree/master</url>
 	</scm>
 
 	<properties>
@@ -47,11 +47,6 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>org.eluder.coveralls</groupId>
-				<artifactId>coveralls-maven-plugin</artifactId>
-				<version>4.3.0</version>
-			</plugin>
-			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>0.7.6.201602180812</version>
@@ -64,6 +59,11 @@
 					</execution>
 				</executions>
 			</plugin>
+            <plugin>
+              <groupId>org.sonarsource.scanner.maven</groupId>
+              <artifactId>sonar-maven-plugin</artifactId>
+              <version>3.2</version>
+            </plugin>
 		</plugins>
 	</build>
 
@@ -71,7 +71,7 @@
 		<!-- Core library to write to PDF -->
 		<dependency>
 			<groupId>com.web4enterprise</groupId>
-			<artifactId>pdf-core</artifactId>
+			<artifactId>simplypdf-core</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 

@@ -1,15 +1,16 @@
 package com.web4enterprise.pdf.layout;
 
-import com.web4enterprise.pdf.core.Color;
 import com.web4enterprise.pdf.core.font.Font;
-import com.web4enterprise.pdf.core.font.FontStyle;
+import com.web4enterprise.pdf.core.font.FontsVariant;
+import com.web4enterprise.pdf.core.styling.Color;
 
 public class TextStyle {
 	protected Font font;
-	protected FontStyle fontStyle;
+	protected FontsVariant fontStyle;
 	protected Integer fontSize;
 	protected Color fontColor;
 	protected Boolean isUnderlined;
+	protected Color underlineColor;
 	
 	public TextStyle() {
 	}
@@ -18,7 +19,7 @@ public class TextStyle {
 		this.font = font;
 	}
 	
-	public TextStyle(FontStyle fontStyle) {
+	public TextStyle(FontsVariant fontStyle) {
 		this.fontStyle = fontStyle;
 	}
 	
@@ -27,13 +28,13 @@ public class TextStyle {
 		this.fontSize = fontSize;
 	}
 	
-	public TextStyle(Font font, FontStyle fontStyle, int fontSize) {
+	public TextStyle(Font font, FontsVariant fontStyle, int fontSize) {
 		this.font = font;
 		this.fontStyle = fontStyle;
 		this.fontSize = fontSize;
 	}
 	
-	public TextStyle(Font font, FontStyle fontStyle, int fontSize, Color fontColor) {
+	public TextStyle(Font font, FontsVariant fontStyle, int fontSize, Color fontColor) {
 		this.font = font;
 		this.fontStyle = fontStyle;
 		this.fontSize = fontSize;
@@ -47,11 +48,11 @@ public class TextStyle {
 		this.font = font;
 	}
 	
-	public FontStyle getFontStyle() {
+	public FontsVariant getFontStyle() {
 		return fontStyle;
 	}
 
-	public void setFontStyle(FontStyle fontStyle) {
+	public void setFontStyle(FontsVariant fontStyle) {
 		this.fontStyle = fontStyle;
 	}
 
@@ -77,5 +78,13 @@ public class TextStyle {
 	
 	public void setUnderlined(Boolean isUnderlined) {
 		this.isUnderlined = isUnderlined;
+	}
+
+	public Color getUnderlineColor() {
+		return underlineColor;
+	}
+
+	public void setUnderlineColor(Color underlineColor) {
+		this.underlineColor = underlineColor;
 	}
 }

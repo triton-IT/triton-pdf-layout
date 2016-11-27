@@ -4,10 +4,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 
-import com.web4enterprise.pdf.core.Page;
-import com.web4enterprise.pdf.core.Pdf;
-import com.web4enterprise.pdf.core.PdfGenerationException;
-import com.web4enterprise.pdf.core.Point;
+import com.web4enterprise.pdf.core.document.Pdf;
+import com.web4enterprise.pdf.core.exceptions.PdfGenerationException;
+import com.web4enterprise.pdf.core.geometry.Point;
+import com.web4enterprise.pdf.core.page.Page;
 
 public class Document {
 	protected Pdf document = new Pdf();
@@ -16,6 +16,10 @@ public class Document {
 
 	protected int blockStartX = 0;
 	protected int blockStartY = 0;
+	
+	public Document() {
+		addPage(PageStyle.A4_PORTRAIT);
+	}
 	
 	public Document(PageStyle pageStyle) {
 		addPage(pageStyle);

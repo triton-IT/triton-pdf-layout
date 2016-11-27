@@ -2,30 +2,30 @@ package com.web4enterprise.pdf.layout;
 
 import static com.web4enterprise.pdf.core.font.Font.TIMES_ROMAN;
 
-import com.web4enterprise.pdf.core.Color;
 import com.web4enterprise.pdf.core.font.Font;
-import com.web4enterprise.pdf.core.font.FontStyle;
+import com.web4enterprise.pdf.core.font.FontsVariant;
 import com.web4enterprise.pdf.core.font.FontVariant;
+import com.web4enterprise.pdf.core.styling.Color;
 
 public class ParagraphStyle extends TextStyle {
 	protected Alignment alignment = Alignment.LEFT;
 	protected float lineSpacing = 1.0f;
-	protected Margins margins = new Margins(0, 0, 0, 0);
+	protected Margins margins = new Margins(0);
 	protected int firstLineMargin = 0;
 	
 	public ParagraphStyle() {
-		super(TIMES_ROMAN, FontStyle.PLAIN, 12, Color.BLACK);
+		super(TIMES_ROMAN, FontsVariant.PLAIN, 12, Color.BLACK);
 	}
 	
 	public ParagraphStyle(Font font, int fontSize) {
-		super(font, FontStyle.PLAIN, fontSize, Color.BLACK);
+		super(font, FontsVariant.PLAIN, fontSize, Color.BLACK);
 	}
 	
-	public ParagraphStyle(Font font, FontStyle style, int fontSize) {
+	public ParagraphStyle(Font font, FontsVariant style, int fontSize) {
 		super(font, style, fontSize, Color.BLACK);
 	}
 	
-	public ParagraphStyle(Font font, FontStyle style, int fontSize, Color fontColor) {
+	public ParagraphStyle(Font font, FontsVariant style, int fontSize, Color fontColor) {
 		super(font, style, fontSize, fontColor);
 	}
 
@@ -69,7 +69,7 @@ public class ParagraphStyle extends TextStyle {
 	 * Do not let null as default style but PLAIN.
 	 */
 	@Override
-	public FontStyle getFontStyle() {
-		return (fontStyle!=null)?fontStyle:FontStyle.PLAIN;
+	public FontsVariant getFontStyle() {
+		return (fontStyle!=null)?fontStyle:FontsVariant.PLAIN;
 	}
 }

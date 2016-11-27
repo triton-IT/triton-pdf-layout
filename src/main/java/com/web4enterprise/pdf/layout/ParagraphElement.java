@@ -3,8 +3,8 @@ package com.web4enterprise.pdf.layout;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.web4enterprise.pdf.core.Page;
-import com.web4enterprise.pdf.core.Point;
+import com.web4enterprise.pdf.core.geometry.Point;
+import com.web4enterprise.pdf.core.page.Page;
 
 public interface ParagraphElement {
 	List<ParagraphElement> getLines();

@@ -3,12 +3,11 @@ package com.web4enterprise.pdf.layout;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.web4enterprise.pdf.core.Color;
-import com.web4enterprise.pdf.core.Page;
-import com.web4enterprise.pdf.core.Point;
-import com.web4enterprise.pdf.core.StraightPath;
 import com.web4enterprise.pdf.core.font.Font;
 import com.web4enterprise.pdf.core.font.FontVariant;
+import com.web4enterprise.pdf.core.geometry.Point;
+import com.web4enterprise.pdf.core.page.Page;
+import com.web4enterprise.pdf.core.styling.Color;
 
 public class Text implements ParagraphElement {
 	public static final String NEW_LINE = "\n";	
@@ -129,24 +128,17 @@ public class Text implements ParagraphElement {
 		
 		Color color = (style.getFontColor() != null)?style.getFontColor():defaultStyle.getFontColor();
 		
-		page.addText(positionX, positionY, currentFontSize, currentFontVariant, color, string);
-		
 		Boolean isUnderlined = (style.isUnderlined != null)?style.isUnderlined:defaultStyle.isUnderlined();
+		com.web4enterprise.pdf.core.text.Text text = new com.web4enterprise.pdf.core.text.Text(positionX, positionY, currentFontSize, currentFontVariant, color, string);
+		if(Boolean.TRUE.equals(isUnderlined)) {
+			text.setUnderlined(isUnderlined);
+			Color underlineColor = (style.getUnderlineColor() != null)?style.getUnderlineColor():defaultStyle.getUnderlineColor();
+			text.setUnderlineColor(underlineColor);
+		}
+		
+		page.addText(text);
 		
 		int width = currentFontVariant.getWidth(currentFontSize, string);
-		if(isUnderlined != null && isUnderlined) {
-			int underlineStartX = positionX;
-			positionX += width;
-			int underlineEndX = positionX;
-			int underlineY = (int) (positionY - ((float) currentFontSize) / 12);
-			
-			StraightPath line = new StraightPath(new Point(underlineStartX, underlineY), new Point(underlineEndX, underlineY));
-			line.setLineWidth(currentFontSize / 20);
-			line.setStrokeColor(color);
-			page.addPath(line);
-		} else {
-			positionX += width;
-		}
 		
 		return new Point(width, currentFontSize);
 	}

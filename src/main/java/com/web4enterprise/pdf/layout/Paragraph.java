@@ -34,8 +34,8 @@ public class Paragraph {
 		return elements;
 	}
 	
-	public void addElement(ParagraphElement element) {
-		elements.add(element);
+	public void addElement(ParagraphElement... elements) {
+		this.elements.addAll(Arrays.asList(elements));
 	}
 	
 	public ParagraphStyle getStyle() {
