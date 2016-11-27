@@ -25,6 +25,7 @@ public class DocumentTest {
 		
 		Document document = new Document();
 
+		//Creating a document.
 		document.addParagraph(new Paragraph(titleStyle, "Creating a document"));
 		
 		Paragraph paragraph = new Paragraph("A PDF is created with:", NEW_LINE);
@@ -33,6 +34,7 @@ public class DocumentTest {
 				new Text(codeStyle, "document.write(out);"));
 		document.addParagraph(paragraph);
 
+		//Adding texts, paragraphs and pages.
 		document.addParagraph(new Paragraph(titleStyle, "Adding texts, paragraphs and pages"));
 
 		paragraph = new Paragraph("A document created with no page style uses the default one: A4 portrait.", NEW_LINE);
@@ -54,45 +56,25 @@ public class DocumentTest {
 				new Text("The same applies to most of the classes (Page, Text, etc.)."));
 		document.addParagraph(paragraph);
 
+		//Adding images and graphics
 		document.addParagraph(new Paragraph(titleStyle, "Adding images and graphics"));
-
-		document.addParagraph(new Paragraph(titleStyle, "Text styles"));
-
-		document.addParagraph(new Paragraph(titleStyle, "Paragraph styles"));
-
-		document.addParagraph(new Paragraph(titleStyle, "Page styles"));
-
-		document.addParagraph(new Paragraph(titleStyle, "Adding headers and footers"));
-
-		document.addParagraph(new Paragraph(titleStyle, "Adding tables"));
-
-		document.addParagraph(new Paragraph(titleStyle, "Adding table of content"));
-
-		document.addParagraph(new Paragraph(titleStyle, "Adding footnotes"));
-		
-		ParagraphStyle paragraphStyle = new ParagraphStyle(TIMES_ROMAN, 14);
-		paragraphStyle.setMargins(new Margins(20));
-		paragraphStyle.setFirstLineMargin(20);
-		paragraph = new Paragraph(paragraphStyle, "This paragraph has a margin of 20 on each side plus a first line margin of 20."
-				, NEW_LINE, "It's also composed of few lines that are part of this same paragraph, so this paragraph configuration is applied to all lines of it."
-				, NEW_LINE, "So, the first line is shifted by 40 pt from the left while other lines of the paragraph are shifted by 20."
-				, NEW_LINE, "This paragraph also ends from 20 pt before page margins and have an top and bottom margin of 20 too."
-				, NEW_LINE, "Text of this paragraph has a size of 14 instead of 12 in a default one.");
-		document.addParagraph(paragraph);
 		
 		Image image = document.createImage(this.getClass().getResourceAsStream("/test.png"));
-		paragraphStyle = new ParagraphStyle();
+		image.setHeight(12, true);
+		ParagraphStyle paragraphStyle = new ParagraphStyle();
 		paragraph = new Paragraph(paragraphStyle, new Text("A paragraph can contain text but also images like this one:"), image);
 		document.addParagraph(paragraph);
+
+		//Text styles.
+		document.addParagraph(new Paragraph(titleStyle, "Text styles"));
 		
-		
-		TextStyle colorPurple = new TextStyle();
-		colorPurple.setFontColor(new Color(128, 80, 128));
+		TextStyle greyGoldStyle = new TextStyle();
+		greyGoldStyle.setFontColor(new Color(128, 80, 128));
 		
 		paragraphStyle = new ParagraphStyle();
 		paragraphStyle.setFontColor(new Color(128, 128, 80));
 		paragraph = new Paragraph(paragraphStyle, new Text("A color can be defined for an entire paragraph but also for ")
-				, new Text(colorPurple, "a subset ")
+				, new Text(greyGoldStyle, "a subset ")
 				, new Text("of the same paragraph."));
 		document.addParagraph(paragraph);
 
@@ -109,6 +91,19 @@ public class DocumentTest {
 				, new Text(plainUnderlined, " and underlined.")
 				, new Text(new TextStyle(TIMES_ROMAN, 14), " Text size can also be changed within a paragraph.")
 				, NEW_TEXT_LINE, new Text("Text styles needs to be used inside a \"Text\" object. A paragraph allow a simple String or Text object as parameter."));
+		document.addParagraph(paragraph);
+
+		//Paragraph styles.
+		document.addParagraph(new Paragraph(titleStyle, "Paragraph styles"));
+		
+		paragraphStyle = new ParagraphStyle(TIMES_ROMAN, 14);
+		paragraphStyle.setMargins(new Margins(20));
+		paragraphStyle.setFirstLineMargin(20);
+		paragraph = new Paragraph(paragraphStyle, "This paragraph has a margin of 20 on each side plus a first line margin of 20."
+				, NEW_LINE, "It's also composed of few lines that are part of this same paragraph, so this paragraph configuration is applied to all lines of it."
+				, NEW_LINE, "So, the first line is shifted by 40 pt from the left while other lines of the paragraph are shifted by 20."
+				, NEW_LINE, "This paragraph also ends from 20 pt before page margins and have an top and bottom margin of 20 too."
+				, NEW_LINE, "Text of this paragraph has a size of 14 instead of 12 in a default one.");
 		document.addParagraph(paragraph);
 		
 		paragraphStyle = new ParagraphStyle();
@@ -128,30 +123,58 @@ public class DocumentTest {
 		paragraph = new Paragraph(paragraphStyle, "This paragraph is aligned to center with a first line margin."
 				+ " It demonstrate the same principles than the previous paragraph.");
 		document.addParagraph(paragraph);
-		
-		paragraphStyle = new ParagraphStyle(TIMES_ROMAN, 24);
-		paragraphStyle.setMargins(new Margins(120, 120, 50, 0));
-		paragraph = new Paragraph(paragraphStyle, "This next paragraph is just written in a big font size with anormaly large margins "
-				+ "because it is just here to prove that pages are created automatically when end of page is reached."
-				, NEW_LINE, "Therefore this paragraph is started on one page and the end of it is rendered automaticaly on another one"
-				+ " without coding anything special.");
-		document.addParagraph(paragraph);
-		
-		paragraphStyle = new ParagraphStyle();
-		paragraph = new Paragraph(paragraphStyle, "The next page will show a page with a different orientation and size.");
-		document.addParagraph(paragraph);
-		
-		PageStyle pageStyle1 = new PageStyle(PageFormat.A3_LANDSCAPE, new Margins(40));
-		document.addPage(pageStyle1);
 
-		paragraphStyle = new ParagraphStyle(TIMES_ROMAN, 14);
-		paragraphStyle.setLineSpacing(2.0f);
+		paragraphStyle = new ParagraphStyle();
+		paragraphStyle.setLineSpacing(1.5f);
 		paragraph = new Paragraph(paragraphStyle, "This paragraph shows that a vertical line spacing ratio can be applied between each line of a paragraph."
 				+ " The standard line spacing is just the size of the font. The line spacing ratio is the multication of itself by the font size."
 				+ " So if line spacing is set to 2, an empty space of the size of the font is left blanck between two lines."
 				+ " Both the lines wrapped automatically and"
 				, NEW_LINE, "The ones created specifically"
 				, NEW_LINE, "will be affected by vertical line spacing ratio.");
+		document.addParagraph(paragraph);
+
+		//Page styles.
+		document.addPage(PageStyle.A8_LANDSCAPE);
+		
+		document.addParagraph(new Paragraph(titleStyle, "Page styles"));
+		
+		paragraphStyle = new ParagraphStyle();
+		paragraph = new Paragraph(paragraphStyle, "This page show a page with a different orientation and size.");
+		document.addParagraph(paragraph);
+		
+		document.addPage(PageStyle.A4_PORTRAIT);
+
+		//Headers and footer.
+		document.addParagraph(new Paragraph(titleStyle, "Adding headers and footers"));
+		
+		paragraphStyle = new ParagraphStyle();
+		paragraphStyle.setFontColor(new Color(128, 80, 80));
+		paragraph = new Paragraph(paragraphStyle, "This still have to be coded.");
+		document.addParagraph(paragraph);
+
+		//Tables.
+		document.addParagraph(new Paragraph(titleStyle, "Adding tables"));
+		
+		paragraphStyle = new ParagraphStyle();
+		paragraphStyle.setFontColor(new Color(128, 80, 80));
+		paragraph = new Paragraph(paragraphStyle, "This still have to be coded.");
+		document.addParagraph(paragraph);
+
+		//Table of content.
+		document.addParagraph(new Paragraph(titleStyle, "Adding table of content"));
+		
+		paragraphStyle = new ParagraphStyle();
+		paragraphStyle.setFontColor(new Color(128, 80, 80));
+		paragraph = new Paragraph(paragraphStyle, "This still have to be coded.");
+		document.addParagraph(paragraph);
+
+		//Footnotes.
+		document.addParagraph(new Paragraph(titleStyle, "Adding footnotes"));
+		
+		paragraphStyle = new ParagraphStyle();
+		paragraphStyle.setFontColor(new Color(128, 80, 80));
+		paragraph = new Paragraph(paragraphStyle, "This still have to be coded.");
 		document.addParagraph(paragraph);
 		
 		document.write(out);

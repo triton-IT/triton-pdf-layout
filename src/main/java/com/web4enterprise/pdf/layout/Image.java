@@ -22,12 +22,28 @@ public class Image implements ParagraphElement {
 		this.coreImage.setWidth(width);
 	}
 	
+	public void setWidth(int width, boolean keepRatio) {
+		float oldWidth = this.coreImage.getWidth();
+		this.coreImage.setWidth(width);
+		if(keepRatio) {
+			this.coreImage.setHeight((int) Math.round((width * this.coreImage.getHeight()) / oldWidth));
+		}
+	}
+	
 	public int getHeight() {
 		return coreImage.getHeight();
 	}
 	
 	public void setHeight(int height) {
 		this.coreImage.setHeight(height);
+	}
+	
+	public void setHeight(int height, boolean keepRatio) {
+		float oldHeight = this.coreImage.getHeight();
+		this.coreImage.setHeight(height);
+		if(keepRatio) {
+			this.coreImage.setWidth((int) Math.round((height * this.coreImage.getWidth()) / oldHeight));
+		}
 	}
 	
 	@Override
@@ -68,7 +84,7 @@ public class Image implements ParagraphElement {
 	public Point layout(Page page, ParagraphStyle defaultStyle,
 			int defaultFontSize, int positionX, int positionY) {
 		coreImage.setX(positionX);
-		coreImage.setY(positionY - this.getHeight());
+		coreImage.setY(positionY);
 		
 		page.addImage(coreImage);
 		
@@ -77,6 +93,6 @@ public class Image implements ParagraphElement {
 
 	@Override
 	public float getLineSpacing(ParagraphStyle defaultStyle) {
-		return coreImage.getHeight() + defaultStyle.fontSize * defaultStyle.lineSpacing;
+		return defaultStyle.fontSize * defaultStyle.lineSpacing;
 	}
 }
