@@ -1,4 +1,4 @@
-package com.web4enterprise.pdf.layout;
+package com.web4enterprise.pdf.layout.placement;
 
 public enum Alignment {
 	LEFT,

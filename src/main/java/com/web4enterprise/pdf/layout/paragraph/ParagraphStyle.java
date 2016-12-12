@@ -1,4 +1,4 @@
-package com.web4enterprise.pdf.layout;
+package com.web4enterprise.pdf.layout.paragraph;
 
 import static com.web4enterprise.pdf.core.font.Font.TIMES_ROMAN;
 
@@ -6,6 +6,9 @@ import com.web4enterprise.pdf.core.font.Font;
 import com.web4enterprise.pdf.core.font.FontsVariant;
 import com.web4enterprise.pdf.core.font.FontVariant;
 import com.web4enterprise.pdf.core.styling.Color;
+import com.web4enterprise.pdf.layout.placement.Alignment;
+import com.web4enterprise.pdf.layout.placement.Margins;
+import com.web4enterprise.pdf.layout.text.TextStyle;
 
 public class ParagraphStyle extends TextStyle {
 	protected Alignment alignment = Alignment.LEFT;

@@ -1,8 +1,8 @@
-package com.web4enterprise.pdf.layout;
+package com.web4enterprise.pdf.layout.document;
 
 import static com.web4enterprise.pdf.core.font.Font.TIMES_ROMAN;
-import static com.web4enterprise.pdf.layout.Text.NEW_LINE;
-import static com.web4enterprise.pdf.layout.Text.NEW_TEXT_LINE;
+import static com.web4enterprise.pdf.layout.text.Text.NEW_LINE;
+import static com.web4enterprise.pdf.layout.text.Text.NEW_TEXT_LINE;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -13,6 +13,18 @@ import org.junit.Test;
 import com.web4enterprise.pdf.core.exceptions.PdfGenerationException;
 import com.web4enterprise.pdf.core.font.FontsVariant;
 import com.web4enterprise.pdf.core.styling.Color;
+import com.web4enterprise.pdf.layout.image.Image;
+import com.web4enterprise.pdf.layout.page.PageStyle;
+import com.web4enterprise.pdf.layout.paragraph.Paragraph;
+import com.web4enterprise.pdf.layout.paragraph.ParagraphStyle;
+import com.web4enterprise.pdf.layout.placement.Alignment;
+import com.web4enterprise.pdf.layout.placement.BorderStyle;
+import com.web4enterprise.pdf.layout.placement.Margins;
+import com.web4enterprise.pdf.layout.table.TableCell;
+import com.web4enterprise.pdf.layout.table.TableCellStyle;
+import com.web4enterprise.pdf.layout.table.Table;
+import com.web4enterprise.pdf.layout.text.Text;
+import com.web4enterprise.pdf.layout.text.TextStyle;
 
 public class DocumentTest {
 	@Test
@@ -159,7 +171,21 @@ public class DocumentTest {
 		paragraphStyle = new ParagraphStyle();
 		paragraphStyle.setFontColor(new Color(128, 80, 80));
 		paragraph = new Paragraph(paragraphStyle, "This still have to be coded.");
-		document.addParagraph(paragraph);
+		
+		TableCellStyle tableHeaderCellStyle = new TableCellStyle();
+		tableHeaderCellStyle.setBordersStyle(BorderStyle.THIN_SOLID, BorderStyle.THIN_SOLID, BorderStyle.THIN_SOLID, BorderStyle.THIN_SOLID);
+		
+		TableCellStyle tableFooterCellStyle = new TableCellStyle();
+		tableFooterCellStyle.setBordersStyle(new BorderStyle(), new BorderStyle(), new BorderStyle(), new BorderStyle());
+		
+		Table table = new Table()
+			.addRow(new TableCell(tableHeaderCellStyle, paragraph), new TableCell(tableHeaderCellStyle, paragraph), new TableCell(tableHeaderCellStyle, paragraph))
+			.addRow(new TableCell(paragraph), new TableCell(paragraph), new TableCell(paragraph))
+			.addRow(new TableCell(paragraph).rowSpan(2).columnSpan(2), new TableCell(paragraph), new TableCell(paragraph))
+			.addRow(new TableCell(paragraph), new TableCell(paragraph), new TableCell(paragraph))
+			.addRow(new TableCell(tableFooterCellStyle, paragraph), new TableCell(tableFooterCellStyle, paragraph), new TableCell(tableFooterCellStyle, paragraph));
+		
+		document.addTable(table);
 
 		//Table of content.
 		document.addParagraph(new Paragraph(titleStyle, "Adding table of content"));

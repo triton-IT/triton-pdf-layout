@@ -1,4 +1,4 @@
-package com.web4enterprise.pdf.layout;
+package com.web4enterprise.pdf.layout.paragraph;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +15,6 @@ public interface ParagraphElement {
 	
 	public class SplitInformation {
 		public int positionX;
-		List<ParagraphElement> splitElements = new ArrayList<>();
+		public List<ParagraphElement> splitElements = new ArrayList<>();
 	}
 }

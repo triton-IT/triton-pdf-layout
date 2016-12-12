@@ -1,8 +1,10 @@
-package com.web4enterprise.pdf.layout;
+package com.web4enterprise.pdf.layout.paragraph;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import com.web4enterprise.pdf.layout.text.Text;
 
 public class Paragraph {	
 	protected ParagraphStyle style = new ParagraphStyle();

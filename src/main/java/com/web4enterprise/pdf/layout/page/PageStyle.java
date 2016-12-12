@@ -1,4 +1,6 @@
-package com.web4enterprise.pdf.layout;
+package com.web4enterprise.pdf.layout.page;
+
+import com.web4enterprise.pdf.layout.placement.Margins;
 
 public class PageStyle {
 	public static final PageStyle A0_PORTRAIT = new PageStyle(PageFormat.A0_PORTRAIT, Margins.A0);

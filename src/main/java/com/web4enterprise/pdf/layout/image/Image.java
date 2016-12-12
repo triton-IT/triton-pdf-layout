@@ -1,4 +1,4 @@
-package com.web4enterprise.pdf.layout;
+package com.web4enterprise.pdf.layout.image;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,6 +6,10 @@ import java.util.List;
 import com.web4enterprise.pdf.core.font.Font;
 import com.web4enterprise.pdf.core.geometry.Point;
 import com.web4enterprise.pdf.core.page.Page;
+import com.web4enterprise.pdf.layout.paragraph.ParagraphElement;
+import com.web4enterprise.pdf.layout.paragraph.ParagraphStyle;
+import com.web4enterprise.pdf.layout.text.Text;
+import com.web4enterprise.pdf.layout.text.TextStyle;
 
 public class Image implements ParagraphElement {	
 	protected com.web4enterprise.pdf.core.image.Image coreImage;
@@ -93,6 +97,6 @@ public class Image implements ParagraphElement {
 
 	@Override
 	public float getLineSpacing(ParagraphStyle defaultStyle) {
-		return defaultStyle.fontSize * defaultStyle.lineSpacing;
+		return defaultStyle.getFontSize() * defaultStyle.getLineSpacing();
 	}
 }

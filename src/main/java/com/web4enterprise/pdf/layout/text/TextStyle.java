@@ -1,4 +1,4 @@
-package com.web4enterprise.pdf.layout;
+package com.web4enterprise.pdf.layout.text;
 
 import com.web4enterprise.pdf.core.font.Font;
 import com.web4enterprise.pdf.core.font.FontsVariant;

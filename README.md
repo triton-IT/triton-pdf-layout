@@ -1,7 +1,9 @@
 # simplypdf-layout
 
-[![Build Status](https://travis-ci.org/rramillien/simplypdf-layout.svg?branch=master)](https://travis-ci.org/rramillien/simplypdf-layout)
+[![Build Status](https://travis-ci.org/web4enterprise/simplypdf-layout.svg?branch=master)](https://travis-ci.org/web4enterprise/simplypdf-layout)
 [![Quality Gate](https://sonarqube.com/api/badges/gate?key=com.web4enterprise:simplypdf-layout)](https://sonarqube.com/dashboard/index/com.web4enterprise:simplypdf-layout)
+[![Javadocs](http://javadoc.io/badge/com.web4enterprise/simplypdf-layout.svg)]
+(http://javadoc.io/doc/com.web4enterprise/simplypdf-layout)
 
 Simple API to create PDF using layout elements.
 

@@ -1,4 +1,4 @@
-package com.web4enterprise.pdf.layout;
+package com.web4enterprise.pdf.layout.page;
 
 /**
  * The size is in pt (point). This is the metric used byPDF.

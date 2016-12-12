@@ -1,10 +1,10 @@
-package com.web4enterprise.pdf.layout;
+package com.web4enterprise.pdf.layout.paragraph;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import com.web4enterprise.pdf.layout.ParagraphElement.SplitInformation;
+import com.web4enterprise.pdf.layout.paragraph.ParagraphElement.SplitInformation;
 
 /*
  * A TextLine is a line of different Texts without any line return.
@@ -42,7 +42,7 @@ public class ElementLine extends ArrayList<ParagraphElement> {
 		return elementLines;
 	}
 	
-	protected List<ElementLine> splitToMaxWidth(ParagraphStyle defaultStyle, int defaultFontSize, int firstLineMaxWidth, Integer maxWidth) {
+	public List<ElementLine> splitToMaxWidth(ParagraphStyle defaultStyle, int defaultFontSize, int firstLineMaxWidth, Integer maxWidth) {
 		List<ElementLine> elementLines = new ArrayList<>();
 		
 		int currentX = 0;

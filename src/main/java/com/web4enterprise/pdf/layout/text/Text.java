@@ -1,4 +1,4 @@
-package com.web4enterprise.pdf.layout;
+package com.web4enterprise.pdf.layout.text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +8,8 @@ import com.web4enterprise.pdf.core.font.FontVariant;
 import com.web4enterprise.pdf.core.geometry.Point;
 import com.web4enterprise.pdf.core.page.Page;
 import com.web4enterprise.pdf.core.styling.Color;
+import com.web4enterprise.pdf.layout.paragraph.ParagraphStyle;
+import com.web4enterprise.pdf.layout.paragraph.ParagraphElement;
 
 public class Text implements ParagraphElement {
 	public static final String NEW_LINE = "\n";	
@@ -145,6 +147,6 @@ public class Text implements ParagraphElement {
 
 	@Override
 	public float getLineSpacing(ParagraphStyle defaultStyle) {
-		return defaultStyle.fontSize * defaultStyle.lineSpacing;
+		return defaultStyle.fontSize * defaultStyle.getLineSpacing();
 	}
 }
