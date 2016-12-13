@@ -10,7 +10,7 @@ public class TableRow extends ArrayList<TableCell> {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	protected int height;
+	protected float height;
 	
 	public List<TableCell> cells;
 	
@@ -24,11 +24,11 @@ public class TableRow extends ArrayList<TableCell> {
 		return cells;
 	}
 	
-	public int getHeight() {
+	public float getHeight() {
 		return height;
 	}
 	
-	public void setHeight(int height) {
+	public void setHeight(float height) {
 		this.height = height;
 	}
 }

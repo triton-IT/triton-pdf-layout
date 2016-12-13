@@ -14,54 +14,54 @@ public class Margins {
 	public static Margins A7 = new Margins(8);
 	public static Margins A8 = new Margins(4);
 	
-	protected int left;
-	protected int right;
-	protected int top;
-	protected int bottom;
+	protected float left;
+	protected float right;
+	protected float top;
+	protected float bottom;
 	
-	public Margins(int allAround) {
+	public Margins(float allAround) {
 		this.left = allAround;
 		this.right = allAround;
 		this.top = allAround;
 		this.bottom = allAround;
 	}
 	
-	public Margins(int left, int right, int top, int bottom) {
+	public Margins(float left, float right, float top, float bottom) {
 		this.left = left;
 		this.right = right;
 		this.top = top;
 		this.bottom = bottom;
 	}
 	
-	public int getLeft() {
+	public float getLeft() {
 		return left;
 	}
 	
-	public void setLeft(int left) {
+	public void setLeft(float left) {
 		this.left = left;
 	}
 	
-	public int getRight() {
+	public float getRight() {
 		return right;
 	}
 	
-	public void setRight(int right) {
+	public void setRight(float right) {
 		this.right = right;
 	}
 	
-	public int getTop() {
+	public float getTop() {
 		return top;
 	}
 	
-	public void setTop(int top) {
+	public void setTop(float top) {
 		this.top = top;
 	}
 	
-	public int getBottom() {
+	public float getBottom() {
 		return bottom;
 	}
 	
-	public void setBottom(int bottom) {
+	public void setBottom(float bottom) {
 		this.bottom = bottom;
 	}
 }

@@ -2,7 +2,6 @@ package com.web4enterprise.pdf.layout.document;
 
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.web4enterprise.pdf.core.document.Pdf;
@@ -29,8 +28,8 @@ public class Document {
 	protected Page currentPage;
 	protected PageStyle currentPageStyle;
 
-	protected int blockStartX = 0;
-	protected int blockStartY = 0;
+	protected float blockStartX = 0;
+	protected float blockStartY = 0;
 	
 	public Document() {
 		addPage(PageStyle.A4_PORTRAIT);
@@ -57,7 +56,7 @@ public class Document {
 				currentPageStyle.getFormat().getWidth() - currentPageStyle.getMargins().getRight()), blockStartY);
 	}
 	
-	public int addParagraph(Paragraph paragraph, Rect boundingBox, int startY) {
+	public float addParagraph(Paragraph paragraph, Rect boundingBox, float startY) {
 		//Get all lines of text (composed of text of different style).
 		List<ElementLine> textLines = paragraph.getElementLines();
 		
@@ -65,7 +64,7 @@ public class Document {
 		ParagraphStyle paragraphStyle = paragraph.getStyle();
 		
 		//Apply top margin to paragraph.
-		int currentBlockStartY = startY - paragraphStyle.getMargins().getTop();
+		float currentBlockStartY = startY - paragraphStyle.getMargins().getTop();
 		
 		//Get this paragraph style. 
 		int textSize = paragraphStyle.getFontSize();
@@ -75,9 +74,9 @@ public class Document {
 		//Iterate of each line of text to display them.
 		for(ElementLine textLine : textLines) {
 			//Calculate the maximum size allowed for text.
-			int maxWidth =  boundingBox.getWidth()
+			float maxWidth =  boundingBox.getWidth()
 					- (paragraphStyle.getMargins().getLeft() + paragraphStyle.getMargins().getRight());
-			int firstLineMaxWidth = maxWidth;
+			float firstLineMaxWidth = maxWidth;
 
 			if(isFirstLine) {
 				firstLineMaxWidth -= paragraphStyle.getFirstLineMargin();
@@ -90,10 +89,11 @@ public class Document {
 				if(currentBlockStartY < boundingBox.getBottom()) {
 					addPage();
 					//Add page reinitialize blockStart, so calculate it again.
-					currentBlockStartY = blockStartY - textSize / 2;
+					float textHeight = paragraphStyle.getFontVariant().getHeight(paragraphStyle.getFontSize());
+					currentBlockStartY = blockStartY - textHeight / 2;
 				}
 				
-				blockStartX = 0;
+				blockStartX = 0.0f;
 				if(paragraphStyle.getAlignment() == Alignment.LEFT) {
 					blockStartX = boundingBox.getLeft() + paragraphStyle.getMargins().getLeft();
 					if(isFirstLine) {
@@ -105,7 +105,7 @@ public class Document {
 							- elementSubLine.getWidth(paragraphStyle, textSize);
 				} else if(paragraphStyle.getAlignment() == Alignment.CENTER) {
 					//Calculate the maximum free space for paragraph.
-					int freeSpace = boundingBox.getWidth()
+					float freeSpace = boundingBox.getWidth()
 							- paragraphStyle.getMargins().getRight()
 							- paragraphStyle.getMargins().getLeft();
 					if(isFirstLine) {
@@ -159,35 +159,47 @@ public class Document {
 			int columnIndex = 0;
 			//FIXME: Calculate real table cells bounds before rendering them.
 			
-			int startX = currentPageStyle.getMargins().getLeft();
+			float startX = currentPageStyle.getMargins().getLeft();
 			for(TableCell cell : row.getCells()) {
 				TableCellStyle cellStyle = cell.getStyle();
+				
+				boolean firstParagraph = true;
+				float top = blockStartY;
+				float bottom = 0.0f;
+				for(Paragraph paragraph : cell.getParagraphs()) {
+					//Calculate top border position.
+					if(firstParagraph) {
+						top += paragraph.getStyle().getFontVariant().getDistanceFromTop(paragraph.getStyle().getFontSize());
+						firstParagraph = false;
+					}
+					
+					addParagraph(paragraph, new Rect(blockStartY, startX, blockStartY - row.getHeight(), startX + table.getColumnWidth(columnIndex)), blockStartY);
+					
+					bottom = blockStartY + + paragraph.getStyle().getFontVariant().getDistanceFromBottom(paragraph.getStyle().getFontSize());
+				}
+				
 				//Top
 				if(cellStyle.getTopBorderStyle().width > 0 && cellStyle.getTopBorderStyle().lineStyle != LineStyle.NONE) {
-					currentPage.addPath(new StraightPath(new Point(startX, blockStartY), 
-							new Point(startX + table.getColumnWidth(columnIndex), blockStartY)));
+					currentPage.addPath(new StraightPath(new Point(startX, top), 
+							new Point(startX + table.getColumnWidth(columnIndex), top)));
 				}
 				
 				//Left
 				if(cellStyle.getLeftBorderStyle().width > 0 && cellStyle.getLeftBorderStyle().lineStyle != LineStyle.NONE) {
-					currentPage.addPath(new StraightPath(new Point(startX, blockStartY), 
-							new Point(startX, (int) (blockStartY + row.getHeight()))));
+					currentPage.addPath(new StraightPath(new Point(startX, top), 
+							new Point(startX, bottom)));
 				}
 				
 				//Bottom
 				if(cellStyle.getBottomBorderStyle().width > 0 && cellStyle.getBottomBorderStyle().lineStyle != LineStyle.NONE) {
-					currentPage.addPath(new StraightPath(new Point(startX, (int) (blockStartY + row.getHeight())), 
-							new Point(startX + table.getColumnWidth(columnIndex), (int) (blockStartY + row.getHeight()))));
+					currentPage.addPath(new StraightPath(new Point(startX, bottom), 
+							new Point(startX + table.getColumnWidth(columnIndex), bottom)));
 				}
 				
 				//Right
 				if(cellStyle.getRightBorderStyle().width > 0 && cellStyle.getRightBorderStyle().lineStyle != LineStyle.NONE) {
-					currentPage.addPath(new StraightPath(new Point(startX + table.getColumnWidth(columnIndex), blockStartY), 
-							new Point(startX + table.getColumnWidth(columnIndex), (int) (blockStartY + row.getHeight()))));
-				}
-				
-				for(Paragraph paragraph : cell.getParagraphs()) {
-					addParagraph(paragraph, new Rect(blockStartY, startX, blockStartY - row.getHeight(), startX + table.getColumnWidth(columnIndex)), blockStartY);
+					currentPage.addPath(new StraightPath(new Point(startX + table.getColumnWidth(columnIndex), top), 
+							new Point(startX + table.getColumnWidth(columnIndex), bottom)));
 				}
 				
 				startX += table.getColumnWidth(columnIndex);

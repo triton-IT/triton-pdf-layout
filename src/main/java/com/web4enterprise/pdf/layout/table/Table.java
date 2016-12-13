@@ -6,7 +6,7 @@ import java.util.List;
 public class Table {
 	protected List<TableRow> rows = new ArrayList<>();
 	
-	protected List<Integer> columnsWidths = new ArrayList<>();
+	protected List<Float> columnsWidths = new ArrayList<>();
 	
 	public Table addRow(TableCell...cells) {
 		rows.add(new TableRow(cells));
@@ -17,7 +17,7 @@ public class Table {
 		return rows;
 	}
 	
-	public int getColumnWidth(int index) {
+	public float getColumnWidth(int index) {
 		return columnsWidths.get(index);
 	}
 	
@@ -28,9 +28,9 @@ public class Table {
 	
 	protected void calculateRowsHeights() {
 		for(TableRow row : rows) {
-			int currentRowHeight = 0;
+			float currentRowHeight = 0;
 			for(TableCell cell : row.getCells()) {
-				int currentCellHeight = cell.getHeight();
+				float currentCellHeight = cell.getHeight();
 				if(currentCellHeight > currentRowHeight) {
 					currentRowHeight = currentCellHeight;
 				}
@@ -40,11 +40,11 @@ public class Table {
 	}
 	
 	protected void calculateColumnWidths() {
-		List<Integer> currentColumnsWidths = new ArrayList<>();
+		List<Float> currentColumnsWidths = new ArrayList<>();
 		for(TableRow row : rows) {
 			int columnIndex = 0;
 			for(TableCell cell : row.getCells()) {
-				int currentWidth = cell.getWidth();
+				float currentWidth = cell.getWidth();
 				if(currentColumnsWidths.size() <= columnIndex) {
 					currentColumnsWidths.add(currentWidth);
 				} else if(currentWidth > currentColumnsWidths.get(columnIndex)) {
@@ -53,7 +53,7 @@ public class Table {
 				columnIndex++;
 			}
 		}
-		for(int columnWidth : currentColumnsWidths) {
+		for(float columnWidth : currentColumnsWidths) {
 			columnsWidths.add(columnWidth);
 		}
 	}

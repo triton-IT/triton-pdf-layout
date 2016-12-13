@@ -168,9 +168,12 @@ public class DocumentTest {
 		//Tables.
 		document.addParagraph(new Paragraph(titleStyle, "Adding tables"));
 		
-		paragraphStyle = new ParagraphStyle();
+		paragraphStyle = new ParagraphStyle(TIMES_ROMAN, 16);
 		paragraphStyle.setFontColor(new Color(128, 80, 80));
-		paragraph = new Paragraph(paragraphStyle, "This still have to be coded.");
+		Paragraph columnHeaderparagraph = new Paragraph(paragraphStyle, "This is a column yder.");
+		paragraphStyle = new ParagraphStyle();
+		Paragraph cellParagraph = new Paragraph(paragraphStyle, "This is a cell content.");
+		Paragraph columnFooterparagraph = new Paragraph(paragraphStyle, "This is a column footer.");
 		
 		TableCellStyle tableHeaderCellStyle = new TableCellStyle();
 		tableHeaderCellStyle.setBordersStyle(BorderStyle.THIN_SOLID, BorderStyle.THIN_SOLID, BorderStyle.THIN_SOLID, BorderStyle.THIN_SOLID);
@@ -179,11 +182,11 @@ public class DocumentTest {
 		tableFooterCellStyle.setBordersStyle(new BorderStyle(), new BorderStyle(), new BorderStyle(), new BorderStyle());
 		
 		Table table = new Table()
-			.addRow(new TableCell(tableHeaderCellStyle, paragraph), new TableCell(tableHeaderCellStyle, paragraph), new TableCell(tableHeaderCellStyle, paragraph))
-			.addRow(new TableCell(paragraph), new TableCell(paragraph), new TableCell(paragraph))
-			.addRow(new TableCell(paragraph).rowSpan(2).columnSpan(2), new TableCell(paragraph), new TableCell(paragraph))
-			.addRow(new TableCell(paragraph), new TableCell(paragraph), new TableCell(paragraph))
-			.addRow(new TableCell(tableFooterCellStyle, paragraph), new TableCell(tableFooterCellStyle, paragraph), new TableCell(tableFooterCellStyle, paragraph));
+			.addRow(new TableCell(tableHeaderCellStyle, columnHeaderparagraph), new TableCell(tableHeaderCellStyle, columnHeaderparagraph), new TableCell(tableHeaderCellStyle, columnHeaderparagraph), new TableCell(tableHeaderCellStyle, columnHeaderparagraph), new TableCell(tableHeaderCellStyle, columnHeaderparagraph))
+			.addRow(new TableCell(cellParagraph), new TableCell(cellParagraph), new TableCell(cellParagraph))
+			.addRow(new TableCell(cellParagraph).rowSpan(2).columnSpan(2), new TableCell(cellParagraph), new TableCell(cellParagraph))
+			.addRow(new TableCell(cellParagraph), new TableCell(cellParagraph), new TableCell(cellParagraph))
+			.addRow(new TableCell(tableFooterCellStyle, columnFooterparagraph), new TableCell(tableFooterCellStyle, columnFooterparagraph), new TableCell(tableFooterCellStyle, columnFooterparagraph));
 		
 		document.addTable(table);
 

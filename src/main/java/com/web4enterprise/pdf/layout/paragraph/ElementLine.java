@@ -42,7 +42,7 @@ public class ElementLine extends ArrayList<ParagraphElement> {
 		return elementLines;
 	}
 	
-	public List<ElementLine> splitToMaxWidth(ParagraphStyle defaultStyle, int defaultFontSize, int firstLineMaxWidth, Integer maxWidth) {
+	public List<ElementLine> splitToMaxWidth(ParagraphStyle defaultStyle, int defaultFontSize, float firstLineMaxWidth, Float maxWidth) {
 		List<ElementLine> elementLines = new ArrayList<>();
 		
 		int currentX = 0;

@@ -65,7 +65,8 @@ public class Text implements ParagraphElement {
 		return lines;
 	}
 	
-	public SplitInformation split(ParagraphStyle defaultStyle, int fontSize, int positionX, int firstLineMaxWidth, Integer maxWidth) {
+	@Override
+	public SplitInformation split(ParagraphStyle defaultStyle, int fontSize, float positionX, float firstLineMaxWidth, Float maxWidth) {
 		TextStyle textStyle = getStyle();
 		//Get font name between paragraph and text ones.
 		Font currentFont = (style.getFont() != null)?style.getFont():defaultStyle.getFont();
@@ -81,12 +82,12 @@ public class Text implements ParagraphElement {
 		return splitInformation;
 	}
 	
-	public void split(String stringToSplit, FontVariant font, int fontSize, int positionX, int firstLineMaxWidth, 
-			int maxWidth, SplitInformation splitInformation, boolean isFirstLine) {
-		int textWidth = font.getWidth(fontSize, stringToSplit);
+	public void split(String stringToSplit, FontVariant font, int fontSize, float positionX, float firstLineMaxWidth, 
+			float maxWidth, SplitInformation splitInformation, boolean isFirstLine) {
+		float textWidth = font.getWidth(fontSize, stringToSplit);
 		String keptString = stringToSplit;
 		
-		int currentMaxWidth = maxWidth;
+		float currentMaxWidth = maxWidth;
 		if(isFirstLine) {
 			currentMaxWidth = firstLineMaxWidth;
 		}
@@ -113,7 +114,8 @@ public class Text implements ParagraphElement {
 		}
 	}
 	
-	public int getWidth(ParagraphStyle defaultStyle, int defaultTextSize) {
+	@Override
+	public float getWidth(ParagraphStyle defaultStyle, int defaultTextSize) {
 		Font currentFont = (style.getFont() != null)?style.getFont():defaultStyle.getFont();
 		FontVariant currentFontVariant = currentFont.getVariant((style.getFontStyle() != null)?
 				style.getFontStyle():defaultStyle.getFontStyle());
@@ -122,7 +124,8 @@ public class Text implements ParagraphElement {
 		return currentFontVariant.getWidth(currentTextSize, string);
 	}
 	
-	public Point layout(Page page, ParagraphStyle defaultStyle, int defaultFontSize, int positionX, int positionY) {
+	@Override
+	public Point layout(Page page, ParagraphStyle defaultStyle, int defaultFontSize, float positionX, float positionY) {
 		Font currentFont = (style.getFont() != null)?style.getFont():defaultStyle.getFont();
 		FontVariant currentFontVariant = currentFont.getVariant((style.getFontStyle() != null)?
 				style.getFontStyle():defaultStyle.getFontStyle());
@@ -140,13 +143,15 @@ public class Text implements ParagraphElement {
 		
 		page.addText(text);
 		
-		int width = currentFontVariant.getWidth(currentFontSize, string);
+		float width = currentFontVariant.getWidth(currentFontSize, string);
 		
 		return new Point(width, currentFontSize);
 	}
 
 	@Override
 	public float getLineSpacing(ParagraphStyle defaultStyle) {
-		return defaultStyle.fontSize * defaultStyle.getLineSpacing();
+		float textHeight = defaultStyle.getFontVariant().getHeight(defaultStyle.getFontSize());
+		
+		return textHeight * defaultStyle.getLineSpacing();
 	}
 }

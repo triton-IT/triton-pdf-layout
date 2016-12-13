@@ -40,8 +40,8 @@ public class TableCell {
 		return cellStyle;
 	}
 	
-	public int getWidth() {
-		int width = 0;
+	public float getWidth() {
+		float width = 0;
 		for(Paragraph paragraph : paragraphs) {
 			for(ElementLine elementLine : paragraph.getElementLines()) {
 				int elementWidth = elementLine.getWidth(paragraph.getStyle(), paragraph.getStyle().getFontSize());
@@ -54,14 +54,14 @@ public class TableCell {
 		return width;
 	}
 	
-	public int getHeight() {
-		int height = 0;
+	public float getHeight() {
+		float height = 0;
 		for(Paragraph paragraph : paragraphs) {
-			int paragraphsHeight = 0;
+			float paragraphsHeight = 0;
 			
 			for(ElementLine elementLine : paragraph.getElementLines()) {
 				//FIXME: calculate real height.
-				paragraphsHeight += paragraph.getStyle().getFontSize();
+				paragraphsHeight += paragraph.getStyle().getFontVariant().getHeight(paragraph.getStyle().getFontSize());
 			}
 			
 			if(paragraphsHeight > height) {

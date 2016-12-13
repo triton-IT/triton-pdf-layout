@@ -8,13 +8,13 @@ import com.web4enterprise.pdf.core.page.Page;
 
 public interface ParagraphElement {
 	List<ParagraphElement> getLines();
-	int getWidth(ParagraphStyle defaultStyle, int defaultTextSize);
-	SplitInformation split(ParagraphStyle defaultStyle, int fontSize, int positionX, int firstLineMaxWidth, Integer maxWidth);
-	Point layout(Page page, ParagraphStyle defaultStyle, int defaultFontSize, int positionX, int positionY);
+	float getWidth(ParagraphStyle defaultStyle, int defaultTextSize);
+	SplitInformation split(ParagraphStyle defaultStyle, int fontSize, float positionX, float firstLineMaxWidth, Float maxWidth);
+	Point layout(Page page, ParagraphStyle defaultStyle, int defaultFontSize, float positionX, float positionY);
 	float getLineSpacing(ParagraphStyle defaultStyle);
 	
 	public class SplitInformation {
-		public int positionX;
+		public float positionX;
 		public List<ParagraphElement> splitElements = new ArrayList<>();
 	}
 }
