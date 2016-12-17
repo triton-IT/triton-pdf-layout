@@ -179,7 +179,7 @@ public class DocumentTest {
 		TableCellStyle tableHeaderCellStyle = new TableCellStyle();
 		tableHeaderCellStyle.setBordersStyle(BorderStyle.THIN_SOLID, BorderStyle.THIN_SOLID, BorderStyle.THIN_SOLID, BorderStyle.THIN_SOLID);
 		
-		TableCellStyle tableFooterCellStyle = new TableCellStyle();
+		TableCellStyle tableFooterCellStyle = new TableCellStyle(Color.BLUE);
 		tableFooterCellStyle.setBordersStyle(new BorderStyle(0.0f), new BorderStyle(0.0f), new BorderStyle(1.0f, LineStyle.NONE), new BorderStyle(2.0f, Color.RED, LineStyle.SOLID));
 		
 		Table table = new Table()

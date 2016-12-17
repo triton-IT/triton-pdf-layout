@@ -9,15 +9,13 @@ import com.web4enterprise.pdf.core.exceptions.PdfGenerationException;
 import com.web4enterprise.pdf.core.geometry.Point;
 import com.web4enterprise.pdf.core.geometry.Rect;
 import com.web4enterprise.pdf.core.page.Page;
-import com.web4enterprise.pdf.core.path.Path;
 import com.web4enterprise.pdf.core.path.StraightPath;
-import com.web4enterprise.pdf.core.styling.Color;
 import com.web4enterprise.pdf.layout.image.Image;
+import com.web4enterprise.pdf.layout.page.PageStyle;
+import com.web4enterprise.pdf.layout.paragraph.ElementLine;
 import com.web4enterprise.pdf.layout.paragraph.Paragraph;
 import com.web4enterprise.pdf.layout.paragraph.ParagraphElement;
 import com.web4enterprise.pdf.layout.paragraph.ParagraphStyle;
-import com.web4enterprise.pdf.layout.page.PageStyle;
-import com.web4enterprise.pdf.layout.paragraph.ElementLine;
 import com.web4enterprise.pdf.layout.placement.Alignment;
 import com.web4enterprise.pdf.layout.placement.BorderStyle;
 import com.web4enterprise.pdf.layout.placement.LineStyle;
@@ -173,6 +171,19 @@ public class Document {
 				TableCellStyle cellStyle = cell.getStyle();
 
 				float bottom = blockStartY - row.getHeight();
+				
+				//Fill background color.
+				if(cellStyle.getBackgroundColor() != null) {
+					StraightPath path = new StraightPath(new Point(startX, blockStartY), 
+							new Point(startX + table.getColumnWidth(columnIndex), blockStartY), 
+							new Point(startX + table.getColumnWidth(columnIndex), bottom),
+							new Point(startX, bottom));
+					path.setStroked(false);
+					path.setFilled(true);
+					path.setClosed(true);
+					path.setFillColor(cellStyle.getBackgroundColor());
+					currentPage.addPath(path);
+				}
 				
 				float paragraphStartY = blockStartY;
 				for(Paragraph paragraph : cell.getParagraphs()) {					
