@@ -11,5 +11,15 @@ public class BorderStyle {
 	public float width = 1.0f;
 	public LineStyle lineStyle = LineStyle.SOLID;
 	
+	public BorderStyle() {
+	}
 	
+	public BorderStyle(float width) {
+		this.width = width;
+	}
+
+	public BorderStyle(float width, LineStyle lineStyle) {
+		this.width = width;
+		this.lineStyle = lineStyle;
+	}
 }

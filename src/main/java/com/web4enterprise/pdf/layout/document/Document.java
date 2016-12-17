@@ -158,34 +158,34 @@ public class Document {
 	
 	public void addTable(Table table) {
 		table.calculateInnerLayout();
-		//FIXME: recalculate columns widths to fit page length.
+		//FIXME: recalculate columns widths to fit page width.
 		
 		for(TableRow row : table.getRows()) {
+			//FIXME: create page when needed.
 			int columnIndex = 0;
-			//FIXME: Calculate real table cells bounds before rendering them.
 			
 			float startX = currentPageStyle.getMargins().getLeft();
 			
 			for(TableCell cell : row.getCells()) {
 				TableCellStyle cellStyle = cell.getStyle();
+
+				float bottom = blockStartY - row.getHeight();
 				
-				float top = blockStartY;
-				float bottom = 0.0f;
+				float paragraphStartY = blockStartY;
 				for(Paragraph paragraph : cell.getParagraphs()) {					
-					addParagraph(paragraph, new Rect(blockStartY, startX, blockStartY - row.getHeight(), startX + table.getColumnWidth(columnIndex)), blockStartY);
-					
-					bottom = blockStartY - paragraph.getStyle().getFontVariant().getHeight(paragraph.getStyle().getFontSize());
+					addParagraph(paragraph, new Rect(paragraphStartY, startX, paragraphStartY - row.getHeight(), startX + table.getColumnWidth(columnIndex)), paragraphStartY);
+					paragraphStartY -= paragraph.getStyle().getFontVariant().getHeight(paragraph.getStyle().getFontSize());
 				}
 				
 				//Top
 				if(cellStyle.getTopBorderStyle().width > 0 && cellStyle.getTopBorderStyle().lineStyle != LineStyle.NONE) {
-					currentPage.addPath(new StraightPath(new Point(startX, top), 
-							new Point(startX + table.getColumnWidth(columnIndex), top)));
+					currentPage.addPath(new StraightPath(new Point(startX, blockStartY), 
+							new Point(startX + table.getColumnWidth(columnIndex), blockStartY)));
 				}
 				
 				//Left
 				if(cellStyle.getLeftBorderStyle().width > 0 && cellStyle.getLeftBorderStyle().lineStyle != LineStyle.NONE) {
-					currentPage.addPath(new StraightPath(new Point(startX, top), 
+					currentPage.addPath(new StraightPath(new Point(startX, blockStartY), 
 							new Point(startX, bottom)));
 				}
 				
@@ -197,7 +197,7 @@ public class Document {
 				
 				//Right
 				if(cellStyle.getRightBorderStyle().width > 0 && cellStyle.getRightBorderStyle().lineStyle != LineStyle.NONE) {
-					currentPage.addPath(new StraightPath(new Point(startX + table.getColumnWidth(columnIndex), top), 
+					currentPage.addPath(new StraightPath(new Point(startX + table.getColumnWidth(columnIndex), blockStartY), 
 							new Point(startX + table.getColumnWidth(columnIndex), bottom)));
 				}
 				

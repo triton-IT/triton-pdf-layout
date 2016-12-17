@@ -19,6 +19,7 @@ import com.web4enterprise.pdf.layout.paragraph.Paragraph;
 import com.web4enterprise.pdf.layout.paragraph.ParagraphStyle;
 import com.web4enterprise.pdf.layout.placement.Alignment;
 import com.web4enterprise.pdf.layout.placement.BorderStyle;
+import com.web4enterprise.pdf.layout.placement.LineStyle;
 import com.web4enterprise.pdf.layout.placement.Margins;
 import com.web4enterprise.pdf.layout.table.Table;
 import com.web4enterprise.pdf.layout.table.TableCell;
@@ -179,11 +180,11 @@ public class DocumentTest {
 		tableHeaderCellStyle.setBordersStyle(BorderStyle.THIN_SOLID, BorderStyle.THIN_SOLID, BorderStyle.THIN_SOLID, BorderStyle.THIN_SOLID);
 		
 		TableCellStyle tableFooterCellStyle = new TableCellStyle();
-		tableFooterCellStyle.setBordersStyle(new BorderStyle(), new BorderStyle(), new BorderStyle(), new BorderStyle());
+		tableFooterCellStyle.setBordersStyle(new BorderStyle(0.0f), new BorderStyle(0.0f), new BorderStyle(1.0f, LineStyle.NONE), new BorderStyle(3.0f, LineStyle.SOLID));
 		
 		Table table = new Table()
 			.addRow(new TableCell(tableHeaderCellStyle, columnHeaderparagraph), new TableCell(tableHeaderCellStyle, columnHeaderparagraph), new TableCell(tableHeaderCellStyle, columnHeaderparagraph), new TableCell(tableHeaderCellStyle, columnHeaderparagraph), new TableCell(tableHeaderCellStyle, columnHeaderparagraph))
-			.addRow(new TableCell(cellParagraph), new TableCell(cellParagraph), new TableCell(cellParagraph))
+			.addRow(new TableCell(cellParagraph, cellParagraph, cellParagraph), new TableCell(cellParagraph), new TableCell(cellParagraph))
 			.addRow(new TableCell(cellParagraph).rowSpan(2).columnSpan(2), new TableCell(cellParagraph), new TableCell(cellParagraph))
 			.addRow(new TableCell(cellParagraph), new TableCell(cellParagraph), new TableCell(cellParagraph))
 			.addRow(new TableCell(tableFooterCellStyle, columnFooterparagraph), new TableCell(tableFooterCellStyle, columnFooterparagraph), new TableCell(tableFooterCellStyle, columnFooterparagraph));

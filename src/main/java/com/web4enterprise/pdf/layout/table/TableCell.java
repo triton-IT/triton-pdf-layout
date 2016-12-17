@@ -60,13 +60,10 @@ public class TableCell {
 			float paragraphsHeight = 0;
 			
 			for(ElementLine elementLine : paragraph.getElementLines()) {
-				//FIXME: calculate real height.
 				paragraphsHeight += paragraph.getStyle().getFontVariant().getHeight(paragraph.getStyle().getFontSize());
 			}
 			
-			if(paragraphsHeight > height) {
-				height = paragraphsHeight;
-			}
+			height += paragraphsHeight;
 		}
 		
 		return height;
