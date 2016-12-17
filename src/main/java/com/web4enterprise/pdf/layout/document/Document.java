@@ -62,9 +62,11 @@ public class Document {
 		
 		//Get the paragraph style which is the default style of text which compose it.
 		ParagraphStyle paragraphStyle = paragraph.getStyle();
-		
+
+		float fontBaseLine = paragraphStyle.getFontVariant().getBaseLine(paragraphStyle.getFontSize());
+
 		//Apply top margin to paragraph.
-		float currentBlockStartY = startY - paragraphStyle.getMargins().getTop();
+		float nextY = startY - paragraphStyle.getMargins().getTop();
 		
 		//Get this paragraph style. 
 		int textSize = paragraphStyle.getFontSize();
@@ -86,11 +88,14 @@ public class Document {
 			
 			boolean firstSubLine = true;
 			for(ElementLine elementSubLine : elementSubLines) {
-				if(currentBlockStartY < boundingBox.getBottom()) {
+				//Calculate text base line.
+				float baseLine = nextY - fontBaseLine;
+				
+				if(baseLine < boundingBox.getBottom()) {
 					addPage();
 					//Add page reinitialize blockStart, so calculate it again.
-					float textHeight = paragraphStyle.getFontVariant().getHeight(paragraphStyle.getFontSize());
-					currentBlockStartY = blockStartY - textHeight / 2;
+					baseLine = blockStartY - fontBaseLine;
+					nextY =  blockStartY - paragraphStyle.getMargins().getTop();
 				}
 				
 				blockStartX = 0.0f;
@@ -128,7 +133,7 @@ public class Document {
 				
 				float lineSpacing = 0;
 				for(ParagraphElement element : elementSubLine) {
-					Point elementSize = element.layout(currentPage, paragraphStyle, textSize, blockStartX, currentBlockStartY);
+					Point elementSize = element.layout(currentPage, paragraphStyle, textSize, blockStartX, baseLine);
 					blockStartX += elementSize.getX();
 					
 					//Keep greatest line spacing to not overlap elements of other lines.
@@ -137,7 +142,7 @@ public class Document {
 						lineSpacing = currentLineSpacing;
 					}
 				}
-				currentBlockStartY -= lineSpacing;
+				nextY -= lineSpacing;
 			}
 			
 			if(isFirstLine) {
@@ -146,9 +151,9 @@ public class Document {
 		}
 		
 		//Apply bottom margin to paragraph.
-		currentBlockStartY -= paragraphStyle.getMargins().getBottom();
+		nextY -= paragraphStyle.getMargins().getBottom();
 		
-		return currentBlockStartY;
+		return nextY;
 	}
 	
 	public void addTable(Table table) {
@@ -160,22 +165,16 @@ public class Document {
 			//FIXME: Calculate real table cells bounds before rendering them.
 			
 			float startX = currentPageStyle.getMargins().getLeft();
+			
 			for(TableCell cell : row.getCells()) {
 				TableCellStyle cellStyle = cell.getStyle();
 				
-				boolean firstParagraph = true;
 				float top = blockStartY;
 				float bottom = 0.0f;
-				for(Paragraph paragraph : cell.getParagraphs()) {
-					//Calculate top border position.
-					if(firstParagraph) {
-						top += paragraph.getStyle().getFontVariant().getDistanceFromTop(paragraph.getStyle().getFontSize());
-						firstParagraph = false;
-					}
-					
+				for(Paragraph paragraph : cell.getParagraphs()) {					
 					addParagraph(paragraph, new Rect(blockStartY, startX, blockStartY - row.getHeight(), startX + table.getColumnWidth(columnIndex)), blockStartY);
 					
-					bottom = blockStartY + + paragraph.getStyle().getFontVariant().getDistanceFromBottom(paragraph.getStyle().getFontSize());
+					bottom = blockStartY - paragraph.getStyle().getFontVariant().getHeight(paragraph.getStyle().getFontSize());
 				}
 				
 				//Top

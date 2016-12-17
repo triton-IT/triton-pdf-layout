@@ -20,9 +20,9 @@ import com.web4enterprise.pdf.layout.paragraph.ParagraphStyle;
 import com.web4enterprise.pdf.layout.placement.Alignment;
 import com.web4enterprise.pdf.layout.placement.BorderStyle;
 import com.web4enterprise.pdf.layout.placement.Margins;
+import com.web4enterprise.pdf.layout.table.Table;
 import com.web4enterprise.pdf.layout.table.TableCell;
 import com.web4enterprise.pdf.layout.table.TableCellStyle;
-import com.web4enterprise.pdf.layout.table.Table;
 import com.web4enterprise.pdf.layout.text.Text;
 import com.web4enterprise.pdf.layout.text.TextStyle;
 

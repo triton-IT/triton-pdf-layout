@@ -13,6 +13,7 @@ public class Margins {
 	public static Margins A6 = new Margins(15);
 	public static Margins A7 = new Margins(8);
 	public static Margins A8 = new Margins(4);
+	public static Margins Zero = new Margins(0);
 	
 	protected float left;
 	protected float right;

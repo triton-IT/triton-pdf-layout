@@ -105,493 +105,493 @@ endobj
 >>
 endobj
 4 0 obj <<
-/Length 7654
+/Length 7658
 >>
 stream
 BT
 /Times-Bold 14 Tf
-60.0 772.0 Td
+60.0 758.91 Td
 0.0 0.0 0.0 rg
 (Creating a document) Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 745.858 Td
+60.0 735.082 Td
 0.0 0.0 0.0 rg
 (A PDF is created with:) Tj
 ET
 BT
 /Times-Roman 12 Tf
-170.0 745.858 Td
+170.0 735.082 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 732.46594 Td
+60.0 721.68994 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Italic 10 Tf
-60.0 732.46594 Td
+60.0 721.68994 Td
 0.3137255 0.5019608 0.5019608 rg
 (Document document = new Document\(\);) Tj
 ET
 BT
 /Times-Roman 12 Tf
-224.0 732.46594 Td
+224.0 721.68994 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 719.0739 Td
+60.0 708.2979 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 719.0739 Td
+60.0 708.2979 Td
 0.0 0.0 0.0 rg
 (and rendered with;) Tj
 ET
 BT
 /Times-Roman 12 Tf
-150.0 719.0739 Td
+150.0 708.2979 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 705.6819 Td
+60.0 694.9059 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Italic 10 Tf
-60.0 705.6819 Td
+60.0 694.9059 Td
 0.3137255 0.5019608 0.5019608 rg
 (document.write\(out\);) Tj
 ET
 BT
 /Times-Bold 14 Tf
-60.0 682.28986 Td
+60.0 669.1998 Td
 0.0 0.0 0.0 rg
 (Adding texts, paragraphs and pages) Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 656.1478 Td
+60.0 645.3718 Td
 0.0 0.0 0.0 rg
 (A document created with no page style uses the default one: A4 portrait.) Tj
 ET
 BT
 /Times-Roman 12 Tf
-407.0 656.1478 Td
+407.0 645.3718 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 642.7558 Td
+60.0 631.9798 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 642.7558 Td
+60.0 631.9798 Td
 0.0 0.0 0.0 rg
 (No need to add new pages, when an element does not fit into the page, a new page with same style) Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 629.3638 Td
+60.0 618.58777 Td
 0.0 0.0 0.0 rg
 (than the previous one is created.) Tj
 ET
 BT
 /Times-Roman 12 Tf
-214.0 629.3638 Td
+214.0 618.58777 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 615.97174 Td
+60.0 605.19574 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 615.97174 Td
+60.0 605.19574 Td
 0.0 0.0 0.0 rg
 (The same is applicable to lines. When a line does not into the page width, the text is automatically) Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 602.5797 Td
+60.0 591.8037 Td
 0.0 0.0 0.0 rg
 (splitted on the last space that fits the page and the text that left is wrapped to a new line. This same) Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 589.1877 Td
+60.0 578.4117 Td
 0.0 0.0 0.0 rg
 (principle is applicable indefinitively to all new lines created.) Tj
 ET
 BT
 /Times-Roman 12 Tf
-349.0 589.1877 Td
+349.0 578.4117 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 575.79565 Td
+60.0 565.01965 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 575.79565 Td
+60.0 565.01965 Td
 0.0 0.0 0.0 rg
 (Of course, new lines and new pages can be created at any time.) Tj
 ET
 BT
 /Times-Roman 12 Tf
-362.0 575.79565 Td
+362.0 565.01965 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 562.4036 Td
+60.0 551.6276 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 549.0116 Td
+60.0 538.2356 Td
 0.0 0.0 0.0 rg
 (A paragraph is created with:) Tj
 ET
 BT
 /Times-Roman 12 Tf
-196.0 549.0116 Td
+196.0 538.2356 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 535.61957 Td
+60.0 524.84357 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Italic 10 Tf
-60.0 535.61957 Td
+60.0 524.84357 Td
 0.3137255 0.5019608 0.5019608 rg
 (Paragraph paragraph = new Paragraph\("Text of paragraph"\);) Tj
 ET
 BT
 /Times-Roman 12 Tf
-310.0 535.61957 Td
+310.0 524.84357 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 522.22754 Td
+60.0 511.45154 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 522.22754 Td
+60.0 511.45154 Td
 0.0 0.0 0.0 rg
 (A new page is created with;) Tj
 ET
 BT
 /Times-Roman 12 Tf
-193.0 522.22754 Td
+193.0 511.45154 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 508.83554 Td
+60.0 498.05954 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Italic 10 Tf
-60.0 508.83554 Td
+60.0 498.05954 Td
 0.3137255 0.5019608 0.5019608 rg
 (document.addPage\(\);) Tj
 ET
 BT
 /Times-Roman 12 Tf
-146.0 508.83554 Td
+146.0 498.05954 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 495.44354 Td
+60.0 484.66754 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 495.44354 Td
+60.0 484.66754 Td
 0.0 0.0 0.0 rg
 (Paragraph style \(margins, first line margin, text color, size, font, etc.\) can be defined using the) Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 482.05154 Td
+60.0 471.27554 Td
 0.0 0.0 0.0 rg
 (constructor for most of parameters. For others, getters and setters can be used.) Tj
 ET
 BT
 /Times-Roman 12 Tf
-435.0 482.05154 Td
+435.0 471.27554 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 468.65955 Td
+60.0 457.88354 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 468.65955 Td
+60.0 457.88354 Td
 0.0 0.0 0.0 rg
 (The same applies to most of the classes \(Page, Text, etc.\).) Tj
 ET
 BT
 /Times-Bold 14 Tf
-60.0 445.26755 Td
+60.0 432.17755 Td
 0.0 0.0 0.0 rg
 (Adding images and graphics) Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 419.12555 Td
+60.0 408.34955 Td
 0.0 0.0 0.0 rg
 (A paragraph can contain text but also images like this one:) Tj
 ET
 BT
 /Times-Bold 14 Tf
-60.0 395.73355 Td
+60.0 382.64355 Td
 0.0 0.0 0.0 rg
 (Text styles) Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 369.59155 Td
+60.0 358.81555 Td
 0.5019608 0.5019608 0.3137255 rg
 (A color can be defined for an entire paragraph but also for ) Tj
 ET
 BT
 /Times-Roman 12 Tf
-342.0 369.59155 Td
+342.0 358.81555 Td
 0.5019608 0.3137255 0.5019608 rg
 (a subset ) Tj
 ET
 BT
 /Times-Roman 12 Tf
-383.0 369.59155 Td
+383.0 358.81555 Td
 0.5019608 0.5019608 0.3137255 rg
 (of the same paragraph.) Tj
 ET
 BT
 /Times-BoldItalic 12 Tf
-60.0 356.19955 Td
+60.0 345.14755 Td
 0.0 0.0 0.0 rg
 (This paragraph demonstrate that text can simply be put in ) Tj
 ET
 BT
 /Times-Bold 12 Tf
-349.0 356.19955 Td
+349.0 345.14755 Td
 0.0 0.0 0.0 rg
 (bold,) Tj
 ET
 BT
 /Times-Roman 12 Tf
-375.0 356.19955 Td
+375.0 345.14755 Td
 0.0 0.0 0.0 rg
 ( italic) Tj
 ET
 BT
 /Times-Roman 12 Tf
-402.0 356.19955 Td
+402.0 345.14755 Td
 0.5019608 0.3137255 0.5019608 rg
 ( and underlined.) Tj
 ET
 BT
 /Times-BoldItalic 14 Tf
-480.0 356.19955 Td
+480.0 345.14755 Td
 0.0 0.0 0.0 rg
 ( Text size) Tj
 ET
 BT
 /Times-BoldItalic 14 Tf
-60.0 342.53156 Td
+60.0 331.47955 Td
 0.0 0.0 0.0 rg
 (can also be changed within a paragraph.) Tj
 ET
 BT
 /Times-BoldItalic 12 Tf
-295.0 342.53156 Td
+295.0 331.47955 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-BoldItalic 12 Tf
-60.0 328.86356 Td
+60.0 317.81155 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-BoldItalic 12 Tf
-60.0 328.86356 Td
+60.0 317.81155 Td
 0.0 0.0 0.0 rg
 (Text styles needs to be used inside a "Text" object. A paragraph allow a simple String or Text) Tj
 ET
 BT
 /Times-BoldItalic 12 Tf
-60.0 315.19556 Td
+60.0 304.14355 Td
 0.0 0.0 0.0 rg
 (object as parameter.) Tj
 ET
 BT
 /Times-Bold 14 Tf
-60.0 291.52756 Td
+60.0 278.43756 Td
 0.0 0.0 0.0 rg
 (Paragraph styles) Tj
 ET
 BT
 /Times-Roman 14 Tf
-100.0 245.38556 Td
+100.0 232.81355 Td
 0.0 0.0 0.0 rg
 (This paragraph has a margin of 20 on each side plus a first line margin of) Tj
 ET
 BT
 /Times-Roman 14 Tf
-80.0 229.76157 Td
+80.0 217.18956 Td
 0.0 0.0 0.0 rg
 (20.) Tj
 ET
 BT
 /Times-Roman 14 Tf
-98.0 229.76157 Td
+98.0 217.18956 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 14 Tf
-80.0 214.13757 Td
+80.0 201.56557 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 14 Tf
-80.0 214.13757 Td
+80.0 201.56557 Td
 0.0 0.0 0.0 rg
 (It's also composed of few lines that are part of this same paragraph, so this) Tj
 ET
 BT
 /Times-Roman 14 Tf
-80.0 198.51358 Td
+80.0 185.94157 Td
 0.0 0.0 0.0 rg
 (paragraph configuration is applied to all lines of it.) Tj
 ET
 BT
 /Times-Roman 14 Tf
-364.0 198.51358 Td
+364.0 185.94157 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 14 Tf
-80.0 182.88959 Td
+80.0 170.31758 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 14 Tf
-80.0 182.88959 Td
+80.0 170.31758 Td
 0.0 0.0 0.0 rg
 (So, the first line is shifted by 40 pt from the left while other lines of the) Tj
 ET
 BT
 /Times-Roman 14 Tf
-80.0 167.2656 Td
+80.0 154.69359 Td
 0.0 0.0 0.0 rg
 (paragraph are shifted by 20.) Tj
 ET
 BT
 /Times-Roman 14 Tf
-237.0 167.2656 Td
+237.0 154.69359 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 14 Tf
-80.0 151.6416 Td
+80.0 139.0696 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 14 Tf
-80.0 151.6416 Td
+80.0 139.0696 Td
 0.0 0.0 0.0 rg
 (This paragraph also ends from 20 pt before page margins and have an top and) Tj
 ET
 BT
 /Times-Roman 14 Tf
-80.0 136.01761 Td
+80.0 123.44561 Td
 0.0 0.0 0.0 rg
 (bottom margin of 20 too.) Tj
 ET
 BT
 /Times-Roman 14 Tf
-220.0 136.01761 Td
+220.0 123.44561 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 14 Tf
-80.0 120.39361 Td
+80.0 107.82161 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 14 Tf
-80.0 120.39361 Td
+80.0 107.82161 Td
 0.0 0.0 0.0 rg
 (Text of this paragraph has a size of 14 instead of 12 in a default one.) Tj
 ET
 BT
 /Times-Roman 12 Tf
-137.0 84.76961 Td
+137.0 73.99361 Td
 0.0 0.0 0.0 rg
 (This paragraph is aligned to right. This shows that the first line margin is taken) Tj
 ET
 BT
 /Times-Roman 12 Tf
-86.0 71.37761 Td
+86.0 60.60161 Td
 0.0 0.0 0.0 rg
 (into account. So, the text will not be displayed until start of paragraph but with a space of) Tj
 ET
-0.6 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 375.0 354.0 m 402.0 354.0 l S
-0.6 w 0.5019608 0.3137255 0.5019608 RG 0.0 0.0 0.0 rg 402.0 354.0 m 480.0 354.0 l S
+0.6 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 375.0 343.0 m 402.0 343.0 l S
+0.6 w 0.5019608 0.3137255 0.5019608 RG 0.0 0.0 0.0 rg 402.0 343.0 m 480.0 343.0 l S
 q
-36 0 0 12 341.0 419.12555 cm
+36 0 0 12 341.0 408.34955 cm
 /image6 Do
 Q
 endstream
@@ -630,114 +630,114 @@ endobj
 >>
 endobj
 8 0 obj <<
-/Length 1928
+/Length 1929
 >>
 stream
 BT
 /Times-Roman 12 Tf
-116.0 775.304 Td
+116.0 771.224 Td
 0.0 0.0 0.0 rg
 (the size of the first line margin. The others line will start with the default paragraph) Tj
 ET
 BT
 /Times-Roman 12 Tf
-478.0 761.912 Td
+478.0 757.832 Td
 0.0 0.0 0.0 rg
 (margin.) Tj
 ET
 BT
 /Times-Roman 12 Tf
-515.0 761.912 Td
+515.0 757.832 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-85.0 748.51996 Td
+85.0 744.43994 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-85.0 748.51996 Td
+85.0 744.43994 Td
 0.0 0.0 0.0 rg
 (This even works with new lines inside a paragraph. New lines will not be sensitive to first) Tj
 ET
 BT
 /Times-Roman 12 Tf
-393.0 735.1279 Td
+393.0 731.0479 Td
 0.0 0.0 0.0 rg
 (line of paragraph margin.) Tj
 ET
 BT
 /Times-Roman 12 Tf
-126.5 721.7359 Td
+126.5 717.6559 Td
 0.0 0.0 0.0 rg
 (This paragraph is aligned to center with a first line margin. It) Tj
 ET
 BT
 /Times-Roman 12 Tf
-150.5 708.3439 Td
+150.5 704.26385 Td
 0.0 0.0 0.0 rg
 (demonstrate the same principles than the previous paragraph.) Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 694.95184 Td
+60.0 690.8718 Td
 0.0 0.0 0.0 rg
 (This paragraph shows that a vertical line spacing ratio can be applied between each line of a) Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 674.86383 Td
+60.0 670.7838 Td
 0.0 0.0 0.0 rg
 (paragraph. The standard line spacing is just the size of the font. The line spacing ratio is the) Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 654.7758 Td
+60.0 650.6958 Td
 0.0 0.0 0.0 rg
 (multication of itself by the font size. So if line spacing is set to 2, an empty space of the size of the) Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 634.6878 Td
+60.0 630.6078 Td
 0.0 0.0 0.0 rg
 (font is left blanck between two lines. Both the lines wrapped automatically and) Tj
 ET
 BT
 /Times-Roman 12 Tf
-440.0 634.6878 Td
+440.0 630.6078 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 614.5998 Td
+60.0 610.5198 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 614.5998 Td
+60.0 610.5198 Td
 0.0 0.0 0.0 rg
 (The ones created specifically) Tj
 ET
 BT
 /Times-Roman 12 Tf
-199.0 614.5998 Td
+199.0 610.5198 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 594.5118 Td
+60.0 590.43176 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 594.5118 Td
+60.0 590.43176 Td
 0.0 0.0 0.0 rg
 (will be affected by vertical line spacing ratio.) Tj
 ET
@@ -760,24 +760,24 @@ endobj
 >>
 endobj
 11 0 obj <<
-/Length 249
+/Length 248
 >>
 stream
 BT
 /Times-Bold 14 Tf
-4.0 133.0 Td
+4.0 119.91 Td
 0.0 0.0 0.0 rg
 (Page styles) Tj
 ET
 BT
 /Times-Roman 12 Tf
-4.0 106.858 Td
+4.0 96.082 Td
 0.0 0.0 0.0 rg
 (This page show a page with a different) Tj
 ET
 BT
 /Times-Roman 12 Tf
-4.0 93.466 Td
+4.0 82.69 Td
 0.0 0.0 0.0 rg
 (orientation and size.) Tj
 ET
@@ -800,221 +800,221 @@ endobj
 >>
 endobj
 14 0 obj <<
-/Length 7163
+/Length 7149
 >>
 stream
 BT
 /Times-Bold 14 Tf
-60.0 772.0 Td
+60.0 758.91 Td
 0.0 0.0 0.0 rg
 (Adding headers and footers) Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 745.858 Td
+60.0 735.082 Td
 0.5019608 0.3137255 0.3137255 rg
 (This still have to be coded.) Tj
 ET
 BT
 /Times-Bold 14 Tf
-60.0 722.46594 Td
+60.0 709.3759 Td
 0.0 0.0 0.0 rg
 (Adding tables) Tj
 ET
 BT
 /Times-Roman 16 Tf
-60.0 696.3239 Td
+60.0 681.95593 Td
 0.5019608 0.3137255 0.3137255 rg
 (This is a column yder.) Tj
 ET
 BT
 /Times-Roman 16 Tf
-202.0 696.3239 Td
+202.0 681.95593 Td
 0.5019608 0.3137255 0.3137255 rg
 (This is a column yder.) Tj
 ET
 BT
 /Times-Roman 16 Tf
-344.0 696.3239 Td
+344.0 681.95593 Td
 0.5019608 0.3137255 0.3137255 rg
 (This is a column yder.) Tj
 ET
 BT
 /Times-Roman 16 Tf
-486.0 696.3239 Td
+486.0 681.95593 Td
 0.5019608 0.3137255 0.3137255 rg
 (This is a column yder.) Tj
 ET
 BT
 /Times-Roman 16 Tf
-628.0 696.3239 Td
+628.0 681.95593 Td
 0.5019608 0.3137255 0.3137255 rg
 (This is a column yder.) Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 678.4679 Td
+60.0 667.6919 Td
 0.0 0.0 0.0 rg
 (This is a cell content.) Tj
 ET
 BT
 /Times-Roman 12 Tf
-202.0 678.4679 Td
+202.0 667.6919 Td
 0.0 0.0 0.0 rg
 (This is a cell content.) Tj
 ET
 BT
 /Times-Roman 12 Tf
-344.0 678.4679 Td
+344.0 667.6919 Td
 0.0 0.0 0.0 rg
 (This is a cell content.) Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 665.07587 Td
+60.0 654.29987 Td
 0.0 0.0 0.0 rg
 (This is a cell content.) Tj
 ET
 BT
 /Times-Roman 12 Tf
-202.0 665.07587 Td
+202.0 654.29987 Td
 0.0 0.0 0.0 rg
 (This is a cell content.) Tj
 ET
 BT
 /Times-Roman 12 Tf
-344.0 665.07587 Td
+344.0 654.29987 Td
 0.0 0.0 0.0 rg
 (This is a cell content.) Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 651.68384 Td
+60.0 640.90784 Td
 0.0 0.0 0.0 rg
 (This is a cell content.) Tj
 ET
 BT
 /Times-Roman 12 Tf
-202.0 651.68384 Td
+202.0 640.90784 Td
 0.0 0.0 0.0 rg
 (This is a cell content.) Tj
 ET
 BT
 /Times-Roman 12 Tf
-344.0 651.68384 Td
+344.0 640.90784 Td
 0.0 0.0 0.0 rg
 (This is a cell content.) Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 638.2918 Td
+60.0 627.5158 Td
 0.0 0.0 0.0 rg
 (This is a column footer.) Tj
 ET
 BT
 /Times-Roman 12 Tf
-202.0 638.2918 Td
+202.0 627.5158 Td
 0.0 0.0 0.0 rg
 (This is a column footer.) Tj
 ET
 BT
 /Times-Roman 12 Tf
-344.0 638.2918 Td
+344.0 627.5158 Td
 0.0 0.0 0.0 rg
 (This is a column footer.) Tj
 ET
 BT
 /Times-Bold 14 Tf
-60.0 614.8998 Td
+60.0 601.80975 Td
 0.0 0.0 0.0 rg
 (Adding table of content) Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 588.75775 Td
+60.0 577.98175 Td
 0.5019608 0.3137255 0.3137255 rg
 (This still have to be coded.) Tj
 ET
 BT
 /Times-Bold 14 Tf
-60.0 565.3657 Td
+60.0 552.2757 Td
 0.0 0.0 0.0 rg
 (Adding footnotes) Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 539.2237 Td
+60.0 528.4477 Td
 0.5019608 0.3137255 0.3137255 rg
 (This still have to be coded.) Tj
 ET
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 710.6919 m 202.0 710.6919 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 710.6919 m 60.0 692.83594 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 692.83594 m 202.0 692.83594 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 202.0 710.6919 m 202.0 692.83594 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 202.0 710.6919 m 344.0 710.6919 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 202.0 710.6919 m 202.0 692.83594 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 202.0 692.83594 m 344.0 692.83594 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 344.0 710.6919 m 344.0 692.83594 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 344.0 710.6919 m 486.0 710.6919 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 344.0 710.6919 m 344.0 692.83594 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 344.0 692.83594 m 486.0 692.83594 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 486.0 710.6919 m 486.0 692.83594 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 486.0 710.6919 m 628.0 710.6919 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 486.0 710.6919 m 486.0 692.83594 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 486.0 692.83594 m 628.0 692.83594 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 628.0 710.6919 m 628.0 692.83594 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 628.0 710.6919 m 770.0 710.6919 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 628.0 710.6919 m 628.0 692.83594 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 628.0 692.83594 m 770.0 692.83594 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 770.0 710.6919 m 770.0 692.83594 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 689.2439 m 202.0 689.2439 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 689.2439 m 60.0 675.85187 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 675.85187 m 202.0 675.85187 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 202.0 689.2439 m 202.0 675.85187 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 202.0 689.2439 m 344.0 689.2439 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 202.0 689.2439 m 202.0 675.85187 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 202.0 675.85187 m 344.0 675.85187 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 344.0 689.2439 m 344.0 675.85187 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 344.0 689.2439 m 486.0 689.2439 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 344.0 689.2439 m 344.0 675.85187 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 344.0 675.85187 m 486.0 675.85187 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 486.0 689.2439 m 486.0 675.85187 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 675.85187 m 202.0 675.85187 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 675.85187 m 60.0 662.45984 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 662.45984 m 202.0 662.45984 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 202.0 675.85187 m 202.0 662.45984 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 202.0 675.85187 m 344.0 675.85187 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 202.0 675.85187 m 202.0 662.45984 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 202.0 662.45984 m 344.0 662.45984 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 344.0 675.85187 m 344.0 662.45984 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 344.0 675.85187 m 486.0 675.85187 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 344.0 675.85187 m 344.0 662.45984 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 344.0 662.45984 m 486.0 662.45984 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 486.0 675.85187 m 486.0 662.45984 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 662.45984 m 202.0 662.45984 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 662.45984 m 60.0 649.0678 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 649.0678 m 202.0 649.0678 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 202.0 662.45984 m 202.0 649.0678 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 202.0 662.45984 m 344.0 662.45984 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 202.0 662.45984 m 202.0 649.0678 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 202.0 649.0678 m 344.0 649.0678 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 344.0 662.45984 m 344.0 649.0678 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 344.0 662.45984 m 486.0 662.45984 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 344.0 662.45984 m 344.0 649.0678 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 344.0 649.0678 m 486.0 649.0678 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 486.0 662.45984 m 486.0 649.0678 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 649.0678 m 202.0 649.0678 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 649.0678 m 60.0 635.6758 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 635.6758 m 202.0 635.6758 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 202.0 649.0678 m 202.0 635.6758 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 202.0 649.0678 m 344.0 649.0678 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 202.0 649.0678 m 202.0 635.6758 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 202.0 635.6758 m 344.0 635.6758 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 344.0 649.0678 m 344.0 635.6758 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 344.0 649.0678 m 486.0 649.0678 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 344.0 649.0678 m 344.0 635.6758 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 344.0 635.6758 m 486.0 635.6758 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 486.0 649.0678 m 486.0 635.6758 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 696.3239 m 202.0 696.3239 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 696.3239 m 60.0 678.4679 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 678.4679 m 202.0 678.4679 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 202.0 696.3239 m 202.0 678.4679 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 202.0 696.3239 m 344.0 696.3239 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 202.0 696.3239 m 202.0 678.4679 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 202.0 678.4679 m 344.0 678.4679 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 344.0 696.3239 m 344.0 678.4679 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 344.0 696.3239 m 486.0 696.3239 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 344.0 696.3239 m 344.0 678.4679 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 344.0 678.4679 m 486.0 678.4679 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 486.0 696.3239 m 486.0 678.4679 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 486.0 696.3239 m 628.0 696.3239 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 486.0 696.3239 m 486.0 678.4679 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 486.0 678.4679 m 628.0 678.4679 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 628.0 696.3239 m 628.0 678.4679 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 628.0 696.3239 m 770.0 696.3239 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 628.0 696.3239 m 628.0 678.4679 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 628.0 678.4679 m 770.0 678.4679 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 770.0 696.3239 m 770.0 678.4679 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 678.4679 m 202.0 678.4679 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 678.4679 m 60.0 665.07587 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 665.07587 m 202.0 665.07587 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 202.0 678.4679 m 202.0 665.07587 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 202.0 678.4679 m 344.0 678.4679 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 202.0 678.4679 m 202.0 665.07587 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 202.0 665.07587 m 344.0 665.07587 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 344.0 678.4679 m 344.0 665.07587 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 344.0 678.4679 m 486.0 678.4679 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 344.0 678.4679 m 344.0 665.07587 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 344.0 665.07587 m 486.0 665.07587 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 486.0 678.4679 m 486.0 665.07587 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 665.07587 m 202.0 665.07587 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 665.07587 m 60.0 651.68384 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 651.68384 m 202.0 651.68384 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 202.0 665.07587 m 202.0 651.68384 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 202.0 665.07587 m 344.0 665.07587 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 202.0 665.07587 m 202.0 651.68384 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 202.0 651.68384 m 344.0 651.68384 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 344.0 665.07587 m 344.0 651.68384 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 344.0 665.07587 m 486.0 665.07587 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 344.0 665.07587 m 344.0 651.68384 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 344.0 651.68384 m 486.0 651.68384 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 486.0 665.07587 m 486.0 651.68384 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 651.68384 m 202.0 651.68384 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 651.68384 m 60.0 638.2918 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 638.2918 m 202.0 638.2918 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 202.0 651.68384 m 202.0 638.2918 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 202.0 651.68384 m 344.0 651.68384 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 202.0 651.68384 m 202.0 638.2918 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 202.0 638.2918 m 344.0 638.2918 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 344.0 651.68384 m 344.0 638.2918 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 344.0 651.68384 m 486.0 651.68384 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 344.0 651.68384 m 344.0 638.2918 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 344.0 638.2918 m 486.0 638.2918 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 486.0 651.68384 m 486.0 638.2918 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 638.2918 m 202.0 638.2918 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 638.2918 m 60.0 624.8998 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 624.8998 m 202.0 624.8998 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 202.0 638.2918 m 202.0 624.8998 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 202.0 638.2918 m 344.0 638.2918 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 202.0 638.2918 m 202.0 624.8998 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 202.0 624.8998 m 344.0 624.8998 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 344.0 638.2918 m 344.0 624.8998 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 344.0 638.2918 m 486.0 638.2918 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 344.0 638.2918 m 344.0 624.8998 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 344.0 624.8998 m 486.0 624.8998 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 486.0 638.2918 m 486.0 624.8998 l S
 endstream
 endobj
 15 0 obj <<
@@ -1030,21 +1030,21 @@ xref
 0000000071 00000 n
 0000001266 00000 n
 0000001363 00000 n
-0000009068 00000 n
-0000009131 00000 n
-0000010778 00000 n
-0000010875 00000 n
-0000012854 00000 n
-0000012917 00000 n
-0000013016 00000 n
-0000013316 00000 n
-0000013382 00000 n
-0000013481 00000 n
-0000020696 00000 n
+0000009072 00000 n
+0000009135 00000 n
+0000010782 00000 n
+0000010879 00000 n
+0000012859 00000 n
+0000012922 00000 n
+0000013021 00000 n
+0000013320 00000 n
+0000013386 00000 n
+0000013485 00000 n
+0000020686 00000 n
 trailer <<
 /Root 1 0 R
 /Size 16
 >>
 startxref
-20762
+20752
 %%EOF
