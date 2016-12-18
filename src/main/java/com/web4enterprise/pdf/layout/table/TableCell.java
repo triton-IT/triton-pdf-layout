@@ -57,13 +57,7 @@ public class TableCell {
 	public float getHeight(float width) {
 		float height = 0;
 		for(Paragraph paragraph : paragraphs) {
-			float paragraphsHeight = 0;
-			
-			for(ElementLine elementLine : paragraph.getElementLines(width)) {
-				paragraphsHeight += paragraph.getStyle().getFontVariant().getHeight(paragraph.getStyle().getFontSize());
-			}
-			
-			height += paragraphsHeight;
+			height += paragraph.getHeight(width);
 		}
 		
 		return height;

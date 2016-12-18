@@ -27,11 +27,11 @@ public class Margins {
 		this.bottom = allAround;
 	}
 	
-	public Margins(float left, float right, float top, float bottom) {
-		this.left = left;
-		this.right = right;
+	public Margins(float top, float left, float bottom, float right) {
 		this.top = top;
+		this.left = left;
 		this.bottom = bottom;
+		this.right = right;
 	}
 	
 	public float getLeft() {

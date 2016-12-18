@@ -73,4 +73,14 @@ public class Paragraph {
 		
 		return elementSubLines;
 	}
+	
+	public float getHeight(float width) {
+		float height = 0;
+		
+		for(ElementLine elementLine : getElementLines(width)) {
+			height += getStyle().getFontVariant().getHeight(getStyle().getFontSize());
+		}
+		
+		return height;
+	}
 }

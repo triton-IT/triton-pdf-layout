@@ -19,7 +19,6 @@ import com.web4enterprise.pdf.layout.paragraph.Paragraph;
 import com.web4enterprise.pdf.layout.paragraph.ParagraphStyle;
 import com.web4enterprise.pdf.layout.placement.Alignment;
 import com.web4enterprise.pdf.layout.placement.BorderStyle;
-import com.web4enterprise.pdf.layout.placement.LineStyle;
 import com.web4enterprise.pdf.layout.placement.Margins;
 import com.web4enterprise.pdf.layout.table.Table;
 import com.web4enterprise.pdf.layout.table.TableCell;
@@ -32,9 +31,18 @@ public class DocumentTest {
 	public void writeTest() throws IOException, PdfGenerationException {
 		OutputStream out = new FileOutputStream("documentation.pdf");
 		
-		ParagraphStyle codeStyle = new ParagraphStyle(TIMES_ROMAN, FontsVariant.ITALIC, 10, new Color(80, 128, 128));
-		ParagraphStyle titleStyle = new ParagraphStyle(TIMES_ROMAN, FontsVariant.BOLD, 14);
-		titleStyle.setMargins(new Margins(0, 0, 10, 10));
+		Color codeColor = new Color(128, 80, 128);
+		Color lightCodeColor = new Color(255, 250, 255);
+		Color darkCodeColor = new Color(100, 0, 100);
+		ParagraphStyle codeStyle = new ParagraphStyle(TIMES_ROMAN, FontsVariant.ITALIC, 10, codeColor);
+		Color titleColor = new Color(204, 85, 89);
+		ParagraphStyle titleStyle = new ParagraphStyle(TIMES_ROMAN, FontsVariant.BOLD, 14, titleColor);
+		titleStyle.setMargins(new Margins(20, 0, 10, 0));
+		Color emphaseColor = new Color(128, 128, 60);
+		Color lightEmphaseColor = new Color(250, 250, 240);
+		Color darkEmphaseColor = new Color(100, 100, 0);
+		ParagraphStyle emphaseStyle = new ParagraphStyle();
+		emphaseStyle.setFontColor(emphaseColor);
 		
 		Document document = new Document();
 
@@ -81,18 +89,15 @@ public class DocumentTest {
 		//Text styles.
 		document.addParagraph(new Paragraph(titleStyle, "Text styles"));
 		
-		TextStyle greyGoldStyle = new TextStyle();
-		greyGoldStyle.setFontColor(new Color(128, 80, 128));
-		
 		paragraphStyle = new ParagraphStyle();
-		paragraphStyle.setFontColor(new Color(128, 128, 80));
+		paragraphStyle.setFontColor(emphaseColor);
 		paragraph = new Paragraph(paragraphStyle, new Text("A color can be defined for an entire paragraph but also for ")
-				, new Text(greyGoldStyle, "a subset ")
+				, new Text(emphaseStyle, "a subset ")
 				, new Text("of the same paragraph."));
 		document.addParagraph(paragraph);
 
 		TextStyle plainUnderlined = new TextStyle(FontsVariant.PLAIN);
-		plainUnderlined.setFontColor(new Color(128, 80, 128));
+		plainUnderlined.setFontColor(emphaseColor);
 		plainUnderlined.setUnderlined(true);
 		
 		TextStyle italicUnderlined = new TextStyle(FontsVariant.PLAIN);
@@ -162,32 +167,37 @@ public class DocumentTest {
 		document.addParagraph(new Paragraph(titleStyle, "Adding headers and footers"));
 		
 		paragraphStyle = new ParagraphStyle();
-		paragraphStyle.setFontColor(new Color(128, 80, 80));
+		paragraphStyle.setFontColor(emphaseColor);
 		paragraph = new Paragraph(paragraphStyle, "This still have to be coded.");
 		document.addParagraph(paragraph);
 
 		//Tables.
 		document.addParagraph(new Paragraph(titleStyle, "Adding tables"));
 		
-		paragraphStyle = new ParagraphStyle(TIMES_ROMAN, 16);
-		paragraphStyle.setFontColor(new Color(128, 80, 80));
-		Paragraph columnHeaderparagraph = new Paragraph(paragraphStyle, "This is a column yder.");
+		paragraphStyle = new ParagraphStyle(TIMES_ROMAN, 14);
+		paragraphStyle.setFontColor(emphaseColor);
+		Paragraph columnHeaderParagraph = new Paragraph(paragraphStyle, "This is a column header.");
+		
 		paragraphStyle = new ParagraphStyle();
 		Paragraph cellParagraph = new Paragraph(paragraphStyle, "This is a cell content.");
-		Paragraph columnFooterparagraph = new Paragraph(paragraphStyle, "This is a column footer.");
+		
+		paragraphStyle = new ParagraphStyle();
+		paragraphStyle.setFontColor(codeColor);
+		Paragraph columnFooterParagraph = new Paragraph(paragraphStyle, "This is a column footer.");
 		
 		TableCellStyle tableHeaderCellStyle = new TableCellStyle();
-		tableHeaderCellStyle.setBordersStyle(BorderStyle.THIN_SOLID, BorderStyle.THIN_SOLID, BorderStyle.THIN_SOLID, BorderStyle.THIN_SOLID);
+		tableHeaderCellStyle.setBordersStyle(new BorderStyle(4.0f, darkEmphaseColor), BorderStyle.THIN_SOLID, BorderStyle.THIN_SOLID, BorderStyle.THIN_SOLID);
+		tableHeaderCellStyle.setBackgroundColor(lightEmphaseColor);
 		
-		TableCellStyle tableFooterCellStyle = new TableCellStyle(Color.BLUE);
-		tableFooterCellStyle.setBordersStyle(new BorderStyle(0.0f), new BorderStyle(0.0f), new BorderStyle(1.0f, LineStyle.NONE), new BorderStyle(2.0f, Color.RED, LineStyle.SOLID));
+		TableCellStyle tableFooterCellStyle = new TableCellStyle(lightCodeColor);
+		tableFooterCellStyle.setBordersStyle(BorderStyle.THIN_SOLID, BorderStyle.THIN_SOLID, new BorderStyle(2.0f, darkCodeColor), BorderStyle.THIN_SOLID);
 		
 		Table table = new Table()
-			.addRow(new TableCell(tableHeaderCellStyle, columnHeaderparagraph), new TableCell(tableHeaderCellStyle, columnHeaderparagraph), new TableCell(tableHeaderCellStyle, columnHeaderparagraph), new TableCell(tableHeaderCellStyle, columnHeaderparagraph), new TableCell(tableHeaderCellStyle, columnHeaderparagraph))
+			.addRow(new TableCell(tableHeaderCellStyle, columnHeaderParagraph), new TableCell(tableHeaderCellStyle, columnHeaderParagraph), new TableCell(tableHeaderCellStyle, columnHeaderParagraph), new TableCell(tableHeaderCellStyle, columnHeaderParagraph), new TableCell(tableHeaderCellStyle, columnHeaderParagraph))
 			.addRow(new TableCell(cellParagraph, cellParagraph, cellParagraph), new TableCell(cellParagraph), new TableCell(cellParagraph))
 			.addRow(new TableCell(cellParagraph).rowSpan(2).columnSpan(2), new TableCell(cellParagraph), new TableCell(cellParagraph))
 			.addRow(new TableCell(cellParagraph), new TableCell(cellParagraph), new TableCell(cellParagraph))
-			.addRow(new TableCell(tableFooterCellStyle, columnFooterparagraph), new TableCell(tableFooterCellStyle, columnFooterparagraph), new TableCell(tableFooterCellStyle, columnFooterparagraph));
+			.addRow(new TableCell(tableFooterCellStyle, columnFooterParagraph), new TableCell(tableFooterCellStyle, columnFooterParagraph), new TableCell(tableFooterCellStyle, columnFooterParagraph));
 		
 		table.setColumnWidth(0, 50);
 		table.setColumnWidth(1, 50);
@@ -197,7 +207,7 @@ public class DocumentTest {
 		document.addParagraph(new Paragraph(titleStyle, "Adding table of content"));
 		
 		paragraphStyle = new ParagraphStyle();
-		paragraphStyle.setFontColor(new Color(128, 80, 80));
+		paragraphStyle.setFontColor(emphaseColor);
 		paragraph = new Paragraph(paragraphStyle, "This still have to be coded.");
 		document.addParagraph(paragraph);
 
@@ -205,7 +215,7 @@ public class DocumentTest {
 		document.addParagraph(new Paragraph(titleStyle, "Adding footnotes"));
 		
 		paragraphStyle = new ParagraphStyle();
-		paragraphStyle.setFontColor(new Color(128, 80, 80));
+		paragraphStyle.setFontColor(emphaseColor);
 		paragraph = new Paragraph(paragraphStyle, "This still have to be coded.");
 		document.addParagraph(paragraph);
 		
