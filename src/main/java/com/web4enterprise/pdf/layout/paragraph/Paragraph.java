@@ -51,4 +51,26 @@ public class Paragraph {
 	public List<ElementLine> getElementLines() {
 		return ElementLine.getElementLines(elements);
 	}
+	
+	public List<ElementLine> getElementLines(float maxWidth) {
+		List<ElementLine> elementSubLines = new ArrayList<>();
+		
+		boolean isFirstLine = true;		
+		for(ElementLine textLine : getElementLines()) {
+			float firstLineMaxWidth = maxWidth;
+	
+			if(isFirstLine) {
+				firstLineMaxWidth -= getStyle().getFirstLineMargin();
+			}
+			
+			//Split text to get-in maximum space.
+			elementSubLines.addAll(textLine.splitToMaxWidth(getStyle(), getStyle().getFontSize(), firstLineMaxWidth, maxWidth));
+			
+			if(isFirstLine) {
+				isFirstLine = false;
+			}
+		}
+		
+		return elementSubLines;
+	}
 }

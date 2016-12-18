@@ -188,7 +188,8 @@ public class Document {
 				float paragraphStartY = blockStartY;
 				for(Paragraph paragraph : cell.getParagraphs()) {					
 					addParagraph(paragraph, new Rect(paragraphStartY, startX, paragraphStartY - row.getHeight(), startX + table.getColumnWidth(columnIndex)), paragraphStartY);
-					paragraphStartY -= paragraph.getStyle().getFontVariant().getHeight(paragraph.getStyle().getFontSize());
+					//FIXME: let paragraph calculate this with inter-line size.
+					paragraphStartY -= paragraph.getElementLines(table.getColumnWidth(columnIndex)).size() * paragraph.getStyle().getFontVariant().getHeight(paragraph.getStyle().getFontSize());
 				}
 				
 				//Top

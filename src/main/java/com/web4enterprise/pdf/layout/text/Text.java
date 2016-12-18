@@ -91,12 +91,27 @@ public class Text implements ParagraphElement {
 		if(isFirstLine) {
 			currentMaxWidth = firstLineMaxWidth;
 		}
+		currentMaxWidth -= positionX;
+		
 		//If we have to split.
-		while(textWidth > currentMaxWidth - positionX) {
+		while(textWidth > currentMaxWidth) {
 			//Get index of split
 			int splitIndex = keptString.lastIndexOf(' ');
-			//If we can split, try to split again. We test against 0 in addition to -1 because first character can be a space and then string cannot be split anymore.
-			if(splitIndex != 0 && splitIndex != -1) {
+			//If string cannot be split on space, we need to cut it inside a word to fit required width.
+			if(splitIndex == 0 || splitIndex == -1) {
+				boolean needSplit = true;
+				int currentSplitIndex = stringToSplit.length();
+				while(needSplit) {
+					currentSplitIndex--;
+					keptString = stringToSplit.substring(0, currentSplitIndex);
+					
+					textWidth = font.getWidth(fontSize, keptString);
+					//If split is enough or if we don't have anything to split.
+					if(textWidth <= currentMaxWidth || stringToSplit.length() == 1) {
+						needSplit = false;
+					}
+				}
+			} else {
 				keptString = stringToSplit.substring(0, splitIndex);
 				textWidth = font.getWidth(fontSize, keptString);
 			}

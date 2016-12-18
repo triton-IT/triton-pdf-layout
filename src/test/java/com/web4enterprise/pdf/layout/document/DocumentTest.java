@@ -189,6 +189,8 @@ public class DocumentTest {
 			.addRow(new TableCell(cellParagraph), new TableCell(cellParagraph), new TableCell(cellParagraph))
 			.addRow(new TableCell(tableFooterCellStyle, columnFooterparagraph), new TableCell(tableFooterCellStyle, columnFooterparagraph), new TableCell(tableFooterCellStyle, columnFooterparagraph));
 		
+		table.setColumnWidth(0, 50);
+		table.setColumnWidth(1, 50);
 		document.addTable(table);
 
 		//Table of content.

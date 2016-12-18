@@ -54,12 +54,12 @@ public class TableCell {
 		return width;
 	}
 	
-	public float getHeight() {
+	public float getHeight(float width) {
 		float height = 0;
 		for(Paragraph paragraph : paragraphs) {
 			float paragraphsHeight = 0;
 			
-			for(ElementLine elementLine : paragraph.getElementLines()) {
+			for(ElementLine elementLine : paragraph.getElementLines(width)) {
 				paragraphsHeight += paragraph.getStyle().getFontVariant().getHeight(paragraph.getStyle().getFontSize());
 			}
 			
