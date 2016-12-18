@@ -167,6 +167,11 @@ public class Document {
 			
 			float startX = currentPageStyle.getMargins().getLeft();
 			
+			float rowHeight = row.getHeight();
+			if(blockStartY - rowHeight < currentPageStyle.getMargins().getBottom()) {
+				addPage();
+			}
+			
 			for(TableCell cell : row.getCells()) {
 				TableCellStyle cellStyle = cell.getStyle();
 
@@ -188,8 +193,7 @@ public class Document {
 				float paragraphStartY = blockStartY;
 				for(Paragraph paragraph : cell.getParagraphs()) {					
 					addParagraph(paragraph, new Rect(paragraphStartY, startX, paragraphStartY - row.getHeight(), startX + table.getColumnWidth(columnIndex)), paragraphStartY);
-					//FIXME: let paragraph calculate this with inter-line size.
-					paragraphStartY -= paragraph.getElementLines(table.getColumnWidth(columnIndex)).size() * paragraph.getStyle().getFontVariant().getHeight(paragraph.getStyle().getFontSize());
+					paragraphStartY -= paragraph.getHeight(table.getColumnWidth(columnIndex));
 				}
 				
 				//Top
@@ -231,7 +235,7 @@ public class Document {
 				startX += table.getColumnWidth(columnIndex);
 				columnIndex++;
 			}
-			blockStartY -= row.getHeight();
+			blockStartY -= rowHeight;
 		}
 	}
 

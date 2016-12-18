@@ -86,4 +86,16 @@ public class ElementLine extends ArrayList<ParagraphElement> {
 		
 		return width;
 	}
+	
+	public float getHeight(ParagraphStyle paragraphStyle) {
+		float lineSpacing = 0;
+		for(ParagraphElement element : this) {
+			//Keep greatest line spacing to not overlap elements of other lines.
+			float currentLineSpacing = element.getLineSpacing(paragraphStyle);
+			if(currentLineSpacing > lineSpacing) {
+				lineSpacing = currentLineSpacing;
+			}
+		}
+		return lineSpacing;
+	}
 }

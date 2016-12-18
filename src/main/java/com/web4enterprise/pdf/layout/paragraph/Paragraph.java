@@ -78,7 +78,7 @@ public class Paragraph {
 		float height = 0;
 		
 		for(ElementLine elementLine : getElementLines(width)) {
-			height += getStyle().getFontVariant().getHeight(getStyle().getFontSize());
+			height += elementLine.getHeight(getStyle());
 		}
 		
 		return height;

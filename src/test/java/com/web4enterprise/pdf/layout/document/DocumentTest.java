@@ -179,7 +179,8 @@ public class DocumentTest {
 		Paragraph columnHeaderParagraph = new Paragraph(paragraphStyle, "This is a column header.");
 		
 		paragraphStyle = new ParagraphStyle();
-		Paragraph cellParagraph = new Paragraph(paragraphStyle, "This is a cell content.");
+		paragraphStyle.setLineSpacing(2.0f);
+		Paragraph cellParagraph = new Paragraph(paragraphStyle, "This is a cell content.", NEW_LINE, "with another line");
 		
 		paragraphStyle = new ParagraphStyle();
 		paragraphStyle.setFontColor(codeColor);
