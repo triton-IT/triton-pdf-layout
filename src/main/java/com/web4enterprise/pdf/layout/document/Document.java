@@ -209,8 +209,8 @@ public class Document {
 			if(cellStyle.getTopBorderStyle().width > 0 && cellStyle.getTopBorderStyle().lineStyle != LineStyle.NONE) {
 				BorderStyle borderStyle = cellStyle.getTopBorderStyle();
 				StraightPath path = new StraightPath(borderStyle.getWidth(), borderStyle.getColor(),
-						new Point(startX, blockStartY), 
-						new Point(startX + table.getColumnWidth(columnIndex), blockStartY));
+						new Point(startX - cellStyle.getLeftBorderStyle().width / 2, blockStartY), 
+						new Point(startX + table.getColumnWidth(columnIndex) + cellStyle.getRightBorderStyle().width / 2, blockStartY));
 				currentPage.addPath(path);
 			}
 			
@@ -218,8 +218,8 @@ public class Document {
 			if(cellStyle.getLeftBorderStyle().width > 0 && cellStyle.getLeftBorderStyle().lineStyle != LineStyle.NONE) {
 				BorderStyle borderStyle = cellStyle.getLeftBorderStyle();
 				StraightPath path = new StraightPath(borderStyle.getWidth(), borderStyle.getColor(),
-						new Point(startX, blockStartY), 
-						new Point(startX, bottom));
+						new Point(startX, blockStartY - cellStyle.getTopBorderStyle().width / 2), 
+						new Point(startX, bottom + cellStyle.getBottomBorderStyle().width / 2));
 				currentPage.addPath(path);
 			}
 			
@@ -227,8 +227,8 @@ public class Document {
 			if(cellStyle.getBottomBorderStyle().width > 0 && cellStyle.getBottomBorderStyle().lineStyle != LineStyle.NONE) {
 				BorderStyle borderStyle = cellStyle.getBottomBorderStyle();
 				StraightPath path = new StraightPath(borderStyle.getWidth(), borderStyle.getColor(),
-						new Point(startX, bottom), 
-						new Point(startX + table.getColumnWidth(columnIndex), bottom));
+						new Point(startX - cellStyle.getLeftBorderStyle().width / 2, bottom), 
+						new Point(startX + table.getColumnWidth(columnIndex) + cellStyle.getRightBorderStyle().width / 2, bottom));
 				currentPage.addPath(path);
 			}
 			
@@ -236,8 +236,8 @@ public class Document {
 			if(cellStyle.getRightBorderStyle().width > 0 && cellStyle.getRightBorderStyle().lineStyle != LineStyle.NONE) {
 				BorderStyle borderStyle = cellStyle.getRightBorderStyle();
 				StraightPath path = new StraightPath(borderStyle.getWidth(), borderStyle.getColor(),
-						new Point(startX + table.getColumnWidth(columnIndex), blockStartY), 
-						new Point(startX + table.getColumnWidth(columnIndex), bottom));
+						new Point(startX + table.getColumnWidth(columnIndex), blockStartY - cellStyle.getTopBorderStyle().width / 2), 
+						new Point(startX + table.getColumnWidth(columnIndex), bottom + cellStyle.getBottomBorderStyle().width / 2));
 				currentPage.addPath(path);
 			}
 			

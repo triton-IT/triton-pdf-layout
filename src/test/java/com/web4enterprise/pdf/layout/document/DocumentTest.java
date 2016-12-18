@@ -61,7 +61,7 @@ public class DocumentTest {
 		paragraph = new Paragraph("A document created with no page style uses the default one: A4 portrait.", NEW_LINE);
 		paragraph.addElement(new Text("No need to add new pages, when an element does not fit into the page, a new page with same style than the previous one is created."), 
 				NEW_TEXT_LINE);
-		paragraph.addElement(new Text("The same is applicable to lines. When a line does not into the page width, the text is automatically splitted on the last space "
+		paragraph.addElement(new Text("The same is applicable to lines. When a line does not fit into the page width, the text is automatically splitted on the last space "
 				+ "that fits the page and the text that left is wrapped to a new line. This same principle is applicable indefinitively to all new lines created."), 
 				NEW_TEXT_LINE);
 		paragraph.addElement(new Text("Of course, new lines and new pages can be created at any time."), 
@@ -92,7 +92,7 @@ public class DocumentTest {
 		paragraphStyle = new ParagraphStyle();
 		paragraphStyle.setFontColor(emphaseColor);
 		paragraph = new Paragraph(paragraphStyle, new Text("A color can be defined for an entire paragraph but also for ")
-				, new Text(emphaseStyle, "a subset ")
+				, new Text(codeStyle, "a subset ")
 				, new Text("of the same paragraph."));
 		document.addParagraph(paragraph);
 
@@ -100,7 +100,7 @@ public class DocumentTest {
 		plainUnderlined.setFontColor(emphaseColor);
 		plainUnderlined.setUnderlined(true);
 		
-		TextStyle italicUnderlined = new TextStyle(FontsVariant.PLAIN);
+		TextStyle italicUnderlined = new TextStyle(FontsVariant.ITALIC);
 		italicUnderlined.setUnderlined(true);
 		
 		paragraph = new Paragraph(new ParagraphStyle(TIMES_ROMAN, FontsVariant.BOLD_ITALIC, 12), new Text("This paragraph demonstrate that text can simply be put in ")
@@ -146,7 +146,7 @@ public class DocumentTest {
 		paragraphStyle.setLineSpacing(1.5f);
 		paragraph = new Paragraph(paragraphStyle, "This paragraph shows that a vertical line spacing ratio can be applied between each line of a paragraph."
 				+ " The standard line spacing is just the size of the font. The line spacing ratio is the multication of itself by the font size."
-				+ " So if line spacing is set to 2, an empty space of the size of the font is left blanck between two lines."
+				+ " So if line spacing is set to 2, an empty space of the size of the font is left blank between two lines."
 				+ " Both the lines wrapped automatically and"
 				, NEW_LINE, "The ones created specifically"
 				, NEW_LINE, "will be affected by vertical line spacing ratio.");
@@ -158,7 +158,7 @@ public class DocumentTest {
 		document.addParagraph(new Paragraph(titleStyle, "Page styles"));
 		
 		paragraphStyle = new ParagraphStyle();
-		paragraph = new Paragraph(paragraphStyle, "This page show a page with a different orientation and size.");
+		paragraph = new Paragraph(paragraphStyle, "This page show a page with a different orientation and size.", NEW_LINE, "You can use default ones or create the ones you need.");
 		document.addParagraph(paragraph);
 		
 		document.addPage(PageStyle.A4_PORTRAIT);
@@ -196,7 +196,7 @@ public class DocumentTest {
 		Table table = new Table()
 			.addRow(new TableCell(tableHeaderCellStyle, columnHeaderParagraph), new TableCell(tableHeaderCellStyle, columnHeaderParagraph), new TableCell(tableHeaderCellStyle, columnHeaderParagraph), new TableCell(tableHeaderCellStyle, columnHeaderParagraph), new TableCell(tableHeaderCellStyle, columnHeaderParagraph))
 			.addRow(new TableCell(tableHeaderCellStyle, columnHeaderParagraph), new TableCell(tableHeaderCellStyle, columnHeaderParagraph), new TableCell(tableHeaderCellStyle, columnHeaderParagraph), new TableCell(tableHeaderCellStyle, columnHeaderParagraph), new TableCell(tableHeaderCellStyle, columnHeaderParagraph))
-			.addRow(new TableCell(cellParagraph, cellParagraph, cellParagraph), new TableCell(cellParagraph), new TableCell(cellParagraph))
+			.addRow(new TableCell(cellParagraph, cellParagraph, cellParagraph), new TableCell(cellParagraph), new TableCell(cellParagraph), new TableCell())
 			.addRow(new TableCell(cellParagraph).rowSpan(2).columnSpan(2), new TableCell(cellParagraph), new TableCell(cellParagraph))
 			.addRow(new TableCell(cellParagraph), new TableCell(cellParagraph), new TableCell(cellParagraph))
 			.addRow(new TableCell(tableFooterCellStyle, columnFooterParagraph), new TableCell(tableFooterCellStyle, columnFooterParagraph), new TableCell(tableFooterCellStyle, columnFooterParagraph));
