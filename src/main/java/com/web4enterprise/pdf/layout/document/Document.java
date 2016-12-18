@@ -162,81 +162,89 @@ public class Document {
 		//FIXME: recalculate columns widths to fit page width.
 		
 		for(TableRow row : table.getRows()) {
-			//FIXME: create page when needed.
-			int columnIndex = 0;
-			
-			float startX = currentPageStyle.getMargins().getLeft();
-			
-			float rowHeight = row.getHeight();
-			if(blockStartY - rowHeight < currentPageStyle.getMargins().getBottom()) {
-				addPage();
-			}
-			
-			for(TableCell cell : row.getCells()) {
-				TableCellStyle cellStyle = cell.getStyle();
-
-				float bottom = blockStartY - row.getHeight();
-				
-				//Fill background color.
-				if(cellStyle.getBackgroundColor() != null) {
-					StraightPath path = new StraightPath(new Point(startX, blockStartY), 
-							new Point(startX + table.getColumnWidth(columnIndex), blockStartY), 
-							new Point(startX + table.getColumnWidth(columnIndex), bottom),
-							new Point(startX, bottom));
-					path.setStroked(false);
-					path.setFilled(true);
-					path.setClosed(true);
-					path.setFillColor(cellStyle.getBackgroundColor());
-					currentPage.addPath(path);
-				}
-				
-				float paragraphStartY = blockStartY;
-				for(Paragraph paragraph : cell.getParagraphs()) {					
-					addParagraph(paragraph, new Rect(paragraphStartY, startX, paragraphStartY - row.getHeight(), startX + table.getColumnWidth(columnIndex)), paragraphStartY);
-					paragraphStartY -= paragraph.getHeight(table.getColumnWidth(columnIndex));
-				}
-				
-				//Top
-				if(cellStyle.getTopBorderStyle().width > 0 && cellStyle.getTopBorderStyle().lineStyle != LineStyle.NONE) {
-					BorderStyle borderStyle = cellStyle.getTopBorderStyle();
-					StraightPath path = new StraightPath(borderStyle.getWidth(), borderStyle.getColor(),
-							new Point(startX, blockStartY), 
-							new Point(startX + table.getColumnWidth(columnIndex), blockStartY));
-					currentPage.addPath(path);
-				}
-				
-				//Left
-				if(cellStyle.getLeftBorderStyle().width > 0 && cellStyle.getLeftBorderStyle().lineStyle != LineStyle.NONE) {
-					BorderStyle borderStyle = cellStyle.getLeftBorderStyle();
-					StraightPath path = new StraightPath(borderStyle.getWidth(), borderStyle.getColor(),
-							new Point(startX, blockStartY), 
-							new Point(startX, bottom));
-					currentPage.addPath(path);
-				}
-				
-				//Bottom
-				if(cellStyle.getBottomBorderStyle().width > 0 && cellStyle.getBottomBorderStyle().lineStyle != LineStyle.NONE) {
-					BorderStyle borderStyle = cellStyle.getBottomBorderStyle();
-					StraightPath path = new StraightPath(borderStyle.getWidth(), borderStyle.getColor(),
-							new Point(startX, bottom), 
-							new Point(startX + table.getColumnWidth(columnIndex), bottom));
-					currentPage.addPath(path);
-				}
-				
-				//Right
-				if(cellStyle.getRightBorderStyle().width > 0 && cellStyle.getRightBorderStyle().lineStyle != LineStyle.NONE) {
-					BorderStyle borderStyle = cellStyle.getRightBorderStyle();
-					StraightPath path = new StraightPath(borderStyle.getWidth(), borderStyle.getColor(),
-							new Point(startX + table.getColumnWidth(columnIndex), blockStartY), 
-							new Point(startX + table.getColumnWidth(columnIndex), bottom));
-					currentPage.addPath(path);
-				}
-				
-				startX += table.getColumnWidth(columnIndex);
-				columnIndex++;
-			}
-			blockStartY -= rowHeight;
+			createRow(table, row);
 		}
+	}
+
+	private void createRow(Table table, TableRow row) {
+		int columnIndex = 0;
+		
+		float startX = currentPageStyle.getMargins().getLeft();
+		
+		float rowHeight = row.getHeight();
+		if(blockStartY - rowHeight < currentPageStyle.getMargins().getBottom()) {
+			addPage();
+			if(table.isRepeatHeaderOnNewPage()) {
+				for(int i = 0; i < table.getNbHeaderRows(); i++) {
+					createRow(table, table.getRows().get(i));
+				}
+			}
+		}
+		
+		for(TableCell cell : row.getCells()) {
+			TableCellStyle cellStyle = cell.getStyle();
+
+			float bottom = blockStartY - row.getHeight();
+			
+			//Fill background color.
+			if(cellStyle.getBackgroundColor() != null) {
+				StraightPath path = new StraightPath(new Point(startX, blockStartY), 
+						new Point(startX + table.getColumnWidth(columnIndex), blockStartY), 
+						new Point(startX + table.getColumnWidth(columnIndex), bottom),
+						new Point(startX, bottom));
+				path.setStroked(false);
+				path.setFilled(true);
+				path.setClosed(true);
+				path.setFillColor(cellStyle.getBackgroundColor());
+				currentPage.addPath(path);
+			}
+			
+			float paragraphStartY = blockStartY;
+			for(Paragraph paragraph : cell.getParagraphs()) {					
+				addParagraph(paragraph, new Rect(paragraphStartY, startX, paragraphStartY - row.getHeight(), startX + table.getColumnWidth(columnIndex)), paragraphStartY);
+				paragraphStartY -= paragraph.getHeight(table.getColumnWidth(columnIndex));
+			}
+			
+			//Top
+			if(cellStyle.getTopBorderStyle().width > 0 && cellStyle.getTopBorderStyle().lineStyle != LineStyle.NONE) {
+				BorderStyle borderStyle = cellStyle.getTopBorderStyle();
+				StraightPath path = new StraightPath(borderStyle.getWidth(), borderStyle.getColor(),
+						new Point(startX, blockStartY), 
+						new Point(startX + table.getColumnWidth(columnIndex), blockStartY));
+				currentPage.addPath(path);
+			}
+			
+			//Left
+			if(cellStyle.getLeftBorderStyle().width > 0 && cellStyle.getLeftBorderStyle().lineStyle != LineStyle.NONE) {
+				BorderStyle borderStyle = cellStyle.getLeftBorderStyle();
+				StraightPath path = new StraightPath(borderStyle.getWidth(), borderStyle.getColor(),
+						new Point(startX, blockStartY), 
+						new Point(startX, bottom));
+				currentPage.addPath(path);
+			}
+			
+			//Bottom
+			if(cellStyle.getBottomBorderStyle().width > 0 && cellStyle.getBottomBorderStyle().lineStyle != LineStyle.NONE) {
+				BorderStyle borderStyle = cellStyle.getBottomBorderStyle();
+				StraightPath path = new StraightPath(borderStyle.getWidth(), borderStyle.getColor(),
+						new Point(startX, bottom), 
+						new Point(startX + table.getColumnWidth(columnIndex), bottom));
+				currentPage.addPath(path);
+			}
+			
+			//Right
+			if(cellStyle.getRightBorderStyle().width > 0 && cellStyle.getRightBorderStyle().lineStyle != LineStyle.NONE) {
+				BorderStyle borderStyle = cellStyle.getRightBorderStyle();
+				StraightPath path = new StraightPath(borderStyle.getWidth(), borderStyle.getColor(),
+						new Point(startX + table.getColumnWidth(columnIndex), blockStartY), 
+						new Point(startX + table.getColumnWidth(columnIndex), bottom));
+				currentPage.addPath(path);
+			}
+			
+			startX += table.getColumnWidth(columnIndex);
+			columnIndex++;
+		}
+		blockStartY -= rowHeight;
 	}
 
 	public Image createImage(InputStream imageStream) throws PdfGenerationException {

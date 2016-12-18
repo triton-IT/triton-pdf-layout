@@ -195,6 +195,7 @@ public class DocumentTest {
 		
 		Table table = new Table()
 			.addRow(new TableCell(tableHeaderCellStyle, columnHeaderParagraph), new TableCell(tableHeaderCellStyle, columnHeaderParagraph), new TableCell(tableHeaderCellStyle, columnHeaderParagraph), new TableCell(tableHeaderCellStyle, columnHeaderParagraph), new TableCell(tableHeaderCellStyle, columnHeaderParagraph))
+			.addRow(new TableCell(tableHeaderCellStyle, columnHeaderParagraph), new TableCell(tableHeaderCellStyle, columnHeaderParagraph), new TableCell(tableHeaderCellStyle, columnHeaderParagraph), new TableCell(tableHeaderCellStyle, columnHeaderParagraph), new TableCell(tableHeaderCellStyle, columnHeaderParagraph))
 			.addRow(new TableCell(cellParagraph, cellParagraph, cellParagraph), new TableCell(cellParagraph), new TableCell(cellParagraph))
 			.addRow(new TableCell(cellParagraph).rowSpan(2).columnSpan(2), new TableCell(cellParagraph), new TableCell(cellParagraph))
 			.addRow(new TableCell(cellParagraph), new TableCell(cellParagraph), new TableCell(cellParagraph))
@@ -202,6 +203,7 @@ public class DocumentTest {
 		
 		table.setColumnWidth(0, 50);
 		table.setColumnWidth(1, 50);
+		table.setNbHeaderRows(2);
 		document.addTable(table);
 
 		//Table of content.

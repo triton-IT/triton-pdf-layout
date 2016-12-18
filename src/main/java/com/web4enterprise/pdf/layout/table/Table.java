@@ -10,6 +10,8 @@ public class Table {
 
 	protected Map<Integer, Float> fixedColumnsWidths = new HashMap<>();
 	protected List<Float> columnsWidths = new ArrayList<>();
+	protected boolean repeatHeaderOnNewPage = true;
+	protected int nbHeaderRows = 1;
 	
 	public Table addRow(TableCell...cells) {
 		rows.add(new TableRow(cells));
@@ -33,6 +35,22 @@ public class Table {
 		fixedColumnsWidths.put(columnIndex, columnWidth);
 	}
 	
+	public boolean isRepeatHeaderOnNewPage() {
+		return repeatHeaderOnNewPage;
+	}
+
+	public void setRepeatHeaderOnNewPage(boolean repeatHeaderOnNewPage) {
+		this.repeatHeaderOnNewPage = repeatHeaderOnNewPage;
+	}
+
+	public int getNbHeaderRows() {
+		return nbHeaderRows;
+	}
+
+	public void setNbHeaderRows(int nbHeaderRows) {
+		this.nbHeaderRows = nbHeaderRows;
+	}
+
 	protected void calculateRowsHeights() {
 		for(TableRow row : rows) {
 			int columnIndex = 0;
