@@ -10,12 +10,31 @@ import com.web4enterprise.pdf.layout.paragraph.Paragraph;
 public class TableCell {
 	public TableCellStyle cellStyle = TableCellStyle.THIN_SOLID_BORDERS;
 	protected List<Paragraph> paragraphs = new ArrayList<>();
-	protected int rowSpan = 0;
-	protected int columnSpan = 0;
+	protected int mergedRows = 0;
+	protected int mergedColumns = 0;
+	
+	public TableCell() {
+		
+	}
+	
+	public TableCell(String... values) {
+		if(values != null) {
+			for(String value : values) {
+				this.paragraphs.add(new Paragraph(value));
+			}
+		}
+	}
 	
 	public TableCell(Paragraph... paragraphs) {
 		if(paragraphs != null) {
 			this.paragraphs = Arrays.asList(paragraphs);
+		}
+	}
+	
+	public TableCell(TableCellStyle style, String... values) {
+		this(values);
+		if(style != null) {
+			cellStyle = style;
 		}
 	}
 	
@@ -26,13 +45,13 @@ public class TableCell {
 		}
 	}
 	
-	public TableCell rowSpan(int nbRows) {
-		rowSpan = nbRows;
+	public TableCell mergeRows(int nbRows) {
+		mergedRows = nbRows;
 		return this;
 	}
 	
-	public TableCell columnSpan(int nbColumns) {
-		columnSpan = nbColumns;
+	public TableCell mergeColumns(int nbColumns) {
+		mergedColumns = nbColumns;
 		return this;
 	}
 	

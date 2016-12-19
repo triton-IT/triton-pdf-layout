@@ -176,15 +176,12 @@ public class DocumentTest {
 		
 		paragraphStyle = new ParagraphStyle(TIMES_ROMAN, 14);
 		paragraphStyle.setFontColor(emphaseColor);
-		Paragraph columnHeaderParagraph = new Paragraph(paragraphStyle, "This is a column header.");
 		
 		paragraphStyle = new ParagraphStyle();
 		paragraphStyle.setLineSpacing(2.0f);
-		Paragraph cellParagraph = new Paragraph(paragraphStyle, "This is a cell content.", NEW_LINE, "with another line");
 		
 		paragraphStyle = new ParagraphStyle();
 		paragraphStyle.setFontColor(codeColor);
-		Paragraph columnFooterParagraph = new Paragraph(paragraphStyle, "This is a column footer.");
 		
 		TableCellStyle tableHeaderCellStyle = new TableCellStyle();
 		tableHeaderCellStyle.setBordersStyle(new BorderStyle(4.0f, darkEmphaseColor), BorderStyle.THIN_SOLID, BorderStyle.THIN_SOLID, BorderStyle.THIN_SOLID);
@@ -193,18 +190,26 @@ public class DocumentTest {
 		TableCellStyle tableFooterCellStyle = new TableCellStyle(lightCodeColor);
 		tableFooterCellStyle.setBordersStyle(BorderStyle.THIN_SOLID, BorderStyle.THIN_SOLID, new BorderStyle(2.0f, darkCodeColor), BorderStyle.THIN_SOLID);
 		
+		ParagraphStyle tableHeaderStyle = new ParagraphStyle(TIMES_ROMAN, FontsVariant.PLAIN, 12, titleColor);
 		Table table = new Table()
-			.addRow(new TableCell(tableHeaderCellStyle, columnHeaderParagraph), new TableCell(tableHeaderCellStyle, columnHeaderParagraph), new TableCell(tableHeaderCellStyle, columnHeaderParagraph), new TableCell(tableHeaderCellStyle, columnHeaderParagraph), new TableCell(tableHeaderCellStyle, columnHeaderParagraph))
-			.addRow(new TableCell(tableHeaderCellStyle, columnHeaderParagraph), new TableCell(tableHeaderCellStyle, columnHeaderParagraph), new TableCell(tableHeaderCellStyle, columnHeaderParagraph), new TableCell(tableHeaderCellStyle, columnHeaderParagraph), new TableCell(tableHeaderCellStyle, columnHeaderParagraph))
-			.addRow(new TableCell(cellParagraph, cellParagraph, cellParagraph), new TableCell(cellParagraph), new TableCell(cellParagraph), new TableCell())
-			.addRow(new TableCell(cellParagraph).rowSpan(2).columnSpan(2), new TableCell(cellParagraph), new TableCell(cellParagraph))
-			.addRow(new TableCell(cellParagraph), new TableCell(cellParagraph), new TableCell(cellParagraph))
-			.addRow(new TableCell(tableFooterCellStyle, columnFooterParagraph), new TableCell(tableFooterCellStyle, columnFooterParagraph), new TableCell(tableFooterCellStyle, columnFooterParagraph));
+			.addRow(new TableCell(tableHeaderCellStyle, new Paragraph(tableHeaderStyle, "How to ...")), new TableCell(tableHeaderCellStyle, new Paragraph(tableHeaderStyle, "Code")))
+			.addRow(new TableCell(new Paragraph(emphaseStyle, "Create a table")), new TableCell(new Paragraph(codeStyle, "Table table = new Table()")))
+			.addRow(new TableCell(new Paragraph(emphaseStyle, "Add a row")), new TableCell(new Paragraph(codeStyle, "table.addRow(TableCell...)")))
+			.addRow(new TableCell(new Paragraph(emphaseStyle, "Add a cell to a row")), new TableCell(new Paragraph(codeStyle, "new TableCell(\"text of cell\")")))
+			.addRow(new TableCell(new Paragraph(emphaseStyle, "Control column width")), new TableCell(new Paragraph(codeStyle, "table.setColumnWidth(columnIndex, width);")))
+			.addRow(new TableCell(new Paragraph(emphaseStyle, "Add table to page")), new TableCell(new Paragraph(codeStyle, "document.addTable(table)")))
+			.addRow(new TableCell(new Paragraph(emphaseStyle, "Merge rows"), new Paragraph(codeStyle, "todo")).mergeRows(2))
+			.addRow(new TableCell(new Paragraph(emphaseStyle, "Merge columns"), new Paragraph(codeStyle, "todo")).mergeColumns(2))
+			.addRow(new TableCell(new Paragraph(emphaseStyle, "Repeat header on a new page")), new TableCell(new Paragraph(codeStyle, "setRepeatHeaderOnNewPage(true)")))
+			.addRow(new TableCell(new Paragraph(emphaseStyle, "Create a cell style")), new TableCell(new Paragraph(codeStyle, "TableCellStyle cellStyle = new TableCellStyle()")))
+			.addRow(new TableCell(new Paragraph(emphaseStyle, "Affect style to cell")), new TableCell(new Paragraph(codeStyle, "new TableCell(cellStyle, paragraph)")))
+			.addRow(new TableCell(tableFooterCellStyle, new Paragraph("Add footer")), new TableCell(tableFooterCellStyle, new Paragraph(codeStyle, "Just create a new row with a different style.")));
 		
-		table.setColumnWidth(0, 50);
-		table.setColumnWidth(1, 50);
-		table.setNbHeaderRows(2);
+		table.setColumnWidth(0, 237.5f);
+		table.setColumnWidth(1, 237.5f);
 		document.addTable(table);
+		
+		document.addParagraph(new Paragraph(NEW_LINE, "More information on tables in table.pdf"));
 
 		//Table of content.
 		document.addParagraph(new Paragraph(titleStyle, "Adding table of content"));
