@@ -7,6 +7,7 @@ import static com.web4enterprise.pdf.layout.text.Text.NEW_TEXT_LINE;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Date;
 
 import org.junit.Test;
 
@@ -14,6 +15,8 @@ import com.web4enterprise.pdf.core.exceptions.PdfGenerationException;
 import com.web4enterprise.pdf.core.font.FontsVariant;
 import com.web4enterprise.pdf.core.styling.Color;
 import com.web4enterprise.pdf.layout.image.Image;
+import com.web4enterprise.pdf.layout.page.PageFooter;
+import com.web4enterprise.pdf.layout.page.PageHeader;
 import com.web4enterprise.pdf.layout.page.PageStyle;
 import com.web4enterprise.pdf.layout.paragraph.Paragraph;
 import com.web4enterprise.pdf.layout.paragraph.ParagraphStyle;
@@ -43,20 +46,32 @@ public class DocumentTest {
 		Color darkEmphaseColor = new Color(100, 100, 0);
 		ParagraphStyle emphaseStyle = new ParagraphStyle();
 		emphaseStyle.setFontColor(emphaseColor);
+		ParagraphStyle standardStyle = new ParagraphStyle();
+		
+		PageHeader pageHeader = new PageHeader();
+		ParagraphStyle paragraphHeaderStyle = new ParagraphStyle();
+		paragraphHeaderStyle.setMargins(new Margins(0.0f, 0.0f, 15.0f, 0.0f));
+		pageHeader.addElement(new Paragraph(paragraphHeaderStyle, "SimplyPDF-layout - web4enterprise"));
+		PageFooter pageFooter = new PageFooter();
+		ParagraphStyle paragraphFooterStyle = new ParagraphStyle();
+		paragraphFooterStyle.setMargins(new Margins(15.0f, 0.0f, 0.0f, 0.0f));
+		pageFooter.addElement(new Paragraph(paragraphFooterStyle, new Date().toString()));
 		
 		Document document = new Document();
+		document.addPage(pageHeader, pageFooter);
+		Image logo = document.createImage(this.getClass().getResourceAsStream("/logo.png"));
 
 		//Creating a document.
-		document.addParagraph(new Paragraph(titleStyle, "Creating a document"));
+		document.addElement(new Paragraph(titleStyle, "Creating a document"));
 		
 		Paragraph paragraph = new Paragraph("A PDF is created with:", NEW_LINE);
 		paragraph.addElement(new Text(codeStyle, "Document document = new Document();"), NEW_TEXT_LINE,
 				new Text("and rendered with;"), NEW_TEXT_LINE,
 				new Text(codeStyle, "document.write(out);"));
-		document.addParagraph(paragraph);
+		document.addElement(paragraph);
 
 		//Adding texts, paragraphs and pages.
-		document.addParagraph(new Paragraph(titleStyle, "Adding texts, paragraphs and pages"));
+		document.addElement(new Paragraph(titleStyle, "Adding texts, paragraphs and pages"));
 
 		paragraph = new Paragraph("A document created with no page style uses the default one: A4 portrait.", NEW_LINE);
 		paragraph.addElement(new Text("No need to add new pages, when an element does not fit into the page, a new page with same style than the previous one is created."), 
@@ -66,7 +81,7 @@ public class DocumentTest {
 				NEW_TEXT_LINE);
 		paragraph.addElement(new Text("Of course, new lines and new pages can be created at any time."), 
 				NEW_TEXT_LINE);
-		document.addParagraph(paragraph);
+		document.addElement(paragraph);
 		
 		paragraph = new Paragraph("A paragraph is created with:", NEW_LINE);
 		paragraph.addElement(new Text(codeStyle, "Paragraph paragraph = new Paragraph(\"Text of paragraph\");"), NEW_TEXT_LINE,
@@ -75,26 +90,22 @@ public class DocumentTest {
 				new Text("Paragraph style (margins, first line margin, text color, size, font, etc.) can be defined using the constructor for most of parameters. For others, "
 						+ "getters and setters can be used."), NEW_TEXT_LINE,
 				new Text("The same applies to most of the classes (Page, Text, etc.)."));
-		document.addParagraph(paragraph);
+		document.addElement(paragraph);
 
 		//Adding images and graphics
-		document.addParagraph(new Paragraph(titleStyle, "Adding images and graphics"));
+		document.addElement(new Paragraph(titleStyle, "Adding images and graphics"));
 		
-		Image image = document.createImage(this.getClass().getResourceAsStream("/test.png"));
-		image.setHeight(12, true);
-		ParagraphStyle paragraphStyle = new ParagraphStyle();
-		paragraph = new Paragraph(paragraphStyle, new Text("A paragraph can contain text but also images like this one:"), image);
-		document.addParagraph(paragraph);
+		logo.setHeight(16, true);
+		paragraph = new Paragraph(standardStyle, new Text("A paragraph can contain text but also images like this one:"), logo);
+		document.addElement(paragraph);
 
 		//Text styles.
-		document.addParagraph(new Paragraph(titleStyle, "Text styles"));
+		document.addElement(new Paragraph(titleStyle, "Text styles"));
 		
-		paragraphStyle = new ParagraphStyle();
-		paragraphStyle.setFontColor(emphaseColor);
-		paragraph = new Paragraph(paragraphStyle, new Text("A color can be defined for an entire paragraph but also for ")
+		paragraph = new Paragraph(emphaseStyle, new Text("A color can be defined for an entire paragraph but also for ")
 				, new Text(codeStyle, "a subset ")
 				, new Text("of the same paragraph."));
-		document.addParagraph(paragraph);
+		document.addElement(paragraph);
 
 		TextStyle plainUnderlined = new TextStyle(FontsVariant.PLAIN);
 		plainUnderlined.setFontColor(emphaseColor);
@@ -109,12 +120,12 @@ public class DocumentTest {
 				, new Text(plainUnderlined, " and underlined.")
 				, new Text(new TextStyle(TIMES_ROMAN, 14), " Text size can also be changed within a paragraph.")
 				, NEW_TEXT_LINE, new Text("Text styles needs to be used inside a \"Text\" object. A paragraph allow a simple String or Text object as parameter."));
-		document.addParagraph(paragraph);
+		document.addElement(paragraph);
 
 		//Paragraph styles.
-		document.addParagraph(new Paragraph(titleStyle, "Paragraph styles"));
+		document.addElement(new Paragraph(titleStyle, "Paragraph styles"));
 		
-		paragraphStyle = new ParagraphStyle(TIMES_ROMAN, 14);
+		ParagraphStyle paragraphStyle = new ParagraphStyle(TIMES_ROMAN, 14);
 		paragraphStyle.setMargins(new Margins(20));
 		paragraphStyle.setFirstLineMargin(20);
 		paragraph = new Paragraph(paragraphStyle, "This paragraph has a margin of 20 on each side plus a first line margin of 20."
@@ -122,7 +133,7 @@ public class DocumentTest {
 				, NEW_LINE, "So, the first line is shifted by 40 pt from the left while other lines of the paragraph are shifted by 20."
 				, NEW_LINE, "This paragraph also ends from 20 pt before page margins and have an top and bottom margin of 20 too."
 				, NEW_LINE, "Text of this paragraph has a size of 14 instead of 12 in a default one.");
-		document.addParagraph(paragraph);
+		document.addElement(paragraph);
 		
 		paragraphStyle = new ParagraphStyle();
 		paragraphStyle.setAlignment(Alignment.RIGHT);
@@ -132,7 +143,7 @@ public class DocumentTest {
 				+ " So, the text will not be displayed until start of paragraph but with a space of the size of the first line margin."
 				+ " The others line will start with the default paragraph margin."
 				, NEW_LINE, "This even works with new lines inside a paragraph. New lines will not be sensitive to first line of paragraph margin.");
-		document.addParagraph(paragraph);
+		document.addElement(paragraph);
 		
 		paragraphStyle = new ParagraphStyle();
 		paragraphStyle.setAlignment(Alignment.CENTER);
@@ -140,7 +151,7 @@ public class DocumentTest {
 		paragraphStyle.setFirstLineMargin(50);
 		paragraph = new Paragraph(paragraphStyle, "This paragraph is aligned to center with a first line margin."
 				+ " It demonstrate the same principles than the previous paragraph.");
-		document.addParagraph(paragraph);
+		document.addElement(paragraph);
 
 		paragraphStyle = new ParagraphStyle();
 		paragraphStyle.setLineSpacing(1.5f);
@@ -150,38 +161,43 @@ public class DocumentTest {
 				+ " Both the lines wrapped automatically and"
 				, NEW_LINE, "The ones created specifically"
 				, NEW_LINE, "will be affected by vertical line spacing ratio.");
-		document.addParagraph(paragraph);
+		document.addElement(paragraph);
 
 		//Page styles.
 		document.addPage(PageStyle.A8_LANDSCAPE);
 		
-		document.addParagraph(new Paragraph(titleStyle, "Page styles"));
+		document.addElement(new Paragraph(titleStyle, "Page styles"));
 		
-		paragraphStyle = new ParagraphStyle();
-		paragraph = new Paragraph(paragraphStyle, "This page show a page with a different orientation and size.", NEW_LINE, "You can use default ones or create the ones you need.");
-		document.addParagraph(paragraph);
-		
-		document.addPage(PageStyle.A4_PORTRAIT);
+		paragraph = new Paragraph(standardStyle, "This page show a page with a different orientation and size.", NEW_LINE, "You can use default ones or create the ones you need.");
+		document.addElement(paragraph);
 
-		//Headers and footer.
-		document.addParagraph(new Paragraph(titleStyle, "Adding headers and footers"));
+		//Create header for next page.
+		pageHeader = new PageHeader();
+		pageHeader.addElement(new Paragraph("SimplyPDF-layout - web4enterprise - new page header example"));
 		
-		paragraphStyle = new ParagraphStyle();
-		paragraphStyle.setFontColor(emphaseColor);
-		paragraph = new Paragraph(paragraphStyle, "This still have to be coded.");
-		document.addParagraph(paragraph);
+		//Set footer before rendering any other element.
+		pageFooter = new PageFooter();
+		pageFooter.addElement(new Paragraph(new Date().toString() + " - new page footer example"));
+		
+		//Add a page with new header.
+		document.addPage(PageStyle.A4_PORTRAIT, pageHeader, pageFooter);
+		
+		//Headers and footer title.
+		document.addElement(new Paragraph(titleStyle, "Adding headers and footers"));
+		
+		//Headers and footers explanations.
+		paragraph = new Paragraph(standardStyle, "Headers and footers can be set once for all for every page or when adding a new page.");
+		document.addElement(paragraph);
+		
+		paragraph = new Paragraph(codeStyle, "PageHeader pageHeader = new PageHeader();", 
+				NEW_LINE, 
+				"pageHeader.addElement(new Paragraph(\"SimplyPDF-layout - web4enterprise\"));", 
+				NEW_LINE,
+				"document.addPage(pageHeader, pageFooter);");
+		document.addElement(paragraph);
 
 		//Tables.
-		document.addParagraph(new Paragraph(titleStyle, "Adding tables"));
-		
-		paragraphStyle = new ParagraphStyle(TIMES_ROMAN, 14);
-		paragraphStyle.setFontColor(emphaseColor);
-		
-		paragraphStyle = new ParagraphStyle();
-		paragraphStyle.setLineSpacing(2.0f);
-		
-		paragraphStyle = new ParagraphStyle();
-		paragraphStyle.setFontColor(codeColor);
+		document.addElement(new Paragraph(titleStyle, "Adding tables"));
 		
 		TableCellStyle tableHeaderCellStyle = new TableCellStyle();
 		tableHeaderCellStyle.setBordersStyle(new BorderStyle(4.0f, darkEmphaseColor), BorderStyle.THIN_SOLID, BorderStyle.THIN_SOLID, BorderStyle.THIN_SOLID);
@@ -197,7 +213,7 @@ public class DocumentTest {
 			.addRow(new TableCell(new Paragraph(emphaseStyle, "Add a row")), new TableCell(new Paragraph(codeStyle, "table.addRow(TableCell...)")))
 			.addRow(new TableCell(new Paragraph(emphaseStyle, "Add a cell to a row")), new TableCell(new Paragraph(codeStyle, "new TableCell(\"text of cell\")")))
 			.addRow(new TableCell(new Paragraph(emphaseStyle, "Control column width")), new TableCell(new Paragraph(codeStyle, "table.setColumnWidth(columnIndex, width);")))
-			.addRow(new TableCell(new Paragraph(emphaseStyle, "Add table to page")), new TableCell(new Paragraph(codeStyle, "document.addTable(table)")))
+			.addRow(new TableCell(new Paragraph(emphaseStyle, "Add table to page")), new TableCell(new Paragraph(codeStyle, "document.addElement(table)")))
 			.addRow(new TableCell(new Paragraph(emphaseStyle, "Merge rows")).setMergedRows(1), new TableCell(new Paragraph(codeStyle, "cell.setMergedRows(nbRows)")))
 			.addRow(new TableCell(), new TableCell())
 			.addRow(new TableCell(new Paragraph(emphaseStyle, "Merge columns"), new Paragraph(codeStyle, "cell.setMergedColumns(nbColumns)")).setMergedColumns(1))
@@ -208,25 +224,23 @@ public class DocumentTest {
 		
 		table.setColumnWidth(0, 237.5f);
 		table.setColumnWidth(1, 237.5f);
-		document.addTable(table);
+		document.addElement(table);
 		
-		document.addParagraph(new Paragraph(NEW_LINE, "More information on tables in table.pdf"));
+		document.addElement(new Paragraph(NEW_LINE, "More information on tables in table.pdf"));
 
 		//Table of content.
-		document.addParagraph(new Paragraph(titleStyle, "Adding table of content"));
+		document.addElement(new Paragraph(titleStyle, "Adding table of content"));
 		
-		paragraphStyle = new ParagraphStyle();
-		paragraphStyle.setFontColor(emphaseColor);
-		paragraph = new Paragraph(paragraphStyle, "This still have to be coded.");
-		document.addParagraph(paragraph);
+		paragraph = new Paragraph(emphaseStyle, "This still have to be coded.");
+		document.addElement(paragraph);
 
 		//Footnotes.
-		document.addParagraph(new Paragraph(titleStyle, "Adding footnotes"));
+		document.addElement(new Paragraph(titleStyle, "Adding footnotes"));
 		
-		paragraphStyle = new ParagraphStyle();
-		paragraphStyle.setFontColor(emphaseColor);
-		paragraph = new Paragraph(paragraphStyle, "This still have to be coded.");
-		document.addParagraph(paragraph);
+		paragraph = new Paragraph(emphaseStyle, "This still have to be coded.");
+		document.addElement(paragraph);
+		
+		document.finish();
 		
 		document.write(out);
 	}

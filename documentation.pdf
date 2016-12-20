@@ -12,8 +12,9 @@ endobj
 7 0 R
 10 0 R
 13 0 R
+16 0 R
 ]
-/Count 4
+/Count 5
 /MediaBox [0 0 595 842]
 /Resources <<
 /Font <<
@@ -105,470 +106,446 @@ endobj
 >>
 endobj
 4 0 obj <<
-/Length 7229
+/Length 6890
 >>
 stream
 BT
+/Times-Roman 12 Tf
+60.0 771.224 Td
+0.0 0.0 0.0 rg
+(SimplyPDF-layout - web4enterprise) Tj
+ET
+BT
 /Times-Bold 14 Tf
-60.0 748.91 Td
+60.0 720.51794 Td
 0.8 0.33333334 0.34901962 rg
 (Creating a document) Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 725.082 Td
+60.0 696.68994 Td
 0.0 0.0 0.0 rg
 (A PDF is created with:) Tj
 ET
 BT
 /Times-Roman 12 Tf
-170.0 725.082 Td
+170.0 696.68994 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 711.68994 Td
+60.0 683.2979 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Italic 10 Tf
-60.0 711.68994 Td
+60.0 683.2979 Td
 0.5019608 0.3137255 0.5019608 rg
 (Document document = new Document\(\);) Tj
 ET
 BT
 /Times-Roman 12 Tf
-224.0 711.68994 Td
+224.0 683.2979 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 698.2979 Td
+60.0 669.9059 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 698.2979 Td
+60.0 669.9059 Td
 0.0 0.0 0.0 rg
 (and rendered with;) Tj
 ET
 BT
 /Times-Roman 12 Tf
-150.0 698.2979 Td
+150.0 669.9059 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 684.9059 Td
+60.0 656.51385 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Italic 10 Tf
-60.0 684.9059 Td
+60.0 656.51385 Td
 0.5019608 0.3137255 0.5019608 rg
 (document.write\(out\);) Tj
 ET
 BT
 /Times-Bold 14 Tf
-60.0 649.1998 Td
+60.0 620.8078 Td
 0.8 0.33333334 0.34901962 rg
 (Adding texts, paragraphs and pages) Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 625.3718 Td
+60.0 596.9798 Td
 0.0 0.0 0.0 rg
 (A document created with no page style uses the default one: A4 portrait.) Tj
 ET
 BT
 /Times-Roman 12 Tf
-407.0 625.3718 Td
+407.0 596.9798 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 611.9798 Td
+60.0 583.58777 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 611.9798 Td
+60.0 583.58777 Td
 0.0 0.0 0.0 rg
 (No need to add new pages, when an element does not fit into the page, a new page with same style) Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 598.58777 Td
+60.0 570.19574 Td
 0.0 0.0 0.0 rg
 (than the previous one is created.) Tj
 ET
 BT
 /Times-Roman 12 Tf
-214.0 598.58777 Td
+214.0 570.19574 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 585.19574 Td
+60.0 556.8037 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 585.19574 Td
+60.0 556.8037 Td
 0.0 0.0 0.0 rg
 (The same is applicable to lines. When a line does not fit into the page width, the text is) Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 571.8037 Td
+60.0 543.4117 Td
 0.0 0.0 0.0 rg
 (automatically splitted on the last space that fits the page and the text that left is wrapped to a new) Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 558.4117 Td
+60.0 530.01965 Td
 0.0 0.0 0.0 rg
 (line. This same principle is applicable indefinitively to all new lines created.) Tj
 ET
 BT
 /Times-Roman 12 Tf
-425.0 558.4117 Td
+425.0 530.01965 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 545.01965 Td
+60.0 516.6276 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 545.01965 Td
+60.0 516.6276 Td
 0.0 0.0 0.0 rg
 (Of course, new lines and new pages can be created at any time.) Tj
 ET
 BT
 /Times-Roman 12 Tf
-362.0 545.01965 Td
+362.0 516.6276 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 531.6276 Td
+60.0 503.2356 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 518.2356 Td
+60.0 489.8436 Td
 0.0 0.0 0.0 rg
 (A paragraph is created with:) Tj
 ET
 BT
 /Times-Roman 12 Tf
-196.0 518.2356 Td
+196.0 489.8436 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 504.84357 Td
+60.0 476.4516 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Italic 10 Tf
-60.0 504.84357 Td
+60.0 476.4516 Td
 0.5019608 0.3137255 0.5019608 rg
 (Paragraph paragraph = new Paragraph\("Text of paragraph"\);) Tj
 ET
 BT
 /Times-Roman 12 Tf
-310.0 504.84357 Td
+310.0 476.4516 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 491.45157 Td
+60.0 463.0596 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 491.45157 Td
+60.0 463.0596 Td
 0.0 0.0 0.0 rg
 (A new page is created with;) Tj
 ET
 BT
 /Times-Roman 12 Tf
-193.0 491.45157 Td
+193.0 463.0596 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 478.05957 Td
+60.0 449.6676 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Italic 10 Tf
-60.0 478.05957 Td
+60.0 449.6676 Td
 0.5019608 0.3137255 0.5019608 rg
 (document.addPage\(\);) Tj
 ET
 BT
 /Times-Roman 12 Tf
-146.0 478.05957 Td
+146.0 449.6676 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 464.66757 Td
+60.0 436.2756 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 464.66757 Td
+60.0 436.2756 Td
 0.0 0.0 0.0 rg
 (Paragraph style \(margins, first line margin, text color, size, font, etc.\) can be defined using the) Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 451.27557 Td
+60.0 422.8836 Td
 0.0 0.0 0.0 rg
 (constructor for most of parameters. For others, getters and setters can be used.) Tj
 ET
 BT
 /Times-Roman 12 Tf
-435.0 451.27557 Td
+435.0 422.8836 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 437.88358 Td
+60.0 409.4916 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 437.88358 Td
+60.0 409.4916 Td
 0.0 0.0 0.0 rg
 (The same applies to most of the classes \(Page, Text, etc.\).) Tj
 ET
 BT
 /Times-Bold 14 Tf
-60.0 402.17758 Td
+60.0 373.7856 Td
 0.8 0.33333334 0.34901962 rg
 (Adding images and graphics) Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 378.34958 Td
+60.0 349.9576 Td
 0.0 0.0 0.0 rg
 (A paragraph can contain text but also images like this one:) Tj
 ET
 q
-36 0 0 12 341.0 378.34958 cm
+16 0 0 16 341.0 349.9576 cm
 /image6 Do
 Q
 BT
 /Times-Bold 14 Tf
-60.0 342.6436 Td
+60.0 314.25162 Td
 0.8 0.33333334 0.34901962 rg
 (Text styles) Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 318.81558 Td
+60.0 290.4236 Td
 0.5019608 0.5019608 0.23529412 rg
 (A color can be defined for an entire paragraph but also for ) Tj
 ET
 BT
 /Times-Italic 10 Tf
-342.0 318.81558 Td
+342.0 290.4236 Td
 0.5019608 0.3137255 0.5019608 rg
 (a subset ) Tj
 ET
 BT
 /Times-Roman 12 Tf
-377.0 318.81558 Td
+377.0 290.4236 Td
 0.5019608 0.5019608 0.23529412 rg
 (of the same paragraph.) Tj
 ET
 BT
 /Times-BoldItalic 12 Tf
-60.0 305.14758 Td
+60.0 276.7556 Td
 0.0 0.0 0.0 rg
 (This paragraph demonstrate that text can simply be put in ) Tj
 ET
 BT
 /Times-Bold 12 Tf
-349.0 305.14758 Td
+349.0 276.7556 Td
 0.0 0.0 0.0 rg
 (bold,) Tj
 ET
 BT
 /Times-Italic 12 Tf
-375.0 305.14758 Td
+375.0 276.7556 Td
 0.0 0.0 0.0 rg
 ( italic) Tj
 ET
-0.6 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 375.0 303.0 m 403.0 303.0 l S
+0.6 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 375.0 275.0 m 403.0 275.0 l S
 BT
 /Times-Roman 12 Tf
-403.0 305.14758 Td
+403.0 276.7556 Td
 0.5019608 0.5019608 0.23529412 rg
 ( and underlined.) Tj
 ET
-0.6 w 0.5019608 0.5019608 0.23529412 RG 0.0 0.0 0.0 rg 403.0 303.0 m 481.0 303.0 l S
+0.6 w 0.5019608 0.5019608 0.23529412 RG 0.0 0.0 0.0 rg 403.0 275.0 m 481.0 275.0 l S
 BT
 /Times-BoldItalic 14 Tf
-481.0 305.14758 Td
+481.0 276.7556 Td
 0.0 0.0 0.0 rg
 ( Text size) Tj
 ET
 BT
 /Times-BoldItalic 14 Tf
-60.0 291.47958 Td
+60.0 263.08762 Td
 0.0 0.0 0.0 rg
 (can also be changed within a paragraph.) Tj
 ET
 BT
 /Times-BoldItalic 12 Tf
-295.0 291.47958 Td
+295.0 263.08762 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-BoldItalic 12 Tf
-60.0 277.81158 Td
+60.0 249.41962 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-BoldItalic 12 Tf
-60.0 277.81158 Td
+60.0 249.41962 Td
 0.0 0.0 0.0 rg
 (Text styles needs to be used inside a "Text" object. A paragraph allow a simple String or Text) Tj
 ET
 BT
 /Times-BoldItalic 12 Tf
-60.0 264.1436 Td
+60.0 235.75162 Td
 0.0 0.0 0.0 rg
 (object as parameter.) Tj
 ET
 BT
 /Times-Bold 14 Tf
-60.0 228.43759 Td
+60.0 200.04562 Td
 0.8 0.33333334 0.34901962 rg
 (Paragraph styles) Tj
 ET
 BT
 /Times-Roman 14 Tf
-100.0 182.81358 Td
+100.0 154.42162 Td
 0.0 0.0 0.0 rg
 (This paragraph has a margin of 20 on each side plus a first line margin of) Tj
 ET
 BT
 /Times-Roman 14 Tf
-80.0 167.18959 Td
+80.0 138.79762 Td
 0.0 0.0 0.0 rg
 (20.) Tj
 ET
 BT
 /Times-Roman 14 Tf
-98.0 167.18959 Td
+98.0 138.79762 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 14 Tf
-80.0 151.5656 Td
+80.0 123.17364 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 14 Tf
-80.0 151.5656 Td
+80.0 123.17364 Td
 0.0 0.0 0.0 rg
 (It's also composed of few lines that are part of this same paragraph, so this) Tj
 ET
 BT
 /Times-Roman 14 Tf
-80.0 135.9416 Td
+80.0 107.54964 Td
 0.0 0.0 0.0 rg
 (paragraph configuration is applied to all lines of it.) Tj
 ET
 BT
 /Times-Roman 14 Tf
-364.0 135.9416 Td
+364.0 107.54964 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 14 Tf
-80.0 120.31762 Td
+80.0 91.92564 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 14 Tf
-80.0 120.31762 Td
+80.0 91.92564 Td
 0.0 0.0 0.0 rg
 (So, the first line is shifted by 40 pt from the left while other lines of the) Tj
 ET
 BT
-/Times-Roman 14 Tf
-80.0 104.69362 Td
+/Times-Roman 12 Tf
+60.0 62.615997 Td
 0.0 0.0 0.0 rg
-(paragraph are shifted by 20.) Tj
-ET
-BT
-/Times-Roman 14 Tf
-237.0 104.69362 Td
-0.0 0.0 0.0 rg
-() Tj
-ET
-BT
-/Times-Roman 14 Tf
-80.0 89.06962 Td
-0.0 0.0 0.0 rg
-() Tj
-ET
-BT
-/Times-Roman 14 Tf
-80.0 89.06962 Td
-0.0 0.0 0.0 rg
-(This paragraph also ends from 20 pt before page margins and have an top and) Tj
-ET
-BT
-/Times-Roman 14 Tf
-80.0 73.44562 Td
-0.0 0.0 0.0 rg
-(bottom margin of 20 too.) Tj
-ET
-BT
-/Times-Roman 14 Tf
-220.0 73.44562 Td
-0.0 0.0 0.0 rg
-() Tj
+(Wed Dec 21 00:05:23 CET 2016) Tj
 ET
 endstream
 endobj
@@ -579,20 +556,23 @@ endobj
 >>
 endobj
 6 0 obj <<
-/Length 1478
+/Length 632
 /Type /XObject
 /Subtype /Image
 /Filter /FlateDecode
 /BitsPerComponent 8
-/Width 121
-/Height 40
+/Width 128
+/Height 128
 /ColorSpace /DeviceRGB
 >>
 stream
-xúÌZ[HT]ˆˇΩ‰Ω∆ºîh•·ÛEIãJîº·√<©•">à†`ÑJ^5Pª‡É=§Z(Ö§— hÅÛí=å‘E≈Àx+oÂˇ—∆Õ¸Áú}G=áÙ|à»^Î;kÌoˆ^{Ì„$>zî(Ù≥´¿\Í)Ú#wæ1©%É"µdP§ñä‘íAëZ2Rjã=»í¸ﬂÖCÆ^Ej…†H-©%É"µdëöczıÍ’ù;w<==mmm˝¸¸rrr&''©ÛÔﬂø;::bccΩΩΩmllººº222∆««Yq«∆∆Ô›ªÊ··qÊÃ∞.\∏pÛÊÕäääπππ}3ﬂ‹‹lhhàååtuu˝ÚÂÀ)))›››˚Œã`xx¯¡É°°°nnn÷÷÷ÓÓÓ7n‹®ÆÆ^]]›7¥y0EÍççÃ¬ÇïJ•’j·π∂∂ñîîƒwprrè+{{˚ÊÊfë¥GGGπjµ	ãÃkggß††¿  JêÕ?~¸hññ˚¿©333Yö`c^âââ,á+WÆ¸¯ÒC‰·"hmmÃyffªFÑhú0á˚Î◊ØÑÑÒ∏ÿ_˝˝˝á◊ñ5eq5Œù;˜¯ÒcTå≠≠-¸.**¢¶[∑nQáââ	‚ÄΩIööö¯(,,loo2€€€¯Dt:›ÛÁœØ^ΩJÉ
-ng„-Ü2ıÈ”'l+xBü¥¥4énnee%∑¥¥ƒ'¢—hñññ]Ø◊øxÒUàX}||0ë#QòØßà…——ÒÀó/kVVñâXEJ	¢ÖááÓ≥gœ8÷Ø_ø“∏ııı|z]]KÍ˘˘yî&¢8øˇûœÖ÷ !æ|˘Ú@iÔS§.++„[QÑ©Cyy9ﬂkåXQCöÂ&''sLtø`7±Ëd£ÒÁU[[K±°X‹7oﬁü‘‘‘É¶-S§∆B‚[WVVƒñóóâ’¡¡·†Y°ª \___é)**äòXïÄIp^qqqdpppê≈•iõ±Bƒaä‘?˛‰[—›Qúå‚Ç°—	`	°ÿÜÑÑ∏∏∏‡0≤‡¡ŸŸô√BCHL8XìÇI04q2hπá˜œá6cÖà√©Õ‡ÓÎÄ⁄~Ì⁄5æ∂`˙"Zhëœó kC04)‘¶Éı|Û ã‘SSSX∆ÊÕ˜0Rnúì-unn.∑≥≥ÀœœG3Ä{%4]ƒ›/ãKàÒ]ïVπxÒ"\XX`qè≤Hçáå£VYZÌãmmm¨∏¨c∑~2HÔÔRB©ÈF^__$VUU±∏¥Ÿãââa≈çéé§WTTê¡€∑o≥∏«Y§V©Tdº≥≥ìœÍÎÎ√Èœ‚‚vIMOü>Â”ü<ybacŒZÍKJJ–#	¶=22œöîŸêEj⁄ﬂ¢ó´©©√áZçkQ^^Ær,≠Ë´-Ù'˜Ôﬂˇ¸˘3vÓÊ∏°£u¥¯?8\(LM---8&O≈ÒÓ›ªË˝D&e6dë˙√áú&ñzn
->|zz⁄””SÑN_7°sÊpq‡äº3ÜòjfA©wˇº©ÄÇsÃŒŒF+"˛··aA∫Z≠^\\$£RÒπP˚·√á"ç_PP–ªwÔXì2rIhµ⁄ÙÙt‘O'''Háj†—hL|8v}}}˝ıÎ◊œü?è'\∫t)%%•´´k˜œˇóØß¯˛˝{YYYdd$∫G»é†0∂COO´Ü+‡£ππôHç¬+w.'Xì8Ôà‘ïïïrßsíQ\\Lt∆…ãJ"Aƒì˝E≤‡‡‡“““ﬁﬁ^ùNg0677ız˝Î◊ØÈ}–‚^8üŒÔÏ±ö
-//ØŸŸŸ£™HÕGXXÿ∑oﬂé<ËÈî◊sy±±±Ë–‹››q¡<{ˆ,⁄≈¥¥¥∑oﬂS–”)µ,P§ñä‘íÅ%ÈôyÿÙ
+xúÌ‹AJÂ@ƒq!À ÄÇ‡¬;Â2"Ã>ê;=Wn¢Ωnd¶&Ù˚Í˝µ~Ù:TUñMÚ˘ˇp«æÔÀ≤L”t˜„¥R≠Z+ÿj∫ó˛FKµÆ´{§
+≠ÊæÇm€‹√‘ie›{˜ÊyvØRßïuÔ›sORÕΩwœΩG5˜ﬁ=˜’‹{˜‹{TsÔ›sÔQÕΩwœΩG5˜ﬁ=VZ´+≠Ç’àïV¡jƒJ´`5b•U∞±“*XçXi¨F¨¥
+V#VZ´+≠Ç’àïV¡jƒJ´`5b•U∞±“*XçXi¨F”~\.ÔÔ„œÂ‚jT``⁄◊˚á+W£Ÿﬂ+˚{eØÏÔï˝Ω≤øWˆ˜ ˛^Ÿﬂ+˚{eØÏÔï˝Ω¶}{|˙Û¸2¸¥«∫ïˆ™ü÷˛◊√Á˛∑É’àïV¡jƒJ´`5b•U∞±“*XçXi¨F¨¥
+V#VZ´+≠Ç’àïV¡jƒJ´`5b•U∞±“*XçXi¨F¨¥
+V#VZ´—®¥π9g`⁄‹?û00mÓﬂO»˛^Ÿﬂ+˚{eØÏÔï˝Ω≤øWˆ˜ ˛^Ÿﬂ+˚{eØÏÔ50m˛øt+≠Ç’àïV¡jƒJ´`5b•U∞±“*XçXi¨F¨¥
+V#VZ´+≠Ç’àïV¡jƒJ´`5b•U∞±“*XçXi¨F¨¥
+V£øß˝y‹{˜‹{TsÔ›sÔQÕΩwœΩG5˜ﬁ=˜’‹{˜‹{TsÔ›õÁŸ=IùV÷Ωwo€6˜*uZY˜ﬁΩ„8÷uuS°’ºÍG ßµT˚æ/À2Mì{§ÒZ©V≠ºÕÒ#"""""""""nÕéÈ˝∆
 endstream
 endobj
 7 0 obj <<
@@ -606,134 +586,182 @@ endobj
 >>
 endobj
 8 0 obj <<
-/Length 2367
+/Length 3066
 >>
 stream
 BT
+/Times-Roman 12 Tf
+60.0 771.224 Td
+0.0 0.0 0.0 rg
+(SimplyPDF-layout - web4enterprise) Tj
+ET
+BT
 /Times-Roman 14 Tf
-80.0 769.428 Td
+80.0 741.03595 Td
+0.0 0.0 0.0 rg
+(paragraph are shifted by 20.) Tj
+ET
+BT
+/Times-Roman 14 Tf
+237.0 741.03595 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 14 Tf
-80.0 769.428 Td
+80.0 705.4119 Td
+0.0 0.0 0.0 rg
+() Tj
+ET
+BT
+/Times-Roman 14 Tf
+80.0 705.4119 Td
+0.0 0.0 0.0 rg
+(This paragraph also ends from 20 pt before page margins and have an top and) Tj
+ET
+BT
+/Times-Roman 14 Tf
+80.0 689.7879 Td
+0.0 0.0 0.0 rg
+(bottom margin of 20 too.) Tj
+ET
+BT
+/Times-Roman 14 Tf
+220.0 689.7879 Td
+0.0 0.0 0.0 rg
+() Tj
+ET
+BT
+/Times-Roman 14 Tf
+80.0 674.1639 Td
+0.0 0.0 0.0 rg
+() Tj
+ET
+BT
+/Times-Roman 14 Tf
+80.0 674.1639 Td
 0.0 0.0 0.0 rg
 (Text of this paragraph has a size of 14 instead of 12 in a default one.) Tj
 ET
 BT
 /Times-Roman 12 Tf
-135.0 695.6 Td
+135.0 620.3359 Td
 0.0 0.0 0.0 rg
 (This paragraph is aligned to right. This shows that the first line margin is taken into) Tj
 ET
 BT
 /Times-Roman 12 Tf
-89.0 682.20795 Td
+89.0 606.94385 Td
 0.0 0.0 0.0 rg
 (account. So, the text will not be displayed until start of paragraph but with a space of the size) Tj
 ET
 BT
 /Times-Roman 12 Tf
-135.0 668.8159 Td
+135.0 593.5518 Td
 0.0 0.0 0.0 rg
 (of the first line margin. The others line will start with the default paragraph margin.) Tj
 ET
 BT
 /Times-Roman 12 Tf
-535.0 668.8159 Td
+535.0 593.5518 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-84.0 655.4239 Td
+84.0 580.1598 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-84.0 655.4239 Td
+84.0 580.1598 Td
 0.0 0.0 0.0 rg
 (This even works with new lines inside a paragraph. New lines will not be sensitive to first line) Tj
 ET
 BT
 /Times-Roman 12 Tf
-434.0 642.03186 Td
+434.0 566.76776 Td
 0.0 0.0 0.0 rg
 (of paragraph margin.) Tj
 ET
 BT
 /Times-Roman 12 Tf
-112.0 578.63983 Td
+112.0 503.37573 Td
 0.0 0.0 0.0 rg
 (This paragraph is aligned to center with a first line margin. It demonstrate the) Tj
 ET
 BT
 /Times-Roman 12 Tf
-215.5 565.2478 Td
+215.5 489.98373 Td
 0.0 0.0 0.0 rg
 (same principles than the previous paragraph.) Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 551.8558 Td
+60.0 476.59174 Td
 0.0 0.0 0.0 rg
 (This paragraph shows that a vertical line spacing ratio can be applied between each line of a) Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 531.76776 Td
+60.0 456.50372 Td
 0.0 0.0 0.0 rg
 (paragraph. The standard line spacing is just the size of the font. The line spacing ratio is the) Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 511.67975 Td
+60.0 436.4157 Td
 0.0 0.0 0.0 rg
 (multication of itself by the font size. So if line spacing is set to 2, an empty space of the size of the) Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 491.59174 Td
+60.0 416.3277 Td
 0.0 0.0 0.0 rg
 (font is left blank between two lines. Both the lines wrapped automatically and) Tj
 ET
 BT
 /Times-Roman 12 Tf
-434.0 491.59174 Td
+434.0 416.3277 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 471.50372 Td
+60.0 396.2397 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 471.50372 Td
+60.0 396.2397 Td
 0.0 0.0 0.0 rg
 (The ones created specifically) Tj
 ET
 BT
 /Times-Roman 12 Tf
-199.0 471.50372 Td
+199.0 396.2397 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 451.4157 Td
+60.0 376.15167 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 451.4157 Td
+60.0 376.15167 Td
 0.0 0.0 0.0 rg
 (will be affected by vertical line spacing ratio.) Tj
+ET
+BT
+/Times-Roman 12 Tf
+60.0 62.615997 Td
+0.0 0.0 0.0 rg
+(Wed Dec 21 00:05:23 CET 2016) Tj
 ET
 endstream
 endobj
@@ -754,50 +782,44 @@ endobj
 >>
 endobj
 11 0 obj <<
-/Length 564
+/Length 522
 >>
 stream
 BT
+/Times-Roman 12 Tf
+4.0 132.224 Td
+0.0 0.0 0.0 rg
+(SimplyPDF-layout - web4enterprise) Tj
+ET
+BT
 /Times-Bold 14 Tf
-4.0 109.91 Td
+4.0 81.518005 Td
 0.8 0.33333334 0.34901962 rg
 (Page styles) Tj
 ET
 BT
 /Times-Roman 12 Tf
-4.0 86.082 Td
+4.0 57.690002 Td
 0.0 0.0 0.0 rg
 (This page show a page with a different) Tj
 ET
 BT
 /Times-Roman 12 Tf
-4.0 72.69 Td
+4.0 44.298004 Td
 0.0 0.0 0.0 rg
 (orientation and size.) Tj
 ET
 BT
 /Times-Roman 12 Tf
-101.0 72.69 Td
+101.0 44.298004 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-4.0 59.298004 Td
+4.0 6.6159983 Td
 0.0 0.0 0.0 rg
-() Tj
-ET
-BT
-/Times-Roman 12 Tf
-4.0 59.298004 Td
-0.0 0.0 0.0 rg
-(You can use default ones or create the) Tj
-ET
-BT
-/Times-Roman 12 Tf
-4.0 45.906006 Td
-0.0 0.0 0.0 rg
-(ones you need.) Tj
+(Wed Dec 21 00:05:23 CET 2016) Tj
 ET
 endstream
 endobj
@@ -814,322 +836,42 @@ endobj
 15 0 R
 ]
 /Count 1
-/MediaBox [0 0 595 842]
+/MediaBox [0 0 210 147]
 >>
 endobj
 14 0 obj <<
-/Length 10974
+/Length 418
 >>
 stream
 BT
-/Times-Bold 14 Tf
-60.0 748.91 Td
-0.8 0.33333334 0.34901962 rg
-(Adding headers and footers) Tj
-ET
-BT
 /Times-Roman 12 Tf
-60.0 725.082 Td
-0.5019608 0.5019608 0.23529412 rg
-(This still have to be coded.) Tj
-ET
-BT
-/Times-Bold 14 Tf
-60.0 689.3759 Td
-0.8 0.33333334 0.34901962 rg
-(Adding tables) Tj
-ET
-1.0 w 0.0 0.0 0.0 RG 0.98039216 0.98039216 0.9411765 rg 60.0 676.3239 m 297.5 676.3239 l 297.5 662.9319 l 60.0 662.9319 l f
-BT
-/Times-Roman 12 Tf
-60.0 665.5479 Td
-0.8 0.33333334 0.34901962 rg
-(How to ...) Tj
-ET
-4.0 w 0.39215687 0.39215687 0.0 RG 0.0 0.0 0.0 rg 59.5 676.3239 m 298.0 676.3239 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 674.3239 m 60.0 663.4319 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 59.5 662.9319 m 298.0 662.9319 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.5 674.3239 m 297.5 663.4319 l S
-1.0 w 0.0 0.0 0.0 RG 0.98039216 0.98039216 0.9411765 rg 297.5 676.3239 m 535.0 676.3239 l 535.0 662.9319 l 297.5 662.9319 l f
-BT
-/Times-Roman 12 Tf
-297.5 665.5479 Td
-0.8 0.33333334 0.34901962 rg
-(Code) Tj
-ET
-4.0 w 0.39215687 0.39215687 0.0 RG 0.0 0.0 0.0 rg 297.0 676.3239 m 535.5 676.3239 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.5 674.3239 m 297.5 663.4319 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.0 662.9319 m 535.5 662.9319 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 535.0 674.3239 m 535.0 663.4319 l S
-BT
-/Times-Roman 12 Tf
-60.0 652.1559 Td
-0.5019608 0.5019608 0.23529412 rg
-(Create a table) Tj
-ET
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 59.5 662.9319 m 298.0 662.9319 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 662.4319 m 60.0 650.03986 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 59.5 649.53986 m 298.0 649.53986 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.5 662.4319 m 297.5 650.03986 l S
-BT
-/Times-Italic 10 Tf
-297.5 654.10187 Td
-0.5019608 0.3137255 0.5019608 rg
-(Table table = new Table\(\)) Tj
-ET
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.0 662.9319 m 535.5 662.9319 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.5 662.4319 m 297.5 650.03986 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.0 649.53986 m 535.5 649.53986 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 535.0 662.4319 m 535.0 650.03986 l S
-BT
-/Times-Roman 12 Tf
-60.0 638.76385 Td
-0.5019608 0.5019608 0.23529412 rg
-(Add a row) Tj
-ET
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 59.5 649.53986 m 298.0 649.53986 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 649.03986 m 60.0 636.6478 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 59.5 636.1478 m 298.0 636.1478 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.5 649.03986 m 297.5 636.6478 l S
-BT
-/Times-Italic 10 Tf
-297.5 640.70984 Td
-0.5019608 0.3137255 0.5019608 rg
-(table.addRow\(TableCell...\)) Tj
-ET
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.0 649.53986 m 535.5 649.53986 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.5 649.03986 m 297.5 636.6478 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.0 636.1478 m 535.5 636.1478 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 535.0 649.03986 m 535.0 636.6478 l S
-BT
-/Times-Roman 12 Tf
-60.0 625.3718 Td
-0.5019608 0.5019608 0.23529412 rg
-(Add a cell to a row) Tj
-ET
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 59.5 636.1478 m 298.0 636.1478 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 635.6478 m 60.0 623.2558 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 59.5 622.7558 m 298.0 622.7558 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.5 635.6478 m 297.5 623.2558 l S
-BT
-/Times-Italic 10 Tf
-297.5 627.3178 Td
-0.5019608 0.3137255 0.5019608 rg
-(new TableCell\("text of cell"\)) Tj
-ET
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.0 636.1478 m 535.5 636.1478 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.5 635.6478 m 297.5 623.2558 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.0 622.7558 m 535.5 622.7558 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 535.0 635.6478 m 535.0 623.2558 l S
-BT
-/Times-Roman 12 Tf
-60.0 611.9798 Td
-0.5019608 0.5019608 0.23529412 rg
-(Control column width) Tj
-ET
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 59.5 622.7558 m 298.0 622.7558 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 622.2558 m 60.0 609.8638 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 59.5 609.3638 m 298.0 609.3638 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.5 622.2558 m 297.5 609.8638 l S
-BT
-/Times-Italic 10 Tf
-297.5 613.9258 Td
-0.5019608 0.3137255 0.5019608 rg
-(table.setColumnWidth\(columnIndex, width\);) Tj
-ET
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.0 622.7558 m 535.5 622.7558 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.5 622.2558 m 297.5 609.8638 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.0 609.3638 m 535.5 609.3638 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 535.0 622.2558 m 535.0 609.8638 l S
-BT
-/Times-Roman 12 Tf
-60.0 598.58777 Td
-0.5019608 0.5019608 0.23529412 rg
-(Add table to page) Tj
-ET
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 59.5 609.3638 m 298.0 609.3638 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 608.8638 m 60.0 596.47174 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 59.5 595.97174 m 298.0 595.97174 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.5 608.8638 m 297.5 596.47174 l S
-BT
-/Times-Italic 10 Tf
-297.5 600.53375 Td
-0.5019608 0.3137255 0.5019608 rg
-(document.addTable\(table\)) Tj
-ET
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.0 609.3638 m 535.5 609.3638 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.5 608.8638 m 297.5 596.47174 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.0 595.97174 m 535.5 595.97174 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 535.0 608.8638 m 535.0 596.47174 l S
-BT
-/Times-Roman 12 Tf
-60.0 585.19574 Td
-0.5019608 0.5019608 0.23529412 rg
-(Merge rows) Tj
-ET
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 59.5 595.97174 m 298.0 595.97174 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 595.47174 m 60.0 569.68774 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 59.5 569.18774 m 298.0 569.18774 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.5 595.47174 m 297.5 569.68774 l S
-BT
-/Times-Italic 10 Tf
-297.5 587.1417 Td
-0.5019608 0.3137255 0.5019608 rg
-(cell.setMergedRows\(nbRows\)) Tj
-ET
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.0 595.97174 m 535.5 595.97174 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.5 595.47174 m 297.5 583.0797 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.0 582.5797 m 535.5 582.5797 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 535.0 595.47174 m 535.0 583.0797 l S
-BT
-/Times-Roman 12 Tf
-297.5 571.8037 Td
+4.0 132.224 Td
 0.0 0.0 0.0 rg
-() Tj
+(SimplyPDF-layout - web4enterprise) Tj
 ET
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.0 582.5797 m 535.5 582.5797 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.5 582.0797 m 297.5 569.6877 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.0 569.1877 m 535.5 569.1877 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 535.0 582.0797 m 535.0 569.6877 l S
 BT
 /Times-Roman 12 Tf
-60.0 558.4117 Td
-0.5019608 0.5019608 0.23529412 rg
-(Merge columns) Tj
-ET
-BT
-/Times-Italic 10 Tf
-60.0 546.96564 Td
-0.5019608 0.3137255 0.5019608 rg
-(cell.setMergedColumns\(nbColumns\)) Tj
-ET
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 59.5 569.1877 m 535.5 569.1877 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 568.6877 m 60.0 545.29565 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 59.5 544.79565 m 535.5 544.79565 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 535.0 568.6877 m 535.0 545.29565 l S
-BT
-/Times-Roman 12 Tf
-60.0 534.01965 Td
-0.5019608 0.5019608 0.23529412 rg
-(Repeat header on a new page) Tj
-ET
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 59.5 544.79565 m 298.0 544.79565 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 544.29565 m 60.0 531.9036 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 59.5 531.4036 m 298.0 531.4036 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.5 544.29565 m 297.5 531.9036 l S
-BT
-/Times-Italic 10 Tf
-297.5 535.96564 Td
-0.5019608 0.3137255 0.5019608 rg
-(setRepeatHeaderOnNewPage\(true\)) Tj
-ET
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.0 544.79565 m 535.5 544.79565 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.5 544.29565 m 297.5 531.9036 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.0 531.4036 m 535.5 531.4036 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 535.0 544.29565 m 535.0 531.9036 l S
-BT
-/Times-Roman 12 Tf
-60.0 520.6276 Td
-0.5019608 0.5019608 0.23529412 rg
-(Create a cell style) Tj
-ET
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 59.5 531.4036 m 298.0 531.4036 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 530.9036 m 60.0 518.5116 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 59.5 518.0116 m 298.0 518.0116 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.5 530.9036 m 297.5 518.5116 l S
-BT
-/Times-Italic 10 Tf
-297.5 522.5736 Td
-0.5019608 0.3137255 0.5019608 rg
-(TableCellStyle cellStyle = new TableCellStyle\(\)) Tj
-ET
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.0 531.4036 m 535.5 531.4036 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.5 530.9036 m 297.5 518.5116 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.0 518.0116 m 535.5 518.0116 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 535.0 530.9036 m 535.0 518.5116 l S
-BT
-/Times-Roman 12 Tf
-60.0 507.2356 Td
-0.5019608 0.5019608 0.23529412 rg
-(Affect style to cell) Tj
-ET
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 59.5 518.0116 m 298.0 518.0116 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 517.5116 m 60.0 505.1196 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 59.5 504.6196 m 298.0 504.6196 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.5 517.5116 m 297.5 505.1196 l S
-BT
-/Times-Italic 10 Tf
-297.5 509.1816 Td
-0.5019608 0.3137255 0.5019608 rg
-(new TableCell\(cellStyle, paragraph\)) Tj
-ET
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.0 518.0116 m 535.5 518.0116 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.5 517.5116 m 297.5 505.1196 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.0 504.6196 m 535.5 504.6196 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 535.0 517.5116 m 535.0 505.1196 l S
-1.0 w 0.0 0.0 0.0 RG 1.0 0.98039216 1.0 rg 60.0 504.6196 m 297.5 504.6196 l 297.5 491.2276 l 60.0 491.2276 l f
-BT
-/Times-Roman 12 Tf
-60.0 493.8436 Td
-0.0 0.0 0.0 rg
-(Add footer) Tj
-ET
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 59.5 504.6196 m 298.0 504.6196 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 504.1196 m 60.0 492.2276 l S
-2.0 w 0.39215687 0.0 0.39215687 RG 0.0 0.0 0.0 rg 59.5 491.2276 m 298.0 491.2276 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.5 504.1196 m 297.5 492.2276 l S
-1.0 w 0.0 0.0 0.0 RG 1.0 0.98039216 1.0 rg 297.5 504.6196 m 535.0 504.6196 l 535.0 491.2276 l 297.5 491.2276 l f
-BT
-/Times-Italic 10 Tf
-297.5 495.7896 Td
-0.5019608 0.3137255 0.5019608 rg
-(Just create a new row with a different style.) Tj
-ET
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.0 504.6196 m 535.5 504.6196 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.5 504.1196 m 297.5 492.2276 l S
-2.0 w 0.39215687 0.0 0.39215687 RG 0.0 0.0 0.0 rg 297.0 491.2276 m 535.5 491.2276 l S
-1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 535.0 504.1196 m 535.0 492.2276 l S
-BT
-/Times-Roman 12 Tf
-60.0 480.4516 Td
+4.0 103.832 Td
 0.0 0.0 0.0 rg
 () Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 467.0596 Td
+4.0 103.832 Td
 0.0 0.0 0.0 rg
-() Tj
+(You can use default ones or create the) Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 467.0596 Td
+4.0 90.44 Td
 0.0 0.0 0.0 rg
-(More information on tables in table.pdf) Tj
-ET
-BT
-/Times-Bold 14 Tf
-60.0 431.3536 Td
-0.8 0.33333334 0.34901962 rg
-(Adding table of content) Tj
+(ones you need.) Tj
 ET
 BT
 /Times-Roman 12 Tf
-60.0 407.5256 Td
-0.5019608 0.5019608 0.23529412 rg
-(This still have to be coded.) Tj
-ET
-BT
-/Times-Bold 14 Tf
-60.0 371.8196 Td
-0.8 0.33333334 0.34901962 rg
-(Adding footnotes) Tj
-ET
-BT
-/Times-Roman 12 Tf
-60.0 347.9916 Td
-0.5019608 0.5019608 0.23529412 rg
-(This still have to be coded.) Tj
+4.0 6.6159983 Td
+0.0 0.0 0.0 rg
+(Wed Dec 21 00:05:23 CET 2016) Tj
 ET
 endstream
 endobj
@@ -1139,28 +881,417 @@ endobj
 /Contents 14 0 R
 >>
 endobj
+16 0 obj <<
+/Type /Pages
+/Parent 2 0 R
+/Kids [
+18 0 R
+]
+/Count 1
+/MediaBox [0 0 595 842]
+>>
+endobj
+17 0 obj <<
+/Length 12083
+>>
+stream
+BT
+/Times-Roman 12 Tf
+60.0 771.224 Td
+0.0 0.0 0.0 rg
+(SimplyPDF-layout - web4enterprise - new page header example) Tj
+ET
+BT
+/Times-Bold 14 Tf
+60.0 735.51794 Td
+0.8 0.33333334 0.34901962 rg
+(Adding headers and footers) Tj
+ET
+BT
+/Times-Roman 12 Tf
+60.0 711.68994 Td
+0.0 0.0 0.0 rg
+(Headers and footers can be set once for all for every page or when adding a new page.) Tj
+ET
+BT
+/Times-Italic 10 Tf
+60.0 700.2439 Td
+0.5019608 0.3137255 0.5019608 rg
+(PageHeader pageHeader = new PageHeader\(\);) Tj
+ET
+BT
+/Times-Italic 10 Tf
+251.0 700.2439 Td
+0.5019608 0.3137255 0.5019608 rg
+() Tj
+ET
+BT
+/Times-Italic 10 Tf
+60.0 689.2439 Td
+0.5019608 0.3137255 0.5019608 rg
+() Tj
+ET
+BT
+/Times-Italic 10 Tf
+60.0 689.2439 Td
+0.5019608 0.3137255 0.5019608 rg
+(pageHeader.addElement\(new Paragraph\("SimplyPDF-layout - web4enterprise"\)\);) Tj
+ET
+BT
+/Times-Italic 10 Tf
+390.0 689.2439 Td
+0.5019608 0.3137255 0.5019608 rg
+() Tj
+ET
+BT
+/Times-Italic 10 Tf
+60.0 678.2439 Td
+0.5019608 0.3137255 0.5019608 rg
+() Tj
+ET
+BT
+/Times-Italic 10 Tf
+60.0 678.2439 Td
+0.5019608 0.3137255 0.5019608 rg
+(document.addPage\(pageHeader, pageFooter\);) Tj
+ET
+BT
+/Times-Bold 14 Tf
+60.0 642.9839 Td
+0.8 0.33333334 0.34901962 rg
+(Adding tables) Tj
+ET
+1.0 w 0.0 0.0 0.0 RG 0.98039216 0.98039216 0.9411765 rg 60.0 629.9319 m 297.5 629.9319 l 297.5 616.53986 l 60.0 616.53986 l f
+BT
+/Times-Roman 12 Tf
+60.0 619.1559 Td
+0.8 0.33333334 0.34901962 rg
+(How to ...) Tj
+ET
+4.0 w 0.39215687 0.39215687 0.0 RG 0.0 0.0 0.0 rg 59.5 629.9319 m 298.0 629.9319 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 627.9319 m 60.0 617.03986 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 59.5 616.53986 m 298.0 616.53986 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.5 627.9319 m 297.5 617.03986 l S
+1.0 w 0.0 0.0 0.0 RG 0.98039216 0.98039216 0.9411765 rg 297.5 629.9319 m 535.0 629.9319 l 535.0 616.53986 l 297.5 616.53986 l f
+BT
+/Times-Roman 12 Tf
+297.5 619.1559 Td
+0.8 0.33333334 0.34901962 rg
+(Code) Tj
+ET
+4.0 w 0.39215687 0.39215687 0.0 RG 0.0 0.0 0.0 rg 297.0 629.9319 m 535.5 629.9319 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.5 627.9319 m 297.5 617.03986 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.0 616.53986 m 535.5 616.53986 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 535.0 627.9319 m 535.0 617.03986 l S
+BT
+/Times-Roman 12 Tf
+60.0 605.76385 Td
+0.5019608 0.5019608 0.23529412 rg
+(Create a table) Tj
+ET
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 59.5 616.53986 m 298.0 616.53986 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 616.03986 m 60.0 603.6478 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 59.5 603.1478 m 298.0 603.1478 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.5 616.03986 m 297.5 603.6478 l S
+BT
+/Times-Italic 10 Tf
+297.5 607.70984 Td
+0.5019608 0.3137255 0.5019608 rg
+(Table table = new Table\(\)) Tj
+ET
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.0 616.53986 m 535.5 616.53986 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.5 616.03986 m 297.5 603.6478 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.0 603.1478 m 535.5 603.1478 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 535.0 616.03986 m 535.0 603.6478 l S
+BT
+/Times-Roman 12 Tf
+60.0 592.3718 Td
+0.5019608 0.5019608 0.23529412 rg
+(Add a row) Tj
+ET
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 59.5 603.1478 m 298.0 603.1478 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 602.6478 m 60.0 590.2558 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 59.5 589.7558 m 298.0 589.7558 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.5 602.6478 m 297.5 590.2558 l S
+BT
+/Times-Italic 10 Tf
+297.5 594.3178 Td
+0.5019608 0.3137255 0.5019608 rg
+(table.addRow\(TableCell...\)) Tj
+ET
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.0 603.1478 m 535.5 603.1478 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.5 602.6478 m 297.5 590.2558 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.0 589.7558 m 535.5 589.7558 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 535.0 602.6478 m 535.0 590.2558 l S
+BT
+/Times-Roman 12 Tf
+60.0 578.9798 Td
+0.5019608 0.5019608 0.23529412 rg
+(Add a cell to a row) Tj
+ET
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 59.5 589.7558 m 298.0 589.7558 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 589.2558 m 60.0 576.8638 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 59.5 576.3638 m 298.0 576.3638 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.5 589.2558 m 297.5 576.8638 l S
+BT
+/Times-Italic 10 Tf
+297.5 580.9258 Td
+0.5019608 0.3137255 0.5019608 rg
+(new TableCell\("text of cell"\)) Tj
+ET
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.0 589.7558 m 535.5 589.7558 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.5 589.2558 m 297.5 576.8638 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.0 576.3638 m 535.5 576.3638 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 535.0 589.2558 m 535.0 576.8638 l S
+BT
+/Times-Roman 12 Tf
+60.0 565.58777 Td
+0.5019608 0.5019608 0.23529412 rg
+(Control column width) Tj
+ET
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 59.5 576.3638 m 298.0 576.3638 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 575.8638 m 60.0 563.47174 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 59.5 562.97174 m 298.0 562.97174 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.5 575.8638 m 297.5 563.47174 l S
+BT
+/Times-Italic 10 Tf
+297.5 567.53375 Td
+0.5019608 0.3137255 0.5019608 rg
+(table.setColumnWidth\(columnIndex, width\);) Tj
+ET
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.0 576.3638 m 535.5 576.3638 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.5 575.8638 m 297.5 563.47174 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.0 562.97174 m 535.5 562.97174 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 535.0 575.8638 m 535.0 563.47174 l S
+BT
+/Times-Roman 12 Tf
+60.0 552.19574 Td
+0.5019608 0.5019608 0.23529412 rg
+(Add table to page) Tj
+ET
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 59.5 562.97174 m 298.0 562.97174 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 562.47174 m 60.0 550.0797 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 59.5 549.5797 m 298.0 549.5797 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.5 562.47174 m 297.5 550.0797 l S
+BT
+/Times-Italic 10 Tf
+297.5 554.1417 Td
+0.5019608 0.3137255 0.5019608 rg
+(document.addElement\(table\)) Tj
+ET
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.0 562.97174 m 535.5 562.97174 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.5 562.47174 m 297.5 550.0797 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.0 549.5797 m 535.5 549.5797 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 535.0 562.47174 m 535.0 550.0797 l S
+BT
+/Times-Roman 12 Tf
+60.0 538.8037 Td
+0.5019608 0.5019608 0.23529412 rg
+(Merge rows) Tj
+ET
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 59.5 549.5797 m 298.0 549.5797 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 549.0797 m 60.0 523.2957 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 59.5 522.7957 m 298.0 522.7957 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.5 549.0797 m 297.5 523.2957 l S
+BT
+/Times-Italic 10 Tf
+297.5 540.7497 Td
+0.5019608 0.3137255 0.5019608 rg
+(cell.setMergedRows\(nbRows\)) Tj
+ET
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.0 549.5797 m 535.5 549.5797 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.5 549.0797 m 297.5 536.6877 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.0 536.1877 m 535.5 536.1877 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 535.0 549.0797 m 535.0 536.6877 l S
+BT
+/Times-Roman 12 Tf
+297.5 525.4117 Td
+0.0 0.0 0.0 rg
+() Tj
+ET
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.0 536.1877 m 535.5 536.1877 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.5 535.6877 m 297.5 523.29565 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.0 522.79565 m 535.5 522.79565 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 535.0 535.6877 m 535.0 523.29565 l S
+BT
+/Times-Roman 12 Tf
+60.0 512.01965 Td
+0.5019608 0.5019608 0.23529412 rg
+(Merge columns) Tj
+ET
+BT
+/Times-Italic 10 Tf
+60.0 500.57367 Td
+0.5019608 0.3137255 0.5019608 rg
+(cell.setMergedColumns\(nbColumns\)) Tj
+ET
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 59.5 522.79565 m 535.5 522.79565 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 522.29565 m 60.0 498.90366 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 59.5 498.40366 m 535.5 498.40366 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 535.0 522.29565 m 535.0 498.90366 l S
+BT
+/Times-Roman 12 Tf
+60.0 487.62766 Td
+0.5019608 0.5019608 0.23529412 rg
+(Repeat header on a new page) Tj
+ET
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 59.5 498.40366 m 298.0 498.40366 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 497.90366 m 60.0 485.51166 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 59.5 485.01166 m 298.0 485.01166 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.5 497.90366 m 297.5 485.51166 l S
+BT
+/Times-Italic 10 Tf
+297.5 489.57367 Td
+0.5019608 0.3137255 0.5019608 rg
+(setRepeatHeaderOnNewPage\(true\)) Tj
+ET
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.0 498.40366 m 535.5 498.40366 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.5 497.90366 m 297.5 485.51166 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.0 485.01166 m 535.5 485.01166 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 535.0 497.90366 m 535.0 485.51166 l S
+BT
+/Times-Roman 12 Tf
+60.0 474.23566 Td
+0.5019608 0.5019608 0.23529412 rg
+(Create a cell style) Tj
+ET
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 59.5 485.01166 m 298.0 485.01166 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 484.51166 m 60.0 472.11966 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 59.5 471.61966 m 298.0 471.61966 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.5 484.51166 m 297.5 472.11966 l S
+BT
+/Times-Italic 10 Tf
+297.5 476.18167 Td
+0.5019608 0.3137255 0.5019608 rg
+(TableCellStyle cellStyle = new TableCellStyle\(\)) Tj
+ET
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.0 485.01166 m 535.5 485.01166 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.5 484.51166 m 297.5 472.11966 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.0 471.61966 m 535.5 471.61966 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 535.0 484.51166 m 535.0 472.11966 l S
+BT
+/Times-Roman 12 Tf
+60.0 460.84366 Td
+0.5019608 0.5019608 0.23529412 rg
+(Affect style to cell) Tj
+ET
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 59.5 471.61966 m 298.0 471.61966 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 471.11966 m 60.0 458.72766 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 59.5 458.22766 m 298.0 458.22766 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.5 471.11966 m 297.5 458.72766 l S
+BT
+/Times-Italic 10 Tf
+297.5 462.78967 Td
+0.5019608 0.3137255 0.5019608 rg
+(new TableCell\(cellStyle, paragraph\)) Tj
+ET
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.0 471.61966 m 535.5 471.61966 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.5 471.11966 m 297.5 458.72766 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.0 458.22766 m 535.5 458.22766 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 535.0 471.11966 m 535.0 458.72766 l S
+1.0 w 0.0 0.0 0.0 RG 1.0 0.98039216 1.0 rg 60.0 458.22766 m 297.5 458.22766 l 297.5 444.83566 l 60.0 444.83566 l f
+BT
+/Times-Roman 12 Tf
+60.0 447.45166 Td
+0.0 0.0 0.0 rg
+(Add footer) Tj
+ET
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 59.5 458.22766 m 298.0 458.22766 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 457.72766 m 60.0 445.83566 l S
+2.0 w 0.39215687 0.0 0.39215687 RG 0.0 0.0 0.0 rg 59.5 444.83566 m 298.0 444.83566 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.5 457.72766 m 297.5 445.83566 l S
+1.0 w 0.0 0.0 0.0 RG 1.0 0.98039216 1.0 rg 297.5 458.22766 m 535.0 458.22766 l 535.0 444.83566 l 297.5 444.83566 l f
+BT
+/Times-Italic 10 Tf
+297.5 449.39767 Td
+0.5019608 0.3137255 0.5019608 rg
+(Just create a new row with a different style.) Tj
+ET
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.0 458.22766 m 535.5 458.22766 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 297.5 457.72766 m 297.5 445.83566 l S
+2.0 w 0.39215687 0.0 0.39215687 RG 0.0 0.0 0.0 rg 297.0 444.83566 m 535.5 444.83566 l S
+1.0 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 535.0 457.72766 m 535.0 445.83566 l S
+BT
+/Times-Roman 12 Tf
+60.0 434.05966 Td
+0.0 0.0 0.0 rg
+() Tj
+ET
+BT
+/Times-Roman 12 Tf
+60.0 420.66766 Td
+0.0 0.0 0.0 rg
+() Tj
+ET
+BT
+/Times-Roman 12 Tf
+60.0 420.66766 Td
+0.0 0.0 0.0 rg
+(More information on tables in table.pdf) Tj
+ET
+BT
+/Times-Bold 14 Tf
+60.0 384.96167 Td
+0.8 0.33333334 0.34901962 rg
+(Adding table of content) Tj
+ET
+BT
+/Times-Roman 12 Tf
+60.0 361.13367 Td
+0.5019608 0.5019608 0.23529412 rg
+(This still have to be coded.) Tj
+ET
+BT
+/Times-Bold 14 Tf
+60.0 325.42767 Td
+0.8 0.33333334 0.34901962 rg
+(Adding footnotes) Tj
+ET
+BT
+/Times-Roman 12 Tf
+60.0 301.59967 Td
+0.5019608 0.5019608 0.23529412 rg
+(This still have to be coded.) Tj
+ET
+BT
+/Times-Roman 12 Tf
+60.0 62.615997 Td
+0.0 0.0 0.0 rg
+(Wed Dec 21 00:05:24 CET 2016 - new page footer example) Tj
+ET
+endstream
+endobj
+18 0 obj <<
+/Type /Page
+/Parent 16 0 R
+/Contents 17 0 R
+>>
+endobj
 xref
-0 16
+0 19
 0000000000 65535 f
 0000000022 00000 n
 0000000071 00000 n
-0000001266 00000 n
-0000001363 00000 n
-0000008643 00000 n
-0000008706 00000 n
-0000010353 00000 n
-0000010450 00000 n
-0000012868 00000 n
-0000012931 00000 n
-0000013030 00000 n
-0000013645 00000 n
-0000013711 00000 n
-0000013810 00000 n
-0000024837 00000 n
+0000001273 00000 n
+0000001370 00000 n
+0000008311 00000 n
+0000008374 00000 n
+0000009175 00000 n
+0000009272 00000 n
+0000012389 00000 n
+0000012452 00000 n
+0000012551 00000 n
+0000013124 00000 n
+0000013190 00000 n
+0000013289 00000 n
+0000013758 00000 n
+0000013824 00000 n
+0000013923 00000 n
+0000026059 00000 n
 trailer <<
 /Root 1 0 R
-/Size 16
+/Size 19
 >>
 startxref
-24903
+26125
 %%EOF
