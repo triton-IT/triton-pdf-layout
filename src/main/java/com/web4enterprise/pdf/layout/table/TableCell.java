@@ -12,9 +12,12 @@ public class TableCell {
 	protected List<Paragraph> paragraphs = new ArrayList<>();
 	protected int mergedRows = 0;
 	protected int mergedColumns = 0;
+	protected float computedWidth = 0.0f;
+	protected float computedHeight = 0.0f;
+	protected boolean merged = false;
 	
 	public TableCell() {
-		
+		this.paragraphs.add(new Paragraph(""));
 	}
 	
 	public TableCell(String... values) {
@@ -43,16 +46,6 @@ public class TableCell {
 		if(style != null) {
 			cellStyle = style;
 		}
-	}
-	
-	public TableCell mergeRows(int nbRows) {
-		mergedRows = nbRows;
-		return this;
-	}
-	
-	public TableCell mergeColumns(int nbColumns) {
-		mergedColumns = nbColumns;
-		return this;
 	}
 	
 	public TableCellStyle getStyle() {
@@ -84,5 +77,47 @@ public class TableCell {
 	
 	public List<Paragraph> getParagraphs() {
 		return paragraphs;
+	}
+
+	public int getMergedRows() {
+		return mergedRows;
+	}
+
+	public TableCell setMergedRows(int mergedRows) {
+		this.mergedRows = mergedRows;
+		return this;
+	}
+
+	public int getMergedColumns() {
+		return mergedColumns;
+	}
+
+	public TableCell setMergedColumns(int mergedColumns) {
+		this.mergedColumns = mergedColumns;
+		return this;
+	}
+
+	public float getComputedWidth() {
+		return computedWidth;
+	}
+
+	public void setComputedWidth(float computedWidth) {
+		this.computedWidth = computedWidth;
+	}
+
+	public float getComputedHeight() {
+		return computedHeight;
+	}
+
+	public void setComputedHeight(float computedHeight) {
+		this.computedHeight = computedHeight;
+	}
+
+	public boolean isMerged() {
+		return merged;
+	}
+
+	public void setMerged(boolean merged) {
+		this.merged = merged;
 	}
 }

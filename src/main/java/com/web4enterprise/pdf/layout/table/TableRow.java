@@ -1,22 +1,14 @@
 package com.web4enterprise.pdf.layout.table;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class TableRow extends ArrayList<TableCell> {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	
+public class TableRow {	
 	protected float height;
 	
 	public List<TableCell> cells;
 	
-	public TableRow(TableCell... cells) {
-		super(cells.length);
-		
+	public TableRow(TableCell... cells) {		
 		this.cells = Arrays.asList(cells);
 	}
 

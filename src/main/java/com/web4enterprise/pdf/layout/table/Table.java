@@ -29,6 +29,8 @@ public class Table {
 	public void calculateInnerLayout() {
 		calculateColumnWidths();
 		calculateRowsHeights();
+		calculateCellsWidths();
+		calculateCellsHeights();
 	}
 	
 	public void setColumnWidth(int columnIndex, float columnWidth) {
@@ -87,6 +89,48 @@ public class Table {
 		}
 		for(float columnWidth : currentColumnsWidths) {
 			columnsWidths.add(columnWidth);
+		}
+	}
+	
+	protected void calculateCellsWidths() {
+		for(TableRow row : rows) {
+			int columnIndex = 0;
+			int nbMergedCells = 0;
+			for(TableCell cell : row.getCells()) {	
+				if(nbMergedCells > 0) {
+					cell.setMerged(true);
+					nbMergedCells--;
+				} else {
+					//Get width for merged cells if any.
+					for(int i = 0; i <= cell.getMergedColumns(); i++) {
+						cell.setComputedWidth(cell.getComputedWidth() + getColumnWidth(columnIndex + i));
+					}
+				}
+				columnIndex++;
+			}
+		}
+	}
+	
+	protected void calculateCellsHeights() {
+		int rowIndex = 0;
+		for(TableRow row : rows) {
+			int columnIndex = 0;
+			for(TableCell cell : row.getCells()) {	
+				if(!cell.isMerged()) {
+					cell.setComputedHeight(row.getHeight());
+					
+					//Get height for merged cells if any.
+					for(int i = 1; i <= cell.getMergedRows(); i++) {
+						TableRow mergedRow = rows.get(rowIndex + i);
+						if(mergedRow != null) {
+							cell.setComputedHeight(cell.getComputedHeight() + mergedRow.getHeight());
+							mergedRow.getCells().get(columnIndex).setMerged(true);
+						}
+					}
+				}
+				columnIndex++;
+			}
+			rowIndex++;
 		}
 	}
 }
