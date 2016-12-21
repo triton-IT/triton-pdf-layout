@@ -23,6 +23,10 @@ public class Document {
 	protected PageHeader pageHeader = null;
 	protected PageFooter pageFooter = null;
 	
+	public Document() {
+		document.setCreator("http://simplypdf-layout.web4enterprise.com");
+	}
+	
 	public void addPage() {
 		layoutFooter();
 		layoutNewPage();
