@@ -48,18 +48,32 @@ public class DocumentTest {
 		emphaseStyle.setFontColor(emphaseColor);
 		ParagraphStyle standardStyle = new ParagraphStyle();
 		
+		Document document = new Document();
+		
+		document.setAuthor("Regis Ramillien");
+		document.setModificationDate(new Date());
+		document.setProducer("web4enterprise");
+		document.setSubject("documentation for simplyPDF-layout library");
+		document.setTitle("simplyPDF-layout documentation");
+		document.addKeyword("http://web4enterprise.com");
+		document.addKeyword("simplyPDF-layout");
+		document.addKeyword("Documentation");
+		document.addMetaData("Customer-specific", "meta-data");
+		
+		Image logo = document.createImage(this.getClass().getResourceAsStream("/logo.png"));
+		logo.setHeight(16, true);
+		
 		PageHeader pageHeader = new PageHeader();
 		ParagraphStyle paragraphHeaderStyle = new ParagraphStyle();
 		paragraphHeaderStyle.setMargins(new Margins(0.0f, 0.0f, 15.0f, 0.0f));
-		pageHeader.addElement(new Paragraph(paragraphHeaderStyle, "SimplyPDF-layout - web4enterprise"));
+		Paragraph paragraphHeader = new Paragraph(paragraphHeaderStyle, logo, new Text("SimplyPDF-layout - web4enterprise"));
+		pageHeader.addElement(paragraphHeader);
 		PageFooter pageFooter = new PageFooter();
 		ParagraphStyle paragraphFooterStyle = new ParagraphStyle();
 		paragraphFooterStyle.setMargins(new Margins(15.0f, 0.0f, 0.0f, 0.0f));
 		pageFooter.addElement(new Paragraph(paragraphFooterStyle, new Date().toString()));
 		
-		Document document = new Document();
 		document.addPage(pageHeader, pageFooter);
-		Image logo = document.createImage(this.getClass().getResourceAsStream("/logo.png"));
 
 		//Creating a document.
 		document.addElement(new Paragraph(titleStyle, "Creating a document"));
@@ -95,8 +109,7 @@ public class DocumentTest {
 		//Adding images and graphics
 		document.addElement(new Paragraph(titleStyle, "Adding images and graphics"));
 		
-		logo.setHeight(16, true);
-		paragraph = new Paragraph(standardStyle, new Text("A paragraph can contain text but also images like this one:"), logo);
+		paragraph = new Paragraph(standardStyle, new Text("A paragraph can contain text but also images like this one:"),  logo.clone(), new Text(" and this one:"),  logo.clone());
 		document.addElement(paragraph);
 
 		//Text styles.

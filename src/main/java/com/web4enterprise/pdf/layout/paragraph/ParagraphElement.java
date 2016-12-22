@@ -6,15 +6,17 @@ import java.util.List;
 import com.web4enterprise.pdf.core.geometry.Point;
 import com.web4enterprise.pdf.core.page.Page;
 
-public interface ParagraphElement {
+public interface ParagraphElement extends Cloneable {
 	List<ParagraphElement> getLines();
 	float getWidth(ParagraphStyle defaultStyle, int defaultTextSize);
 	SplitInformation split(ParagraphStyle defaultStyle, int fontSize, float positionX, float firstLineMaxWidth, Float maxWidth);
 	Point layout(Page page, ParagraphStyle defaultStyle, int defaultFontSize, float positionX, float positionY);
 	float getLineSpacing(ParagraphStyle defaultStyle);
 	
-	public class SplitInformation {
+	class SplitInformation {
 		public float positionX;
 		public List<ParagraphElement> splitElements = new ArrayList<>();
 	}
+	
+	ParagraphElement clone();
 }

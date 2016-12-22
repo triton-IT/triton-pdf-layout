@@ -37,6 +37,17 @@ public class Paragraph implements Element {
 		this.elements.addAll(Arrays.asList(elements));
 	}
 	
+	/**
+	 * USed only for cloning.
+	 * 
+	 * @param style The style of paragraph.
+	 * @param elements The elements to reference.
+	 */
+	private Paragraph(ParagraphStyle style, List<ParagraphElement> elements) {
+		this.style = style;
+		this.elements = elements;
+	}
+	
 	public List<ParagraphElement> getElements() {
 		return elements;
 	}
@@ -192,5 +203,17 @@ public class Paragraph implements Element {
 		nextY -= paragraphStyle.getMargins().getBottom();
 		
 		return nextY;
+	}
+
+	@Override
+	public Paragraph clone() {
+		//Start by cloning elements.
+		List<ParagraphElement> elementsClones = new ArrayList<ParagraphElement>(elements.size());
+	    for (ParagraphElement element : elements) {
+	    	elementsClones.add(element.clone());
+	    }
+	    
+	    //Clone create a new Paragraph with clones.
+		return new Paragraph(style, elementsClones);
 	}
 }

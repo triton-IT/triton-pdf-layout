@@ -2,6 +2,7 @@ package com.web4enterprise.pdf.layout.text;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import com.web4enterprise.pdf.core.font.Font;
 import com.web4enterprise.pdf.core.font.FontVariant;
@@ -12,6 +13,8 @@ import com.web4enterprise.pdf.layout.paragraph.ParagraphStyle;
 import com.web4enterprise.pdf.layout.paragraph.ParagraphElement;
 
 public class Text implements ParagraphElement {
+	private final static Logger LOGGER = Logger.getLogger(ParagraphElement.class.getName());
+	
 	public static final String NEW_LINE = "\n";	
 	public static final Text NEW_TEXT_LINE = new Text(NEW_LINE);
 
@@ -84,48 +87,51 @@ public class Text implements ParagraphElement {
 	
 	public void split(String stringToSplit, FontVariant font, int fontSize, float positionX, float firstLineMaxWidth, 
 			float maxWidth, SplitInformation splitInformation, boolean isFirstLine) {
-		float textWidth = font.getWidth(fontSize, stringToSplit);
-		String keptString = stringToSplit;
-		
-		float currentMaxWidth = maxWidth;
+		//Calculate maximum size for final line.
+		float maximumLineWidth = maxWidth;
 		if(isFirstLine) {
-			currentMaxWidth = firstLineMaxWidth;
+			maximumLineWidth = firstLineMaxWidth;
 		}
-		currentMaxWidth -= positionX;
+		maximumLineWidth -= positionX;
 		
-		//If we have to split.
-		while(textWidth > currentMaxWidth) {
-			//Get index of split
-			int splitIndex = keptString.lastIndexOf(' ');
-			//If string cannot be split on space, we need to cut it inside a word to fit required width.
-			if(splitIndex == 0 || splitIndex == -1) {
-				boolean needSplit = true;
-				int currentSplitIndex = stringToSplit.length();
-				while(needSplit) {
-					currentSplitIndex--;
-					keptString = stringToSplit.substring(0, currentSplitIndex);
-					
-					textWidth = font.getWidth(fontSize, keptString);
-					//If split is enough or if we don't have anything to split.
-					if(textWidth <= currentMaxWidth || stringToSplit.length() == 1) {
-						needSplit = false;
+		//Get text size.
+		float textWidth = font.getWidth(fontSize, stringToSplit);
+		
+		//Check if we need to split text.
+		if(textWidth > maximumLineWidth) {
+			//Initialize the kept String to initial String to split.
+			String keptString = stringToSplit;
+			//Split text to match maximum line width.
+			boolean keepSplitting = textWidth > maximumLineWidth;
+			while(keepSplitting) {
+				int splitIndex = keptString.lastIndexOf(' ');
+				if(splitIndex < 1) {
+					LOGGER.warning("'" + stringToSplit + "' cannot be split to fit expected size. Text can be rendered outside its expected bounding box.");
+					splitInformation.splitElements.add(new Text(style, keptString));
+					float keptStringWidth = font.getWidth(fontSize, keptString);
+					splitInformation.positionX = keptStringWidth;
+					keepSplitting = false;
+				} else {
+					keptString = stringToSplit.substring(0, splitIndex);
+					float keptStringSize = font.getWidth(fontSize, keptString);
+					if(keptStringSize <= maximumLineWidth) {
+						//This line is splitted, so do not continue to split this specific line.
+						keepSplitting = false;
+						//Add information on current line to split information.
+						splitInformation.splitElements.add(new Text(style, keptString));
+						float keptStringWidth = font.getWidth(fontSize, stringToSplit);
+						splitInformation.positionX = keptStringWidth;
+						
+						//Try to split the next lines of text.
+						String textLeft = stringToSplit.substring(keptString.length());
+						//We split on space earlier, we don't want to display it on new line, so remove it.
+						split(textLeft.substring(1), font, fontSize, 0, firstLineMaxWidth, maxWidth, splitInformation, false);
 					}
 				}
-			} else {
-				keptString = stringToSplit.substring(0, splitIndex);
-				textWidth = font.getWidth(fontSize, keptString);
 			}
-		}
-		
-		//Add information on current line to split information.
-		splitInformation.splitElements.add(new Text(style, keptString));
-		splitInformation.positionX = textWidth;
-		
-		//Try to split the text left.
-		if(stringToSplit.length() != keptString.length()) {
-			String textLeft = stringToSplit.substring(keptString.length());
-			//We split on space earlier, we don't want to display it on new line, so remove it.
-			split(textLeft.substring(1), font, fontSize, 0, firstLineMaxWidth, maxWidth, splitInformation, false);
+		} else {
+			splitInformation.splitElements.add(new Text(style, stringToSplit));
+			splitInformation.positionX = textWidth;
 		}
 	}
 	
@@ -156,7 +162,7 @@ public class Text implements ParagraphElement {
 			text.setUnderlineColor(underlineColor);
 		}
 		
-		page.addText(text);
+		page.add(text);
 		
 		float width = currentFontVariant.getWidth(currentFontSize, string);
 		
@@ -168,5 +174,11 @@ public class Text implements ParagraphElement {
 		float textHeight = defaultStyle.getFontVariant().getHeight(defaultStyle.getFontSize());
 		
 		return textHeight * defaultStyle.getLineSpacing();
+	}
+	
+	@Override
+	public Text clone() {
+		//TODO: Clone style.
+		return new Text(style, string);
 	}
 }

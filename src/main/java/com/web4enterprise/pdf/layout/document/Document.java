@@ -2,6 +2,7 @@ package com.web4enterprise.pdf.layout.document;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Date;
 
 import com.web4enterprise.pdf.core.document.Pdf;
 import com.web4enterprise.pdf.core.exceptions.PdfGenerationException;
@@ -25,6 +26,88 @@ public class Document {
 	
 	public Document() {
 		document.setCreator("http://simplypdf-layout.web4enterprise.com");
+	}
+	
+	/**
+	 * Set the title of document.
+	 * 
+	 * @param title The title of document meta-data.
+	 */
+	public void setTitle(String title) {
+		document.setTitle(title);
+	}
+	
+	/**
+	 * Set the author of document.
+	 * 
+	 * @param author The author of document meta-data.
+	 */
+	public void setAuthor(String author) {
+		document.setAuthor(author);
+	}
+	
+	/**
+	 * Set the subject of document.
+	 * 
+	 * @param subject The subject of document meta-data.
+	 */
+	public void setSubject(String subject) {
+		document.setSubject(subject);
+	}
+	
+	/**
+	 * Add a keyword to document.
+	 * 
+	 * @param keyword The keyword to add to document meta-data.
+	 */
+	public void addKeyword(String keyword) {
+		document.addKeyword(keyword);
+	}
+
+	/**
+	 * Set the creator of document.
+	 * 
+	 * @param creator The creator of document meta-data.
+	 */
+	public void setCreator(String creator) {
+		document.setCreator(creator);
+	}
+
+	/**
+	 * Set the producer of document.
+	 * 
+	 * @param producer The producer of document meta-data.
+	 */
+	public void setProducer(String producer) {
+		document.setProducer(producer);
+	}
+
+	/**
+	 * Add a keyword to document.
+	 * 
+	 * @param keyword The keyword to add to document meta-data.
+	 */
+	public void setCreationDate(Date creationDate) {
+		document.setCreationDate(creationDate);
+	}
+
+	/**
+	 * Set the modification date of document.
+	 * 
+	 * @param modificationDate The modification date of document meta-data.
+	 */
+	public void setModificationDate(Date modificationDate) {
+		document.setModificationDate(modificationDate);
+	}
+	
+	/**
+	 * Add a custom meta-data to document.
+	 * 
+	 * @param key The key of custom meta-data to add to document.
+	 * @param value The value of custom meta-data to add to document.
+	 */
+	public void addMetaData(String key, String value) {
+		document.addMetaData(key, value);
 	}
 	
 	public void addPage() {

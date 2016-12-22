@@ -8,7 +8,7 @@ import com.web4enterprise.pdf.layout.document.Document;
 import com.web4enterprise.pdf.layout.document.Element;
 
 public class PageHeader implements Element {
-	List<Element> elements = new ArrayList<>();
+	protected List<Element> elements = new ArrayList<>();
 	protected float height = 0.0f;
 	protected float computedWidth = 0.0f;
 	
@@ -36,9 +36,16 @@ public class PageHeader implements Element {
 	@Override
 	public float layout(Document document, Rect boundingBox, float startY) {
 		for(Element element : elements) {
-			startY = element.layout(document, boundingBox, startY);
+			//Need to clone element because header is repeated and changing any value of the element for a page will change it for each page.
+			startY = element.clone().layout(document, boundingBox, startY);
 		}
 		
 		return startY;
+	}
+
+	@Override
+	public PageHeader clone() {
+		//TODO: clone this.
+		return this;
 	}
 }

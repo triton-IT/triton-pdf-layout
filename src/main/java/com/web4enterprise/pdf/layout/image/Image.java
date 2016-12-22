@@ -79,7 +79,7 @@ public class Image implements ParagraphElement {
 		
 		lines.add(this);
 		
-		splitInformation.positionX = positionX + getWidth();
+		splitInformation.positionX = getWidth();
 		splitInformation.splitElements = lines;
 		return splitInformation;
 	}
@@ -90,7 +90,7 @@ public class Image implements ParagraphElement {
 		coreImage.setX(positionX);
 		coreImage.setY(positionY);
 		
-		page.addImage(coreImage);
+		page.add(coreImage);
 		
 		return new Point(coreImage.getWidth(), coreImage.getHeight());
 	}	
@@ -98,5 +98,10 @@ public class Image implements ParagraphElement {
 	@Override
 	public float getLineSpacing(ParagraphStyle defaultStyle) {
 		return defaultStyle.getFontSize() * defaultStyle.getLineSpacing();
+	}
+	
+	@Override
+	public Image clone() {
+		return new Image(coreImage);
 	}
 }

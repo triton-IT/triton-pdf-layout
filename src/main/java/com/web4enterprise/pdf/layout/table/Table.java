@@ -211,7 +211,7 @@ public class Table implements Element {
 					path.setFilled(true);
 					path.setClosed(true);
 					path.setFillColor(cellStyle.getBackgroundColor());
-					currentPage.addPath(path);
+					currentPage.add(path);
 				}
 				
 				float paragraphStartY = startY;
@@ -228,7 +228,7 @@ public class Table implements Element {
 					StraightPath path = new StraightPath(borderStyle.getWidth(), borderStyle.getColor(),
 							new Point(startX - cellStyle.getLeftBorderStyle().width / 2, startY), 
 							new Point(startX + width + cellStyle.getRightBorderStyle().width / 2, startY));
-					currentPage.addPath(path);
+					currentPage.add(path);
 				}
 				
 				//Left border
@@ -237,7 +237,7 @@ public class Table implements Element {
 					StraightPath path = new StraightPath(borderStyle.getWidth(), borderStyle.getColor(),
 							new Point(startX, startY - cellStyle.getTopBorderStyle().width / 2), 
 							new Point(startX, bottom + cellStyle.getBottomBorderStyle().width / 2));
-					currentPage.addPath(path);
+					currentPage.add(path);
 				}
 				
 				//Bottom border
@@ -246,7 +246,7 @@ public class Table implements Element {
 					StraightPath path = new StraightPath(borderStyle.getWidth(), borderStyle.getColor(),
 							new Point(startX - cellStyle.getLeftBorderStyle().width / 2, bottom), 
 							new Point(startX + width + cellStyle.getRightBorderStyle().width / 2, bottom));
-					currentPage.addPath(path);
+					currentPage.add(path);
 				}
 				
 				//Right border
@@ -255,7 +255,7 @@ public class Table implements Element {
 					StraightPath path = new StraightPath(borderStyle.getWidth(), borderStyle.getColor(),
 							new Point(startX + width, startY - cellStyle.getTopBorderStyle().width / 2), 
 							new Point(startX + width, bottom + cellStyle.getBottomBorderStyle().width / 2));
-					currentPage.addPath(path);
+					currentPage.add(path);
 				}
 			}
 			
@@ -264,5 +264,11 @@ public class Table implements Element {
 		startY -= rowHeight;
 		
 		return startY;
+	}
+	
+	@Override
+	public Table clone() {
+		//TODO: clone this.
+		return this;
 	}
 }
