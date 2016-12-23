@@ -3,14 +3,16 @@ package com.web4enterprise.pdf.layout.text;
 import com.web4enterprise.pdf.core.font.Font;
 import com.web4enterprise.pdf.core.font.FontsVariant;
 import com.web4enterprise.pdf.core.styling.Color;
+import com.web4enterprise.pdf.core.text.TextScript;
 
 public class TextStyle {
 	protected Font font;
-	protected FontsVariant fontStyle;
-	protected Integer fontSize;
+	protected FontsVariant fontVariant;
+	protected Float fontSize;
 	protected Color fontColor;
-	protected Boolean isUnderlined;
+	protected Boolean underlined;
 	protected Color underlineColor;
+	protected TextScript script = TextScript.NORMAL;
 	
 	public TextStyle() {
 	}
@@ -19,24 +21,24 @@ public class TextStyle {
 		this.font = font;
 	}
 	
-	public TextStyle(FontsVariant fontStyle) {
-		this.fontStyle = fontStyle;
+	public TextStyle(FontsVariant fontVariant) {
+		this.fontVariant = fontVariant;
 	}
 	
-	public TextStyle(Font font, int fontSize) {
+	public TextStyle(Font font, float fontSize) {
 		this.font = font;
 		this.fontSize = fontSize;
 	}
 	
-	public TextStyle(Font font, FontsVariant fontStyle, int fontSize) {
+	public TextStyle(Font font, FontsVariant fontVariant, float fontSize) {
 		this.font = font;
-		this.fontStyle = fontStyle;
+		this.fontVariant = fontVariant;
 		this.fontSize = fontSize;
 	}
 	
-	public TextStyle(Font font, FontsVariant fontStyle, int fontSize, Color fontColor) {
+	public TextStyle(Font font, FontsVariant fontVariant, float fontSize, Color fontColor) {
 		this.font = font;
-		this.fontStyle = fontStyle;
+		this.fontVariant = fontVariant;
 		this.fontSize = fontSize;
 		this.fontColor = fontColor;
 	}
@@ -49,18 +51,18 @@ public class TextStyle {
 	}
 	
 	public FontsVariant getFontStyle() {
-		return fontStyle;
+		return fontVariant;
 	}
 
-	public void setFontStyle(FontsVariant fontStyle) {
-		this.fontStyle = fontStyle;
+	public void setFontStyle(FontsVariant fontVariant) {
+		this.fontVariant = fontVariant;
 	}
 
-	public Integer getFontSize() {
+	public Float getFontSize() {
 		return fontSize;
 	}
 
-	public void setFontSize(Integer fontSize) {
+	public void setFontSize(Float fontSize) {
 		this.fontSize = fontSize;
 	}
 	
@@ -73,11 +75,11 @@ public class TextStyle {
 	}
 
 	public Boolean isUnderlined() {
-		return isUnderlined;
+		return underlined;
 	}
 	
 	public void setUnderlined(Boolean isUnderlined) {
-		this.isUnderlined = isUnderlined;
+		this.underlined = isUnderlined;
 	}
 
 	public Color getUnderlineColor() {
@@ -86,5 +88,13 @@ public class TextStyle {
 
 	public void setUnderlineColor(Color underlineColor) {
 		this.underlineColor = underlineColor;
+	}
+
+	public TextScript getScript() {
+		return script;
+	}
+
+	public void setScript(TextScript script) {
+		this.script = script;
 	}
 }

@@ -18,16 +18,17 @@ public class Text implements ParagraphElement {
 	public static final String NEW_LINE = "\n";	
 	public static final Text NEW_TEXT_LINE = new Text(NEW_LINE);
 
-	protected TextStyle style = new TextStyle();
-	protected String string;
+	protected TextStyle style = new TextStyle();	
+
+	com.web4enterprise.pdf.core.text.Text coreText;
 	
 	public Text(String string) {
-		this.string = string;
+		coreText = new com.web4enterprise.pdf.core.text.Text(0.0f, 0.0f, 0.0f, string);
 	}
 	
 	public Text(TextStyle style, String string) {
+		coreText = new com.web4enterprise.pdf.core.text.Text(0.0f, 0.0f, 0.0f, string);
 		this.style = style;
-		this.string = string;
 	}
 
 	public TextStyle getStyle() {
@@ -39,29 +40,29 @@ public class Text implements ParagraphElement {
 	}
 
 	public String getString() {
-		return string;
+		return coreText.getValue();
 	}
 
 	public void setString(String string) {
-		this.string = string;
+		coreText.setValue(string);
 	}
 	
 	public List<ParagraphElement> getLines() {
 		ArrayList<ParagraphElement> lines = new ArrayList<>();
 
 		//If string starts with a new line, we have to create an empty one.
-		if(string.startsWith(NEW_LINE)) {
+		if(getString().startsWith(NEW_LINE)) {
 			lines.add(new Text(style, ""));
 		}
 		
 		//Split will return only one entry if regex if at start or end of string.
-		String[] stringLines = string.split(NEW_LINE);
+		String[] stringLines = getString().split(NEW_LINE);
 		for(String stringLine : stringLines) {
 			lines.add(new Text(style, stringLine));
 		}
 		
 		//If string ends with a new line, we have to create an empty one.
-		if(string.endsWith(NEW_LINE)) {
+		if(getString().endsWith(NEW_LINE)) {
 			lines.add(new Text(style, ""));
 		}
 		
@@ -69,23 +70,23 @@ public class Text implements ParagraphElement {
 	}
 	
 	@Override
-	public SplitInformation split(ParagraphStyle defaultStyle, int fontSize, float positionX, float firstLineMaxWidth, Float maxWidth) {
+	public SplitInformation split(ParagraphStyle defaultStyle, float fontSize, float positionX, float firstLineMaxWidth, Float maxWidth) {
 		TextStyle textStyle = getStyle();
 		//Get font name between paragraph and text ones.
 		Font currentFont = (style.getFont() != null)?style.getFont():defaultStyle.getFont();
 		FontVariant currentFontVariant = currentFont.getVariant((style.getFontStyle() != null)?
 				style.getFontStyle():defaultStyle.getFontStyle());
 		//Get font size between paragraph and text ones.
-		int currentTextSize = (textStyle.getFontSize() != null)?textStyle.getFontSize():fontSize;
+		float currentTextSize = (textStyle.getFontSize() != null)?textStyle.getFontSize():fontSize;
 		
 		//Split the text on max width.
 		SplitInformation splitInformation = new SplitInformation();
-		split(string, currentFontVariant, currentTextSize, positionX, firstLineMaxWidth, maxWidth, splitInformation, true);
+		split(getString(), currentFontVariant, currentTextSize, positionX, firstLineMaxWidth, maxWidth, splitInformation, true);
 		
 		return splitInformation;
 	}
 	
-	public void split(String stringToSplit, FontVariant font, int fontSize, float positionX, float firstLineMaxWidth, 
+	public void split(String stringToSplit, FontVariant font, float fontSize, float positionX, float firstLineMaxWidth, 
 			float maxWidth, SplitInformation splitInformation, boolean isFirstLine) {
 		//Calculate maximum size for final line.
 		float maximumLineWidth = maxWidth;
@@ -136,37 +137,44 @@ public class Text implements ParagraphElement {
 	}
 	
 	@Override
-	public float getWidth(ParagraphStyle defaultStyle, int defaultTextSize) {
+	public float getWidth(ParagraphStyle defaultStyle, float defaultTextSize) {
 		Font currentFont = (style.getFont() != null)?style.getFont():defaultStyle.getFont();
 		FontVariant currentFontVariant = currentFont.getVariant((style.getFontStyle() != null)?
 				style.getFontStyle():defaultStyle.getFontStyle());
-		int currentTextSize = (style.fontSize != null)?style.fontSize:defaultTextSize;
+		float currentTextSize = (style.fontSize != null)?style.fontSize:defaultTextSize;
 		
-		return currentFontVariant.getWidth(currentTextSize, string);
+		coreText.setFontVariant(currentFontVariant);
+		coreText.setSize(currentTextSize);
+		return coreText.getWidth();
 	}
 	
 	@Override
-	public Point layout(Page page, ParagraphStyle defaultStyle, int defaultFontSize, float positionX, float positionY) {
+	public Point layout(Page page, ParagraphStyle defaultStyle, float defaultFontSize, float positionX, float positionY) {
 		Font currentFont = (style.getFont() != null)?style.getFont():defaultStyle.getFont();
 		FontVariant currentFontVariant = currentFont.getVariant((style.getFontStyle() != null)?
 				style.getFontStyle():defaultStyle.getFontStyle());
-		int currentFontSize = (style.fontSize != null)?style.fontSize:defaultFontSize;
+		float currentFontSize = (style.fontSize != null)?style.fontSize:defaultFontSize;
 		
 		Color color = (style.getFontColor() != null)?style.getFontColor():defaultStyle.getFontColor();
 		
-		Boolean isUnderlined = (style.isUnderlined != null)?style.isUnderlined:defaultStyle.isUnderlined();
-		com.web4enterprise.pdf.core.text.Text text = new com.web4enterprise.pdf.core.text.Text(positionX, positionY, currentFontSize, currentFontVariant, color, string);
+		Boolean isUnderlined = (style.isUnderlined() != null)?style.isUnderlined():defaultStyle.isUnderlined();
+		
+		coreText.setX(positionX);
+		coreText.setY(positionY);
+		coreText.setSize(currentFontSize);
+		coreText.setFontVariant(currentFontVariant);
+		coreText.setColor(color);
+		coreText.setScript(style.script);
+		
 		if(Boolean.TRUE.equals(isUnderlined)) {
-			text.setUnderlined(isUnderlined);
+			coreText.setUnderlined(isUnderlined);
 			Color underlineColor = (style.getUnderlineColor() != null)?style.getUnderlineColor():defaultStyle.getUnderlineColor();
-			text.setUnderlineColor(underlineColor);
+			coreText.setUnderlineColor(underlineColor);
 		}
 		
-		page.add(text);
+		page.add(coreText);
 		
-		float width = currentFontVariant.getWidth(currentFontSize, string);
-		
-		return new Point(width, currentFontSize);
+		return new Point(coreText.getWidth(), currentFontSize);
 	}
 
 	@Override
@@ -179,6 +187,6 @@ public class Text implements ParagraphElement {
 	@Override
 	public Text clone() {
 		//TODO: Clone style.
-		return new Text(style, string);
+		return new Text(style, getString());
 	}
 }

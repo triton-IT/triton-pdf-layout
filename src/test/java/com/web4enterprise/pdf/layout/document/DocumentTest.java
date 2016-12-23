@@ -14,6 +14,7 @@ import org.junit.Test;
 import com.web4enterprise.pdf.core.exceptions.PdfGenerationException;
 import com.web4enterprise.pdf.core.font.FontsVariant;
 import com.web4enterprise.pdf.core.styling.Color;
+import com.web4enterprise.pdf.core.text.TextScript;
 import com.web4enterprise.pdf.layout.image.Image;
 import com.web4enterprise.pdf.layout.page.PageFooter;
 import com.web4enterprise.pdf.layout.page.PageHeader;
@@ -95,6 +96,13 @@ public class DocumentTest {
 				NEW_TEXT_LINE);
 		paragraph.addElement(new Text("Of course, new lines and new pages can be created at any time."), 
 				NEW_TEXT_LINE);
+		document.addElement(paragraph);
+		
+		TextStyle superScripted = new TextStyle();
+		superScripted.setScript(TextScript.SUPER);
+		TextStyle subScripted = new TextStyle();
+		subScripted.setScript(TextScript.SUB);
+		paragraph = new Paragraph(new Text("Text can be "), new Text(superScripted, "super-scripted"), new Text(" or "), new Text(subScripted, "sub-scripted."), NEW_TEXT_LINE);
 		document.addElement(paragraph);
 		
 		paragraph = new Paragraph("A paragraph is created with:", NEW_LINE);

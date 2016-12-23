@@ -117,7 +117,7 @@ public class Paragraph implements Element {
 		float nextY = startY - paragraphStyle.getMargins().getTop();
 		
 		//Get this paragraph style. 
-		int textSize = paragraphStyle.getFontSize();
+		float textSize = paragraphStyle.getFontSize();
 		
 		//If this is the first line, some special behavior will have to be performed, so set it to true for now.
 		boolean isFirstLine = true;

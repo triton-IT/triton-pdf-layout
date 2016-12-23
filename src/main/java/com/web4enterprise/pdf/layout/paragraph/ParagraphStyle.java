@@ -20,15 +20,15 @@ public class ParagraphStyle extends TextStyle {
 		super(TIMES_ROMAN, FontsVariant.PLAIN, 12, Color.BLACK);
 	}
 	
-	public ParagraphStyle(Font font, int fontSize) {
+	public ParagraphStyle(Font font, float fontSize) {
 		super(font, FontsVariant.PLAIN, fontSize, Color.BLACK);
 	}
 	
-	public ParagraphStyle(Font font, FontsVariant style, int fontSize) {
+	public ParagraphStyle(Font font, FontsVariant style, float fontSize) {
 		super(font, style, fontSize, Color.BLACK);
 	}
 	
-	public ParagraphStyle(Font font, FontsVariant style, int fontSize, Color fontColor) {
+	public ParagraphStyle(Font font, FontsVariant style, float fontSize, Color fontColor) {
 		super(font, style, fontSize, fontColor);
 	}
 
@@ -65,7 +65,7 @@ public class ParagraphStyle extends TextStyle {
 	}
 	
 	public FontVariant getFontVariant() {
-		return font.getVariant(fontStyle);
+		return font.getVariant(fontVariant);
 	}
 	
 	/**
@@ -73,6 +73,6 @@ public class ParagraphStyle extends TextStyle {
 	 */
 	@Override
 	public FontsVariant getFontStyle() {
-		return (fontStyle!=null)?fontStyle:FontsVariant.PLAIN;
+		return (fontVariant!=null)?fontVariant:FontsVariant.PLAIN;
 	}
 }

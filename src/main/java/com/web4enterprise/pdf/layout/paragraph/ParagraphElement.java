@@ -8,9 +8,9 @@ import com.web4enterprise.pdf.core.page.Page;
 
 public interface ParagraphElement extends Cloneable {
 	List<ParagraphElement> getLines();
-	float getWidth(ParagraphStyle defaultStyle, int defaultTextSize);
-	SplitInformation split(ParagraphStyle defaultStyle, int fontSize, float positionX, float firstLineMaxWidth, Float maxWidth);
-	Point layout(Page page, ParagraphStyle defaultStyle, int defaultFontSize, float positionX, float positionY);
+	float getWidth(ParagraphStyle defaultStyle, float defaultTextSize);
+	SplitInformation split(ParagraphStyle defaultStyle, float fontSize, float positionX, float firstLineMaxWidth, Float maxWidth);
+	Point layout(Page page, ParagraphStyle defaultStyle, float defaultFontSize, float positionX, float positionY);
 	float getLineSpacing(ParagraphStyle defaultStyle);
 	
 	class SplitInformation {

@@ -58,12 +58,12 @@ public class Image implements ParagraphElement {
 	}
 	
 	@Override
-	public float getWidth(ParagraphStyle defaultStyle, int defaultTextSize) {
+	public float getWidth(ParagraphStyle defaultStyle, float defaultTextSize) {
 		return getWidth();
 	}
 	
 	@Override
-	public SplitInformation split(ParagraphStyle defaultStyle, int fontSize,
+	public SplitInformation split(ParagraphStyle defaultStyle, float fontSize,
 			float positionX, float firstLineMaxWidth, Float maxWidth) {
 		SplitInformation splitInformation = new SplitInformation();
 		
@@ -86,7 +86,7 @@ public class Image implements ParagraphElement {
 	
 	@Override
 	public Point layout(Page page, ParagraphStyle defaultStyle,
-			int defaultFontSize, float positionX, float positionY) {
+			float defaultFontSize, float positionX, float positionY) {
 		coreImage.setX(positionX);
 		coreImage.setY(positionY);
 		
