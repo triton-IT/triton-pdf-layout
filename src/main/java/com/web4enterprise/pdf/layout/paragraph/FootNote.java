@@ -1,16 +1,24 @@
-package com.web4enterprise.pdf.layout.page;
+package com.web4enterprise.pdf.layout.paragraph;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.web4enterprise.pdf.core.geometry.Rect;
 import com.web4enterprise.pdf.layout.document.Document;
 import com.web4enterprise.pdf.layout.document.Element;
+import com.web4enterprise.pdf.layout.page.PageFootNotes;
 
-public class PageHeader implements Element {
+public class FootNote implements Element {
 	protected List<Element> elements = new ArrayList<>();
 	protected float height = 0.0f;
 	protected float computedWidth = 0.0f;
+	
+	public FootNote(Paragraph... paragraph) {
+		if(paragraph != null) {
+			elements.addAll(Arrays.asList(paragraph));
+		}
+	}
 	
 	public void addElement(Element element) {
 		elements.add(element);
@@ -29,22 +37,21 @@ public class PageHeader implements Element {
 		if(computedWidth != width) {
 			compute(width);
 		}
-		
 		return height;
 	}
 
 	@Override
 	public float layout(Document document, Rect boundingBox, float startY, PageFootNotes pageFootNotes) {
-		for(Element element : elements) {
-			//Need to clone element because header is repeated and changing any value of the element for a page will change it for each page.
-			startY = element.clone().layout(document, boundingBox, startY, pageFootNotes);
+		startY = boundingBox.getBottom() + height;
+		for(Element element : this.elements) {
+			startY = element.layout(document, boundingBox, startY, pageFootNotes);
 		}
 		
 		return startY;
 	}
 
 	@Override
-	public PageHeader clone() {
+	public FootNote clone() {
 		//TODO: clone this.
 		return this;
 	}

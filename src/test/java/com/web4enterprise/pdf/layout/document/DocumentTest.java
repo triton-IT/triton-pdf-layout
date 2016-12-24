@@ -19,6 +19,7 @@ import com.web4enterprise.pdf.layout.image.Image;
 import com.web4enterprise.pdf.layout.page.PageFooter;
 import com.web4enterprise.pdf.layout.page.PageHeader;
 import com.web4enterprise.pdf.layout.page.PageStyle;
+import com.web4enterprise.pdf.layout.paragraph.FootNote;
 import com.web4enterprise.pdf.layout.paragraph.Paragraph;
 import com.web4enterprise.pdf.layout.paragraph.ParagraphStyle;
 import com.web4enterprise.pdf.layout.placement.Alignment;
@@ -194,7 +195,8 @@ public class DocumentTest {
 
 		//Create header for next page.
 		pageHeader = new PageHeader();
-		pageHeader.addElement(new Paragraph("SimplyPDF-layout - web4enterprise - new page header example"));
+		paragraphHeader = new Paragraph(paragraphHeaderStyle, logo, new Text("SimplyPDF-layout - web4enterprise - new page header example"));
+		pageHeader.addElement(paragraphHeader);
 		
 		//Set footer before rendering any other element.
 		pageFooter = new PageFooter();
@@ -258,7 +260,9 @@ public class DocumentTest {
 		//Footnotes.
 		document.addElement(new Paragraph(titleStyle, "Adding footnotes"));
 		
-		paragraph = new Paragraph(emphaseStyle, "This still have to be coded.");
+		paragraph = new Paragraph(emphaseStyle, new Text("A footnote can be added simply by adding a footnote object to a paragraph element."));
+		paragraph.addFootNote(new FootNote(new Paragraph("Anything can be added to a footnote, paragraphs with texts and images.", NEW_LINE, 
+				"super-scripts are added automatically.")));
 		document.addElement(paragraph);
 		
 		document.finish();

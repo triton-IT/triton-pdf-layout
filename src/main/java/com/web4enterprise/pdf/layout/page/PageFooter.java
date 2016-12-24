@@ -29,14 +29,15 @@ public class PageFooter implements Element {
 		if(computedWidth != width) {
 			compute(width);
 		}
+		
 		return height;
 	}
 
 	@Override
-	public float layout(Document document, Rect boundingBox, float startY) {
-		startY = boundingBox.getBottom() + height;
+	public float layout(Document document, Rect boundingBox, float startY, PageFootNotes pageFootNotes) {
 		for(Element element : this.elements) {
-			startY = element.clone().layout(document, boundingBox, startY);
+			//Need to clone element because footer is repeated and changing any value of the element for a page will change it for each page.
+			startY = element.clone().layout(document, boundingBox, startY, pageFootNotes);
 		}
 		
 		return startY;

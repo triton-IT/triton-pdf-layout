@@ -11,6 +11,7 @@ import com.web4enterprise.pdf.core.page.Page;
 import com.web4enterprise.pdf.core.path.StraightPath;
 import com.web4enterprise.pdf.layout.document.Document;
 import com.web4enterprise.pdf.layout.document.Element;
+import com.web4enterprise.pdf.layout.page.PageFootNotes;
 import com.web4enterprise.pdf.layout.paragraph.Paragraph;
 import com.web4enterprise.pdf.layout.placement.BorderStyle;
 import com.web4enterprise.pdf.layout.placement.LineStyle;
@@ -164,20 +165,20 @@ public class Table implements Element {
 	}
 
 	@Override
-	public float layout(Document document, Rect boundingBox, float startY) {
+	public float layout(Document document, Rect boundingBox, float startY, PageFootNotes pageFootNotes) {
 		if(!computed) {
 			computeInnerLayout();
 		}
 		
 		Map<Integer, Integer> rowMerges = new HashMap<>();
 		for(TableRow row : getRows()) {
-			startY = createRow(document, boundingBox, startY, row, rowMerges);
+			startY = createRow(document, boundingBox, startY, row, rowMerges, pageFootNotes);
 		}
 		
 		return startY;
 	}
 
-	protected float createRow(Document document, Rect boundingBox, float startY, TableRow row, Map<Integer, Integer> rowMerges) {
+	protected float createRow(Document document, Rect boundingBox, float startY, TableRow row, Map<Integer, Integer> rowMerges, PageFootNotes pageFootNotes) {
 		Page currentPage = document.getCurrentPage();
 		float startX = boundingBox.getLeft();
 		
@@ -188,7 +189,7 @@ public class Table implements Element {
 			startY = document.getCurrentStartY();
 			if(isRepeatHeaderOnNewPage()) {
 				for(int i = 0; i < getNbHeaderRows(); i++) {
-					startY-= createRow(document, boundingBox, startY, getRows().get(i), rowMerges);
+					startY-= createRow(document, boundingBox, startY, getRows().get(i), rowMerges, pageFootNotes);
 				}
 			}
 		}
@@ -218,7 +219,7 @@ public class Table implements Element {
 				for(Paragraph paragraph : cell.getParagraphs()) {					
 					paragraph.layout(document, 
 							new Rect(paragraphStartY, startX, paragraphStartY - row.getHeight(), startX + width), 
-							paragraphStartY);
+							paragraphStartY, pageFootNotes);
 					paragraphStartY -= paragraph.getHeight(width);
 				}
 				

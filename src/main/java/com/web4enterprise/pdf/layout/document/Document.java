@@ -9,6 +9,7 @@ import com.web4enterprise.pdf.core.exceptions.PdfGenerationException;
 import com.web4enterprise.pdf.core.geometry.Rect;
 import com.web4enterprise.pdf.core.page.Page;
 import com.web4enterprise.pdf.layout.image.Image;
+import com.web4enterprise.pdf.layout.page.PageFootNotes;
 import com.web4enterprise.pdf.layout.page.PageFooter;
 import com.web4enterprise.pdf.layout.page.PageHeader;
 import com.web4enterprise.pdf.layout.page.PageStyle;
@@ -23,6 +24,7 @@ public class Document {
 	
 	protected PageHeader pageHeader = null;
 	protected PageFooter pageFooter = null;
+	protected PageFootNotes pageFootNotes = new PageFootNotes();
 	
 	public Document() {
 		document.setCreator("http://simplypdf-layout.web4enterprise.com");
@@ -111,8 +113,7 @@ public class Document {
 	}
 	
 	public void addPage() {
-		layoutFooter();
-		layoutNewPage();
+		addPage(pageStyle, pageHeader, pageFooter);
 	}
 	
 	public void addPage(PageStyle pageStyle) {
@@ -124,30 +125,55 @@ public class Document {
 	}
 	
 	public void addPage(PageStyle pageStyle, PageHeader pageHeader, PageFooter pageFooter) {
+		float pageWidth = pageStyle.getFormat().getWidth() - 
+				pageStyle.getMargins().getLeft() - 
+				pageStyle.getMargins().getRight();
+		
 		this.pageHeader = pageHeader;
-		layoutFooter();
+		if(currentPage != null) {
+			layoutEndOfPage(pageWidth);
+			
+			//Clear and start a new footNotes now that page has been rendered.
+			pageFootNotes.clear();
+			pageFootNotes.setWidth(pageWidth);
+		}
 		this.pageFooter = pageFooter;
 		this.pageStyle = pageStyle;
-		layoutNewPage();
+		layoutNewPage(pageWidth);
 	}
 	
-	protected void layoutFooter() {
-		///If this is not the first page and if we have a footer to layout.
-		if(currentPage != null && pageFooter != null) {			
-			float pageFooterHeight = pageFooter.getHeight(pageStyle.getFormat().getWidth() - 
-					pageStyle.getMargins().getLeft() - 
-					pageStyle.getMargins().getRight());
-			
+	protected void layoutFooter(float pageWidth) {
+		///If we have a footer to layout.
+		 if(pageFooter != null) {
+			float pageFooterHeight = pageFooter.getHeight(pageWidth);
+
 			pageFooter.layout(this, 
 					new Rect(pageStyle.getMargins().getBottom() + pageFooterHeight, 
 							pageStyle.getMargins().getLeft(),
 							pageStyle.getMargins().getBottom(),
 							pageStyle.getFormat().getWidth() - pageStyle.getMargins().getRight()),
-						blockStartY);
+					pageStyle.getMargins().getBottom() + pageFooterHeight,
+					pageFootNotes);
 		}
 	}
 	
-	protected void layoutNewPage() {
+	protected void layoutFootNotes(float pageWidth) {
+		///If we have a footer to layout.
+		 if(pageFootNotes != null) {
+			float pageFooterHeight = pageFooter.getHeight(pageWidth);
+			float pageFootNotesHeight = pageFootNotes.getHeight(pageWidth);
+
+			pageFootNotes.layout(this, 
+					new Rect(pageStyle.getMargins().getBottom() + pageFooterHeight + pageFootNotesHeight, 
+							pageStyle.getMargins().getLeft(),
+							pageStyle.getMargins().getBottom() + pageFooterHeight,
+							pageStyle.getFormat().getWidth() - pageStyle.getMargins().getRight()),
+					pageStyle.getMargins().getBottom() + pageFooterHeight + pageFootNotesHeight,
+					pageFootNotes);
+		}
+	}
+	
+	protected void layoutNewPage(float pageWidth) {
 		currentPage = document.createPage(pageStyle.getFormat().getWidth(), pageStyle.getFormat().getHeight());
 		blockStartY = pageStyle.getFormat().getHeight() - pageStyle.getMargins().getTop();
 		
@@ -157,11 +183,15 @@ public class Document {
 							pageStyle.getMargins().getLeft(),
 							pageStyle.getMargins().getBottom(),
 							pageStyle.getFormat().getWidth() - pageStyle.getMargins().getRight()),
-						blockStartY);
-			blockStartY -= pageHeader.getHeight(pageStyle.getFormat().getWidth() - 
-					pageStyle.getMargins().getLeft() - 
-					pageStyle.getMargins().getRight());
+						blockStartY,
+						pageFootNotes);
+			blockStartY -= pageHeader.getHeight(pageWidth);
 		}
+	}
+	
+	protected void layoutEndOfPage(float pageWidth) {
+		layoutFootNotes(pageWidth);
+		layoutFooter(pageWidth);
 	}
 	
 	public Page getCurrentPage() {
@@ -187,12 +217,19 @@ public class Document {
 					pageStyle.getMargins().getRight());
 		}
 		
+		if(pageFootNotes != null) {
+			bottom += pageFootNotes.getHeight(pageStyle.getFormat().getWidth() - 
+					pageStyle.getMargins().getLeft() - 
+					pageStyle.getMargins().getRight());
+		}
+		
 		blockStartY = element.layout(this, 
 				new Rect(top, 
 					pageStyle.getMargins().getLeft(),
 					bottom,
 					pageStyle.getFormat().getWidth() - pageStyle.getMargins().getRight()),
-				blockStartY);
+				blockStartY,
+				pageFootNotes);
 	}
 
 	public Image createImage(InputStream imageStream) throws PdfGenerationException {
@@ -200,18 +237,12 @@ public class Document {
 	}
 	
 	public void finish() {
-		///If this is not the first page and if we have a footer to layout.
-		if(pageFooter != null) {
-			float pageFooterHeight = pageFooter.getHeight(pageStyle.getFormat().getWidth() - 
-					pageStyle.getMargins().getLeft() - 
-					pageStyle.getMargins().getRight());
-			
-			pageFooter.layout(this, 
-					new Rect(pageStyle.getMargins().getBottom() + pageFooterHeight, 
-							pageStyle.getMargins().getLeft(),
-							pageStyle.getMargins().getBottom(),
-							pageStyle.getFormat().getWidth() - pageStyle.getMargins().getRight()),
-						blockStartY);
+		float pageWidth = pageStyle.getFormat().getWidth() - 
+				pageStyle.getMargins().getLeft() - 
+				pageStyle.getMargins().getRight();
+		
+		if(currentPage != null) {
+			layoutEndOfPage(pageWidth);
 		}
 	}
 

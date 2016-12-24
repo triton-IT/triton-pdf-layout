@@ -7,13 +7,26 @@ import com.web4enterprise.pdf.core.geometry.Rect;
 import com.web4enterprise.pdf.layout.document.Document;
 import com.web4enterprise.pdf.layout.document.Element;
 
-public class PageHeader implements Element {
+public class PageFootNotes implements Element {
 	protected List<Element> elements = new ArrayList<>();
+	protected float width = 0.0f;
 	protected float height = 0.0f;
 	protected float computedWidth = 0.0f;
 	
 	public void addElement(Element element) {
 		elements.add(element);
+	}
+
+	public float getWidth() {
+		return width;
+	}
+
+	public void setWidth(float width) {
+		this.width = width;
+	}
+	
+	public void clear() {
+		elements.clear();
 	}
 
 	public void compute(float width) {
@@ -44,8 +57,8 @@ public class PageHeader implements Element {
 	}
 
 	@Override
-	public PageHeader clone() {
+	public PageFootNotes clone() {
 		//TODO: clone this.
 		return this;
-	}
+	}	
 }

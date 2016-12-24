@@ -6,14 +6,17 @@ import java.util.List;
 
 import com.web4enterprise.pdf.core.geometry.Point;
 import com.web4enterprise.pdf.core.geometry.Rect;
+import com.web4enterprise.pdf.core.text.TextScript;
 import com.web4enterprise.pdf.layout.document.Document;
 import com.web4enterprise.pdf.layout.document.Element;
+import com.web4enterprise.pdf.layout.page.PageFootNotes;
 import com.web4enterprise.pdf.layout.placement.Alignment;
 import com.web4enterprise.pdf.layout.text.Text;
 
 public class Paragraph implements Element {	
 	protected ParagraphStyle style = new ParagraphStyle();
 	protected List<ParagraphElement> elements = new ArrayList<>();
+	protected List<FootNote> footNotes = new ArrayList<>();
 	
 	public Paragraph(String... texts) {
 		for(String text : texts) {
@@ -38,7 +41,7 @@ public class Paragraph implements Element {
 	}
 	
 	/**
-	 * USed only for cloning.
+	 * Used only for cloning.
 	 * 
 	 * @param style The style of paragraph.
 	 * @param elements The elements to reference.
@@ -89,6 +92,10 @@ public class Paragraph implements Element {
 		
 		return elementSubLines;
 	}
+
+	public void addFootNote(FootNote footNote) {
+		footNotes.add(footNote);
+	}
 	
 	@Override
 	public float getHeight(float width) {
@@ -104,7 +111,7 @@ public class Paragraph implements Element {
 	}
 
 	@Override
-	public float layout(Document document, Rect boundingBox, float startY) {
+	public float layout(Document document, Rect boundingBox, float startY, PageFootNotes pageFootNotes) {
 		//Get all lines of text (composed of text of different style).
 		List<ElementLine> textLines = getElementLines();
 		
@@ -121,6 +128,17 @@ public class Paragraph implements Element {
 		
 		//If this is the first line, some special behavior will have to be performed, so set it to true for now.
 		boolean isFirstLine = true;
+
+		//For last line, add the foot notes.
+		if(footNotes.size() > 0) {
+			ElementLine lastLine = textLines.get(textLines.size() - 1);
+			for(int i = 1; i <= footNotes.size(); i++) {
+				Text text = new Text(String.valueOf(i));
+				text.getStyle().setScript(TextScript.SUPER);
+				lastLine.add(text);
+			}
+		}
+		
 		//Iterate of each line of text to display them.
 		for(ElementLine textLine : textLines) {
 			//Calculate the maximum size allowed for text.
@@ -134,12 +152,20 @@ public class Paragraph implements Element {
 			//Split text to get-in maximum space.
 			List<ElementLine> elementSubLines = textLine.splitToMaxWidth(paragraphStyle, textSize, firstLineMaxWidth, maxWidth);
 			
+			//FootNote must be rendered on same page than paragraph, so check that both paragraph and its footNote fit in the page.
+			float bottom = boundingBox.getBottom();
+			if(footNotes.size() > 0) {
+				for(FootNote footNote : footNotes) {
+					bottom += footNote.getHeight(pageFootNotes.getWidth());
+				} 
+			}
+			
 			boolean firstSubLine = true;
 			for(ElementLine elementSubLine : elementSubLines) {
 				//Calculate text base line.
 				float baseLine = nextY - fontBaseLine;
 				
-				if(baseLine < boundingBox.getBottom()) {
+				if(baseLine < bottom) {
 					document.addPage();
 					startY = document.getCurrentStartY();
 					//Add page reinitialize blockStart, so calculate it again.
@@ -197,6 +223,10 @@ public class Paragraph implements Element {
 			if(isFirstLine) {
 				isFirstLine = false;
 			}
+		}
+		
+		for(FootNote footNote : footNotes) {
+			pageFootNotes.addElement(footNote);
 		}
 		
 		//Apply bottom margin to paragraph.
