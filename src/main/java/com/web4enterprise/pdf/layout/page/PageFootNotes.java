@@ -29,18 +29,22 @@ public class PageFootNotes implements Element {
 		elements.clear();
 	}
 
-	public void compute(float width) {
+	public void compute(Document document, float width) {
 		height = 0.0f;
 		for(Element element : elements) {
-			height += element.getHeight(width);
+			height += element.getHeight(document, width);
 		}
 		computedWidth = width;
 	}
 	
+	public boolean isEmpty() {
+		return elements.isEmpty();
+	}
+	
 	@Override
-	public float getHeight(float width) {
+	public float getHeight(Document document, float width) {
 		if(computedWidth != width) {
-			compute(width);
+			compute(document, width);
 		}
 		
 		return height;

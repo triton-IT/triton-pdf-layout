@@ -39,9 +39,9 @@ public class Table implements Element {
 		return columnsWidths.get(index);
 	}
 	
-	public void computeInnerLayout() {
+	public void computeInnerLayout(Document document) {
 		computeColumnWidths();
-		computeRowsHeights();
+		computeRowsHeights(document);
 		computeCellsWidths();
 		computeCellsHeights();
 		
@@ -68,12 +68,12 @@ public class Table implements Element {
 		this.nbHeaderRows = nbHeaderRows;
 	}
 
-	protected void computeRowsHeights() {
+	protected void computeRowsHeights(Document document) {
 		for(TableRow row : rows) {
 			int columnIndex = 0;
 			float currentRowHeight = 0;
 			for(TableCell cell : row.getCells()) {
-				float currentCellHeight = cell.getHeight(columnsWidths.get(columnIndex));
+				float currentCellHeight = cell.getHeight(document, columnsWidths.get(columnIndex));
 				if(currentCellHeight > currentRowHeight) {
 					currentRowHeight = currentCellHeight;
 				}
@@ -150,9 +150,9 @@ public class Table implements Element {
 	}
 	
 	@Override
-	public float getHeight(float width) {
+	public float getHeight(Document document, float width) {
 		if(!computed) {
-			computeInnerLayout();
+			computeInnerLayout(document);
 		}
 		
 		float height = 0.0f;
@@ -167,7 +167,7 @@ public class Table implements Element {
 	@Override
 	public float layout(Document document, Rect boundingBox, float startY, PageFootNotes pageFootNotes) {
 		if(!computed) {
-			computeInnerLayout();
+			computeInnerLayout(document);
 		}
 		
 		Map<Integer, Integer> rowMerges = new HashMap<>();
@@ -220,7 +220,7 @@ public class Table implements Element {
 					paragraph.layout(document, 
 							new Rect(paragraphStartY, startX, paragraphStartY - row.getHeight(), startX + width), 
 							paragraphStartY, pageFootNotes);
-					paragraphStartY -= paragraph.getHeight(width);
+					paragraphStartY -= paragraph.getHeight(document, width);
 				}
 				
 				//Top border

@@ -5,7 +5,7 @@ import com.web4enterprise.pdf.core.font.FontsVariant;
 import com.web4enterprise.pdf.core.styling.Color;
 import com.web4enterprise.pdf.core.text.TextScript;
 
-public class TextStyle {
+public class TextStyle implements Cloneable {
 	protected Font font;
 	protected FontsVariant fontVariant;
 	protected Float fontSize;
@@ -96,5 +96,15 @@ public class TextStyle {
 
 	public void setScript(TextScript script) {
 		this.script = script;
+	}
+	
+	@Override
+	public TextStyle clone() {
+		TextStyle clone = new TextStyle(font, fontVariant, fontSize, fontColor);
+		clone.setScript(script);
+		clone.setUnderlineColor(underlineColor);
+		clone.setUnderlined(underlined);
+		
+		return clone;
 	}
 }

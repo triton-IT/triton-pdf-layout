@@ -26,6 +26,8 @@ public class Document {
 	protected PageFooter pageFooter = null;
 	protected PageFootNotes pageFootNotes = new PageFootNotes();
 	
+	protected int currentFootNoteId = 1;
+	
 	public Document() {
 		document.setCreator("http://simplypdf-layout.web4enterprise.com");
 	}
@@ -137,15 +139,26 @@ public class Document {
 			pageFootNotes.clear();
 			pageFootNotes.setWidth(pageWidth);
 		}
+		
+		clearFootNoteId();
+		
 		this.pageFooter = pageFooter;
 		this.pageStyle = pageStyle;
 		layoutNewPage(pageWidth);
 	}
 	
+	public String generateFootNoteId() {
+		return String.valueOf(currentFootNoteId++);
+	}
+	
+	public void clearFootNoteId() {
+		currentFootNoteId = 1;
+	}
+	
 	protected void layoutFooter(float pageWidth) {
 		///If we have a footer to layout.
 		 if(pageFooter != null) {
-			float pageFooterHeight = pageFooter.getHeight(pageWidth);
+			float pageFooterHeight = pageFooter.getHeight(this, pageWidth);
 
 			pageFooter.layout(this, 
 					new Rect(pageStyle.getMargins().getBottom() + pageFooterHeight, 
@@ -159,9 +172,9 @@ public class Document {
 	
 	protected void layoutFootNotes(float pageWidth) {
 		///If we have a footer to layout.
-		 if(pageFootNotes != null) {
-			float pageFooterHeight = pageFooter.getHeight(pageWidth);
-			float pageFootNotesHeight = pageFootNotes.getHeight(pageWidth);
+		 if(!pageFootNotes.isEmpty()) {
+			float pageFooterHeight = pageFooter.getHeight(this, pageWidth);
+			float pageFootNotesHeight = pageFootNotes.getHeight(this, pageWidth);
 
 			pageFootNotes.layout(this, 
 					new Rect(pageStyle.getMargins().getBottom() + pageFooterHeight + pageFootNotesHeight, 
@@ -185,7 +198,7 @@ public class Document {
 							pageStyle.getFormat().getWidth() - pageStyle.getMargins().getRight()),
 						blockStartY,
 						pageFootNotes);
-			blockStartY -= pageHeader.getHeight(pageWidth);
+			blockStartY -= pageHeader.getHeight(this, pageWidth);
 		}
 	}
 	
@@ -205,20 +218,20 @@ public class Document {
 	public void addElement(Element element) {
 		float top = pageStyle.getMargins().getTop();
 		if(pageFooter != null) {
-			top -= pageFooter.getHeight(pageStyle.getFormat().getWidth() - 
+			top -= pageFooter.getHeight(this, pageStyle.getFormat().getWidth() - 
 					pageStyle.getMargins().getLeft() - 
 					pageStyle.getMargins().getRight());
 		}
 		
 		float bottom = pageStyle.getMargins().getBottom();
 		if(pageFooter != null) {
-			bottom += pageFooter.getHeight(pageStyle.getFormat().getWidth() - 
+			bottom += pageFooter.getHeight(this, pageStyle.getFormat().getWidth() - 
 					pageStyle.getMargins().getLeft() - 
 					pageStyle.getMargins().getRight());
 		}
 		
 		if(pageFootNotes != null) {
-			bottom += pageFootNotes.getHeight(pageStyle.getFormat().getWidth() - 
+			bottom += pageFootNotes.getHeight(this, pageStyle.getFormat().getWidth() - 
 					pageStyle.getMargins().getLeft() - 
 					pageStyle.getMargins().getRight());
 		}

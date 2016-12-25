@@ -6,7 +6,6 @@ import java.util.List;
 
 import com.web4enterprise.pdf.core.geometry.Point;
 import com.web4enterprise.pdf.core.geometry.Rect;
-import com.web4enterprise.pdf.core.text.TextScript;
 import com.web4enterprise.pdf.layout.document.Document;
 import com.web4enterprise.pdf.layout.document.Element;
 import com.web4enterprise.pdf.layout.page.PageFootNotes;
@@ -16,7 +15,6 @@ import com.web4enterprise.pdf.layout.text.Text;
 public class Paragraph implements Element {	
 	protected ParagraphStyle style = new ParagraphStyle();
 	protected List<ParagraphElement> elements = new ArrayList<>();
-	protected List<FootNote> footNotes = new ArrayList<>();
 	
 	public Paragraph(String... texts) {
 		for(String text : texts) {
@@ -71,7 +69,7 @@ public class Paragraph implements Element {
 		return ElementLine.getElementLines(elements);
 	}
 	
-	public List<ElementLine> getElementLines(float maxWidth) {
+	public List<ElementLine> getElementLines(Document document, float maxWidth) {
 		List<ElementLine> elementSubLines = new ArrayList<>();
 		
 		boolean isFirstLine = true;		
@@ -83,7 +81,7 @@ public class Paragraph implements Element {
 			}
 			
 			//Split text to get-in maximum space.
-			elementSubLines.addAll(textLine.splitToMaxWidth(getStyle(), getStyle().getFontSize(), firstLineMaxWidth, maxWidth));
+			elementSubLines.addAll(textLine.splitToMaxWidth(document, getStyle(), getStyle().getFontSize(), firstLineMaxWidth, maxWidth));
 			
 			if(isFirstLine) {
 				isFirstLine = false;
@@ -92,16 +90,12 @@ public class Paragraph implements Element {
 		
 		return elementSubLines;
 	}
-
-	public void addFootNote(FootNote footNote) {
-		footNotes.add(footNote);
-	}
 	
 	@Override
-	public float getHeight(float width) {
+	public float getHeight(Document document, float width) {
 		float height = 0;
 		
-		for(ElementLine elementLine : getElementLines(width)) {
+		for(ElementLine elementLine : getElementLines(document, width)) {
 			height += elementLine.getHeight(getStyle());
 		}
 		
@@ -128,16 +122,6 @@ public class Paragraph implements Element {
 		
 		//If this is the first line, some special behavior will have to be performed, so set it to true for now.
 		boolean isFirstLine = true;
-
-		//For last line, add the foot notes.
-		if(footNotes.size() > 0) {
-			ElementLine lastLine = textLines.get(textLines.size() - 1);
-			for(int i = 1; i <= footNotes.size(); i++) {
-				Text text = new Text(String.valueOf(i));
-				text.getStyle().setScript(TextScript.SUPER);
-				lastLine.add(text);
-			}
-		}
 		
 		//Iterate of each line of text to display them.
 		for(ElementLine textLine : textLines) {
@@ -150,20 +134,20 @@ public class Paragraph implements Element {
 				firstLineMaxWidth -= paragraphStyle.getFirstLineMargin();
 			}
 			//Split text to get-in maximum space.
-			List<ElementLine> elementSubLines = textLine.splitToMaxWidth(paragraphStyle, textSize, firstLineMaxWidth, maxWidth);
-			
-			//FootNote must be rendered on same page than paragraph, so check that both paragraph and its footNote fit in the page.
-			float bottom = boundingBox.getBottom();
-			if(footNotes.size() > 0) {
-				for(FootNote footNote : footNotes) {
-					bottom += footNote.getHeight(pageFootNotes.getWidth());
-				} 
-			}
+			List<ElementLine> elementSubLines = textLine.splitToMaxWidth(document, paragraphStyle, textSize, firstLineMaxWidth, maxWidth);
 			
 			boolean firstSubLine = true;
 			for(ElementLine elementSubLine : elementSubLines) {
 				//Calculate text base line.
 				float baseLine = nextY - fontBaseLine;
+
+				//FootNote must be rendered on same page than line, so check that both line and its footNote fit in the page.
+				float bottom = boundingBox.getBottom();
+				for(ParagraphElement paragraphElement : elementSubLine) {
+					for(FootNote footNote : paragraphElement.getFootNotes()) {
+						bottom += footNote.getHeight(document, pageFootNotes.getWidth());
+					}
+				}
 				
 				if(baseLine < bottom) {
 					document.addPage();
@@ -171,6 +155,13 @@ public class Paragraph implements Element {
 					//Add page reinitialize blockStart, so calculate it again.
 					baseLine = startY - fontBaseLine;
 					nextY =  startY - paragraphStyle.getMargins().getTop();
+				}
+
+				//Add footNotes of the line to page.
+				for(ParagraphElement paragraphElement : elementSubLine) {
+					for(FootNote footNote : paragraphElement.getFootNotes()) {
+						pageFootNotes.addElement(footNote);
+					}
 				}
 				
 				float startX = 0.0f;
@@ -223,10 +214,6 @@ public class Paragraph implements Element {
 			if(isFirstLine) {
 				isFirstLine = false;
 			}
-		}
-		
-		for(FootNote footNote : footNotes) {
-			pageFootNotes.addElement(footNote);
 		}
 		
 		//Apply bottom margin to paragraph.

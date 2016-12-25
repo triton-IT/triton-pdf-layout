@@ -260,9 +260,10 @@ public class DocumentTest {
 		//Footnotes.
 		document.addElement(new Paragraph(titleStyle, "Adding footnotes"));
 		
-		paragraph = new Paragraph(emphaseStyle, new Text("A footnote can be added simply by adding a footnote object to a paragraph element."));
-		paragraph.addFootNote(new FootNote(new Paragraph("Anything can be added to a footnote, paragraphs with texts and images.", NEW_LINE, 
-				"super-scripts are added automatically.")));
+		Text footNotedText = new Text("A footnote can be added simply by adding a footnote object to a paragraph element.");
+		footNotedText.addFootNote(new FootNote(new Paragraph("Anything can be added to a footnote, paragraphs with texts and images.", NEW_LINE, 
+				"super-scripts are added to text automatically.")));
+		paragraph = new Paragraph(emphaseStyle, footNotedText);
 		document.addElement(paragraph);
 		
 		document.finish();

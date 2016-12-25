@@ -16,18 +16,18 @@ public class PageFooter implements Element {
 		elements.add(element);
 	}
 
-	public void compute(float width) {
+	public void compute(Document document, float width) {
 		height = 0.0f;
 		for(Element element : elements) {
-			height += element.getHeight(width);
+			height += element.getHeight(document, width);
 		}
 		computedWidth = width;
 	}
 	
 	@Override
-	public float getHeight(float width) {
+	public float getHeight(Document document, float width) {
 		if(computedWidth != width) {
-			compute(width);
+			compute(document, width);
 		}
 		
 		return height;

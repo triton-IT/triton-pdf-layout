@@ -6,6 +6,8 @@ import java.util.List;
 import com.web4enterprise.pdf.core.font.Font;
 import com.web4enterprise.pdf.core.geometry.Point;
 import com.web4enterprise.pdf.core.page.Page;
+import com.web4enterprise.pdf.layout.document.Document;
+import com.web4enterprise.pdf.layout.paragraph.FootNote;
 import com.web4enterprise.pdf.layout.paragraph.ParagraphElement;
 import com.web4enterprise.pdf.layout.paragraph.ParagraphStyle;
 import com.web4enterprise.pdf.layout.text.Text;
@@ -13,6 +15,8 @@ import com.web4enterprise.pdf.layout.text.TextStyle;
 
 public class Image implements ParagraphElement {	
 	protected com.web4enterprise.pdf.core.image.Image coreImage;
+	
+	protected List<FootNote> footNotes = new ArrayList<>();
 	
 	public Image(com.web4enterprise.pdf.core.image.Image coreImage) {
 		this.coreImage = coreImage.cloneReference();
@@ -49,12 +53,22 @@ public class Image implements ParagraphElement {
 			this.coreImage.setWidth((int) Math.round((height * this.coreImage.getWidth()) / oldHeight));
 		}
 	}
+
+	@Override
+	public void addFootNote(FootNote footNote) {
+		footNotes.add(footNote);
+	}
 	
 	@Override
 	public List<ParagraphElement> getLines() {
 		List<ParagraphElement> lines = new ArrayList<>();
 		lines.add(this);
 		return lines;
+	}	
+
+	@Override
+	public List<FootNote> getFootNotes() {
+		return footNotes;
 	}
 	
 	@Override
@@ -63,7 +77,7 @@ public class Image implements ParagraphElement {
 	}
 	
 	@Override
-	public SplitInformation split(ParagraphStyle defaultStyle, float fontSize,
+	public SplitInformation split(Document document, ParagraphStyle defaultStyle, float fontSize,
 			float positionX, float firstLineMaxWidth, Float maxWidth) {
 		SplitInformation splitInformation = new SplitInformation();
 		

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import com.web4enterprise.pdf.layout.document.Document;
 import com.web4enterprise.pdf.layout.paragraph.ParagraphElement.SplitInformation;
 
 /*
@@ -42,7 +43,7 @@ public class ElementLine extends ArrayList<ParagraphElement> {
 		return elementLines;
 	}
 	
-	public List<ElementLine> splitToMaxWidth(ParagraphStyle defaultStyle, float defaultFontSize, float firstLineMaxWidth, Float maxWidth) {
+	public List<ElementLine> splitToMaxWidth(Document document, ParagraphStyle defaultStyle, float defaultFontSize, float firstLineMaxWidth, Float maxWidth) {
 		List<ElementLine> elementLines = new ArrayList<>();
 		
 		int currentX = 0;
@@ -51,7 +52,7 @@ public class ElementLine extends ArrayList<ParagraphElement> {
 		
 		boolean isFirstLine = true;
 		for(ParagraphElement element : this) {
-			SplitInformation splitInformation = element.split(defaultStyle, defaultFontSize, currentX, firstLineMaxWidth, maxWidth);
+			SplitInformation splitInformation = element.split(document, defaultStyle, defaultFontSize, currentX, firstLineMaxWidth, maxWidth);
 			
 			//Insert end of line on current line.
 			Iterator<ParagraphElement> iterator = splitInformation.splitElements.iterator();

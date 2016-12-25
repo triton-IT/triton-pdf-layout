@@ -9,6 +9,9 @@ import com.web4enterprise.pdf.core.font.FontVariant;
 import com.web4enterprise.pdf.core.geometry.Point;
 import com.web4enterprise.pdf.core.page.Page;
 import com.web4enterprise.pdf.core.styling.Color;
+import com.web4enterprise.pdf.core.text.TextScript;
+import com.web4enterprise.pdf.layout.document.Document;
+import com.web4enterprise.pdf.layout.paragraph.FootNote;
 import com.web4enterprise.pdf.layout.paragraph.ParagraphStyle;
 import com.web4enterprise.pdf.layout.paragraph.ParagraphElement;
 
@@ -20,7 +23,10 @@ public class Text implements ParagraphElement {
 
 	protected TextStyle style = new TextStyle();	
 
-	com.web4enterprise.pdf.core.text.Text coreText;
+	protected com.web4enterprise.pdf.core.text.Text coreText;
+	protected com.web4enterprise.pdf.core.text.Text coreFootNoteTexts;
+	
+	protected List<FootNote> footNotes = new ArrayList<>();
 	
 	public Text(String string) {
 		coreText = new com.web4enterprise.pdf.core.text.Text(0.0f, 0.0f, 0.0f, string);
@@ -58,7 +64,9 @@ public class Text implements ParagraphElement {
 		//Split will return only one entry if regex if at start or end of string.
 		String[] stringLines = getString().split(NEW_LINE);
 		for(String stringLine : stringLines) {
-			lines.add(new Text(style, stringLine));
+			Text singleTextLine = new Text(style, stringLine);
+			singleTextLine.setFootNotes(footNotes);
+			lines.add(singleTextLine);
 		}
 		
 		//If string ends with a new line, we have to create an empty one.
@@ -68,9 +76,23 @@ public class Text implements ParagraphElement {
 		
 		return lines;
 	}
+
+	@Override
+	public void addFootNote(FootNote footNote) {
+		footNotes.add(footNote);
+	}
+
+	public void setFootNotes(List<FootNote> footNotes) {
+		this.footNotes = footNotes;
+	}	
+
+	@Override
+	public List<FootNote> getFootNotes() {
+		return footNotes;
+	}
 	
 	@Override
-	public SplitInformation split(ParagraphStyle defaultStyle, float fontSize, float positionX, float firstLineMaxWidth, Float maxWidth) {
+	public SplitInformation split(Document document, ParagraphStyle defaultStyle, float fontSize, float positionX, float firstLineMaxWidth, Float maxWidth) {
 		TextStyle textStyle = getStyle();
 		//Get font name between paragraph and text ones.
 		Font currentFont = (style.getFont() != null)?style.getFont():defaultStyle.getFont();
@@ -81,12 +103,12 @@ public class Text implements ParagraphElement {
 		
 		//Split the text on max width.
 		SplitInformation splitInformation = new SplitInformation();
-		split(getString(), currentFontVariant, currentTextSize, positionX, firstLineMaxWidth, maxWidth, splitInformation, true);
+		split(document, getString(), currentFontVariant, currentTextSize, positionX, firstLineMaxWidth, maxWidth, splitInformation, true);
 		
 		return splitInformation;
 	}
 	
-	public void split(String stringToSplit, FontVariant font, float fontSize, float positionX, float firstLineMaxWidth, 
+	protected void split(Document document, String stringToSplit, FontVariant font, float fontSize, float positionX, float firstLineMaxWidth, 
 			float maxWidth, SplitInformation splitInformation, boolean isFirstLine) {
 		//Calculate maximum size for final line.
 		float maximumLineWidth = maxWidth;
@@ -126,12 +148,42 @@ public class Text implements ParagraphElement {
 						//Try to split the next lines of text.
 						String textLeft = stringToSplit.substring(keptString.length());
 						//We split on space earlier, we don't want to display it on new line, so remove it.
-						split(textLeft.substring(1), font, fontSize, 0, firstLineMaxWidth, maxWidth, splitInformation, false);
+						split(document, textLeft.substring(1), font, fontSize, 0, firstLineMaxWidth, maxWidth, splitInformation, false);
 					}
 				}
 			}
-		} else {
-			splitInformation.splitElements.add(new Text(style, stringToSplit));
+		} else {		
+			//Now, calculate with foot notes on last word. We want foot notes to be all together with word and never been separated from it.
+			if(footNotes.size() > 0) {
+				float currentFootNoteSize = fontSize / 2.0f;
+				StringBuilder footNotesBuilder = new StringBuilder(stringToSplit);
+				for(FootNote footNote : footNotes) {
+					footNotesBuilder.append(footNote.generateId(document)).append(" ");
+				}
+				footNotesBuilder.deleteCharAt(footNotesBuilder.length() - 1);
+				String footNotesString = footNotesBuilder.toString();
+				
+				float footNotesWidth = font.getWidth(currentFootNoteSize, footNotesString);
+				//If last line + footNotes does not fit in page, then cut again on last word of the last line to put last word with its foot notes indices.
+				if(textWidth + footNotesWidth > maximumLineWidth) {
+					int splitIndex = stringToSplit.lastIndexOf(' ');
+					if(splitIndex < 1) {
+						LOGGER.warning("'" + stringToSplit + "' cannot be split to fit expected size. Text can be rendered outside its expected bounding box.");
+					} else {
+						String keptString = stringToSplit.substring(0, splitIndex);
+						//Add information on current line to split information.
+						splitInformation.splitElements.add(new Text(style, keptString));
+						
+						//Remove space on splitting.
+						stringToSplit = stringToSplit.substring(splitIndex + 1);
+					}
+				}
+			}
+			
+			//Finally, add last part of text to split information.
+			Text text = new Text(style, stringToSplit);
+			text.setFootNotes(footNotes);
+			splitInformation.splitElements.add(text);
 			splitInformation.positionX = textWidth;
 		}
 	}
@@ -174,7 +226,22 @@ public class Text implements ParagraphElement {
 		
 		page.add(coreText);
 		
-		return new Point(coreText.getWidth(), currentFontSize);
+		float footNotesWidth = 0.0f;
+		if(footNotes.size() > 0) {
+			StringBuilder footNotesBuilder = new StringBuilder();
+			
+			for(FootNote footNote : footNotes) {
+				footNotesBuilder.append(footNote.getId()).append(" ");
+			}
+			footNotesBuilder.deleteCharAt(footNotesBuilder.length() - 1);
+			float footNotePositionX = positionX + coreText.getWidth();
+			coreFootNoteTexts = new com.web4enterprise.pdf.core.text.Text(footNotePositionX, positionY, currentFontSize, currentFontVariant, color, footNotesBuilder.toString());
+			coreFootNoteTexts.setScript(TextScript.SUPER);
+			
+			page.add(coreFootNoteTexts);
+		}
+		
+		return new Point(coreText.getWidth() + footNotesWidth, currentFontSize);
 	}
 
 	@Override

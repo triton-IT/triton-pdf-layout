@@ -3,6 +3,7 @@ package com.web4enterprise.pdf.layout.paragraph;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Logger;
 
 import com.web4enterprise.pdf.core.geometry.Rect;
 import com.web4enterprise.pdf.layout.document.Document;
@@ -10,9 +11,12 @@ import com.web4enterprise.pdf.layout.document.Element;
 import com.web4enterprise.pdf.layout.page.PageFootNotes;
 
 public class FootNote implements Element {
+	private final static Logger LOGGER = Logger.getLogger(FootNote.class.getName());
+	
 	protected List<Element> elements = new ArrayList<>();
 	protected float height = 0.0f;
 	protected float computedWidth = 0.0f;
+	protected String id;
 	
 	public FootNote(Paragraph... paragraph) {
 		if(paragraph != null) {
@@ -24,18 +28,30 @@ public class FootNote implements Element {
 		elements.add(element);
 	}
 
-	public void compute(float width) {
+	public void compute(Document document, float width) {
 		height = 0.0f;
 		for(Element element : elements) {
-			height += element.getHeight(width);
+			height += element.getHeight(document, width);
 		}
 		computedWidth = width;
 	}
 	
+	public String generateId(Document document) {
+		id = document.generateFootNoteId();
+		return id;
+	}
+	
+	public String getId() {
+		if(id == null) {
+			LOGGER.severe("FootNote id is asked but has not been generated.");
+		}
+		return id;
+	}
+	
 	@Override
-	public float getHeight(float width) {
+	public float getHeight(Document document, float width) {
 		if(computedWidth != width) {
-			compute(width);
+			compute(document, width);
 		}
 		return height;
 	}
