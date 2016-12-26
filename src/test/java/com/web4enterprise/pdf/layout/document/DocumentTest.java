@@ -57,7 +57,7 @@ public class DocumentTest {
 		
 		Document document = new Document();
 		
-		/*document.setAuthor("Regis Ramillien");
+		document.setAuthor("Regis Ramillien");
 		document.setModificationDate(new Date());
 		document.setProducer("web4enterprise");
 		document.setSubject("documentation for simplyPDF-layout library");
@@ -263,24 +263,24 @@ public class DocumentTest {
 		document.addElement(paragraph);
 
 		//Internal links.
-		document.addElement(new Paragraph(titleStyle, "Adding document internal links"));*/
+		document.addElement(new Paragraph(titleStyle, "Adding document internal links"));
 		Text linkedText = new Text(internalLinkStyle, "Document internal links");
 		document.addElement(new Paragraph(NEW_TEXT_LINE, linkedText, new Text(" can simply be added to any text.")));
 		
 		//document.addElement(new Paragraph(title2Style, "Internal link target"));
-		Paragraph paragraph = new Paragraph("An internal link target is nothing special, it's just a simple element.");
+		paragraph = new Paragraph("An internal link target is nothing special, it's just a simple element.");
 		document.addElement(paragraph);
 		
 		linkedText.setLink(paragraph);
 
 		//Footnotes.
-		/*document.addElement(new Paragraph(titleStyle, "Adding footnotes"));
+		document.addElement(new Paragraph(titleStyle, "Adding footnotes"));
 		
 		Text footNotedText = new Text("A footnote can be added simply by adding a footnote object to a paragraph element.");
 		footNotedText.addFootNote(new FootNote(new Paragraph(footNoteStyle, "Any paragraph with texts and images can be added to a footnote.", NEW_LINE, 
 				"Footnotes indices are added to text automatically as super-scripts.")));
 		paragraph = new Paragraph(footNotedText);
-		document.addElement(paragraph);*/
+		document.addElement(paragraph);
 		
 		document.finish();
 		

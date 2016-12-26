@@ -31,7 +31,7 @@ public class Text implements ParagraphElement {
 	
 	protected Element linkedElement;
 	
-	protected List<ParagraphElement> lines = new ArrayList<>();
+	protected List<Text> spawns = new ArrayList<Text>();
 	
 	public Text(String string) {
 		coreText = new com.web4enterprise.pdf.core.text.Text(0.0f, 0.0f, 0.0f, string);
@@ -59,8 +59,8 @@ public class Text implements ParagraphElement {
 	}
 	
 	@Override
-	public List<ParagraphElement> getLines() {
-		lines.clear();
+	public List<ParagraphElement> getLines() {		
+		List<ParagraphElement> lines = new ArrayList<>();
 		
 		//If string starts with a new line, we have to create an empty one.
 		if(getString().startsWith(NEW_LINE)) {
@@ -70,11 +70,8 @@ public class Text implements ParagraphElement {
 		//Split will return only one entry if regex if at start or end of string.
 		String[] stringLines = getString().split(NEW_LINE);
 		for(String stringLine : stringLines) {
-			Text singleTextLine = new Text(style, stringLine);
+			Text singleTextLine = spawn(stringLine);
 			singleTextLine.setFootNotes(footNotes);
-			if(linkedElement != null) {
-				singleTextLine.setLink(linkedElement);
-			}
 			lines.add(singleTextLine);
 		}
 		
@@ -90,8 +87,8 @@ public class Text implements ParagraphElement {
 	public void setLink(Element element) {
 		linkedElement = element;
 		coreText.setLink(element);
-		for(ParagraphElement subElement : lines) {
-			subElement.setLink(element);
+		for(Text spawn : spawns) {
+			spawn.setLink(element);
 		}
 	}
 
@@ -148,10 +145,7 @@ public class Text implements ParagraphElement {
 				int splitIndex = keptString.lastIndexOf(' ');
 				if(splitIndex < 1) {
 					LOGGER.warning("'" + stringToSplit + "' cannot be split to fit expected size. Text can be rendered outside its expected bounding box.");
-					Text newTextLine = new Text(style, keptString);
-					if(linkedElement != null) {
-						newTextLine.setLink(linkedElement);
-					}
+					Text newTextLine = spawn(keptString);
 					splitInformation.splitElements.add(newTextLine);
 					float keptStringWidth = font.getWidth(fontSize, keptString);
 					splitInformation.positionX = keptStringWidth;
@@ -163,10 +157,7 @@ public class Text implements ParagraphElement {
 						//This line is splitted, so do not continue to split this specific line.
 						keepSplitting = false;
 						//Add information on current line to split information.
-						Text newTextLine = new Text(style, keptString);
-						if(linkedElement != null) {
-							newTextLine.setLink(linkedElement);
-						}
+						Text newTextLine = spawn(keptString);
 						splitInformation.splitElements.add(newTextLine);
 						float keptStringWidth = font.getWidth(fontSize, stringToSplit);
 						splitInformation.positionX = keptStringWidth;
@@ -198,10 +189,7 @@ public class Text implements ParagraphElement {
 					} else {
 						String keptString = stringToSplit.substring(0, splitIndex);
 						//Add information on current line to split information.
-						Text newTextLine = new Text(style, keptString);
-						if(linkedElement != null) {
-							newTextLine.setLink(linkedElement);
-						}
+						Text newTextLine = spawn(keptString);
 						splitInformation.splitElements.add(newTextLine);
 						
 						//Remove space on splitting.
@@ -211,10 +199,7 @@ public class Text implements ParagraphElement {
 			}
 			
 			//Finally, add last part of text to split information.
-			Text newTextLine = new Text(style, stringToSplit);
-			if(linkedElement != null) {
-				newTextLine.setLink(linkedElement);
-			}
+			Text newTextLine = spawn(stringToSplit);
 			newTextLine.setFootNotes(footNotes);
 			splitInformation.splitElements.add(newTextLine);
 			splitInformation.positionX = textWidth;
@@ -293,5 +278,16 @@ public class Text implements ParagraphElement {
 		}
 		newTextLine.setFootNotes(footNotes);
 		return newTextLine;
+	}
+	
+	protected Text spawn(String value) {
+		Text spawn = new Text(style, value);
+		if(linkedElement != null) {
+			spawn.setLink(linkedElement);
+		}
+		
+		spawns.add(spawn);
+		
+		return spawn;
 	}
 }
