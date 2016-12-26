@@ -53,6 +53,10 @@ public class Paragraph implements Element {
 		return elements;
 	}
 	
+	public void prependElement(ParagraphElement... elements) {
+		this.elements.addAll(0, Arrays.asList(elements));
+	}
+	
 	public void addElement(ParagraphElement... elements) {
 		this.elements.addAll(Arrays.asList(elements));
 	}
