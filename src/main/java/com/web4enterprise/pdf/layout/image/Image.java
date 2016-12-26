@@ -7,6 +7,7 @@ import com.web4enterprise.pdf.core.font.Font;
 import com.web4enterprise.pdf.core.geometry.Point;
 import com.web4enterprise.pdf.core.page.Page;
 import com.web4enterprise.pdf.layout.document.Document;
+import com.web4enterprise.pdf.layout.document.Element;
 import com.web4enterprise.pdf.layout.paragraph.FootNote;
 import com.web4enterprise.pdf.layout.paragraph.ParagraphElement;
 import com.web4enterprise.pdf.layout.paragraph.ParagraphStyle;
@@ -17,6 +18,8 @@ public class Image implements ParagraphElement {
 	protected com.web4enterprise.pdf.core.image.Image coreImage;
 	
 	protected List<FootNote> footNotes = new ArrayList<>();
+	
+	protected Element linkedElement;
 	
 	public Image(com.web4enterprise.pdf.core.image.Image coreImage) {
 		this.coreImage = coreImage.cloneReference();
@@ -52,6 +55,11 @@ public class Image implements ParagraphElement {
 		if(keepRatio) {
 			this.coreImage.setWidth((int) Math.round((height * this.coreImage.getWidth()) / oldHeight));
 		}
+	}
+
+	@Override
+	public void setLink(Element element) {
+		linkedElement = element;
 	}
 
 	@Override

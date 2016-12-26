@@ -6,6 +6,7 @@ import java.util.List;
 import com.web4enterprise.pdf.core.geometry.Point;
 import com.web4enterprise.pdf.core.page.Page;
 import com.web4enterprise.pdf.layout.document.Document;
+import com.web4enterprise.pdf.layout.document.Element;
 
 public interface ParagraphElement extends Cloneable {
 	List<ParagraphElement> getLines();
@@ -15,6 +16,7 @@ public interface ParagraphElement extends Cloneable {
 	float getLineSpacing(ParagraphStyle defaultStyle);
 	void addFootNote(FootNote footNote);
 	List<FootNote> getFootNotes();
+	void setLink(Element element);
 	
 	class SplitInformation {
 		public float positionX;

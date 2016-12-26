@@ -11,6 +11,7 @@ import com.web4enterprise.pdf.core.page.Page;
 import com.web4enterprise.pdf.core.styling.Color;
 import com.web4enterprise.pdf.core.text.TextScript;
 import com.web4enterprise.pdf.layout.document.Document;
+import com.web4enterprise.pdf.layout.document.Element;
 import com.web4enterprise.pdf.layout.paragraph.FootNote;
 import com.web4enterprise.pdf.layout.paragraph.ParagraphStyle;
 import com.web4enterprise.pdf.layout.paragraph.ParagraphElement;
@@ -27,6 +28,10 @@ public class Text implements ParagraphElement {
 	protected com.web4enterprise.pdf.core.text.Text coreFootNoteTexts;
 	
 	protected List<FootNote> footNotes = new ArrayList<>();
+	
+	protected Element linkedElement;
+	
+	protected List<ParagraphElement> lines = new ArrayList<>();
 	
 	public Text(String string) {
 		coreText = new com.web4enterprise.pdf.core.text.Text(0.0f, 0.0f, 0.0f, string);
@@ -53,9 +58,10 @@ public class Text implements ParagraphElement {
 		coreText.setValue(string);
 	}
 	
+	@Override
 	public List<ParagraphElement> getLines() {
-		ArrayList<ParagraphElement> lines = new ArrayList<>();
-
+		lines.clear();
+		
 		//If string starts with a new line, we have to create an empty one.
 		if(getString().startsWith(NEW_LINE)) {
 			lines.add(new Text(style, ""));
@@ -66,6 +72,9 @@ public class Text implements ParagraphElement {
 		for(String stringLine : stringLines) {
 			Text singleTextLine = new Text(style, stringLine);
 			singleTextLine.setFootNotes(footNotes);
+			if(linkedElement != null) {
+				singleTextLine.setLink(linkedElement);
+			}
 			lines.add(singleTextLine);
 		}
 		
@@ -75,6 +84,15 @@ public class Text implements ParagraphElement {
 		}
 		
 		return lines;
+	}
+
+	@Override
+	public void setLink(Element element) {
+		linkedElement = element;
+		coreText.setLink(element);
+		for(ParagraphElement subElement : lines) {
+			subElement.setLink(element);
+		}
 	}
 
 	@Override
@@ -130,7 +148,11 @@ public class Text implements ParagraphElement {
 				int splitIndex = keptString.lastIndexOf(' ');
 				if(splitIndex < 1) {
 					LOGGER.warning("'" + stringToSplit + "' cannot be split to fit expected size. Text can be rendered outside its expected bounding box.");
-					splitInformation.splitElements.add(new Text(style, keptString));
+					Text newTextLine = new Text(style, keptString);
+					if(linkedElement != null) {
+						newTextLine.setLink(linkedElement);
+					}
+					splitInformation.splitElements.add(newTextLine);
 					float keptStringWidth = font.getWidth(fontSize, keptString);
 					splitInformation.positionX = keptStringWidth;
 					keepSplitting = false;
@@ -141,7 +163,11 @@ public class Text implements ParagraphElement {
 						//This line is splitted, so do not continue to split this specific line.
 						keepSplitting = false;
 						//Add information on current line to split information.
-						splitInformation.splitElements.add(new Text(style, keptString));
+						Text newTextLine = new Text(style, keptString);
+						if(linkedElement != null) {
+							newTextLine.setLink(linkedElement);
+						}
+						splitInformation.splitElements.add(newTextLine);
 						float keptStringWidth = font.getWidth(fontSize, stringToSplit);
 						splitInformation.positionX = keptStringWidth;
 						
@@ -172,7 +198,11 @@ public class Text implements ParagraphElement {
 					} else {
 						String keptString = stringToSplit.substring(0, splitIndex);
 						//Add information on current line to split information.
-						splitInformation.splitElements.add(new Text(style, keptString));
+						Text newTextLine = new Text(style, keptString);
+						if(linkedElement != null) {
+							newTextLine.setLink(linkedElement);
+						}
+						splitInformation.splitElements.add(newTextLine);
 						
 						//Remove space on splitting.
 						stringToSplit = stringToSplit.substring(splitIndex + 1);
@@ -181,9 +211,12 @@ public class Text implements ParagraphElement {
 			}
 			
 			//Finally, add last part of text to split information.
-			Text text = new Text(style, stringToSplit);
-			text.setFootNotes(footNotes);
-			splitInformation.splitElements.add(text);
+			Text newTextLine = new Text(style, stringToSplit);
+			if(linkedElement != null) {
+				newTextLine.setLink(linkedElement);
+			}
+			newTextLine.setFootNotes(footNotes);
+			splitInformation.splitElements.add(newTextLine);
 			splitInformation.positionX = textWidth;
 		}
 	}
@@ -254,6 +287,11 @@ public class Text implements ParagraphElement {
 	@Override
 	public Text clone() {
 		//TODO: Clone style.
-		return new Text(style, getString());
+		Text newTextLine = new Text(style, getString());
+		if(linkedElement != null) {
+			newTextLine.setLink(linkedElement);
+		}
+		newTextLine.setFootNotes(footNotes);
+		return newTextLine;
 	}
 }

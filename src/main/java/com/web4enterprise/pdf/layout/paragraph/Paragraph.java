@@ -15,6 +15,10 @@ import com.web4enterprise.pdf.layout.text.Text;
 public class Paragraph implements Element {	
 	protected ParagraphStyle style = new ParagraphStyle();
 	protected List<ParagraphElement> elements = new ArrayList<>();
+
+	protected float linkX = 0.0f;
+	protected float linkY = 0.0f;
+	protected Integer pageId = null;
 	
 	public Paragraph(String... texts) {
 		for(String text : texts) {
@@ -160,6 +164,13 @@ public class Paragraph implements Element {
 					baseLine = startY - fontBaseLine;
 					nextY =  startY - paragraphStyle.getMargins().getTop();
 				}
+				
+				//If this is the first line, set the link.
+				if(pageId == null) {
+					pageId = document.getCurrentPage().getId();
+					linkX = boundingBox.getLeft();
+					linkY = startY;
+				}
 
 				//Add footNotes of the line to page.
 				for(ParagraphElement paragraphElement : elementSubLine) {
@@ -236,5 +247,20 @@ public class Paragraph implements Element {
 	    
 	    //Clone create a new Paragraph with clones.
 		return new Paragraph(style, elementsClones);
+	}
+
+	@Override
+	public int getPage() {
+		return pageId;
+	}
+
+	@Override
+	public float getLinkX() {
+		return linkX;
+	}
+
+	@Override
+	public float getLinkY() {
+		return linkY;
 	}
 }

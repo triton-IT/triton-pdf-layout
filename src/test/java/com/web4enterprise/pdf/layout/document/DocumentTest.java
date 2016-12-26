@@ -43,16 +43,21 @@ public class DocumentTest {
 		Color titleColor = new Color(204, 85, 89);
 		ParagraphStyle titleStyle = new ParagraphStyle(TIMES_ROMAN, FontsVariant.BOLD, 14, titleColor);
 		titleStyle.setMargins(new Margins(20, 0, 10, 0));
+		ParagraphStyle title2Style = new ParagraphStyle(TIMES_ROMAN, FontsVariant.BOLD, 12, titleColor);
+		title2Style.setMargins(new Margins(10, 0, 5, 0));
 		Color emphaseColor = new Color(128, 128, 60);
 		Color lightEmphaseColor = new Color(250, 250, 240);
 		Color darkEmphaseColor = new Color(100, 100, 0);
 		ParagraphStyle emphaseStyle = new ParagraphStyle();
 		emphaseStyle.setFontColor(emphaseColor);
-		ParagraphStyle standardStyle = new ParagraphStyle();
+		ParagraphStyle footNoteStyle = new ParagraphStyle(TIMES_ROMAN, FontsVariant.ITALIC, 10, codeColor);
+		footNoteStyle.setFontColor(darkEmphaseColor);
+		ParagraphStyle internalLinkStyle = new ParagraphStyle();
+		internalLinkStyle.setUnderlined(true);
 		
 		Document document = new Document();
 		
-		document.setAuthor("Regis Ramillien");
+		/*document.setAuthor("Regis Ramillien");
 		document.setModificationDate(new Date());
 		document.setProducer("web4enterprise");
 		document.setSubject("documentation for simplyPDF-layout library");
@@ -118,7 +123,7 @@ public class DocumentTest {
 		//Adding images and graphics
 		document.addElement(new Paragraph(titleStyle, "Adding images and graphics"));
 		
-		paragraph = new Paragraph(standardStyle, new Text("A paragraph can contain text but also images like this one:"),  logo.clone(), new Text(" and this one:"),  logo.clone());
+		paragraph = new Paragraph(new Text("A paragraph can contain text but also images like this one:"),  logo.clone(), new Text(" and this one:"),  logo.clone());
 		document.addElement(paragraph);
 
 		//Text styles.
@@ -190,7 +195,7 @@ public class DocumentTest {
 		
 		document.addElement(new Paragraph(titleStyle, "Page styles"));
 		
-		paragraph = new Paragraph(standardStyle, "This page show a page with a different orientation and size.", NEW_LINE, "You can use default ones or create the ones you need.");
+		paragraph = new Paragraph("This page show a page with a different orientation and size.", NEW_LINE, "You can use default ones or create the ones you need.");
 		document.addElement(paragraph);
 
 		//Create header for next page.
@@ -209,7 +214,7 @@ public class DocumentTest {
 		document.addElement(new Paragraph(titleStyle, "Adding headers and footers"));
 		
 		//Headers and footers explanations.
-		paragraph = new Paragraph(standardStyle, "Headers and footers can be set once for all for every page or when adding a new page.");
+		paragraph = new Paragraph("Headers and footers can be set once for all for every page or when adding a new page.");
 		document.addElement(paragraph);
 		
 		paragraph = new Paragraph(codeStyle, "PageHeader pageHeader = new PageHeader();", 
@@ -257,14 +262,25 @@ public class DocumentTest {
 		paragraph = new Paragraph(emphaseStyle, "This still have to be coded.");
 		document.addElement(paragraph);
 
+		//Internal links.
+		document.addElement(new Paragraph(titleStyle, "Adding document internal links"));*/
+		Text linkedText = new Text(internalLinkStyle, "Document internal links");
+		document.addElement(new Paragraph(NEW_TEXT_LINE, linkedText, new Text(" can simply be added to any text.")));
+		
+		//document.addElement(new Paragraph(title2Style, "Internal link target"));
+		Paragraph paragraph = new Paragraph("An internal link target is nothing special, it's just a simple element.");
+		document.addElement(paragraph);
+		
+		linkedText.setLink(paragraph);
+
 		//Footnotes.
-		document.addElement(new Paragraph(titleStyle, "Adding footnotes"));
+		/*document.addElement(new Paragraph(titleStyle, "Adding footnotes"));
 		
 		Text footNotedText = new Text("A footnote can be added simply by adding a footnote object to a paragraph element.");
-		footNotedText.addFootNote(new FootNote(new Paragraph("Anything can be added to a footnote, paragraphs with texts and images.", NEW_LINE, 
-				"super-scripts are added to text automatically.")));
-		paragraph = new Paragraph(emphaseStyle, footNotedText);
-		document.addElement(paragraph);
+		footNotedText.addFootNote(new FootNote(new Paragraph(footNoteStyle, "Any paragraph with texts and images can be added to a footnote.", NEW_LINE, 
+				"Footnotes indices are added to text automatically as super-scripts.")));
+		paragraph = new Paragraph(footNotedText);
+		document.addElement(paragraph);*/
 		
 		document.finish();
 		

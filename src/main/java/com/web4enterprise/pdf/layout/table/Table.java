@@ -25,6 +25,10 @@ public class Table implements Element {
 	protected int nbHeaderRows = 1;
 	
 	protected boolean computed = false;
+
+	protected float linkX = 0.0f;
+	protected float linkY = 0.0f;
+	protected Integer pageId = null;
 	
 	public Table addRow(TableCell...cells) {
 		rows.add(new TableRow(cells));
@@ -194,6 +198,13 @@ public class Table implements Element {
 			}
 		}
 		
+		//If this is the first row to create, then set link to it.
+		if(pageId == null) {
+			pageId = currentPage.getId();
+			linkX = startX;
+			linkY = startY;
+		}
+		
 		for(TableCell cell : row.getCells()) {
 			float width = cell.getComputedWidth();
 			
@@ -271,5 +282,20 @@ public class Table implements Element {
 	public Table clone() {
 		//TODO: clone this.
 		return this;
+	}
+
+	@Override
+	public int getPage() {
+		return pageId;
+	}
+
+	@Override
+	public float getLinkX() {
+		return linkX;
+	}
+
+	@Override
+	public float getLinkY() {
+		return linkY;
 	}
 }

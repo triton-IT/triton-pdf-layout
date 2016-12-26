@@ -11,6 +11,10 @@ public class PageHeader implements Element {
 	protected List<Element> elements = new ArrayList<>();
 	protected float height = 0.0f;
 	protected float computedWidth = 0.0f;
+
+	protected float linkX = 0.0f;
+	protected float linkY = 0.0f;
+	protected Integer pageId = null;
 	
 	public void addElement(Element element) {
 		elements.add(element);
@@ -35,6 +39,10 @@ public class PageHeader implements Element {
 
 	@Override
 	public float layout(Document document, Rect boundingBox, float startY, PageFootNotes pageFootNotes) {
+		pageId = document.getCurrentPage().getId();
+		linkX = boundingBox.getLeft();
+		linkY = startY;
+		
 		for(Element element : elements) {
 			//Need to clone element because header is repeated and changing any value of the element for a page will change it for each page.
 			startY = element.clone().layout(document, boundingBox, startY, pageFootNotes);
@@ -47,5 +55,20 @@ public class PageHeader implements Element {
 	public PageHeader clone() {
 		//TODO: clone this.
 		return this;
+	}
+
+	@Override
+	public int getPage() {
+		return pageId;
+	}
+
+	@Override
+	public float getLinkX() {
+		return linkX;
+	}
+
+	@Override
+	public float getLinkY() {
+		return linkY;
 	}
 }

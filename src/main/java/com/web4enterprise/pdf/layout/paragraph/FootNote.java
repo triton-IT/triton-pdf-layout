@@ -20,6 +20,10 @@ public class FootNote implements Element {
 	protected float height = 0.0f;
 	protected float computedWidth = 0.0f;
 	protected String id;
+
+	protected float linkX = 0.0f;
+	protected float linkY = 0.0f;
+	protected Integer pageId = null;
 	
 	public FootNote(Paragraph... paragraph) {
 		if(paragraph == null) {
@@ -74,6 +78,11 @@ public class FootNote implements Element {
 	@Override
 	public float layout(Document document, Rect boundingBox, float startY, PageFootNotes pageFootNotes) {
 		startY = boundingBox.getBottom() + height;
+		
+		pageId = document.getCurrentPage().getId();
+		linkX = boundingBox.getLeft();
+		linkY = startY;
+		
 		for(Paragraph paragraph : this.paragraphs) {
 			startY = paragraph.layout(document, boundingBox, startY, pageFootNotes);
 		}
@@ -85,5 +94,20 @@ public class FootNote implements Element {
 	public FootNote clone() {
 		//TODO: clone this.
 		return this;
+	}
+
+	@Override
+	public int getPage() {
+		return pageId;
+	}
+
+	@Override
+	public float getLinkX() {
+		return linkX;
+	}
+
+	@Override
+	public float getLinkY() {
+		return linkY;
 	}
 }
