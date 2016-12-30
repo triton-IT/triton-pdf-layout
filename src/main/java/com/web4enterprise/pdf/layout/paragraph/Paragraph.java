@@ -10,36 +10,44 @@ import com.web4enterprise.pdf.layout.document.Document;
 import com.web4enterprise.pdf.layout.document.Element;
 import com.web4enterprise.pdf.layout.page.PageFootNotes;
 import com.web4enterprise.pdf.layout.placement.Alignment;
+import com.web4enterprise.pdf.layout.placement.Stop;
 import com.web4enterprise.pdf.layout.text.Text;
+import com.web4enterprise.pdf.layout.utils.ListConcatenation;
 
-public class Paragraph implements Element {	
-	protected ParagraphStyle style = new ParagraphStyle();
-	protected List<ParagraphElement> elements = new ArrayList<>();
+public class Paragraph implements Element {
+	protected ParagraphStyle style = null;
+	protected List<Stop> stops = new ArrayList<>();
+	//List of stops and theirs paragraph elements.
+	protected ListConcatenation<ParagraphElement> elements = new ListConcatenation<>();
+	protected int currentStop = 0;
+	protected List<ParagraphElement> currentElements = null;
 
 	protected float linkX = 0.0f;
 	protected float linkY = 0.0f;
 	protected Integer pageId = null;
 	
 	public Paragraph(String... texts) {
-		for(String text : texts) {
-			this.elements.add(new Text(text));
-		}
+		this(new ParagraphStyle(), texts);
 	}
 	
 	public Paragraph(ParagraphStyle style, String... texts) {
+		elements.addList(new ArrayList<ParagraphElement>());
+		currentElements = this.elements.getList(0);
 		this.style = style;
 		for(String text : texts) {
-			this.elements.add(new Text(text));
+			this.currentElements.add(new Text(text));
 		}
 	}
 	
-	public Paragraph(ParagraphElement... elements) {
-		this.elements.addAll(Arrays.asList(elements));
+	public Paragraph(ParagraphElement... paragraphElements) {
+		this(new ParagraphStyle(), paragraphElements);
 	}
 	
-	public Paragraph(ParagraphStyle style, ParagraphElement... elements) {
+	public Paragraph(ParagraphStyle style, ParagraphElement... paragraphElements) {
+		this.elements.addList(new ArrayList<ParagraphElement>());
+		currentElements = this.elements.getList(0);
 		this.style = style;
-		this.elements.addAll(Arrays.asList(elements));
+		this.currentElements.addAll(Arrays.asList(paragraphElements));
 	}
 	
 	/**
@@ -48,7 +56,7 @@ public class Paragraph implements Element {
 	 * @param style The style of paragraph.
 	 * @param elements The elements to reference.
 	 */
-	private Paragraph(ParagraphStyle style, List<ParagraphElement> elements) {
+	private Paragraph(ParagraphStyle style, ListConcatenation<ParagraphElement> elements) {
 		this.style = style;
 		this.elements = elements;
 	}
@@ -58,11 +66,11 @@ public class Paragraph implements Element {
 	}
 	
 	public void prependElement(ParagraphElement... elements) {
-		this.elements.addAll(0, Arrays.asList(elements));
+		this.elements.getList(0).addAll(0, Arrays.asList(elements));
 	}
 	
 	public void addElement(ParagraphElement... elements) {
-		this.elements.addAll(Arrays.asList(elements));
+		this.currentElements.addAll(Arrays.asList(elements));
 	}
 	
 	public ParagraphStyle getStyle() {
@@ -97,6 +105,25 @@ public class Paragraph implements Element {
 		}
 		
 		return elementSubLines;
+	}
+	
+	public void addStop(Stop stop) {
+		stops.add(stop);
+		elements.addList(new ArrayList<ParagraphElement>());
+	}
+	
+	public void nextStop(String... texts) {
+		currentStop++;
+		currentElements = elements.getList(currentStop);
+		for(String text : texts) {
+			currentElements.add(new Text(text));
+		}
+	}
+	
+	public void nextStop(ParagraphElement... elements) {
+		currentStop++;
+		currentElements = this.elements.getList(currentStop);
+		currentElements.addAll(Arrays.asList(elements));
 	}
 	
 	@Override
@@ -239,14 +266,22 @@ public class Paragraph implements Element {
 
 	@Override
 	public Paragraph clone() {
-		//Start by cloning elements.
-		List<ParagraphElement> elementsClones = new ArrayList<ParagraphElement>(elements.size());
-	    for (ParagraphElement element : elements) {
-	    	elementsClones.add(element.clone());
-	    }
+		int index = 0;
+		ListConcatenation<ParagraphElement> listElementsClone = new ListConcatenation<>();
+		
+		while(index < elements.getLists().size()) {
+			List<ParagraphElement> currentElements = elements.getList(index);
+			//Start by cloning elements.
+			List<ParagraphElement> elementsClones = new ArrayList<ParagraphElement>(currentElements.size());
+		    for (ParagraphElement element : currentElements) {
+		    	elementsClones.add(element.clone());
+		    }
+		    listElementsClone.addList(elementsClones);
+			index++;
+		}
 	    
 	    //Clone create a new Paragraph with clones.
-		return new Paragraph(style, elementsClones);
+		return new Paragraph(style, listElementsClone);
 	}
 
 	@Override

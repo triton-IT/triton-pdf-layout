@@ -25,6 +25,8 @@ import com.web4enterprise.pdf.layout.paragraph.ParagraphStyle;
 import com.web4enterprise.pdf.layout.placement.Alignment;
 import com.web4enterprise.pdf.layout.placement.BorderStyle;
 import com.web4enterprise.pdf.layout.placement.Margins;
+import com.web4enterprise.pdf.layout.placement.Stop;
+import com.web4enterprise.pdf.layout.placement.StopType;
 import com.web4enterprise.pdf.layout.table.Table;
 import com.web4enterprise.pdf.layout.table.TableCell;
 import com.web4enterprise.pdf.layout.table.TableCellStyle;
@@ -267,7 +269,6 @@ public class DocumentTest {
 		Text linkedText = new Text(internalLinkStyle, "Document internal links");
 		document.addElement(new Paragraph(NEW_TEXT_LINE, linkedText, new Text(" can simply be added to any text.")));
 		
-		//document.addElement(new Paragraph(title2Style, "Internal link target"));
 		paragraph = new Paragraph("An internal link target is nothing special, it's just a simple element.");
 		document.addElement(paragraph);
 		
@@ -281,6 +282,15 @@ public class DocumentTest {
 				"Footnotes indices are added to text automatically as super-scripts.")));
 		paragraph = new Paragraph(footNotedText);
 		document.addElement(paragraph);
+		
+		//Footnotes.
+		document.addElement(new Paragraph(titleStyle, "Using stops"));
+		
+		paragraph = new Paragraph("A stop can be added anywhere in a paragraph to");
+		paragraph.addStop(new Stop(StopType.LEFT, 300.0f));
+		paragraph.nextStop("place text near it");
+		document.addElement(paragraph);
+		
 		
 		document.finish();
 		

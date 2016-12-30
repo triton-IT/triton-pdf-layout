@@ -15,11 +15,11 @@ public class ElementLine extends ArrayList<ParagraphElement> {
 	private static final long serialVersionUID = 1L;
 	
 	/**
-	 * Convert a list of text to  a list of TextLine.
+	 * Convert a list of text to a list of TextLine.
 	 * List of text is parsed to search for new line in each Text. 
 	 * Texts are added to TextLine elements until a new line is found.
 	 * If a new line is found in a text, a new TextLine is created and following texts are added until new line.
-	 * @param texts The elements to parse.
+	 * @param elements The elements to parse.
 	 * @return The list of TextLine.
 	 */
 	public static List<ElementLine> getElementLines(List<ParagraphElement> elements) {

@@ -102,8 +102,8 @@ endobj
 /Keywords (http://web4enterprise.com simplyPDF-layout Documentation)
 /Creator (http://simplypdf-layout.web4enterprise.com)
 /Producer (web4enterprise)
-/CreationDate (D:20161226215655+01'00')
-/ModDate (D:20161226215655+01'00')
+/CreationDate (D:20161230015514+01'00')
+/ModDate (D:20161230015514+01'00')
 /Customer-specific (meta-data)
 >>
 endobj
@@ -685,7 +685,7 @@ BT
 60.0 62.615997 Td
 0.0 0.0 0.0 rg
 0 Ts
-(Mon Dec 26 21:56:56 CET 2016) Tj
+(Fri Dec 30 01:55:15 CET 2016) Tj
 ET
 endstream
 endobj
@@ -943,7 +943,7 @@ BT
 60.0 62.615997 Td
 0.0 0.0 0.0 rg
 0 Ts
-(Mon Dec 26 21:56:56 CET 2016) Tj
+(Fri Dec 30 01:55:15 CET 2016) Tj
 ET
 endstream
 endobj
@@ -1012,7 +1012,7 @@ BT
 4.0 6.6159983 Td
 0.0 0.0 0.0 rg
 0 Ts
-(Mon Dec 26 21:56:56 CET 2016) Tj
+(Fri Dec 30 01:55:15 CET 2016) Tj
 ET
 endstream
 endobj
@@ -1074,7 +1074,7 @@ BT
 4.0 6.6159983 Td
 0.0 0.0 0.0 rg
 0 Ts
-(Mon Dec 26 21:56:56 CET 2016) Tj
+(Fri Dec 30 01:55:15 CET 2016) Tj
 ET
 endstream
 endobj
@@ -1103,7 +1103,7 @@ endobj
 ]>>
 endobj
 19 0 obj <<
-/Length 13726
+/Length 13938
 >>
 stream
 q
@@ -1569,6 +1569,20 @@ BT
 (1) Tj
 ET
 BT
+/Times-Bold 14.0 Tf
+60.0 151.18372 Td
+0.8 0.33333334 0.34901962 rg
+0 Ts
+(Using stops) Tj
+ET
+BT
+/Times-Roman 12.0 Tf
+60.0 127.35571 Td
+0.0 0.0 0.0 rg
+0 Ts
+(A stop can be added anywhere in a paragraph to) Tj
+ET
+BT
 /Times-Italic 5.0 Tf
 60.0 86.562 Td
 0.39215687 0.39215687 0.0 rg
@@ -1608,7 +1622,7 @@ BT
 60.0 62.615997 Td
 0.0 0.0 0.0 rg
 0 Ts
-(Mon Dec 26 21:56:56 CET 2016 - new page footer example) Tj
+(Fri Dec 30 01:55:15 CET 2016 - new page footer example) Tj
 ET
 endstream
 endobj
@@ -1640,5 +1654,5 @@ trailer <<
 /Info 3 0 R
 >>
 startxref
-29914
+30126
 %%EOF
