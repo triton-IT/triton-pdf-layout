@@ -269,7 +269,7 @@ public class DocumentTest {
 		Text linkedText = new Text(internalLinkStyle, "Document internal links");
 		document.addElement(new Paragraph(NEW_TEXT_LINE, linkedText, new Text(" can simply be added to any text.")));
 		
-		paragraph = new Paragraph("An internal link target is nothing special, it's just a simple element.");
+		paragraph = new Paragraph("An internal link target is nothing special, it's just a simple element like this one but is generally a title or a figure.");
 		document.addElement(paragraph);
 		
 		linkedText.setLink(paragraph);
@@ -287,10 +287,9 @@ public class DocumentTest {
 		document.addElement(new Paragraph(titleStyle, "Using stops"));
 		
 		paragraph = new Paragraph("A stop can be added anywhere in a paragraph to");
-		paragraph.addStop(new Stop(StopType.LEFT, 300.0f));
-		paragraph.nextStop("place text near it");
+		paragraph.addStop(new Stop(StopType.LEFT, 400.0f));
+		paragraph.nextStop("place text near to it");
 		document.addElement(paragraph);
-		
 		
 		document.finish();
 		

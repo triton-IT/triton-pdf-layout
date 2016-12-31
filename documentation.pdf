@@ -102,8 +102,8 @@ endobj
 /Keywords (http://web4enterprise.com simplyPDF-layout Documentation)
 /Creator (http://simplypdf-layout.web4enterprise.com)
 /Producer (web4enterprise)
-/CreationDate (D:20161230015514+01'00')
-/ModDate (D:20161230015514+01'00')
+/CreationDate (D:20161231014119+01'00')
+/ModDate (D:20161231014119+01'00')
 /Customer-specific (meta-data)
 >>
 endobj
@@ -685,7 +685,7 @@ BT
 60.0 62.615997 Td
 0.0 0.0 0.0 rg
 0 Ts
-(Fri Dec 30 01:55:15 CET 2016) Tj
+(Sat Dec 31 01:41:20 CET 2016) Tj
 ET
 endstream
 endobj
@@ -943,7 +943,7 @@ BT
 60.0 62.615997 Td
 0.0 0.0 0.0 rg
 0 Ts
-(Fri Dec 30 01:55:15 CET 2016) Tj
+(Sat Dec 31 01:41:20 CET 2016) Tj
 ET
 endstream
 endobj
@@ -1012,7 +1012,7 @@ BT
 4.0 6.6159983 Td
 0.0 0.0 0.0 rg
 0 Ts
-(Fri Dec 30 01:55:15 CET 2016) Tj
+(Sat Dec 31 01:41:20 CET 2016) Tj
 ET
 endstream
 endobj
@@ -1074,7 +1074,7 @@ BT
 4.0 6.6159983 Td
 0.0 0.0 0.0 rg
 0 Ts
-(Fri Dec 30 01:55:15 CET 2016) Tj
+(Sat Dec 31 01:41:20 CET 2016) Tj
 ET
 endstream
 endobj
@@ -1103,7 +1103,7 @@ endobj
 ]>>
 endobj
 19 0 obj <<
-/Length 13938
+/Length 14223
 >>
 stream
 q
@@ -1538,49 +1538,70 @@ BT
 60.0 259.8157 Td
 0.0 0.0 0.0 rg
 0 Ts
-(An internal link target is nothing special, it's just a simple element.) Tj
+(An internal link target is nothing special, it's just a simple element like this one but is generally a) Tj
+ET
+BT
+/Times-Roman 12.0 Tf
+60.0 246.4237 Td
+0.0 0.0 0.0 rg
+0 Ts
+(title or a figure.) Tj
 ET
 BT
 /Times-Bold 14.0 Tf
-60.0 224.10971 Td
+60.0 210.71771 Td
 0.8 0.33333334 0.34901962 rg
 0 Ts
 (Adding footnotes) Tj
 ET
 BT
 /Times-Roman 12.0 Tf
-60.0 200.28171 Td
+60.0 186.88971 Td
 0.0 0.0 0.0 rg
 0 Ts
 (A footnote can be added simply by adding a footnote object to a paragraph) Tj
 ET
 BT
 /Times-Roman 12.0 Tf
-60.0 186.88971 Td
+60.0 173.49771 Td
 0.0 0.0 0.0 rg
 0 Ts
 (element.) Tj
 ET
 BT
 /Times-Roman 6.0 Tf
-101.0 186.88971 Td
+101.0 173.49771 Td
 0.0 0.0 0.0 rg
 5.388 Ts
 (1) Tj
 ET
 BT
 /Times-Bold 14.0 Tf
-60.0 151.18372 Td
+60.0 137.79172 Td
 0.8 0.33333334 0.34901962 rg
 0 Ts
 (Using stops) Tj
 ET
 BT
 /Times-Roman 12.0 Tf
-60.0 127.35571 Td
+60.0 113.963715 Td
 0.0 0.0 0.0 rg
 0 Ts
 (A stop can be added anywhere in a paragraph to) Tj
+ET
+BT
+/Times-Roman 12.0 Tf
+400.0 113.963715 Td
+0.0 0.0 0.0 rg
+0 Ts
+(place text near) Tj
+ET
+BT
+/Times-Roman 12.0 Tf
+60.0 100.57172 Td
+0.0 0.0 0.0 rg
+0 Ts
+(to it) Tj
 ET
 BT
 /Times-Italic 5.0 Tf
@@ -1622,7 +1643,7 @@ BT
 60.0 62.615997 Td
 0.0 0.0 0.0 rg
 0 Ts
-(Fri Dec 30 01:55:15 CET 2016 - new page footer example) Tj
+(Sat Dec 31 01:41:20 CET 2016 - new page footer example) Tj
 ET
 endstream
 endobj
@@ -1654,5 +1675,5 @@ trailer <<
 /Info 3 0 R
 >>
 startxref
-30126
+30411
 %%EOF

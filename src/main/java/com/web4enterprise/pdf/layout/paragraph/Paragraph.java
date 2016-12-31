@@ -12,15 +12,16 @@ import com.web4enterprise.pdf.layout.page.PageFootNotes;
 import com.web4enterprise.pdf.layout.placement.Alignment;
 import com.web4enterprise.pdf.layout.placement.Stop;
 import com.web4enterprise.pdf.layout.text.Text;
-import com.web4enterprise.pdf.layout.utils.ListConcatenation;
+import com.web4enterprise.pdf.layout.utils.CompositeList;
+import com.web4enterprise.pdf.layout.utils.CompositeList.CompositeListIterator;
 
 public class Paragraph implements Element {
 	protected ParagraphStyle style = null;
 	protected List<Stop> stops = new ArrayList<>();
 	//List of stops and theirs paragraph elements.
-	protected ListConcatenation<ParagraphElement> elements = new ListConcatenation<>();
+	protected CompositeList<ParagraphElement> elements = new CompositeList<>();
 	protected int currentStop = 0;
-	protected List<ParagraphElement> currentElements = null;
+	protected List<ParagraphElement> currentElements = new ArrayList<ParagraphElement>();
 
 	protected float linkX = 0.0f;
 	protected float linkY = 0.0f;
@@ -31,8 +32,7 @@ public class Paragraph implements Element {
 	}
 	
 	public Paragraph(ParagraphStyle style, String... texts) {
-		elements.addList(new ArrayList<ParagraphElement>());
-		currentElements = this.elements.getList(0);
+		elements.addList(currentElements);
 		this.style = style;
 		for(String text : texts) {
 			this.currentElements.add(new Text(text));
@@ -44,8 +44,7 @@ public class Paragraph implements Element {
 	}
 	
 	public Paragraph(ParagraphStyle style, ParagraphElement... paragraphElements) {
-		this.elements.addList(new ArrayList<ParagraphElement>());
-		currentElements = this.elements.getList(0);
+		elements.addList(currentElements);
 		this.style = style;
 		this.currentElements.addAll(Arrays.asList(paragraphElements));
 	}
@@ -56,12 +55,12 @@ public class Paragraph implements Element {
 	 * @param style The style of paragraph.
 	 * @param elements The elements to reference.
 	 */
-	private Paragraph(ParagraphStyle style, ListConcatenation<ParagraphElement> elements) {
+	private Paragraph(ParagraphStyle style, CompositeList<ParagraphElement> elements) {
 		this.style = style;
 		this.elements = elements;
 	}
 	
-	public List<ParagraphElement> getElements() {
+	public CompositeList<ParagraphElement> getElements() {
 		return elements;
 	}
 	
@@ -89,15 +88,15 @@ public class Paragraph implements Element {
 		List<ElementLine> elementSubLines = new ArrayList<>();
 		
 		boolean isFirstLine = true;		
-		for(ElementLine textLine : getElementLines()) {
+		for(ElementLine elementLine : getElementLines()) {
 			float firstLineMaxWidth = maxWidth;
 	
 			if(isFirstLine) {
 				firstLineMaxWidth -= getStyle().getFirstLineMargin();
 			}
 			
-			//Split text to get-in maximum space.
-			elementSubLines.addAll(textLine.splitToMaxWidth(document, getStyle(), getStyle().getFontSize(), firstLineMaxWidth, maxWidth));
+			//Split text to maximum space.
+			elementSubLines.addAll(elementLine.splitToMaxWidth(document, getStyle(), getStyle().getFontSize(), firstLineMaxWidth, maxWidth, stops));
 			
 			if(isFirstLine) {
 				isFirstLine = false;
@@ -142,7 +141,7 @@ public class Paragraph implements Element {
 	@Override
 	public float layout(Document document, Rect boundingBox, float startY, PageFootNotes pageFootNotes) {
 		//Get all lines of text (composed of text of different style).
-		List<ElementLine> textLines = getElementLines();
+		List<ElementLine> elementLines = getElementLines();
 		
 		//Get the paragraph style which is the default style of text which compose it.
 		ParagraphStyle paragraphStyle = getStyle();
@@ -159,7 +158,7 @@ public class Paragraph implements Element {
 		boolean isFirstLine = true;
 		
 		//Iterate of each line of text to display them.
-		for(ElementLine textLine : textLines) {
+		for(ElementLine textLine : elementLines) {
 			//Calculate the maximum size allowed for text.
 			float maxWidth =  boundingBox.getWidth()
 					- (paragraphStyle.getMargins().getLeft() + paragraphStyle.getMargins().getRight());
@@ -169,7 +168,7 @@ public class Paragraph implements Element {
 				firstLineMaxWidth -= paragraphStyle.getFirstLineMargin();
 			}
 			//Split text to get-in maximum space.
-			List<ElementLine> elementSubLines = textLine.splitToMaxWidth(document, paragraphStyle, textSize, firstLineMaxWidth, maxWidth);
+			List<ElementLine> elementSubLines = textLine.splitToMaxWidth(document, paragraphStyle, textSize, firstLineMaxWidth, maxWidth, stops);
 			
 			boolean firstSubLine = true;
 			for(ElementLine elementSubLine : elementSubLines) {
@@ -238,9 +237,28 @@ public class Paragraph implements Element {
 				if(firstSubLine) {
 					firstSubLine = false;
 				}
-				
+
+				//The index of current stop.
+				int currentStopIndex = 0;
 				float lineSpacing = 0;
-				for(ParagraphElement paragraphElement : elementSubLine) {
+				//Iterate over each paragraphElement to display new lines.
+				CompositeListIterator paragraphIterator = elementSubLine.iterator();
+				while(paragraphIterator.hasNext()) {
+					ParagraphElement paragraphElement = (ParagraphElement) paragraphIterator.next();
+
+					//If list has changed, it means that a stop has been inserted. So, go to next stop for X position.
+					if(paragraphIterator.hasListChanged()) {
+						//Get next stop position and increment its index accordingly.
+						Stop currentStop = stops.get(currentStopIndex);
+						currentStopIndex++;
+
+						//If we already passed stop, do not increment position. Continue to write where we are.
+						float stopX = currentStop.getPosition();
+						if(stopX > startX) {
+							startX = stopX;
+						}
+					}
+					
 					Point elementSize = paragraphElement.layout(document.getCurrentPage(), paragraphStyle, textSize, startX, baseLine);
 					startX += elementSize.getX();
 					
@@ -267,7 +285,7 @@ public class Paragraph implements Element {
 	@Override
 	public Paragraph clone() {
 		int index = 0;
-		ListConcatenation<ParagraphElement> listElementsClone = new ListConcatenation<>();
+		CompositeList<ParagraphElement> listElementsClone = new CompositeList<>();
 		
 		while(index < elements.getLists().size()) {
 			List<ParagraphElement> currentElements = elements.getList(index);

@@ -6,35 +6,50 @@ import java.util.List;
 
 import com.web4enterprise.pdf.layout.document.Document;
 import com.web4enterprise.pdf.layout.paragraph.ParagraphElement.SplitInformation;
+import com.web4enterprise.pdf.layout.placement.Stop;
+import com.web4enterprise.pdf.layout.utils.CompositeList;
 
 /*
- * A TextLine is a line of different Texts without any line return.
- * A line of text can be composed of one or more Texts. Texts can have different styles.
+ * An ElementLine is a line of different Elements without any line return.
+ * A line of element can be composed of one or more Elements. Elements can have different styles and associated to different stops.
+ * All elements for a given stop are gathered into a same list, itself gathered into a "meta" {@see CompositeList}.
  */
-public class ElementLine extends ArrayList<ParagraphElement> {
-	private static final long serialVersionUID = 1L;
-	
+public class ElementLine extends CompositeList<ParagraphElement> {	
 	/**
-	 * Convert a list of text to a list of TextLine.
-	 * List of text is parsed to search for new line in each Text. 
-	 * Texts are added to TextLine elements until a new line is found.
-	 * If a new line is found in a text, a new TextLine is created and following texts are added until new line.
+	 * Convert a list of elements to a list of ElementLine.
+	 * List of elements is parsed to search for new line in each Element. 
+	 * Elements are added to ElementLine elements until a new line is found.
+	 * If a new line is found in an element, a new ElementLine is created and following elements are added until new line.
 	 * @param elements The elements to parse.
-	 * @return The list of TextLine.
+	 * @return The list of ElementLine.
 	 */
-	public static List<ElementLine> getElementLines(List<ParagraphElement> elements) {
+	public static List<ElementLine> getElementLines(CompositeList<ParagraphElement> elements) {
+		//Initialize the array of lines of elements.
 		List<ElementLine> elementLines = new ArrayList<>();
+		//Create a new element line and add it to array. This will contain the elements of the first line, within a different list for each stop.
 		ElementLine elementLine = new ElementLine();
+		ArrayList<ParagraphElement> stopElementLine = new ArrayList<ParagraphElement>();
+		elementLine.addList(stopElementLine);
 		elementLines.add(elementLine);
-
-		for(ParagraphElement element : elements) {
-			List<ParagraphElement> currentTextLines = element.getLines();
-			Iterator<ParagraphElement> iterator = currentTextLines.iterator();
-			while(iterator.hasNext()) {
-				ParagraphElement currentElement = iterator.next();
-				elementLine.add(currentElement);
-				if(iterator.hasNext()) {
+		
+		//Iterate over each paragraphElement to search for new lines and create a new List on a new Stop.
+		CompositeListIterator paragraphIterator = elements.iterator();
+		while(paragraphIterator.hasNext()) {
+			ParagraphElement element = paragraphIterator.next();
+			//If list has changed, it means that a stop has been inserted. So, do the same for line, insert a new List to simulate Stop.
+			if(paragraphIterator.hasListChanged()) {
+				stopElementLine = new ArrayList<ParagraphElement>();
+				elementLine.addList(stopElementLine);
+			}
+			List<ParagraphElement> currentElementLines = element.getLines();
+			Iterator<ParagraphElement> currentElementLinesIterator = currentElementLines.iterator();
+			while(currentElementLinesIterator.hasNext()) {
+				ParagraphElement currentElement = currentElementLinesIterator.next();
+				stopElementLine.add(currentElement);
+				if(currentElementLinesIterator.hasNext()) {
 					elementLine = new ElementLine();
+					stopElementLine = new ArrayList<ParagraphElement>();
+					elementLine.addList(stopElementLine);
 					elementLines.add(elementLine);
 				}				
 			}
@@ -43,33 +58,75 @@ public class ElementLine extends ArrayList<ParagraphElement> {
 		return elementLines;
 	}
 	
-	public List<ElementLine> splitToMaxWidth(Document document, ParagraphStyle defaultStyle, float defaultFontSize, float firstLineMaxWidth, Float maxWidth) {
+	/***
+	 * Do not permit external instantiation.
+	 */
+	private ElementLine() {
+		//Empty constructor.
+	}
+	
+	public List<ElementLine> splitToMaxWidth(Document document, ParagraphStyle defaultStyle, float defaultFontSize, float firstLineMaxWidth, Float maxWidth, List<Stop> stops) {
 		List<ElementLine> elementLines = new ArrayList<>();
 		
-		int currentX = 0;
+		float currentX = 0.0f;
 		ElementLine currentElementLine = new ElementLine();
+		ArrayList<ParagraphElement> stopElementLine = new ArrayList<ParagraphElement>();
+		currentElementLine.addList(stopElementLine);
 		elementLines.add(currentElementLine);
 		
+		//Defines if the line being processed is the first or not.
 		boolean isFirstLine = true;
-		for(ParagraphElement element : this) {
+
+		//The index of current stop.
+		int currentStopIndex = 0;
+		//Iterate over each paragraphElement to search for new lines and create a new List on a new Stop.
+		CompositeListIterator paragraphIterator = iterator();
+		while(paragraphIterator.hasNext()) {
+			ParagraphElement element = paragraphIterator.next();
+
+			//If list has changed, it means that a stop has been inserted. So, do the same for line, insert a new List to simulate Stop.
+			if(paragraphIterator.hasListChanged()) {
+				//Get next stop position and increment its index accordingly.
+				Stop currentStop = stops.get(currentStopIndex);
+				currentStopIndex++;
+
+				//If we already passed stop, do not increment position. Continue to write where we are.
+				float stopX = currentStop.getPosition();
+				if(stopX > currentX) {
+					currentX = stopX;
+				}
+				
+				//Add a list to element line to simulate this new stop.
+				stopElementLine = new ArrayList<ParagraphElement>();
+				currentElementLine.addList(stopElementLine);
+			}
+			
 			SplitInformation splitInformation = element.split(document, defaultStyle, defaultFontSize, currentX, firstLineMaxWidth, maxWidth);
 			
-			//Insert end of line on current line.
+			//Insert end of line on current stop line.
 			Iterator<ParagraphElement> iterator = splitInformation.splitElements.iterator();
-			currentElementLine.add(iterator.next());
+			stopElementLine.add(iterator.next());
 			
 			//Create new line for each new line.
 			while(iterator.hasNext()) {
 				if(isFirstLine) {
 					isFirstLine = false;
 				}
+				//Create a new Element line with a new list inside for first stop.
 				currentElementLine = new ElementLine();
+				stopElementLine = new ArrayList<ParagraphElement>();
+				currentElementLine.addList(stopElementLine);
+				
+				//Add current Element line to resulting lines.
 				elementLines.add(currentElementLine);
 				
-				currentX = 0;
+				//Reinitialize current position and stop index.
+				currentX = 0.0f;
+				currentStopIndex = 0;
 				
+				//Add ParagraphElement to current stop Element line.
 				ParagraphElement splitElement = iterator.next();
-				currentElementLine.add(splitElement);
+				stopElementLine.add(splitElement);
 			}
 			
 			currentX += splitInformation.positionX;

@@ -20,9 +20,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.NoSuchElementException;
 
-public class ListConcatenation<E> implements List<E> {
+public class CompositeList<E> implements List<E> {
 	protected List<List<E>> lists = new ArrayList<>();
 	
 	public void addList(List<E> list) {
@@ -67,8 +66,8 @@ public class ListConcatenation<E> implements List<E> {
 	}
 
 	@Override
-	public Iterator<E> iterator() {
-		return new ListConcatenationIterator();
+	public CompositeListIterator iterator() {
+		return new CompositeListIterator();
 	}
 
 	@Override
@@ -189,17 +188,38 @@ public class ListConcatenation<E> implements List<E> {
 		throw new UnsupportedOperationException("Implement when needed.");
 	}
 	
-	protected class ListConcatenationIterator implements Iterator<E> {
+	public class CompositeListIterator implements Iterator<E> {
+		protected int previousListIndex = 0;
 		protected int currentListIndex = 0;
-		protected Iterator<E> currentListIterator = ListConcatenation.this.getList(0).iterator();
+		protected Iterator<E> currentListIterator = CompositeList.this.getList(0).iterator();
+		
+		public List<E> getCurrentList() {
+			return CompositeList.this.getList(currentListIndex);
+		}
+		
+		public int getCurrentListIndex() {
+			return currentListIndex;
+		}
+		
+		public boolean hasListChanged() {
+			if(previousListIndex != currentListIndex) {
+				previousListIndex = currentListIndex;
+				return true;
+			}
+			return false;
+		}
 
 		@Override
 		public boolean hasNext() {
-			while(currentListIndex < ListConcatenation.this.size()) {
-				if(currentListIterator.hasNext()) {
-					return currentListIterator.hasNext();
-				} else {
+			if(currentListIterator.hasNext()) {
+				return true;
+			} else {
+				while(currentListIndex < CompositeList.this.getLists().size() - 1) {
 					currentListIndex++;
+					currentListIterator = CompositeList.this.getList(currentListIndex).iterator();
+					if(currentListIterator.hasNext()) {
+						return true;
+					}
 				}
 			}
 			return false;
@@ -207,14 +227,7 @@ public class ListConcatenation<E> implements List<E> {
 
 		@Override
 		public E next() {
-			while(currentListIndex < ListConcatenation.this.size()) {
-				if(currentListIterator.hasNext()) {
-					return currentListIterator.next();
-				} else {
-					currentListIndex++;
-				}
-			}
-			throw new NoSuchElementException("No more list has an element.");
+			return currentListIterator.next();
 		}
 		
 	}
