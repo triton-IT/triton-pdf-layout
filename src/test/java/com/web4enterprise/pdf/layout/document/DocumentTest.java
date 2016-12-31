@@ -283,12 +283,12 @@ public class DocumentTest {
 		paragraph = new Paragraph(footNotedText);
 		document.addElement(paragraph);
 		
-		//Footnotes.
+		//Stops.
 		document.addElement(new Paragraph(titleStyle, "Using stops"));
 		
 		paragraph = new Paragraph("A stop can be added anywhere in a paragraph to");
 		paragraph.addStop(new Stop(StopType.LEFT, 400.0f));
-		paragraph.nextStop("place text near to it");
+		paragraph.nextStop("place text near to it.");
 		document.addElement(paragraph);
 		
 		document.finish();

@@ -167,8 +167,17 @@ public class Paragraph implements Element {
 			if(isFirstLine) {
 				firstLineMaxWidth -= paragraphStyle.getFirstLineMargin();
 			}
+			//Create a list of stops with relative positioning (by removing left borders).
+			List<Stop> relativeStops = new ArrayList();
+			for(Stop stop : stops) {
+				Stop relativeStop = new Stop(stop.getType(), stop.getPosition() - boundingBox.getLeft() - paragraphStyle.getMargins().getLeft());
+				if(isFirstLine) {
+					relativeStop.setPosition(relativeStop.getPosition() - paragraphStyle.getFirstLineMargin());
+				}
+				relativeStops.add(relativeStop);
+			}
 			//Split text to get-in maximum space.
-			List<ElementLine> elementSubLines = textLine.splitToMaxWidth(document, paragraphStyle, textSize, firstLineMaxWidth, maxWidth, stops);
+			List<ElementLine> elementSubLines = textLine.splitToMaxWidth(document, paragraphStyle, textSize, firstLineMaxWidth, maxWidth, relativeStops);
 			
 			boolean firstSubLine = true;
 			for(ElementLine elementSubLine : elementSubLines) {

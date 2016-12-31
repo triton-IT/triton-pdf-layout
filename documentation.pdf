@@ -102,8 +102,8 @@ endobj
 /Keywords (http://web4enterprise.com simplyPDF-layout Documentation)
 /Creator (http://simplypdf-layout.web4enterprise.com)
 /Producer (web4enterprise)
-/CreationDate (D:20161231014119+01'00')
-/ModDate (D:20161231014119+01'00')
+/CreationDate (D:20161231033020+01'00')
+/ModDate (D:20161231033020+01'00')
 /Customer-specific (meta-data)
 >>
 endobj
@@ -145,7 +145,7 @@ endobj
 ]>>
 endobj
 7 0 obj <<
-/Length 7638
+/Length 7688
 >>
 stream
 q
@@ -175,7 +175,7 @@ BT
 ET
 BT
 /Times-Roman 12.0 Tf
-170.0 696.68994 Td
+169.992 696.68994 Td
 0.0 0.0 0.0 rg
 0 Ts
 () Tj
@@ -196,7 +196,7 @@ BT
 ET
 BT
 /Times-Roman 12.0 Tf
-224.0 683.2979 Td
+223.78 683.2979 Td
 0.0 0.0 0.0 rg
 0 Ts
 () Tj
@@ -217,7 +217,7 @@ BT
 ET
 BT
 /Times-Roman 12.0 Tf
-150.0 669.9059 Td
+149.976 669.9059 Td
 0.0 0.0 0.0 rg
 0 Ts
 () Tj
@@ -252,7 +252,7 @@ BT
 ET
 BT
 /Times-Roman 12.0 Tf
-407.0 596.9798 Td
+406.824 596.9798 Td
 0.0 0.0 0.0 rg
 0 Ts
 () Tj
@@ -280,7 +280,7 @@ BT
 ET
 BT
 /Times-Roman 12.0 Tf
-214.0 570.19574 Td
+214.332 570.19574 Td
 0.0 0.0 0.0 rg
 0 Ts
 () Tj
@@ -315,7 +315,7 @@ BT
 ET
 BT
 /Times-Roman 12.0 Tf
-425.0 530.01965 Td
+425.052 530.01965 Td
 0.0 0.0 0.0 rg
 0 Ts
 () Tj
@@ -336,7 +336,7 @@ BT
 ET
 BT
 /Times-Roman 12.0 Tf
-362.0 516.6276 Td
+362.46 516.6276 Td
 0.0 0.0 0.0 rg
 0 Ts
 () Tj
@@ -357,28 +357,28 @@ BT
 ET
 BT
 /Times-Roman 6.0 Tf
-118.0 489.8436 Td
+117.96 489.8436 Td
 0.0 0.0 0.0 rg
 5.388 Ts
 (super-scripted) Tj
 ET
 BT
 /Times-Roman 12.0 Tf
-152.0 489.8436 Td
+151.83 489.8436 Td
 0.0 0.0 0.0 rg
 0 Ts
 ( or ) Tj
 ET
 BT
 /Times-Roman 6.0 Tf
-168.0 489.8436 Td
+167.826 489.8436 Td
 0.0 0.0 0.0 rg
 -1.3079998 Ts
 (sub-scripted.) Tj
 ET
 BT
 /Times-Roman 12.0 Tf
-199.0 489.8436 Td
+198.654 489.8436 Td
 0.0 0.0 0.0 rg
 0 Ts
 () Tj
@@ -399,7 +399,7 @@ BT
 ET
 BT
 /Times-Roman 12.0 Tf
-196.0 463.0596 Td
+195.96 463.0596 Td
 0.0 0.0 0.0 rg
 0 Ts
 () Tj
@@ -420,7 +420,7 @@ BT
 ET
 BT
 /Times-Roman 12.0 Tf
-310.0 449.6676 Td
+310.12 449.6676 Td
 0.0 0.0 0.0 rg
 0 Ts
 () Tj
@@ -441,7 +441,7 @@ BT
 ET
 BT
 /Times-Roman 12.0 Tf
-193.0 436.2756 Td
+193.332 436.2756 Td
 0.0 0.0 0.0 rg
 0 Ts
 () Tj
@@ -462,7 +462,7 @@ BT
 ET
 BT
 /Times-Roman 12.0 Tf
-146.0 422.8836 Td
+145.92 422.8836 Td
 0.0 0.0 0.0 rg
 0 Ts
 () Tj
@@ -490,7 +490,7 @@ BT
 ET
 BT
 /Times-Roman 12.0 Tf
-435.0 396.0996 Td
+434.736 396.0996 Td
 0.0 0.0 0.0 rg
 0 Ts
 () Tj
@@ -524,18 +524,18 @@ BT
 (A paragraph can contain text but also images like this one:) Tj
 ET
 q
-16 0 0 16 341.0 323.1736 cm
+16 0 0 16 340.752 323.1736 cm
 /image4 Do
 Q
 BT
 /Times-Roman 12.0 Tf
-357.0 323.1736 Td
+356.752 323.1736 Td
 0.0 0.0 0.0 rg
 0 Ts
 ( and this one:) Tj
 ET
 q
-16 0 0 16 421.0 323.1736 cm
+16 0 0 16 421.084 323.1736 cm
 /image4 Do
 Q
 BT
@@ -554,14 +554,14 @@ BT
 ET
 BT
 /Times-Italic 10.0 Tf
-342.0 263.63962 Td
+342.096 263.63962 Td
 0.5019608 0.3137255 0.5019608 rg
 0 Ts
 (a subset ) Tj
 ET
 BT
 /Times-Roman 12.0 Tf
-377.0 263.63962 Td
+377.096 263.63962 Td
 0.5019608 0.5019608 0.23529412 rg
 0 Ts
 (of the same paragraph.) Tj
@@ -575,30 +575,30 @@ BT
 ET
 BT
 /Times-Bold 12.0 Tf
-349.0 249.97162 Td
+349.38 249.97162 Td
 0.0 0.0 0.0 rg
 0 Ts
 (bold,) Tj
 ET
 BT
 /Times-Italic 12.0 Tf
-375.0 249.97162 Td
+375.06 249.97162 Td
 0.0 0.0 0.0 rg
 0 Ts
 ( italic) Tj
 ET
-0.6 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 375.0 248.0 m 403.0 248.0 l S
+0.6 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 375.06 248.0 m 402.732 248.0 l S
 BT
 /Times-Roman 12.0 Tf
-403.0 249.97162 Td
+402.732 249.97162 Td
 0.5019608 0.5019608 0.23529412 rg
 0 Ts
 ( and underlined.) Tj
 ET
-0.6 w 0.5019608 0.5019608 0.23529412 RG 0.0 0.0 0.0 rg 403.0 248.0 m 481.0 248.0 l S
+0.6 w 0.5019608 0.5019608 0.23529412 RG 0.0 0.0 0.0 rg 402.732 248.0 m 480.384 248.0 l S
 BT
 /Times-BoldItalic 14.0 Tf
-481.0 249.97162 Td
+480.384 249.97162 Td
 0.0 0.0 0.0 rg
 0 Ts
 ( Text size) Tj
@@ -612,7 +612,7 @@ BT
 ET
 BT
 /Times-BoldItalic 12.0 Tf
-295.0 236.30362 Td
+295.172 236.30362 Td
 0.0 0.0 0.0 rg
 0 Ts
 () Tj
@@ -661,7 +661,7 @@ BT
 ET
 BT
 /Times-Roman 14.0 Tf
-98.0 112.013626 Td
+97.5 112.013626 Td
 0.0 0.0 0.0 rg
 0 Ts
 () Tj
@@ -685,7 +685,7 @@ BT
 60.0 62.615997 Td
 0.0 0.0 0.0 rg
 0 Ts
-(Sat Dec 31 01:41:20 CET 2016) Tj
+(Sat Dec 31 03:30:20 CET 2016) Tj
 ET
 endstream
 endobj
@@ -707,7 +707,7 @@ endobj
 ]>>
 endobj
 10 0 obj <<
-/Length 3729
+/Length 3737
 >>
 stream
 q
@@ -730,7 +730,7 @@ BT
 ET
 BT
 /Times-Roman 14.0 Tf
-364.0 741.03595 Td
+363.962 741.03595 Td
 0.0 0.0 0.0 rg
 0 Ts
 () Tj
@@ -758,7 +758,7 @@ BT
 ET
 BT
 /Times-Roman 14.0 Tf
-237.0 689.7879 Td
+236.674 689.7879 Td
 0.0 0.0 0.0 rg
 0 Ts
 () Tj
@@ -786,7 +786,7 @@ BT
 ET
 BT
 /Times-Roman 14.0 Tf
-220.0 658.53986 Td
+220.14 658.53986 Td
 0.0 0.0 0.0 rg
 0 Ts
 () Tj
@@ -807,7 +807,7 @@ BT
 ET
 BT
 /Times-Roman 12.0 Tf
-135.0 589.0878 Td
+136.0 589.0878 Td
 0.0 0.0 0.0 rg
 0 Ts
 (This paragraph is aligned to right. This shows that the first line margin is taken into) Tj
@@ -821,35 +821,35 @@ BT
 ET
 BT
 /Times-Roman 12.0 Tf
-135.0 562.3038 Td
+136.0 562.3038 Td
 0.0 0.0 0.0 rg
 0 Ts
 (of the first line margin. The others line will start with the default paragraph margin.) Tj
 ET
 BT
 /Times-Roman 12.0 Tf
-535.0 562.3038 Td
+535.6 562.3038 Td
 0.0 0.0 0.0 rg
 0 Ts
 () Tj
 ET
 BT
 /Times-Roman 12.0 Tf
-84.0 548.91174 Td
+85.0 548.91174 Td
 0.0 0.0 0.0 rg
 0 Ts
 () Tj
 ET
 BT
 /Times-Roman 12.0 Tf
-84.0 548.91174 Td
+85.0 548.91174 Td
 0.0 0.0 0.0 rg
 0 Ts
 (This even works with new lines inside a paragraph. New lines will not be sensitive to first line) Tj
 ET
 BT
 /Times-Roman 12.0 Tf
-434.0 535.5197 Td
+435.0 535.5197 Td
 0.0 0.0 0.0 rg
 0 Ts
 (of paragraph margin.) Tj
@@ -898,7 +898,7 @@ BT
 ET
 BT
 /Times-Roman 12.0 Tf
-434.0 385.07965 Td
+434.172 385.07965 Td
 0.0 0.0 0.0 rg
 0 Ts
 () Tj
@@ -919,7 +919,7 @@ BT
 ET
 BT
 /Times-Roman 12.0 Tf
-199.0 364.99164 Td
+199.38 364.99164 Td
 0.0 0.0 0.0 rg
 0 Ts
 () Tj
@@ -943,7 +943,7 @@ BT
 60.0 62.615997 Td
 0.0 0.0 0.0 rg
 0 Ts
-(Sat Dec 31 01:41:20 CET 2016) Tj
+(Sat Dec 31 03:30:20 CET 2016) Tj
 ET
 endstream
 endobj
@@ -965,7 +965,7 @@ endobj
 ]>>
 endobj
 13 0 obj <<
-/Length 605
+/Length 607
 >>
 stream
 q
@@ -1002,7 +1002,7 @@ BT
 ET
 BT
 /Times-Roman 12.0 Tf
-101.0 44.298004 Td
+100.984 44.298004 Td
 0.0 0.0 0.0 rg
 0 Ts
 () Tj
@@ -1012,7 +1012,7 @@ BT
 4.0 6.6159983 Td
 0.0 0.0 0.0 rg
 0 Ts
-(Sat Dec 31 01:41:20 CET 2016) Tj
+(Sat Dec 31 03:30:20 CET 2016) Tj
 ET
 endstream
 endobj
@@ -1074,7 +1074,7 @@ BT
 4.0 6.6159983 Td
 0.0 0.0 0.0 rg
 0 Ts
-(Sat Dec 31 01:41:20 CET 2016) Tj
+(Sat Dec 31 03:30:20 CET 2016) Tj
 ET
 endstream
 endobj
@@ -1097,13 +1097,13 @@ endobj
 /Type /Annot
 /Subtype /Link
 /Border [0 0 0]
-/Rect [60.0 282.5917 176.0 270.5917]
+/Rect [60.0 282.5917 175.992 270.5917]
 /A [18 0 R /XYZ 60.0 270.5917 0.0]
 >>
 ]>>
 endobj
 19 0 obj <<
-/Length 14223
+/Length 14166
 >>
 stream
 q
@@ -1140,7 +1140,7 @@ BT
 ET
 BT
 /Times-Italic 10.0 Tf
-251.0 685.2439 Td
+251.01 685.2439 Td
 0.5019608 0.3137255 0.5019608 rg
 0 Ts
 () Tj
@@ -1161,7 +1161,7 @@ BT
 ET
 BT
 /Times-Italic 10.0 Tf
-390.0 674.2439 Td
+389.57 674.2439 Td
 0.5019608 0.3137255 0.5019608 rg
 0 Ts
 () Tj
@@ -1525,10 +1525,10 @@ BT
 0 Ts
 (Document internal links) Tj
 ET
-0.6 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 272.0 m 176.0 272.0 l S
+0.6 w 0.0 0.0 0.0 RG 0.0 0.0 0.0 rg 60.0 272.0 m 175.992 272.0 l S
 BT
 /Times-Roman 12.0 Tf
-176.0 273.2077 Td
+175.992 273.2077 Td
 0.0 0.0 0.0 rg
 0 Ts
 ( can simply be added to any text.) Tj
@@ -1570,7 +1570,7 @@ BT
 ET
 BT
 /Times-Roman 6.0 Tf
-101.0 173.49771 Td
+100.992004 173.49771 Td
 0.0 0.0 0.0 rg
 5.388 Ts
 (1) Tj
@@ -1594,14 +1594,7 @@ BT
 400.0 113.963715 Td
 0.0 0.0 0.0 rg
 0 Ts
-(place text near) Tj
-ET
-BT
-/Times-Roman 12.0 Tf
-60.0 100.57172 Td
-0.0 0.0 0.0 rg
-0 Ts
-(to it) Tj
+(place text near to it.) Tj
 ET
 BT
 /Times-Italic 5.0 Tf
@@ -1612,14 +1605,14 @@ BT
 ET
 BT
 /Times-Italic 10.0 Tf
-63.0 86.562 Td
+62.5 86.562 Td
 0.39215687 0.39215687 0.0 rg
 0 Ts
 (Any paragraph with texts and images can be added to a footnote.) Tj
 ET
 BT
 /Times-Italic 10.0 Tf
-323.0 86.562 Td
+322.65 86.562 Td
 0.39215687 0.39215687 0.0 rg
 0 Ts
 () Tj
@@ -1643,7 +1636,7 @@ BT
 60.0 62.615997 Td
 0.0 0.0 0.0 rg
 0 Ts
-(Sat Dec 31 01:41:20 CET 2016 - new page footer example) Tj
+(Sat Dec 31 03:30:20 CET 2016 - new page footer example) Tj
 ET
 endstream
 endobj
@@ -1657,23 +1650,23 @@ xref
 0000002471 00000 n
 0000002568 00000 n
 0000002642 00000 n
-0000010331 00000 n
-0000010428 00000 n
-0000010503 00000 n
-0000014284 00000 n
-0000014383 00000 n
-0000014460 00000 n
-0000015116 00000 n
-0000015215 00000 n
-0000015292 00000 n
-0000015837 00000 n
-0000015936 00000 n
-0000016135 00000 n
+0000010381 00000 n
+0000010478 00000 n
+0000010553 00000 n
+0000014342 00000 n
+0000014441 00000 n
+0000014518 00000 n
+0000015176 00000 n
+0000015275 00000 n
+0000015352 00000 n
+0000015897 00000 n
+0000015996 00000 n
+0000016197 00000 n
 trailer <<
 /Root 1 0 R
 /Size 20
 /Info 3 0 R
 >>
 startxref
-30411
+30416
 %%EOF
