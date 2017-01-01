@@ -62,7 +62,9 @@ public class PageFootNotes implements Element {
 		
 		for(Element element : elements) {
 			//Need to clone element because header is repeated and changing any value of the element for a page will change it for each page.
-			startY = element.clone().layout(document, boundingBox, startY, pageFootNotes);
+			//We do not pass any footNote because it will end in a never ending loop because pageFootNotes call operations on itself.
+			//Furthermore, a footNote cannot create another footNote, it will change the page layouting and its too late for this.
+			startY = element.clone().layout(document, boundingBox, startY, null);
 		}
 		
 		return startY;

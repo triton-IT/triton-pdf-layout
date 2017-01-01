@@ -160,13 +160,14 @@ public class Document {
 		 if(pageFooter != null) {
 			float pageFooterHeight = pageFooter.getHeight(this, pageWidth);
 
+			//We do not allow footNotes on footers. This will change page layouting and its too late for this.
 			pageFooter.layout(this, 
 					new Rect(pageStyle.getMargins().getBottom() + pageFooterHeight, 
 							pageStyle.getMargins().getLeft(),
 							pageStyle.getMargins().getBottom(),
 							pageStyle.getFormat().getWidth() - pageStyle.getMargins().getRight()),
 					pageStyle.getMargins().getBottom() + pageFooterHeight,
-					pageFootNotes);
+					null);
 		}
 	}
 	
@@ -226,12 +227,6 @@ public class Document {
 		float bottom = pageStyle.getMargins().getBottom();
 		if(pageFooter != null) {
 			bottom += pageFooter.getHeight(this, pageStyle.getFormat().getWidth() - 
-					pageStyle.getMargins().getLeft() - 
-					pageStyle.getMargins().getRight());
-		}
-		
-		if(pageFootNotes != null) {
-			bottom += pageFootNotes.getHeight(this, pageStyle.getFormat().getWidth() - 
 					pageStyle.getMargins().getLeft() - 
 					pageStyle.getMargins().getRight());
 		}

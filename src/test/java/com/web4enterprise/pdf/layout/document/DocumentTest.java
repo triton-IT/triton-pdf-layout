@@ -13,6 +13,8 @@ import org.junit.Test;
 
 import com.web4enterprise.pdf.core.exceptions.PdfGenerationException;
 import com.web4enterprise.pdf.core.font.FontsVariant;
+import com.web4enterprise.pdf.core.geometry.Point;
+import com.web4enterprise.pdf.core.path.StraightPath;
 import com.web4enterprise.pdf.core.styling.Color;
 import com.web4enterprise.pdf.core.text.TextScript;
 import com.web4enterprise.pdf.layout.image.Image;
@@ -286,9 +288,22 @@ public class DocumentTest {
 		//Stops.
 		document.addElement(new Paragraph(titleStyle, "Using stops"));
 		
-		paragraph = new Paragraph("A stop can be added anywhere in a paragraph to");
-		paragraph.addStop(new Stop(StopType.LEFT, 400.0f));
-		paragraph.nextStop("place text near to it.");
+		paragraph = new Paragraph("A stop can be added anywhere in a paragraph to:");
+		document.addElement(paragraph);
+		
+		paragraph = new Paragraph("");
+		paragraph.addStop(new Stop(StopType.RIGHT, 80.0f));
+		paragraph.nextStop("- place text right to it.");
+		document.addElement(paragraph);
+		
+		paragraph = new Paragraph("");
+		paragraph.addStop(new Stop(StopType.LEFT, 177.14f));
+		paragraph.nextStop("- place text left to it.");
+		document.addElement(paragraph);
+		
+		paragraph = new Paragraph("");
+		paragraph.addStop(new Stop(StopType.CENTER, 130.0f));
+		paragraph.nextStop("- place text centered on it.");
 		document.addElement(paragraph);
 		
 		document.finish();

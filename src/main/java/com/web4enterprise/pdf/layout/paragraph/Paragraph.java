@@ -168,7 +168,7 @@ public class Paragraph implements Element {
 				firstLineMaxWidth -= paragraphStyle.getFirstLineMargin();
 			}
 			//Create a list of stops with relative positioning (by removing left borders).
-			List<Stop> relativeStops = new ArrayList();
+			List<Stop> relativeStops = new ArrayList<>();
 			for(Stop stop : stops) {
 				Stop relativeStop = new Stop(stop.getType(), stop.getPosition() - boundingBox.getLeft() - paragraphStyle.getMargins().getLeft());
 				if(isFirstLine) {
@@ -184,20 +184,40 @@ public class Paragraph implements Element {
 				//Calculate text base line.
 				float baseLine = nextY - fontBaseLine;
 
-				//FootNote must be rendered on same page than line, so check that both line and its footNote fit in the page.
+				//Calculate page bottom with already added footnotes  
 				float bottom = boundingBox.getBottom();
-				for(ParagraphElement paragraphElement : elementSubLine) {
-					for(FootNote footNote : paragraphElement.getFootNotes()) {
-						bottom += footNote.getHeight(document, pageFootNotes.getWidth());
+				float existingFootNotesHeight = 0.0f;
+				if(pageFootNotes != null) {
+					existingFootNotesHeight = pageFootNotes.getHeight(document, pageFootNotes.getWidth());
+					
+					//FootNote must be rendered on same page than line, add height of the footNote to the bottom of page.
+					for(ParagraphElement paragraphElement : elementSubLine) {
+						for(FootNote footNote : paragraphElement.getFootNotes()) {
+							bottom += footNote.getHeight(document, pageFootNotes.getWidth());
+						}
 					}
 				}
 				
-				if(baseLine < bottom) {
+				//If text and its footNote does not fit in page, add a new page.
+				if(baseLine < bottom + existingFootNotesHeight) {
 					document.addPage();
 					startY = document.getCurrentStartY();
 					//Add page reinitialize blockStart, so calculate it again.
 					baseLine = startY - fontBaseLine;
 					nextY =  startY - paragraphStyle.getMargins().getTop();
+				} else {
+					//if it fits in page, add existing foot notes height to this page.
+					bottom += existingFootNotesHeight;
+				}
+
+				//Add footNotes of the line to page.
+				if(pageFootNotes != null) {
+					for(ParagraphElement paragraphElement : elementSubLine) {
+						for(FootNote footNote : paragraphElement.getFootNotes()) {
+							pageFootNotes.addElement(footNote);
+						}
+					}
+					pageFootNotes.compute(document, pageFootNotes.getWidth());
 				}
 				
 				//If this is the first line, set the link.
@@ -205,13 +225,6 @@ public class Paragraph implements Element {
 					pageId = document.getCurrentPage().getId();
 					linkX = boundingBox.getLeft();
 					linkY = startY;
-				}
-
-				//Add footNotes of the line to page.
-				for(ParagraphElement paragraphElement : elementSubLine) {
-					for(FootNote footNote : paragraphElement.getFootNotes()) {
-						pageFootNotes.addElement(footNote);
-					}
 				}
 				
 				float startX = 0.0f;
@@ -260,9 +273,22 @@ public class Paragraph implements Element {
 						//Get next stop position and increment its index accordingly.
 						Stop currentStop = stops.get(currentStopIndex);
 						currentStopIndex++;
-
-						//If we already passed stop, do not increment position. Continue to write where we are.
 						float stopX = currentStop.getPosition();
+
+						switch(currentStop.getType()) {
+						case LEFT:
+							float paragraphWidth = paragraphElement.getWidth(paragraphStyle, textSize);;
+							stopX -= paragraphWidth;
+							break;
+						case CENTER:
+							paragraphWidth = paragraphElement.getWidth(paragraphStyle, textSize);
+							stopX -= (paragraphWidth / 2.0f);
+							break;
+						default:
+							break;
+						}
+						
+						//If we already passed stop, do not increment position. Continue to write where we are.
 						if(stopX > startX) {
 							startX = stopX;
 						}
