@@ -2,7 +2,11 @@ package com.web4enterprise.pdf.layout.document;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import com.web4enterprise.pdf.core.document.Pdf;
 import com.web4enterprise.pdf.core.exceptions.PdfGenerationException;
@@ -17,6 +21,7 @@ import com.web4enterprise.pdf.layout.page.PageStyle;
 public class Document {
 	protected Pdf document = new Pdf();
 	protected Page currentPage;
+	protected int currentPageId;
 	protected PageStyle pageStyle = PageStyle.A4_PORTRAIT;
 
 	protected float blockStartX = 0;
@@ -27,6 +32,13 @@ public class Document {
 	protected PageFootNotes pageFootNotes = new PageFootNotes();
 	
 	protected int currentFootNoteId = 1;
+	
+	/**
+	 * List of stops per page.
+	 */
+	protected Map<Integer, List<Float>> stops = new HashMap<>();
+	
+	protected int currentStopId = 0;
 	
 	public Document() {
 		document.setCreator("http://simplypdf-layout.web4enterprise.com");
@@ -144,7 +156,34 @@ public class Document {
 		
 		this.pageFooter = pageFooter;
 		this.pageStyle = pageStyle;
+		
+		currentPageId++;
+		currentStopId = 0;
+		
 		layoutNewPage(pageWidth);
+	}
+	
+	public void addStopHeight(float position) {
+		List<Float> pageStops = stops.get(currentPageId);
+		
+		if(pageStops == null) {
+			pageStops = new ArrayList<Float>();
+			stops.put(currentPageId, pageStops);
+		}
+		
+		pageStops.add(position);
+	}
+	
+	public void nextStopHeight() {
+		List<Float> pageStops = stops.get(currentPageId);
+		
+		if(pageStops != null) {
+			if(pageStops.size() > currentStopId) {
+				blockStartY = pageStops.get(currentStopId);				
+			}
+		}
+		
+		currentStopId++;
 	}
 	
 	public String generateFootNoteId() {

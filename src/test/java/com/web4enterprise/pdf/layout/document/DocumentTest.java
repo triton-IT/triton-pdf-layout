@@ -13,8 +13,6 @@ import org.junit.Test;
 
 import com.web4enterprise.pdf.core.exceptions.PdfGenerationException;
 import com.web4enterprise.pdf.core.font.FontsVariant;
-import com.web4enterprise.pdf.core.geometry.Point;
-import com.web4enterprise.pdf.core.path.StraightPath;
 import com.web4enterprise.pdf.core.styling.Color;
 import com.web4enterprise.pdf.core.text.TextScript;
 import com.web4enterprise.pdf.layout.image.Image;
@@ -74,6 +72,23 @@ public class DocumentTest {
 		Image logo = document.createImage(this.getClass().getResourceAsStream("/logo.png"));
 		logo.setHeight(16, true);
 		
+		//Add first blank empty page.
+		document.addPage();
+		
+		//Title page.
+		document.addStopHeight(600);
+		document.addStopHeight(400);
+		document.nextStopHeight();
+		Paragraph paragraph = new Paragraph("");
+		paragraph.addStop(new Stop(StopType.CENTER, 297.0f));
+		paragraph.nextStop("SimplyPDF-layout documentation");
+		document.addElement(paragraph);
+		document.nextStopHeight();
+		paragraph = new Paragraph("");
+		paragraph.addStop(new Stop(StopType.CENTER, 297.0f));
+		paragraph.nextStop("General documentation.");
+		document.addElement(paragraph);
+
 		PageHeader pageHeader = new PageHeader();
 		ParagraphStyle paragraphHeaderStyle = new ParagraphStyle();
 		paragraphHeaderStyle.setMargins(new Margins(0.0f, 0.0f, 15.0f, 0.0f));
@@ -89,7 +104,7 @@ public class DocumentTest {
 		//Creating a document.
 		document.addElement(new Paragraph(titleStyle, "Creating a document"));
 		
-		Paragraph paragraph = new Paragraph("A PDF is created with:", NEW_LINE);
+		paragraph = new Paragraph("A PDF is created with:", NEW_LINE);
 		paragraph.addElement(new Text(codeStyle, "Document document = new Document();"), NEW_TEXT_LINE,
 				new Text("and rendered with;"), NEW_TEXT_LINE,
 				new Text(codeStyle, "document.write(out);"));
