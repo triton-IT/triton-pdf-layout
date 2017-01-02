@@ -179,7 +179,10 @@ public class Document {
 		
 		if(pageStops != null) {
 			if(pageStops.size() > currentStopId) {
-				blockStartY = pageStops.get(currentStopId);				
+				float stopPosition = pageStops.get(currentStopId);
+				if(stopPosition < blockStartY) {
+					blockStartY = stopPosition;
+				}
 			}
 		}
 		

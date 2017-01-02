@@ -104,8 +104,8 @@ endobj
 /Keywords (http://web4enterprise.com simplyPDF-layout Documentation)
 /Creator (http://simplypdf-layout.web4enterprise.com)
 /Producer (web4enterprise)
-/CreationDate (D:20160101174738+01'00')
-/ModDate (D:20160101174738+01'00')
+/CreationDate (D:20170102210555+01'00')
+/ModDate (D:20170102210555+01'00')
 /Customer-specific (meta-data)
 >>
 endobj
@@ -147,36 +147,26 @@ endobj
 ]>>
 endobj
 7 0 obj <<
-/Length 336
+/Length 256
 >>
 stream
+q
+150 0 0 150 222.5 527.56 cm
+/image4 Do
+Q
 BT
-/Times-Roman 12.0 Tf
-60.0 589.224 Td
-0.0 0.0 0.0 rg
-0 Ts
-() Tj
-ET
-BT
-/Times-Roman 12.0 Tf
-214.494 589.224 Td
-0.0 0.0 0.0 rg
+/Times-Bold 24.0 Tf
+123.0 477.56 Td
+0.8 0.33333334 0.34901962 rg
 0 Ts
 (SimplyPDF-layout documentation) Tj
 ET
 BT
-/Times-Roman 12.0 Tf
-60.0 389.224 Td
-0.0 0.0 0.0 rg
+/Times-Bold 18.0 Tf
+243.0 383.17 Td
+0.5019608 0.5019608 0.23529412 rg
 0 Ts
-() Tj
-ET
-BT
-/Times-Roman 12.0 Tf
-239.34601 389.224 Td
-0.0 0.0 0.0 rg
-0 Ts
-(General documentation.) Tj
+(Starting guide) Tj
 ET
 endstream
 endobj
@@ -738,7 +728,7 @@ BT
 60.0 62.615997 Td
 0.0 0.0 0.0 rg
 0 Ts
-(Sun Jan 01 17:47:39 CET 2017) Tj
+(Mon Jan 02 21:05:56 CET 2017) Tj
 ET
 endstream
 endobj
@@ -996,7 +986,7 @@ BT
 60.0 62.615997 Td
 0.0 0.0 0.0 rg
 0 Ts
-(Sun Jan 01 17:47:39 CET 2017) Tj
+(Mon Jan 02 21:05:56 CET 2017) Tj
 ET
 endstream
 endobj
@@ -1065,7 +1055,7 @@ BT
 4.0 6.6159983 Td
 0.0 0.0 0.0 rg
 0 Ts
-(Sun Jan 01 17:47:39 CET 2017) Tj
+(Mon Jan 02 21:05:56 CET 2017) Tj
 ET
 endstream
 endobj
@@ -1127,7 +1117,7 @@ BT
 4.0 6.6159983 Td
 0.0 0.0 0.0 rg
 0 Ts
-(Sun Jan 01 17:47:39 CET 2017) Tj
+(Mon Jan 02 21:05:56 CET 2017) Tj
 ET
 endstream
 endobj
@@ -1696,7 +1686,7 @@ BT
 60.0 62.615997 Td
 0.0 0.0 0.0 rg
 0 Ts
-(Sun Jan 01 17:47:39 CET 2017 - new page footer example) Tj
+(Mon Jan 02 21:05:56 CET 2017 - new page footer example) Tj
 ET
 endstream
 endobj
@@ -1765,7 +1755,7 @@ BT
 60.0 62.615997 Td
 0.0 0.0 0.0 rg
 0 Ts
-(Sun Jan 01 17:47:39 CET 2017 - new page footer example) Tj
+(Mon Jan 02 21:05:56 CET 2017 - new page footer example) Tj
 ET
 endstream
 endobj
@@ -1779,29 +1769,29 @@ xref
 0000002485 00000 n
 0000002582 00000 n
 0000002656 00000 n
-0000003042 00000 n
-0000003139 00000 n
-0000003214 00000 n
-0000010954 00000 n
-0000011053 00000 n
-0000011130 00000 n
-0000014919 00000 n
-0000015018 00000 n
-0000015095 00000 n
-0000015753 00000 n
-0000015852 00000 n
-0000015929 00000 n
-0000016474 00000 n
-0000016573 00000 n
-0000016774 00000 n
-0000031066 00000 n
-0000031165 00000 n
-0000031242 00000 n
+0000002962 00000 n
+0000003059 00000 n
+0000003134 00000 n
+0000010874 00000 n
+0000010973 00000 n
+0000011050 00000 n
+0000014839 00000 n
+0000014938 00000 n
+0000015015 00000 n
+0000015673 00000 n
+0000015772 00000 n
+0000015849 00000 n
+0000016394 00000 n
+0000016493 00000 n
+0000016694 00000 n
+0000030986 00000 n
+0000031085 00000 n
+0000031162 00000 n
 trailer <<
 /Root 1 0 R
 /Size 26
 /Info 3 0 R
 >>
 startxref
-31921
+31841
 %%EOF

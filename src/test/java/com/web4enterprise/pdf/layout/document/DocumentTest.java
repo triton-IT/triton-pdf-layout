@@ -37,19 +37,24 @@ public class DocumentTest {
 	@Test
 	public void writeTest() throws IOException, PdfGenerationException {
 		OutputStream out = new FileOutputStream("documentation.pdf");
-		
+
+		Color titleColor = new Color(204, 85, 89);
 		Color codeColor = new Color(128, 80, 128);
 		Color lightCodeColor = new Color(255, 250, 255);
 		Color darkCodeColor = new Color(100, 0, 100);
-		ParagraphStyle codeStyle = new ParagraphStyle(TIMES_ROMAN, FontsVariant.ITALIC, 10, codeColor);
-		Color titleColor = new Color(204, 85, 89);
-		ParagraphStyle titleStyle = new ParagraphStyle(TIMES_ROMAN, FontsVariant.BOLD, 14, titleColor);
-		titleStyle.setMargins(new Margins(20, 0, 10, 0));
-		ParagraphStyle title2Style = new ParagraphStyle(TIMES_ROMAN, FontsVariant.BOLD, 12, titleColor);
-		title2Style.setMargins(new Margins(10, 0, 5, 0));
 		Color emphaseColor = new Color(128, 128, 60);
 		Color lightEmphaseColor = new Color(250, 250, 240);
 		Color darkEmphaseColor = new Color(100, 100, 0);
+		
+		ParagraphStyle codeStyle = new ParagraphStyle(TIMES_ROMAN, FontsVariant.ITALIC, 10, codeColor);
+		ParagraphStyle titleStyle = new ParagraphStyle(TIMES_ROMAN, FontsVariant.BOLD, 24, titleColor);
+		titleStyle.setAlignment(Alignment.CENTER);
+		ParagraphStyle subTitleStyle = new ParagraphStyle(TIMES_ROMAN, FontsVariant.BOLD, 18, emphaseColor);
+		subTitleStyle.setAlignment(Alignment.CENTER);
+		ParagraphStyle title1Style = new ParagraphStyle(TIMES_ROMAN, FontsVariant.BOLD, 14, titleColor);
+		title1Style.setMargins(new Margins(20, 0, 10, 0));
+		ParagraphStyle title2Style = new ParagraphStyle(TIMES_ROMAN, FontsVariant.BOLD, 12, titleColor);
+		title2Style.setMargins(new Margins(10, 0, 5, 0));
 		ParagraphStyle emphaseStyle = new ParagraphStyle();
 		emphaseStyle.setFontColor(emphaseColor);
 		ParagraphStyle footNoteStyle = new ParagraphStyle(TIMES_ROMAN, FontsVariant.ITALIC, 10, codeColor);
@@ -76,17 +81,22 @@ public class DocumentTest {
 		document.addPage();
 		
 		//Title page.
-		document.addStopHeight(600);
+		document.addStopHeight(550);
+		document.addStopHeight(500);
 		document.addStopHeight(400);
+		
 		document.nextStopHeight();
-		Paragraph paragraph = new Paragraph("");
-		paragraph.addStop(new Stop(StopType.CENTER, 297.0f));
-		paragraph.nextStop("SimplyPDF-layout documentation");
+		Image titleLogo = logo.clone();
+		titleLogo.setWidth(150, true);
+		Paragraph paragraph = new Paragraph(titleStyle, titleLogo);
 		document.addElement(paragraph);
+
 		document.nextStopHeight();
-		paragraph = new Paragraph("");
-		paragraph.addStop(new Stop(StopType.CENTER, 297.0f));
-		paragraph.nextStop("General documentation.");
+		paragraph = new Paragraph(titleStyle, "SimplyPDF-layout documentation");
+		document.addElement(paragraph);
+		
+		document.nextStopHeight();
+		paragraph = new Paragraph(subTitleStyle, "Starting guide");
 		document.addElement(paragraph);
 
 		PageHeader pageHeader = new PageHeader();
@@ -102,7 +112,7 @@ public class DocumentTest {
 		document.addPage(pageHeader, pageFooter);
 
 		//Creating a document.
-		document.addElement(new Paragraph(titleStyle, "Creating a document"));
+		document.addElement(new Paragraph(title1Style, "Creating a document"));
 		
 		paragraph = new Paragraph("A PDF is created with:", NEW_LINE);
 		paragraph.addElement(new Text(codeStyle, "Document document = new Document();"), NEW_TEXT_LINE,
@@ -111,7 +121,7 @@ public class DocumentTest {
 		document.addElement(paragraph);
 
 		//Adding texts, paragraphs and pages.
-		document.addElement(new Paragraph(titleStyle, "Adding texts, paragraphs and pages"));
+		document.addElement(new Paragraph(title1Style, "Adding texts, paragraphs and pages"));
 
 		paragraph = new Paragraph("A document created with no page style uses the default one: A4 portrait.", NEW_LINE);
 		paragraph.addElement(new Text("No need to add new pages, when an element does not fit into the page, a new page with same style than the previous one is created."), 
@@ -140,13 +150,13 @@ public class DocumentTest {
 		document.addElement(paragraph);
 
 		//Adding images and graphics
-		document.addElement(new Paragraph(titleStyle, "Adding images and graphics"));
+		document.addElement(new Paragraph(title1Style, "Adding images and graphics"));
 		
 		paragraph = new Paragraph(new Text("A paragraph can contain text but also images like this one:"),  logo.clone(), new Text(" and this one:"),  logo.clone());
 		document.addElement(paragraph);
 
 		//Text styles.
-		document.addElement(new Paragraph(titleStyle, "Text styles"));
+		document.addElement(new Paragraph(title1Style, "Text styles"));
 		
 		paragraph = new Paragraph(emphaseStyle, new Text("A color can be defined for an entire paragraph but also for ")
 				, new Text(codeStyle, "a subset ")
@@ -169,7 +179,7 @@ public class DocumentTest {
 		document.addElement(paragraph);
 
 		//Paragraph styles.
-		document.addElement(new Paragraph(titleStyle, "Paragraph styles"));
+		document.addElement(new Paragraph(title1Style, "Paragraph styles"));
 		
 		ParagraphStyle paragraphStyle = new ParagraphStyle(TIMES_ROMAN, 14);
 		paragraphStyle.setMargins(new Margins(20));
@@ -212,7 +222,7 @@ public class DocumentTest {
 		//Page styles.
 		document.addPage(PageStyle.A8_LANDSCAPE);
 		
-		document.addElement(new Paragraph(titleStyle, "Page styles"));
+		document.addElement(new Paragraph(title1Style, "Page styles"));
 		
 		paragraph = new Paragraph("This page show a page with a different orientation and size.", NEW_LINE, "You can use default ones or create the ones you need.");
 		document.addElement(paragraph);
@@ -230,7 +240,7 @@ public class DocumentTest {
 		document.addPage(PageStyle.A4_PORTRAIT, pageHeader, pageFooter);
 		
 		//Headers and footer title.
-		document.addElement(new Paragraph(titleStyle, "Adding headers and footers"));
+		document.addElement(new Paragraph(title1Style, "Adding headers and footers"));
 		
 		//Headers and footers explanations.
 		paragraph = new Paragraph("Headers and footers can be set once for all for every page or when adding a new page.");
@@ -244,7 +254,7 @@ public class DocumentTest {
 		document.addElement(paragraph);
 
 		//Tables.
-		document.addElement(new Paragraph(titleStyle, "Adding tables"));
+		document.addElement(new Paragraph(title1Style, "Adding tables"));
 		
 		TableCellStyle tableHeaderCellStyle = new TableCellStyle();
 		tableHeaderCellStyle.setBordersStyle(new BorderStyle(4.0f, darkEmphaseColor), BorderStyle.THIN_SOLID, BorderStyle.THIN_SOLID, BorderStyle.THIN_SOLID);
@@ -276,13 +286,13 @@ public class DocumentTest {
 		document.addElement(new Paragraph(NEW_LINE, "More information on tables in table.pdf"));
 
 		//Table of content.
-		document.addElement(new Paragraph(titleStyle, "Adding table of content"));
+		document.addElement(new Paragraph(title1Style, "Adding table of content"));
 		
 		paragraph = new Paragraph(emphaseStyle, "This still have to be coded.");
 		document.addElement(paragraph);
 
 		//Internal links.
-		document.addElement(new Paragraph(titleStyle, "Adding document internal links"));
+		document.addElement(new Paragraph(title1Style, "Adding document internal links"));
 		Text linkedText = new Text(internalLinkStyle, "Document internal links");
 		document.addElement(new Paragraph(NEW_TEXT_LINE, linkedText, new Text(" can simply be added to any text.")));
 		
@@ -292,7 +302,7 @@ public class DocumentTest {
 		linkedText.setLink(paragraph);
 
 		//Footnotes.
-		document.addElement(new Paragraph(titleStyle, "Adding footnotes"));
+		document.addElement(new Paragraph(title1Style, "Adding footnotes"));
 		
 		Text footNotedText = new Text("A footnote can be added simply by adding a footnote object to a paragraph element.");
 		footNotedText.addFootNote(new FootNote(new Paragraph(footNoteStyle, "Any paragraph with texts and images can be added to a footnote.", NEW_LINE, 
@@ -301,7 +311,7 @@ public class DocumentTest {
 		document.addElement(paragraph);
 		
 		//Stops.
-		document.addElement(new Paragraph(titleStyle, "Using stops"));
+		document.addElement(new Paragraph(title1Style, "Using stops"));
 		
 		paragraph = new Paragraph("A stop can be added anywhere in a paragraph to:");
 		document.addElement(paragraph);
