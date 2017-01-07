@@ -5,9 +5,9 @@ import java.util.List;
 
 import com.web4enterprise.pdf.core.font.Font;
 import com.web4enterprise.pdf.core.geometry.Point;
-import com.web4enterprise.pdf.core.page.Page;
-import com.web4enterprise.pdf.layout.document.Document;
 import com.web4enterprise.pdf.layout.document.Element;
+import com.web4enterprise.pdf.layout.document.impl.Layouter;
+import com.web4enterprise.pdf.layout.page.Page;
 import com.web4enterprise.pdf.layout.paragraph.FootNote;
 import com.web4enterprise.pdf.layout.paragraph.ParagraphElement;
 import com.web4enterprise.pdf.layout.paragraph.ParagraphStyle;
@@ -85,7 +85,7 @@ public class Image implements ParagraphElement {
 	}
 	
 	@Override
-	public SplitInformation split(Document document, ParagraphStyle defaultStyle, float fontSize,
+	public SplitInformation split(Layouter layouter, ParagraphStyle defaultStyle, float fontSize,
 			float positionX, float firstLineMaxWidth, Float maxWidth) {
 		SplitInformation splitInformation = new SplitInformation();
 		
@@ -112,7 +112,7 @@ public class Image implements ParagraphElement {
 		coreImage.setX(positionX);
 		coreImage.setY(positionY);
 		
-		page.add(coreImage);
+		page.getCorePage().add(coreImage);
 		
 		return new Point(coreImage.getWidth(), coreImage.getHeight());
 	}	

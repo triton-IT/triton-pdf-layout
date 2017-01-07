@@ -7,10 +7,10 @@ import java.util.Map;
 
 import com.web4enterprise.pdf.core.geometry.Point;
 import com.web4enterprise.pdf.core.geometry.Rect;
-import com.web4enterprise.pdf.core.page.Page;
 import com.web4enterprise.pdf.core.path.StraightPath;
-import com.web4enterprise.pdf.layout.document.Document;
 import com.web4enterprise.pdf.layout.document.Element;
+import com.web4enterprise.pdf.layout.document.impl.Layouter;
+import com.web4enterprise.pdf.layout.page.Page;
 import com.web4enterprise.pdf.layout.page.PageFootNotes;
 import com.web4enterprise.pdf.layout.paragraph.Paragraph;
 import com.web4enterprise.pdf.layout.placement.BorderStyle;
@@ -43,9 +43,9 @@ public class Table implements Element {
 		return columnsWidths.get(index);
 	}
 	
-	public void computeInnerLayout(Document document) {
+	public void computeInnerLayout(Layouter layouter) {
 		computeColumnWidths();
-		computeRowsHeights(document);
+		computeRowsHeights(layouter);
 		computeCellsWidths();
 		computeCellsHeights();
 		
@@ -72,12 +72,12 @@ public class Table implements Element {
 		this.nbHeaderRows = nbHeaderRows;
 	}
 
-	protected void computeRowsHeights(Document document) {
+	protected void computeRowsHeights(Layouter layouter) {
 		for(TableRow row : rows) {
 			int columnIndex = 0;
 			float currentRowHeight = 0;
 			for(TableCell cell : row.getCells()) {
-				float currentCellHeight = cell.getHeight(document, columnsWidths.get(columnIndex));
+				float currentCellHeight = cell.getHeight(layouter, columnsWidths.get(columnIndex));
 				if(currentCellHeight > currentRowHeight) {
 					currentRowHeight = currentCellHeight;
 				}
@@ -154,9 +154,9 @@ public class Table implements Element {
 	}
 	
 	@Override
-	public float getHeight(Document document, float width) {
+	public float getHeight(Layouter layouter, float width) {
 		if(!computed) {
-			computeInnerLayout(document);
+			computeInnerLayout(layouter);
 		}
 		
 		float height = 0.0f;
@@ -169,38 +169,35 @@ public class Table implements Element {
 	}
 
 	@Override
-	public float layout(Document document, Rect boundingBox, float startY, PageFootNotes pageFootNotes) {
+	public void layout(Layouter layouter, Rect boundingBox, float startY, PageFootNotes pageFootNotes) {
 		if(!computed) {
-			computeInnerLayout(document);
+			computeInnerLayout(layouter);
 		}
 		
 		Map<Integer, Integer> rowMerges = new HashMap<>();
 		for(TableRow row : getRows()) {
-			startY = createRow(document, boundingBox, startY, row, rowMerges, pageFootNotes);
+			createRow(layouter, boundingBox, startY, row, rowMerges, pageFootNotes);
 		}
-		
-		return startY;
 	}
 
-	protected float createRow(Document document, Rect boundingBox, float startY, TableRow row, Map<Integer, Integer> rowMerges, PageFootNotes pageFootNotes) {
-		Page currentPage = document.getCurrentPage();
+	protected void createRow(Layouter layouter, Rect boundingBox, float startY, TableRow row, Map<Integer, Integer> rowMerges, PageFootNotes pageFootNotes) {
+		Page currentPage = layouter.getCurrentPage();
 		float startX = boundingBox.getLeft();
 		
 		float rowHeight = row.getHeight();
 		if(startY - rowHeight < boundingBox.getBottom()) {
-			document.addPage();
-			currentPage = document.getCurrentPage();
-			startY = document.getCurrentStartY();
+			layouter.addPage();
+			currentPage = layouter.getCurrentPage();
 			if(isRepeatHeaderOnNewPage()) {
 				for(int i = 0; i < getNbHeaderRows(); i++) {
-					startY-= createRow(document, boundingBox, startY, getRows().get(i), rowMerges, pageFootNotes);
+					createRow(layouter, boundingBox, startY, getRows().get(i), rowMerges, pageFootNotes);
 				}
 			}
 		}
 		
 		//If this is the first row to create, then set link to it.
 		if(pageId == null) {
-			pageId = currentPage.getId();
+			pageId = currentPage.getCorePage().getId();
 			linkX = startX;
 			linkY = startY;
 		}
@@ -223,15 +220,15 @@ public class Table implements Element {
 					path.setFilled(true);
 					path.setClosed(true);
 					path.setFillColor(cellStyle.getBackgroundColor());
-					currentPage.add(path);
+					currentPage.getCorePage().add(path);
 				}
 				
 				float paragraphStartY = startY;
 				for(Paragraph paragraph : cell.getParagraphs()) {					
-					paragraph.layout(document, 
+					paragraph.layout(layouter, 
 							new Rect(paragraphStartY, startX, paragraphStartY - row.getHeight(), startX + width), 
 							paragraphStartY, pageFootNotes);
-					paragraphStartY -= paragraph.getHeight(document, width);
+					paragraphStartY -= paragraph.getHeight(layouter, width);
 				}
 				
 				//Top border
@@ -240,7 +237,7 @@ public class Table implements Element {
 					StraightPath path = new StraightPath(borderStyle.getWidth(), borderStyle.getColor(),
 							new Point(startX - cellStyle.getLeftBorderStyle().width / 2, startY), 
 							new Point(startX + width + cellStyle.getRightBorderStyle().width / 2, startY));
-					currentPage.add(path);
+					currentPage.getCorePage().add(path);
 				}
 				
 				//Left border
@@ -249,7 +246,7 @@ public class Table implements Element {
 					StraightPath path = new StraightPath(borderStyle.getWidth(), borderStyle.getColor(),
 							new Point(startX, startY - cellStyle.getTopBorderStyle().width / 2), 
 							new Point(startX, bottom + cellStyle.getBottomBorderStyle().width / 2));
-					currentPage.add(path);
+					currentPage.getCorePage().add(path);
 				}
 				
 				//Bottom border
@@ -258,7 +255,7 @@ public class Table implements Element {
 					StraightPath path = new StraightPath(borderStyle.getWidth(), borderStyle.getColor(),
 							new Point(startX - cellStyle.getLeftBorderStyle().width / 2, bottom), 
 							new Point(startX + width + cellStyle.getRightBorderStyle().width / 2, bottom));
-					currentPage.add(path);
+					currentPage.getCorePage().add(path);
 				}
 				
 				//Right border
@@ -267,15 +264,15 @@ public class Table implements Element {
 					StraightPath path = new StraightPath(borderStyle.getWidth(), borderStyle.getColor(),
 							new Point(startX + width, startY - cellStyle.getTopBorderStyle().width / 2), 
 							new Point(startX + width, bottom + cellStyle.getBottomBorderStyle().width / 2));
-					currentPage.add(path);
+					currentPage.getCorePage().add(path);
 				}
 			}
 			
 			startX += width;
 		}
 		startY -= rowHeight;
-		
-		return startY;
+
+		layouter.getCursorPosition().setY(startY);
 	}
 	
 	@Override

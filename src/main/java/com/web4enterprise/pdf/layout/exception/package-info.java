@@ -15,8 +15,8 @@
  */
 
 /**
- * 
+ * Defines all exceptions for the library.
  * 
  * @author Régis Ramillien
  */
-package com.web4enterprise.pdf.layout.table;
+package com.web4enterprise.pdf.layout.exception;

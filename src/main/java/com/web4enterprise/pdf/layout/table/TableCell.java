@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.web4enterprise.pdf.layout.document.Document;
+import com.web4enterprise.pdf.layout.document.impl.Layouter;
 import com.web4enterprise.pdf.layout.paragraph.ElementLine;
 import com.web4enterprise.pdf.layout.paragraph.Paragraph;
 
@@ -67,10 +67,10 @@ public class TableCell {
 		return width;
 	}
 	
-	public float getHeight(Document document, float width) {
+	public float getHeight(Layouter layouter, float width) {
 		float height = 0;
 		for(Paragraph paragraph : paragraphs) {
-			height += paragraph.getHeight(document, width);
+			height += paragraph.getHeight(layouter, width);
 		}
 		
 		return height;

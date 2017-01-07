@@ -14,9 +14,23 @@
  * limitations under the License.
  */
 
+package com.web4enterprise.pdf.layout.document;
+
+import com.web4enterprise.pdf.layout.document.impl.PdfDocument;
+
 /**
- * 
+ * Simple factory to create a new document.
+ * This factory is used to avoid to instantiate the implementation and to hide all implementation complexity to end-developer.
  * 
  * @author Régis Ramillien
  */
-package com.web4enterprise.pdf.layout.table;
+public class DocumentFactory {
+	/**
+	 * Create an empty PDF document.
+	 * 
+	 * @return The empty PDF document.
+	 */
+	static Document createPdfDocument() {
+		return new PdfDocument();
+	}
+}

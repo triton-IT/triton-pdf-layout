@@ -11,10 +11,10 @@ import java.util.Date;
 
 import org.junit.Test;
 
-import com.web4enterprise.pdf.core.exceptions.PdfGenerationException;
 import com.web4enterprise.pdf.core.font.FontsVariant;
 import com.web4enterprise.pdf.core.styling.Color;
 import com.web4enterprise.pdf.core.text.TextScript;
+import com.web4enterprise.pdf.layout.exception.DocumentException;
 import com.web4enterprise.pdf.layout.image.Image;
 import com.web4enterprise.pdf.layout.page.PageFooter;
 import com.web4enterprise.pdf.layout.page.PageHeader;
@@ -32,10 +32,11 @@ import com.web4enterprise.pdf.layout.table.TableCell;
 import com.web4enterprise.pdf.layout.table.TableCellStyle;
 import com.web4enterprise.pdf.layout.text.Text;
 import com.web4enterprise.pdf.layout.text.TextStyle;
+import com.web4enterprise.pdf.layout.toc.TableOfContent;
 
 public class DocumentTest {
 	@Test
-	public void writeTest() throws IOException, PdfGenerationException {
+	public void writeTest() throws IOException, DocumentException {
 		OutputStream out = new FileOutputStream("documentation.pdf");
 
 		Color titleColor = new Color(204, 85, 89);
@@ -62,7 +63,7 @@ public class DocumentTest {
 		ParagraphStyle internalLinkStyle = new ParagraphStyle();
 		internalLinkStyle.setUnderlined(true);
 		
-		Document document = new Document();
+		Document document = DocumentFactory.createPdfDocument();
 		
 		document.setAuthor("Regis Ramillien");
 		document.setModificationDate(new Date());
@@ -77,25 +78,25 @@ public class DocumentTest {
 		Image logo = document.createImage(this.getClass().getResourceAsStream("/logo.png"));
 		logo.setHeight(16, true);
 		
-		//Add first blank empty page.
+		//Add first blank empty page to add content to it.
 		document.addPage();
 		
 		//Title page.
-		document.addStopHeight(550);
-		document.addStopHeight(500);
-		document.addStopHeight(400);
+		document.addVerticalStop(550);
+		document.addVerticalStop(500);
+		document.addVerticalStop(400);
 		
-		document.nextStopHeight();
+		document.nextVerticalStop();
 		Image titleLogo = logo.clone();
 		titleLogo.setWidth(150, true);
 		Paragraph paragraph = new Paragraph(titleStyle, titleLogo);
 		document.addElement(paragraph);
 
-		document.nextStopHeight();
+		document.nextVerticalStop();
 		paragraph = new Paragraph(titleStyle, "SimplyPDF-layout documentation");
 		document.addElement(paragraph);
 		
-		document.nextStopHeight();
+		document.nextVerticalStop();
 		paragraph = new Paragraph(subTitleStyle, "Starting guide");
 		document.addElement(paragraph);
 
@@ -109,13 +110,21 @@ public class DocumentTest {
 		paragraphFooterStyle.setMargins(new Margins(15.0f, 0.0f, 0.0f, 0.0f));
 		pageFooter.addElement(new Paragraph(paragraphFooterStyle, new Date().toString()));
 		
+		//Page for table of content
+		document.addPage(pageHeader, pageFooter);
+		TableOfContent tableOfContent = new TableOfContent();
+		tableOfContent.addLevel(0, title1Style);
+		tableOfContent.addLevel(1, title2Style);
+		document.addElement(tableOfContent);
+		
+		//Page for paragraphs
 		document.addPage(pageHeader, pageFooter);
 
 		//Creating a document.
 		document.addElement(new Paragraph(title1Style, "Creating a document"));
 		
 		paragraph = new Paragraph("A PDF is created with:", NEW_LINE);
-		paragraph.addElement(new Text(codeStyle, "Document document = new Document();"), NEW_TEXT_LINE,
+		paragraph.addElement(new Text(codeStyle, "Document document = Document.create();"), NEW_TEXT_LINE,
 				new Text("and rendered with;"), NEW_TEXT_LINE,
 				new Text(codeStyle, "document.write(out);"));
 		document.addElement(paragraph);
@@ -330,8 +339,6 @@ public class DocumentTest {
 		paragraph.addStop(new Stop(StopType.CENTER, 130.0f));
 		paragraph.nextStop("- place text centered on it.");
 		document.addElement(paragraph);
-		
-		document.finish();
 		
 		document.write(out);
 	}

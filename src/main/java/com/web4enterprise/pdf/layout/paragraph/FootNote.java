@@ -7,14 +7,14 @@ import java.util.logging.Logger;
 
 import com.web4enterprise.pdf.core.geometry.Rect;
 import com.web4enterprise.pdf.core.text.TextScript;
-import com.web4enterprise.pdf.layout.document.Document;
 import com.web4enterprise.pdf.layout.document.Element;
+import com.web4enterprise.pdf.layout.document.impl.Layouter;
 import com.web4enterprise.pdf.layout.page.PageFootNotes;
 import com.web4enterprise.pdf.layout.text.Text;
 import com.web4enterprise.pdf.layout.text.TextStyle;
 
 public class FootNote implements Element {
-	private final static Logger LOGGER = Logger.getLogger(FootNote.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(FootNote.class.getName());
 	
 	protected List<Paragraph> paragraphs = new ArrayList<>();
 	protected float height = 0.0f;
@@ -43,20 +43,20 @@ public class FootNote implements Element {
 		paragraphs.add(paragraph);
 	}
 
-	public void compute(Document document, float width) {
+	public void compute(Layouter layouter, float width) {
 		height = 0.0f;
 		if(paragraphs.size() > 0) {
 			Paragraph firstParagraph = paragraphs.get(0);
 			((Text) firstParagraph.getElements().get(0)).setString(getId());
 			for(Paragraph paragraph : paragraphs) {
-				height += paragraph.getHeight(document, width);
+				height += paragraph.getHeight(layouter, width);
 			}
 		}
 		computedWidth = width;
 	}
 	
-	public String generateId(Document document) {
-		id = document.generateFootNoteId();
+	public String generateId(Layouter layouter) {
+		id = layouter.getCurrentPage().generateFootNoteId();
 		return id;
 	}
 	
@@ -68,26 +68,24 @@ public class FootNote implements Element {
 	}
 	
 	@Override
-	public float getHeight(Document document, float width) {
+	public float getHeight(Layouter layouter, float width) {
 		if(computedWidth != width) {
-			compute(document, width);
+			compute(layouter, width);
 		}
 		return height;
 	}
 
 	@Override
-	public float layout(Document document, Rect boundingBox, float startY, PageFootNotes pageFootNotes) {
+	public void layout(Layouter layouter, Rect boundingBox, float startY, PageFootNotes pageFootNotes) {
 		startY = boundingBox.getBottom() + height;
 		
-		pageId = document.getCurrentPage().getId();
+		pageId = layouter.getCurrentPage().getCorePage().getId();
 		linkX = boundingBox.getLeft();
 		linkY = startY;
 		
 		for(Paragraph paragraph : this.paragraphs) {
-			startY = paragraph.layout(document, boundingBox, startY, pageFootNotes);
+			paragraph.layout(layouter, boundingBox, startY, pageFootNotes);
 		}
-		
-		return startY;
 	}
 
 	@Override

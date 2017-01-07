@@ -6,8 +6,8 @@ import java.util.List;
 
 import com.web4enterprise.pdf.core.geometry.Point;
 import com.web4enterprise.pdf.core.geometry.Rect;
-import com.web4enterprise.pdf.layout.document.Document;
 import com.web4enterprise.pdf.layout.document.Element;
+import com.web4enterprise.pdf.layout.document.impl.Layouter;
 import com.web4enterprise.pdf.layout.page.PageFootNotes;
 import com.web4enterprise.pdf.layout.placement.Alignment;
 import com.web4enterprise.pdf.layout.placement.Stop;
@@ -84,7 +84,7 @@ public class Paragraph implements Element {
 		return ElementLine.getElementLines(elements);
 	}
 	
-	public List<ElementLine> getElementLines(Document document, float maxWidth) {
+	public List<ElementLine> getElementLines(Layouter layouter, float maxWidth) {
 		List<ElementLine> elementSubLines = new ArrayList<>();
 		
 		boolean isFirstLine = true;		
@@ -96,7 +96,7 @@ public class Paragraph implements Element {
 			}
 			
 			//Split text to maximum space.
-			elementSubLines.addAll(elementLine.splitToMaxWidth(document, getStyle(), getStyle().getFontSize(), firstLineMaxWidth, maxWidth, stops));
+			elementSubLines.addAll(elementLine.splitToMaxWidth(layouter, getStyle(), getStyle().getFontSize(), firstLineMaxWidth, maxWidth, stops));
 			
 			if(isFirstLine) {
 				isFirstLine = false;
@@ -126,10 +126,10 @@ public class Paragraph implements Element {
 	}
 	
 	@Override
-	public float getHeight(Document document, float width) {
+	public float getHeight(Layouter layouter, float width) {
 		float height = 0;
 		
-		for(ElementLine elementLine : getElementLines(document, width)) {
+		for(ElementLine elementLine : getElementLines(layouter, width)) {
 			height += elementLine.getHeight(getStyle());
 		}
 		
@@ -139,7 +139,7 @@ public class Paragraph implements Element {
 	}
 
 	@Override
-	public float layout(Document document, Rect boundingBox, float startY, PageFootNotes pageFootNotes) {
+	public void layout(Layouter layouter, Rect boundingBox, float startY, PageFootNotes pageFootNotes) {
 		//Get all lines of text (composed of text of different style).
 		List<ElementLine> elementLines = getElementLines();
 		
@@ -177,7 +177,7 @@ public class Paragraph implements Element {
 				relativeStops.add(relativeStop);
 			}
 			//Split text to get-in maximum space.
-			List<ElementLine> elementSubLines = textLine.splitToMaxWidth(document, paragraphStyle, textSize, firstLineMaxWidth, maxWidth, relativeStops);
+			List<ElementLine> elementSubLines = textLine.splitToMaxWidth(layouter, paragraphStyle, textSize, firstLineMaxWidth, maxWidth, relativeStops);
 			
 			boolean firstSubLine = true;
 			for(ElementLine elementSubLine : elementSubLines) {
@@ -188,20 +188,20 @@ public class Paragraph implements Element {
 				float bottom = boundingBox.getBottom();
 				float existingFootNotesHeight = 0.0f;
 				if(pageFootNotes != null) {
-					existingFootNotesHeight = pageFootNotes.getHeight(document, pageFootNotes.getWidth());
+					existingFootNotesHeight = pageFootNotes.getHeight(layouter, pageFootNotes.getWidth());
 					
 					//FootNote must be rendered on same page than line, add height of the footNote to the bottom of page.
 					for(ParagraphElement paragraphElement : elementSubLine) {
 						for(FootNote footNote : paragraphElement.getFootNotes()) {
-							bottom += footNote.getHeight(document, pageFootNotes.getWidth());
+							bottom += footNote.getHeight(layouter, pageFootNotes.getWidth());
 						}
 					}
 				}
 				
 				//If text and its footNote does not fit in page, add a new page.
 				if(baseLine < bottom + existingFootNotesHeight) {
-					document.addPage();
-					startY = document.getCurrentStartY();
+					layouter.addPage();
+					startY = layouter.getCursorPosition().getY();
 					//Add page reinitialize blockStart, so calculate it again.
 					baseLine = startY - fontBaseLine;
 					nextY =  startY - paragraphStyle.getMargins().getTop();
@@ -217,12 +217,12 @@ public class Paragraph implements Element {
 							pageFootNotes.addElement(footNote);
 						}
 					}
-					pageFootNotes.compute(document, pageFootNotes.getWidth());
+					pageFootNotes.compute(layouter, pageFootNotes.getWidth());
 				}
 				
 				//If this is the first line, set the link.
 				if(pageId == null) {
-					pageId = document.getCurrentPage().getId();
+					pageId = layouter.getCurrentPage().getCorePage().getId();
 					linkX = boundingBox.getLeft();
 					linkY = startY;
 				}
@@ -294,7 +294,7 @@ public class Paragraph implements Element {
 						}
 					}
 					
-					Point elementSize = paragraphElement.layout(document.getCurrentPage(), paragraphStyle, textSize, startX, baseLine);
+					Point elementSize = paragraphElement.layout(layouter.getCurrentPage(), paragraphStyle, textSize, startX, baseLine);
 					startX += elementSize.getX();
 					
 					//Keep greatest line spacing to not overlap elements of other lines.
@@ -314,7 +314,7 @@ public class Paragraph implements Element {
 		//Apply bottom margin to paragraph.
 		nextY -= paragraphStyle.getMargins().getBottom();
 		
-		return nextY;
+		layouter.getCursorPosition().setY(nextY);
 	}
 
 	@Override

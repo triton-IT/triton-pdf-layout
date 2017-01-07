@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import com.web4enterprise.pdf.layout.document.Document;
+import com.web4enterprise.pdf.layout.document.impl.Layouter;
 import com.web4enterprise.pdf.layout.paragraph.ParagraphElement.SplitInformation;
 import com.web4enterprise.pdf.layout.placement.Stop;
 import com.web4enterprise.pdf.layout.utils.CompositeList;
@@ -65,7 +65,7 @@ public class ElementLine extends CompositeList<ParagraphElement> {
 		//Empty constructor.
 	}
 	
-	public List<ElementLine> splitToMaxWidth(Document document, ParagraphStyle defaultStyle, float defaultFontSize, float firstLineMaxWidth, Float maxWidth, List<Stop> stops) {
+	public List<ElementLine> splitToMaxWidth(Layouter layouter, ParagraphStyle defaultStyle, float defaultFontSize, float firstLineMaxWidth, Float maxWidth, List<Stop> stops) {
 		List<ElementLine> elementLines = new ArrayList<>();
 		
 		float currentX = 0.0f;
@@ -101,7 +101,7 @@ public class ElementLine extends CompositeList<ParagraphElement> {
 				currentElementLine.addList(stopElementLine);
 			}
 			
-			SplitInformation splitInformation = element.split(document, defaultStyle, defaultFontSize, currentX, firstLineMaxWidth, maxWidth);
+			SplitInformation splitInformation = element.split(layouter, defaultStyle, defaultFontSize, currentX, firstLineMaxWidth, maxWidth);
 			
 			//Insert end of line on current stop line.
 			Iterator<ParagraphElement> iterator = splitInformation.splitElements.iterator();

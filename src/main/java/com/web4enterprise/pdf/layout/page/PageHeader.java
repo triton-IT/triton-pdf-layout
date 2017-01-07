@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.web4enterprise.pdf.core.geometry.Rect;
-import com.web4enterprise.pdf.layout.document.Document;
 import com.web4enterprise.pdf.layout.document.Element;
+import com.web4enterprise.pdf.layout.document.impl.Layouter;
 
 public class PageHeader implements Element {
 	protected List<Element> elements = new ArrayList<>();
@@ -20,35 +20,33 @@ public class PageHeader implements Element {
 		elements.add(element);
 	}
 
-	public void compute(Document document, float width) {
+	public void compute(Layouter layouter, float width) {
 		height = 0.0f;
 		for(Element element : elements) {
-			height += element.getHeight(document, width);
+			height += element.getHeight(layouter, width);
 		}
 		computedWidth = width;
 	}
 	
 	@Override
-	public float getHeight(Document document, float width) {
+	public float getHeight(Layouter layouter, float width) {
 		if(computedWidth != width) {
-			compute(document, width);
+			compute(layouter, width);
 		}
 		
 		return height;
 	}
 
 	@Override
-	public float layout(Document document, Rect boundingBox, float startY, PageFootNotes pageFootNotes) {
-		pageId = document.getCurrentPage().getId();
+	public void layout(Layouter layouter, Rect boundingBox, float startY, PageFootNotes pageFootNotes) {
+		pageId = layouter.getCurrentPage().getCorePage().getId();
 		linkX = boundingBox.getLeft();
 		linkY = startY;
 		
 		for(Element element : elements) {
 			//Need to clone element because header is repeated and changing any value of the element for a page will change it for each page.
-			startY = element.clone().layout(document, boundingBox, startY, pageFootNotes);
+			element.clone().layout(layouter, boundingBox, startY, pageFootNotes);
 		}
-		
-		return startY;
 	}
 
 	@Override

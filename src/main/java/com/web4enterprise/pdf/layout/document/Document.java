@@ -2,119 +2,72 @@ package com.web4enterprise.pdf.layout.document;
 
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-import com.web4enterprise.pdf.core.document.Pdf;
-import com.web4enterprise.pdf.core.exceptions.PdfGenerationException;
-import com.web4enterprise.pdf.core.geometry.Rect;
-import com.web4enterprise.pdf.core.page.Page;
+import com.web4enterprise.pdf.layout.exception.BadOperationException;
+import com.web4enterprise.pdf.layout.exception.BadResourceException;
+import com.web4enterprise.pdf.layout.exception.DocumentGenerationException;
 import com.web4enterprise.pdf.layout.image.Image;
-import com.web4enterprise.pdf.layout.page.PageFootNotes;
 import com.web4enterprise.pdf.layout.page.PageFooter;
 import com.web4enterprise.pdf.layout.page.PageHeader;
 import com.web4enterprise.pdf.layout.page.PageStyle;
 
-public class Document {
-	protected Pdf document = new Pdf();
-	protected Page currentPage;
-	protected int currentPageId;
-	protected PageStyle pageStyle = PageStyle.A4_PORTRAIT;
-
-	protected float blockStartX = 0;
-	protected float blockStartY = 0;
-	
-	protected PageHeader pageHeader = null;
-	protected PageFooter pageFooter = null;
-	protected PageFootNotes pageFootNotes = new PageFootNotes();
-	
-	protected int currentFootNoteId = 1;
-	
-	/**
-	 * List of stops per page.
-	 */
-	protected Map<Integer, List<Float>> stops = new HashMap<>();
-	
-	protected int currentStopId = 0;
-	
-	public Document() {
-		document.setCreator("http://simplypdf-layout.web4enterprise.com");
-	}
-	
+public interface Document {	
 	/**
 	 * Set the title of document.
 	 * 
 	 * @param title The title of document meta-data.
 	 */
-	public void setTitle(String title) {
-		document.setTitle(title);
-	}
+	void setTitle(String title);
 	
 	/**
 	 * Set the author of document.
 	 * 
 	 * @param author The author of document meta-data.
 	 */
-	public void setAuthor(String author) {
-		document.setAuthor(author);
-	}
+	void setAuthor(String author);
 	
 	/**
 	 * Set the subject of document.
 	 * 
 	 * @param subject The subject of document meta-data.
 	 */
-	public void setSubject(String subject) {
-		document.setSubject(subject);
-	}
-	
-	/**
-	 * Add a keyword to document.
-	 * 
-	 * @param keyword The keyword to add to document meta-data.
-	 */
-	public void addKeyword(String keyword) {
-		document.addKeyword(keyword);
-	}
+	void setSubject(String subject);
 
 	/**
 	 * Set the creator of document.
 	 * 
 	 * @param creator The creator of document meta-data.
 	 */
-	public void setCreator(String creator) {
-		document.setCreator(creator);
-	}
+	void setCreator(String creator);
 
 	/**
 	 * Set the producer of document.
 	 * 
 	 * @param producer The producer of document meta-data.
 	 */
-	public void setProducer(String producer) {
-		document.setProducer(producer);
-	}
+	void setProducer(String producer);
 
 	/**
 	 * Add a keyword to document.
 	 * 
 	 * @param keyword The keyword to add to document meta-data.
 	 */
-	public void setCreationDate(Date creationDate) {
-		document.setCreationDate(creationDate);
-	}
+	void setCreationDate(Date creationDate);
 
 	/**
 	 * Set the modification date of document.
 	 * 
 	 * @param modificationDate The modification date of document meta-data.
 	 */
-	public void setModificationDate(Date modificationDate) {
-		document.setModificationDate(modificationDate);
-	}
+	void setModificationDate(Date modificationDate);
+	
+	/**
+	 * Add a keyword to document.
+	 * 
+	 * @param keyword The keyword to add to document meta-data.
+	 */
+	void addKeyword(String keyword);
 	
 	/**
 	 * Add a custom meta-data to document.
@@ -122,181 +75,81 @@ public class Document {
 	 * @param key The key of custom meta-data to add to document.
 	 * @param value The value of custom meta-data to add to document.
 	 */
-	public void addMetaData(String key, String value) {
-		document.addMetaData(key, value);
-	}
+	void addMetaData(String key, String value);
 	
-	public void addPage() {
-		addPage(pageStyle, pageHeader, pageFooter);
-	}
+	/**
+	 * Add a page to the document.
+	 * All further layouting operation will starts on this new page.
+	 */
+	void addPage();
 	
-	public void addPage(PageStyle pageStyle) {
-		addPage(pageStyle, pageHeader, pageFooter);
-	}
+	/**
+	 * Add a page to the document.
+	 * All further layouting operation will starts on this new page.
+	 * All next pages will use the same styling than the one defined in parameter unless otherwise specified. 
+	 * 
+	 * @param pageStyle The style of page to set for this and subsequent pages.
+	 */
+	void addPage(PageStyle pageStyle);
 	
-	public void addPage(PageHeader pageHeader, PageFooter pageFooter) {
-		addPage(pageStyle, pageHeader, pageFooter);
-	}
+	/**
+	 * Add a page to the document.
+	 * All further layouting operation will starts on this new page.
+	 * All next pages will use the same headers and footers than the one defined in parameter unless otherwise specified. 
+	 * 
+	 * @param pageHeader The page header to set to this page.
+	 * @param pageFooter The page footer to set to this page.
+	 */
+	void addPage(PageHeader pageHeader, PageFooter pageFooter);
 	
-	public void addPage(PageStyle pageStyle, PageHeader pageHeader, PageFooter pageFooter) {
-		float pageWidth = pageStyle.getFormat().getWidth() - 
-				pageStyle.getMargins().getLeft() - 
-				pageStyle.getMargins().getRight();
-		
-		this.pageHeader = pageHeader;
-		if(currentPage != null) {
-			layoutEndOfPage(pageWidth);
-			
-			//Clear and start a new footNotes now that page has been rendered.
-			pageFootNotes.clear();
-			pageFootNotes.setWidth(pageWidth);
-		}
-		
-		clearFootNoteId();
-		
-		this.pageFooter = pageFooter;
-		this.pageStyle = pageStyle;
-		
-		currentPageId++;
-		currentStopId = 0;
-		
-		layoutNewPage(pageWidth);
-	}
+	/**
+	 * Add a page to the document.
+	 * All further layouting operation will starts on this new page.
+	 * All next pages will use the same styling, headers and footers than the one defined in parameter unless otherwise specified.
+	 * 
+	 * @param pageStyle The style of page to set for this and subsequent pages.
+	 * @param pageHeader The page header to set to this page.
+	 * @param pageFooter The page footer to set to this page.
+	 */
+	void addPage(PageStyle pageStyle, PageHeader pageHeader, PageFooter pageFooter);
 	
-	public void addStopHeight(float position) {
-		List<Float> pageStops = stops.get(currentPageId);
-		
-		if(pageStops == null) {
-			pageStops = new ArrayList<Float>();
-			stops.put(currentPageId, pageStops);
-		}
-		
-		pageStops.add(position);
-	}
+	/**
+	 * Add a vertical stop to the current page.
+	 * On a call to {@see nextVerticalStop}, the next element will be add to the next available vertical stop.
+	 * 
+	 * @param position The position in number of units of the vertical stopp to place.
+	 */
+	void addVerticalStop(float position);
 	
-	public void nextStopHeight() {
-		List<Float> pageStops = stops.get(currentPageId);
-		
-		if(pageStops != null) {
-			if(pageStops.size() > currentStopId) {
-				float stopPosition = pageStops.get(currentStopId);
-				if(stopPosition < blockStartY) {
-					blockStartY = stopPosition;
-				}
-			}
-		}
-		
-		currentStopId++;
-	}
+	/**
+	 * Tell the document to place the next element on the next defined vertical stop.
+	 * If there is no more vertical stop defined, the method throws a {@see BadOperationException}.
+	 * 
+	 * @throws BadOperationException When no vertical stop is defined or no more vertical stop is available.
+	 */
+	void nextVerticalStop() throws BadOperationException;
 	
-	public String generateFootNoteId() {
-		return String.valueOf(currentFootNoteId++);
-	}
+	/**
+	 * Create an image from an input stream.
+	 * 
+	 * @param imageStream The input stream where image data is available.
+	 * @return The Image created in document.
+	 * @throws BadResourceException When image input stream cannot be read correctly.
+	 */
+	Image createImage(InputStream imageInputStream) throws BadResourceException;
 	
-	public void clearFootNoteId() {
-		currentFootNoteId = 1;
-	}
+	/**
+	 * Layout an element to the document.
+	 * 
+	 * @param element The element to add and layout to the document.
+	 * @throws BadOperationException When an illegal operation is performed.
+	 */
+	void addElement(Element element) throws BadOperationException;
 	
-	protected void layoutFooter(float pageWidth) {
-		///If we have a footer to layout.
-		 if(pageFooter != null) {
-			float pageFooterHeight = pageFooter.getHeight(this, pageWidth);
-
-			//We do not allow footNotes on footers. This will change page layouting and its too late for this.
-			pageFooter.layout(this, 
-					new Rect(pageStyle.getMargins().getBottom() + pageFooterHeight, 
-							pageStyle.getMargins().getLeft(),
-							pageStyle.getMargins().getBottom(),
-							pageStyle.getFormat().getWidth() - pageStyle.getMargins().getRight()),
-					pageStyle.getMargins().getBottom() + pageFooterHeight,
-					null);
-		}
-	}
-	
-	protected void layoutFootNotes(float pageWidth) {
-		///If we have a footer to layout.
-		 if(!pageFootNotes.isEmpty()) {
-			float pageFooterHeight = pageFooter.getHeight(this, pageWidth);
-			float pageFootNotesHeight = pageFootNotes.getHeight(this, pageWidth);
-
-			pageFootNotes.layout(this, 
-					new Rect(pageStyle.getMargins().getBottom() + pageFooterHeight + pageFootNotesHeight, 
-							pageStyle.getMargins().getLeft(),
-							pageStyle.getMargins().getBottom() + pageFooterHeight,
-							pageStyle.getFormat().getWidth() - pageStyle.getMargins().getRight()),
-					pageStyle.getMargins().getBottom() + pageFooterHeight + pageFootNotesHeight,
-					pageFootNotes);
-		}
-	}
-	
-	protected void layoutNewPage(float pageWidth) {
-		currentPage = document.createPage(pageStyle.getFormat().getWidth(), pageStyle.getFormat().getHeight());
-		blockStartY = pageStyle.getFormat().getHeight() - pageStyle.getMargins().getTop();
-		
-		if(pageHeader != null) {
-			pageHeader.layout(this, 
-					new Rect(pageStyle.getMargins().getTop(), 
-							pageStyle.getMargins().getLeft(),
-							pageStyle.getMargins().getBottom(),
-							pageStyle.getFormat().getWidth() - pageStyle.getMargins().getRight()),
-						blockStartY,
-						pageFootNotes);
-			blockStartY -= pageHeader.getHeight(this, pageWidth);
-		}
-	}
-	
-	protected void layoutEndOfPage(float pageWidth) {
-		layoutFootNotes(pageWidth);
-		layoutFooter(pageWidth);
-	}
-	
-	public Page getCurrentPage() {
-		return currentPage;
-	}
-	
-	public float getCurrentStartY() {
-		return blockStartY;
-	}
-	
-	public void addElement(Element element) {
-		float top = pageStyle.getMargins().getTop();
-		if(pageFooter != null) {
-			top -= pageFooter.getHeight(this, pageStyle.getFormat().getWidth() - 
-					pageStyle.getMargins().getLeft() - 
-					pageStyle.getMargins().getRight());
-		}
-		
-		float bottom = pageStyle.getMargins().getBottom();
-		if(pageFooter != null) {
-			bottom += pageFooter.getHeight(this, pageStyle.getFormat().getWidth() - 
-					pageStyle.getMargins().getLeft() - 
-					pageStyle.getMargins().getRight());
-		}
-		
-		blockStartY = element.layout(this, 
-				new Rect(top, 
-					pageStyle.getMargins().getLeft(),
-					bottom,
-					pageStyle.getFormat().getWidth() - pageStyle.getMargins().getRight()),
-				blockStartY,
-				pageFootNotes);
-	}
-
-	public Image createImage(InputStream imageStream) throws PdfGenerationException {
-		return new Image(document.createImage(imageStream));
-	}
-	
-	public void finish() {
-		float pageWidth = pageStyle.getFormat().getWidth() - 
-				pageStyle.getMargins().getLeft() - 
-				pageStyle.getMargins().getRight();
-		
-		if(currentPage != null) {
-			layoutEndOfPage(pageWidth);
-		}
-	}
-
-	public void write(OutputStream out) throws PdfGenerationException {
-		document.write(out);
-	}
+	/**
+	 * Write document to an outputStream.
+	 * 
+	 * @param out The output stream to write document to.
+	 */
+	void write(OutputStream out) throws DocumentGenerationException;
 }

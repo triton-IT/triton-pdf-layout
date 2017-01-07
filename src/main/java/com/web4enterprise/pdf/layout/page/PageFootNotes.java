@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.web4enterprise.pdf.core.geometry.Rect;
-import com.web4enterprise.pdf.layout.document.Document;
 import com.web4enterprise.pdf.layout.document.Element;
+import com.web4enterprise.pdf.layout.document.impl.Layouter;
 
 public class PageFootNotes implements Element {
 	protected List<Element> elements = new ArrayList<>();
@@ -33,10 +33,10 @@ public class PageFootNotes implements Element {
 		elements.clear();
 	}
 
-	public void compute(Document document, float width) {
+	public void compute(Layouter layouter, float width) {
 		height = 0.0f;
 		for(Element element : elements) {
-			height += element.getHeight(document, width);
+			height += element.getHeight(layouter, width);
 		}
 		computedWidth = width;
 	}
@@ -46,17 +46,17 @@ public class PageFootNotes implements Element {
 	}
 	
 	@Override
-	public float getHeight(Document document, float width) {
+	public float getHeight(Layouter layouter, float width) {
 		if(computedWidth != width) {
-			compute(document, width);
+			compute(layouter, width);
 		}
 		
 		return height;
 	}
 
 	@Override
-	public float layout(Document document, Rect boundingBox, float startY, PageFootNotes pageFootNotes) {
-		pageId = document.getCurrentPage().getId();
+	public void layout(Layouter layouter, Rect boundingBox, float startY, PageFootNotes pageFootNotes) {
+		pageId = layouter.getCurrentPage().getCorePage().getId();
 		linkX = boundingBox.getLeft();
 		linkY = startY;
 		
@@ -64,10 +64,8 @@ public class PageFootNotes implements Element {
 			//Need to clone element because header is repeated and changing any value of the element for a page will change it for each page.
 			//We do not pass any footNote because it will end in a never ending loop because pageFootNotes call operations on itself.
 			//Furthermore, a footNote cannot create another footNote, it will change the page layouting and its too late for this.
-			startY = element.clone().layout(document, boundingBox, startY, null);
+			element.clone().layout(layouter, boundingBox, startY, null);
 		}
-		
-		return startY;
 	}
 
 	@Override

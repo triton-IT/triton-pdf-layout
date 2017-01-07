@@ -7,17 +7,17 @@ import java.util.logging.Logger;
 import com.web4enterprise.pdf.core.font.Font;
 import com.web4enterprise.pdf.core.font.FontVariant;
 import com.web4enterprise.pdf.core.geometry.Point;
-import com.web4enterprise.pdf.core.page.Page;
 import com.web4enterprise.pdf.core.styling.Color;
 import com.web4enterprise.pdf.core.text.TextScript;
-import com.web4enterprise.pdf.layout.document.Document;
 import com.web4enterprise.pdf.layout.document.Element;
+import com.web4enterprise.pdf.layout.document.impl.Layouter;
+import com.web4enterprise.pdf.layout.page.Page;
 import com.web4enterprise.pdf.layout.paragraph.FootNote;
-import com.web4enterprise.pdf.layout.paragraph.ParagraphStyle;
 import com.web4enterprise.pdf.layout.paragraph.ParagraphElement;
+import com.web4enterprise.pdf.layout.paragraph.ParagraphStyle;
 
 public class Text implements ParagraphElement {
-	private final static Logger LOGGER = Logger.getLogger(ParagraphElement.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(ParagraphElement.class.getName());
 	
 	public static final String NEW_LINE = "\n";	
 	public static final Text NEW_TEXT_LINE = new Text(NEW_LINE);
@@ -107,7 +107,7 @@ public class Text implements ParagraphElement {
 	}
 	
 	@Override
-	public SplitInformation split(Document document, ParagraphStyle defaultStyle, float fontSize, float positionX, float firstLineMaxWidth, Float maxWidth) {
+	public SplitInformation split(Layouter layouter, ParagraphStyle defaultStyle, float fontSize, float positionX, float firstLineMaxWidth, Float maxWidth) {
 		TextStyle textStyle = getStyle();
 		//Get font name between paragraph and text ones.
 		Font currentFont = (style.getFont() != null)?style.getFont():defaultStyle.getFont();
@@ -118,12 +118,12 @@ public class Text implements ParagraphElement {
 		
 		//Split the text on max width.
 		SplitInformation splitInformation = new SplitInformation();
-		split(document, getString(), currentFontVariant, currentTextSize, positionX, firstLineMaxWidth, maxWidth, splitInformation, true);
+		split(layouter, getString(), currentFontVariant, currentTextSize, positionX, firstLineMaxWidth, maxWidth, splitInformation, true);
 		
 		return splitInformation;
 	}
 	
-	protected void split(Document document, String stringToSplit, FontVariant font, float fontSize, float positionX, float firstLineMaxWidth, 
+	protected void split(Layouter layouter, String stringToSplit, FontVariant font, float fontSize, float positionX, float firstLineMaxWidth, 
 			float maxWidth, SplitInformation splitInformation, boolean isFirstLine) {
 		//Calculate maximum size for final line.
 		float maximumLineWidth = maxWidth;
@@ -165,7 +165,7 @@ public class Text implements ParagraphElement {
 						//Try to split the next lines of text.
 						String textLeft = stringToSplit.substring(keptString.length());
 						//We split on space earlier, we don't want to display it on new line, so remove it.
-						split(document, textLeft.substring(1), font, fontSize, 0, firstLineMaxWidth, maxWidth, splitInformation, false);
+						split(layouter, textLeft.substring(1), font, fontSize, 0, firstLineMaxWidth, maxWidth, splitInformation, false);
 					}
 				}
 			}
@@ -175,7 +175,7 @@ public class Text implements ParagraphElement {
 				float currentFootNoteSize = fontSize / 2.0f;
 				StringBuilder footNotesBuilder = new StringBuilder(stringToSplit);
 				for(FootNote footNote : footNotes) {
-					footNotesBuilder.append(footNote.generateId(document)).append(" ");
+					footNotesBuilder.append(footNote.generateId(layouter)).append(" ");
 				}
 				footNotesBuilder.deleteCharAt(footNotesBuilder.length() - 1);
 				String footNotesString = footNotesBuilder.toString();
@@ -242,7 +242,7 @@ public class Text implements ParagraphElement {
 			coreText.setUnderlineColor(underlineColor);
 		}
 		
-		page.add(coreText);
+		page.getCorePage().add(coreText);
 		
 		float footNotesWidth = 0.0f;
 		if(footNotes.size() > 0) {
@@ -256,7 +256,7 @@ public class Text implements ParagraphElement {
 			coreFootNoteTexts = new com.web4enterprise.pdf.core.text.Text(footNotePositionX, positionY, currentFontSize, currentFontVariant, color, footNotesBuilder.toString());
 			coreFootNoteTexts.setScript(TextScript.SUPER);
 			
-			page.add(coreFootNoteTexts);
+			page.getCorePage().add(coreFootNoteTexts);
 		}
 		
 		return new Point(coreText.getWidth() + footNotesWidth, currentFontSize);

@@ -15,8 +15,8 @@
  */
 
 /**
- * 
+ * Contains all elements related to the table of content.
  * 
  * @author Régis Ramillien
  */
-package com.web4enterprise.pdf.layout.table;
+package com.web4enterprise.pdf.layout.toc;
