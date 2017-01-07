@@ -2,10 +2,8 @@ package com.web4enterprise.pdf.layout.document.impl;
 
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -23,6 +21,7 @@ import com.web4enterprise.pdf.layout.page.PageFootNotes;
 import com.web4enterprise.pdf.layout.page.PageFooter;
 import com.web4enterprise.pdf.layout.page.PageHeader;
 import com.web4enterprise.pdf.layout.page.PageStyle;
+import com.web4enterprise.pdf.layout.page.VerticalStopsList;
 
 public class PdfDocument implements Document {
 	private static final Logger LOGGER = Logger.getLogger(PdfDocument.class.getName());
@@ -30,15 +29,13 @@ public class PdfDocument implements Document {
 	protected Pdf pdf = new Pdf();
 	
 	protected Layouter layouter = new Layouter(pdf);
-
-	protected float blockStartX = 0;
 	
 	/**
 	 * List of stops per page.
 	 */
-	protected Map<Page, List<Float>> verticalStops = new HashMap<>();
+	protected Map<Page, VerticalStopsList> pagesVerticalStops = new HashMap<>();
 	
-	protected int currentStopId = 0;
+	protected boolean finished = false;
 	
 	public PdfDocument() {
 		pdf.setCreator("http://simplypdf-layout.web4enterprise.com");
@@ -120,29 +117,29 @@ public class PdfDocument implements Document {
 	}
 
 	@Override
-	public void addPage(PageStyle pageStyle, PageHeader pageHeader, PageFooter pageFooter) {		
-		currentStopId = 0;
+	public void addPage(PageStyle pageStyle, PageHeader pageHeader, PageFooter pageFooter) {
 		layouter.addPage(pageStyle, pageHeader, pageFooter);
 	}
 
 	@Override
 	public void addVerticalStop(float position) {
-		List<Float> stops = verticalStops.get(layouter.getCurrentPage());
+		VerticalStopsList stops = pagesVerticalStops.get(layouter.getCurrentPage());
 		
 		if(stops == null) {
-			stops = new ArrayList<Float>();
-			verticalStops.put(layouter.getCurrentPage(), stops);
+			stops = new VerticalStopsList();
+			pagesVerticalStops.put(layouter.getCurrentPage(), stops);
 		}
 		
 		stops.add(position);
 	}
 	
 	@Override
-	public void nextVerticalStop() throws BadOperationException {
-		List<Float> stops = verticalStops.get(layouter.getCurrentPage());
+	public void nextVerticalStop() {
+		VerticalStopsList stops = pagesVerticalStops.get(layouter.getCurrentPage());
+		int currentStopIndex = stops.getCurrentIndex();
 		
-		if(stops != null && stops.size() > currentStopId) {
-			float stopPosition = stops.get(currentStopId);
+		if(stops != null && stops.size() > currentStopIndex) {
+			float stopPosition = stops.get(currentStopIndex);
 			if(stopPosition < layouter.getCursorPosition().getY()) {
 				layouter.getCursorPosition().setY(stopPosition);
 			}
@@ -150,7 +147,7 @@ public class PdfDocument implements Document {
 			throw new BadOperationException("There is no vertical stop available.");
 		}
 		
-		currentStopId++;
+		stops.next();
 	}
 
 	@Override
@@ -163,42 +160,43 @@ public class PdfDocument implements Document {
 	}
 
 	@Override
-	public void addElement(Element element) throws BadOperationException {
+	public void addElement(Element element) {
 		Page page = layouter.getCurrentPage();
 		if(page == null) {
 			throw new BadOperationException("You can't add an element without having created a page first.");
 		}
 		
 		PageStyle pageStyle = page.getStyle();
-		float top = pageStyle.getMargins().getTop();
+		float top = pageStyle.getInnerTop();
 		
 		PageFooter pageFooter = page.getFooter();
 		if(pageFooter != null) {
-			top -= pageFooter.getHeight(layouter, pageStyle.getFormat().getWidth() - 
-					pageStyle.getMargins().getLeft() - 
-					pageStyle.getMargins().getRight());
+			top -= pageFooter.getHeight(layouter, pageStyle.getInnerWidth());
 		}
 		
-		float bottom = pageStyle.getMargins().getBottom();
+		float bottom = pageStyle.getInnerBottom();
 		if(pageFooter != null) {
-			bottom += pageFooter.getHeight(layouter, pageStyle.getFormat().getWidth() - 
-					pageStyle.getMargins().getLeft() - 
-					pageStyle.getMargins().getRight());
+			bottom += pageFooter.getHeight(layouter, pageStyle.getInnerWidth());
 		}
 
 		PageFootNotes pageFootNotes = page.getFootNotes();
 		element.layout(layouter, 
 				new Rect(top, 
-					pageStyle.getMargins().getLeft(),
+					pageStyle.getInnerLeft(),
 					bottom,
-					pageStyle.getFormat().getWidth() - pageStyle.getMargins().getRight()),
+					pageStyle.getInnerRight()),
 				layouter.getCursorPosition().getY(),
 				pageFootNotes);
 	}
 
 	@Override
 	public void write(OutputStream out) throws DocumentGenerationException {
-		finish();
+		//If write is called multiple times, call finish() only once.
+		if(!finished) {
+			finish();
+			finished = true;
+		}
+		
 		try {
 			pdf.write(out);
 		} catch(PdfGenerationException e) {

@@ -87,11 +87,11 @@ public class Page {
 			float footNotesHeight = footNotes.getHeight(layouter, pageWidth);
 
 			footNotes.layout(layouter, 
-					new Rect(style.getMargins().getBottom() + footerHeight + footNotesHeight, 
-							style.getMargins().getLeft(),
-							style.getMargins().getBottom() + footerHeight,
-							style.getFormat().getWidth() - style.getMargins().getRight()),
-					style.getMargins().getBottom() + footerHeight + footNotesHeight,
+					new Rect(style.getInnerBottom() + footerHeight + footNotesHeight, 
+							style.getInnerLeft(),
+							style.getInnerBottom() + footerHeight,
+							style.getInnerRight()),
+					style.getInnerBottom() + footerHeight + footNotesHeight,
 					footNotes);
 		}
 	}
@@ -103,11 +103,11 @@ public class Page {
 
 			//We do not allow footNotes on footers. This will change page layouting and its too late for this.
 			footer.layout(layouter, 
-					new Rect(style.getMargins().getBottom() + footerHeight, 
-							style.getMargins().getLeft(),
-							style.getMargins().getBottom(),
-							style.getFormat().getWidth() - style.getMargins().getRight()),
-					style.getMargins().getBottom() + footerHeight,
+					new Rect(style.getInnerBottom() + footerHeight, 
+							style.getInnerLeft(),
+							style.getInnerBottom(),
+							style.getInnerRight()),
+					style.getInnerBottom() + footerHeight,
 					null);
 		}
 	}

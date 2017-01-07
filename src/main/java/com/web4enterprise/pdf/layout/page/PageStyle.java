@@ -53,4 +53,28 @@ public class PageStyle {
 	public void setMargins(Margins margins) {
 		this.margins = margins;
 	}
+	
+	public float getInnerWidth() {
+		return getFormat().getWidth() - getMargins().getLeft() - getMargins().getRight();
+	}
+	
+	public float getInnerHeight() {
+		return getFormat().getHeight() - getMargins().getTop() - getMargins().getBottom();
+	}
+	
+	public float getInnerTop() {
+		return getFormat().getHeight() - getMargins().getTop();
+	}
+	
+	public float getInnerLeft() {
+		return getMargins().getLeft();
+	}
+	
+	public float getInnerBottom() {
+		return getMargins().getBottom();
+	}
+	
+	public float getInnerRight() {
+		return getFormat().getWidth() - getMargins().getRight();
+	}
 }

@@ -1,6 +1,6 @@
 package com.web4enterprise.pdf.layout.exception;
 
-public class BadOperationException extends DocumentException {
+public class BadOperationException extends RuntimeException {
     /**
 	 * Default serial version UID.
 	 */
