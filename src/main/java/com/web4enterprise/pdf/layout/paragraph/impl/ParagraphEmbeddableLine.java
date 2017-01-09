@@ -1,11 +1,12 @@
-package com.web4enterprise.pdf.layout.paragraph;
+package com.web4enterprise.pdf.layout.paragraph.impl;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import com.web4enterprise.pdf.layout.document.impl.Layouter;
-import com.web4enterprise.pdf.layout.paragraph.ParagraphElement.SplitInformation;
+import com.web4enterprise.pdf.layout.document.impl.Pager;
+import com.web4enterprise.pdf.layout.paragraph.ParagraphStyle;
+import com.web4enterprise.pdf.layout.paragraph.impl.PdfParagraphEmbeddable.SplitInformation;
 import com.web4enterprise.pdf.layout.placement.Stop;
 import com.web4enterprise.pdf.layout.utils.CompositeList;
 
@@ -14,7 +15,7 @@ import com.web4enterprise.pdf.layout.utils.CompositeList;
  * A line of element can be composed of one or more Elements. Elements can have different styles and associated to different stops.
  * All elements for a given stop are gathered into a same list, itself gathered into a "meta" {@see CompositeList}.
  */
-public class ElementLine extends CompositeList<ParagraphElement> {	
+public class ParagraphEmbeddableLine extends CompositeList<PdfParagraphEmbeddable> {	
 	/**
 	 * Convert a list of elements to a list of ElementLine.
 	 * List of elements is parsed to search for new line in each Element. 
@@ -23,66 +24,66 @@ public class ElementLine extends CompositeList<ParagraphElement> {
 	 * @param elements The elements to parse.
 	 * @return The list of ElementLine.
 	 */
-	public static List<ElementLine> getElementLines(CompositeList<ParagraphElement> elements) {
+	public static List<ParagraphEmbeddableLine> getEmbeddableLines(CompositeList<PdfParagraphEmbeddable> elements) {
 		//Initialize the array of lines of elements.
-		List<ElementLine> elementLines = new ArrayList<>();
+		List<ParagraphEmbeddableLine> paragraphEmbeddableLines = new ArrayList<>();
 		//Create a new element line and add it to array. This will contain the elements of the first line, within a different list for each stop.
-		ElementLine elementLine = new ElementLine();
-		ArrayList<ParagraphElement> stopElementLine = new ArrayList<ParagraphElement>();
-		elementLine.addList(stopElementLine);
-		elementLines.add(elementLine);
+		ParagraphEmbeddableLine paragraphEmbeddableLine = new ParagraphEmbeddableLine();
+		ArrayList<PdfParagraphEmbeddable> stopElementLine = new ArrayList<PdfParagraphEmbeddable>();
+		paragraphEmbeddableLine.addList(stopElementLine);
+		paragraphEmbeddableLines.add(paragraphEmbeddableLine);
 		
-		//Iterate over each paragraphElement to search for new lines and create a new List on a new Stop.
+		//Iterate over each paragraphEmbeddable to search for new lines and create a new List on a new Stop.
 		CompositeListIterator paragraphIterator = elements.iterator();
 		while(paragraphIterator.hasNext()) {
-			ParagraphElement element = paragraphIterator.next();
+			PdfParagraphEmbeddable element = paragraphIterator.next();
 			//If list has changed, it means that a stop has been inserted. So, do the same for line, insert a new List to simulate Stop.
 			if(paragraphIterator.hasListChanged()) {
-				stopElementLine = new ArrayList<ParagraphElement>();
-				elementLine.addList(stopElementLine);
+				stopElementLine = new ArrayList<PdfParagraphEmbeddable>();
+				paragraphEmbeddableLine.addList(stopElementLine);
 			}
-			List<ParagraphElement> currentElementLines = element.getLines();
-			Iterator<ParagraphElement> currentElementLinesIterator = currentElementLines.iterator();
+			List<PdfParagraphEmbeddable> currentElementLines = element.getLines();
+			Iterator<PdfParagraphEmbeddable> currentElementLinesIterator = currentElementLines.iterator();
 			while(currentElementLinesIterator.hasNext()) {
-				ParagraphElement currentElement = currentElementLinesIterator.next();
+				PdfParagraphEmbeddable currentElement = currentElementLinesIterator.next();
 				stopElementLine.add(currentElement);
 				if(currentElementLinesIterator.hasNext()) {
-					elementLine = new ElementLine();
-					stopElementLine = new ArrayList<ParagraphElement>();
-					elementLine.addList(stopElementLine);
-					elementLines.add(elementLine);
+					paragraphEmbeddableLine = new ParagraphEmbeddableLine();
+					stopElementLine = new ArrayList<PdfParagraphEmbeddable>();
+					paragraphEmbeddableLine.addList(stopElementLine);
+					paragraphEmbeddableLines.add(paragraphEmbeddableLine);
 				}				
 			}
 		}
 		
-		return elementLines;
+		return paragraphEmbeddableLines;
 	}
 	
 	/***
 	 * Do not permit external instantiation.
 	 */
-	private ElementLine() {
+	private ParagraphEmbeddableLine() {
 		//Empty constructor.
 	}
 	
-	public List<ElementLine> splitToMaxWidth(Layouter layouter, ParagraphStyle defaultStyle, float defaultFontSize, float firstLineMaxWidth, Float maxWidth, List<Stop> stops) {
-		List<ElementLine> elementLines = new ArrayList<>();
+	public List<ParagraphEmbeddableLine> splitToMaxWidth(Pager pager, ParagraphStyle defaultStyle, float defaultFontSize, float firstLineMaxWidth, Float maxWidth, List<Stop> stops) {
+		List<ParagraphEmbeddableLine> paragraphEmbeddableLines = new ArrayList<>();
 		
 		float currentX = 0.0f;
-		ElementLine currentElementLine = new ElementLine();
-		ArrayList<ParagraphElement> stopElementLine = new ArrayList<ParagraphElement>();
+		ParagraphEmbeddableLine currentElementLine = new ParagraphEmbeddableLine();
+		ArrayList<PdfParagraphEmbeddable> stopElementLine = new ArrayList<PdfParagraphEmbeddable>();
 		currentElementLine.addList(stopElementLine);
-		elementLines.add(currentElementLine);
+		paragraphEmbeddableLines.add(currentElementLine);
 		
 		//Defines if the line being processed is the first or not.
 		boolean isFirstLine = true;
 
 		//The index of current stop.
 		int currentStopIndex = 0;
-		//Iterate over each paragraphElement to search for new lines and create a new List on a new Stop.
+		//Iterate over each paragraphEmbeddable to search for new lines and create a new List on a new Stop.
 		CompositeListIterator paragraphIterator = iterator();
 		while(paragraphIterator.hasNext()) {
-			ParagraphElement element = paragraphIterator.next();
+			PdfParagraphEmbeddable element = paragraphIterator.next();
 
 			//If list has changed, it means that a stop has been inserted. So, do the same for line, insert a new List to simulate Stop.
 			if(paragraphIterator.hasListChanged()) {
@@ -97,14 +98,14 @@ public class ElementLine extends CompositeList<ParagraphElement> {
 				}
 				
 				//Add a list to element line to simulate this new stop.
-				stopElementLine = new ArrayList<ParagraphElement>();
+				stopElementLine = new ArrayList<PdfParagraphEmbeddable>();
 				currentElementLine.addList(stopElementLine);
 			}
 			
-			SplitInformation splitInformation = element.split(layouter, defaultStyle, defaultFontSize, currentX, firstLineMaxWidth, maxWidth);
+			SplitInformation splitInformation = element.split(pager, defaultStyle, defaultFontSize, currentX, firstLineMaxWidth, maxWidth);
 			
 			//Insert end of line on current stop line.
-			Iterator<ParagraphElement> iterator = splitInformation.splitElements.iterator();
+			Iterator<PdfParagraphEmbeddable> iterator = splitInformation.splitEmbeddables.iterator();
 			stopElementLine.add(iterator.next());
 			
 			//Create new line for each new line.
@@ -113,32 +114,32 @@ public class ElementLine extends CompositeList<ParagraphElement> {
 					isFirstLine = false;
 				}
 				//Create a new Element line with a new list inside for first stop.
-				currentElementLine = new ElementLine();
-				stopElementLine = new ArrayList<ParagraphElement>();
+				currentElementLine = new ParagraphEmbeddableLine();
+				stopElementLine = new ArrayList<PdfParagraphEmbeddable>();
 				currentElementLine.addList(stopElementLine);
 				
 				//Add current Element line to resulting lines.
-				elementLines.add(currentElementLine);
+				paragraphEmbeddableLines.add(currentElementLine);
 				
 				//Reinitialize current position and stop index.
 				currentX = 0.0f;
 				currentStopIndex = 0;
 				
-				//Add ParagraphElement to current stop Element line.
-				ParagraphElement splitElement = iterator.next();
+				//Add PdfParagraphEmbeddable to current stop Element line.
+				PdfParagraphEmbeddable splitElement = iterator.next();
 				stopElementLine.add(splitElement);
 			}
 			
 			currentX += splitInformation.positionX;
 		}
 		
-		return elementLines;
+		return paragraphEmbeddableLines;
 	}
 
 	public int getWidth(ParagraphStyle defaultStyle, float defaultTextSize) {
 		int width = 0;
 		
-		for(ParagraphElement element : this) {
+		for(PdfParagraphEmbeddable element : this) {
 			width += element.getWidth(defaultStyle, defaultTextSize);
 		}
 		
@@ -147,7 +148,7 @@ public class ElementLine extends CompositeList<ParagraphElement> {
 	
 	public float getHeight(ParagraphStyle paragraphStyle) {
 		float lineSpacing = 0;
-		for(ParagraphElement element : this) {
+		for(PdfParagraphEmbeddable element : this) {
 			//Keep greatest line spacing to not overlap elements of other lines.
 			float currentLineSpacing = element.getLineSpacing(paragraphStyle);
 			if(currentLineSpacing > lineSpacing) {

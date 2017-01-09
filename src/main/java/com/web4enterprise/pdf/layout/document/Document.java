@@ -8,9 +8,14 @@ import com.web4enterprise.pdf.layout.exception.BadOperationException;
 import com.web4enterprise.pdf.layout.exception.BadResourceException;
 import com.web4enterprise.pdf.layout.exception.DocumentGenerationException;
 import com.web4enterprise.pdf.layout.image.Image;
-import com.web4enterprise.pdf.layout.page.PageFooter;
-import com.web4enterprise.pdf.layout.page.PageHeader;
 import com.web4enterprise.pdf.layout.page.PageStyle;
+import com.web4enterprise.pdf.layout.page.footer.PageFooter;
+import com.web4enterprise.pdf.layout.page.header.PageHeader;
+import com.web4enterprise.pdf.layout.paragraph.Paragraph;
+import com.web4enterprise.pdf.layout.paragraph.ParagraphEmbeddable;
+import com.web4enterprise.pdf.layout.paragraph.ParagraphStyle;
+import com.web4enterprise.pdf.layout.table.Table;
+import com.web4enterprise.pdf.layout.toc.TableOfContent;
 
 public interface Document {	
 	/**
@@ -133,18 +138,38 @@ public interface Document {
 	 * Create an image from an input stream.
 	 * 
 	 * @param imageStream The input stream where image data is available.
-	 * @return The Image created in document.
+	 * @return The PdfImage created in document.
 	 * @throws BadResourceException When image input stream cannot be read correctly.
 	 */
 	Image createImage(InputStream imageInputStream) throws BadResourceException;
 	
 	/**
+	 * Create a paragraph with default values.
+	 * 
+	 * @return A new paragraph.
+	 */
+	Paragraph createParagraph();
+	Paragraph createParagraph(ParagraphStyle style);
+	Paragraph createParagraph(String... texts);
+	Paragraph createParagraph(ParagraphStyle style, String... texts);
+	Paragraph createParagraph(ParagraphEmbeddable... paragraphEmbeddables);
+	Paragraph createParagraph(ParagraphStyle style, ParagraphEmbeddable... ParagraphEmbeddable);
+	
+	Table createTable();
+
+	PageHeader createPageHeader();
+	
+	PageFooter createPageFooter();
+	
+	TableOfContent createTableOfContent();
+	
+	/**
 	 * Layout an element to the document.
 	 * 
-	 * @param element The element to add and layout to the document.
+	 * @param embeddable The {@see DocumentEmbeddable} to add to this document.
 	 * @throws BadOperationException When an illegal operation is performed.
 	 */
-	void addElement(Element element) throws BadOperationException;
+	void addEmbeddable(DocumentEmbeddable embeddable) throws BadOperationException;
 	
 	/**
 	 * Write document to an outputStream.

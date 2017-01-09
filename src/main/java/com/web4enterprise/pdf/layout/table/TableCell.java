@@ -1,12 +1,12 @@
 package com.web4enterprise.pdf.layout.table;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import com.web4enterprise.pdf.layout.document.impl.Layouter;
-import com.web4enterprise.pdf.layout.paragraph.ElementLine;
+import com.web4enterprise.pdf.layout.document.impl.Pager;
 import com.web4enterprise.pdf.layout.paragraph.Paragraph;
+import com.web4enterprise.pdf.layout.paragraph.impl.ParagraphEmbeddableLine;
+import com.web4enterprise.pdf.layout.paragraph.impl.PdfParagraph;
 
 public class TableCell {
 	public TableCellStyle cellStyle = TableCellStyle.THIN_SOLID_BORDERS;
@@ -18,20 +18,22 @@ public class TableCell {
 	protected boolean merged = false;
 	
 	public TableCell() {
-		this.paragraphs.add(new Paragraph(""));
+		this.paragraphs.add(new PdfParagraph(""));
 	}
 	
 	public TableCell(String... values) {
 		if(values != null) {
 			for(String value : values) {
-				this.paragraphs.add(new Paragraph(value));
+				this.paragraphs.add(new PdfParagraph(value));
 			}
 		}
 	}
 	
 	public TableCell(Paragraph... paragraphs) {
 		if(paragraphs != null) {
-			this.paragraphs = Arrays.asList(paragraphs);
+			for(Paragraph paragraph : paragraphs) {
+				this.paragraphs.add((PdfParagraph) paragraph);
+			}
 		}
 	}
 	
@@ -55,9 +57,9 @@ public class TableCell {
 	
 	public float getWidth() {
 		float width = 0;
-		for(Paragraph paragraph : paragraphs) {
-			for(ElementLine elementLine : paragraph.getElementLines()) {
-				int elementWidth = elementLine.getWidth(paragraph.getStyle(), paragraph.getStyle().getFontSize());
+		for(PdfParagraph paragraph : (PdfParagraph[]) paragraphs.toArray()) {
+			for(ParagraphEmbeddableLine paragraphEmbeddableLine : paragraph.getEmbeddableLines()) {
+				int elementWidth = paragraphEmbeddableLine.getWidth(paragraph.getStyle(), paragraph.getStyle().getFontSize());
 				if(elementWidth > width) {
 					width = elementWidth;
 				}
@@ -67,10 +69,10 @@ public class TableCell {
 		return width;
 	}
 	
-	public float getHeight(Layouter layouter, float width) {
+	public float getHeight(Pager pager, float width) {
 		float height = 0;
 		for(Paragraph paragraph : paragraphs) {
-			height += paragraph.getHeight(layouter, width);
+			height += ((PdfParagraph) paragraph).getHeight(pager, width);
 		}
 		
 		return height;

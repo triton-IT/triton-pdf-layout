@@ -13,16 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.web4enterprise.pdf.layout.document;
 
-import com.web4enterprise.pdf.core.geometry.Rect;
-import com.web4enterprise.pdf.core.link.Linkable;
-import com.web4enterprise.pdf.layout.document.impl.Layouter;
-import com.web4enterprise.pdf.layout.page.PageFootNotes;
-
-public interface Element extends Cloneable, Linkable {
-	float getHeight(Layouter documentLayouter, float width);
-	void layout(Layouter documentLayouter, Rect boundingBox, float startY, PageFootNotes pageFootNotes);
-	
-	Element clone();
-}
+/**
+ * 
+ * 
+ * @author Régis Ramillien
+ */
+package com.web4enterprise.pdf.layout.text.impl;

@@ -3,17 +3,17 @@ package com.web4enterprise.pdf.layout.document.impl;
 import com.web4enterprise.pdf.core.document.Pdf;
 import com.web4enterprise.pdf.core.geometry.Point;
 import com.web4enterprise.pdf.layout.page.Page;
-import com.web4enterprise.pdf.layout.page.PageFooter;
 import com.web4enterprise.pdf.layout.page.PageFormat;
-import com.web4enterprise.pdf.layout.page.PageHeader;
 import com.web4enterprise.pdf.layout.page.PageStyle;
+import com.web4enterprise.pdf.layout.page.footer.PageFooter;
+import com.web4enterprise.pdf.layout.page.header.PageHeader;
 
-public class Layouter {
+public class Pager {
 	protected Pdf pdf = null;
 	protected Page currentPage = null;
 	protected Point cursorPosition = new Point(0.0f, 0.0f);
 	
-	public Layouter(Pdf pdf) {
+	public Pager(Pdf pdf) {
 		this.pdf = pdf;
 	}
 	
