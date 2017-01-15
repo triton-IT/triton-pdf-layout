@@ -14,16 +14,9 @@
  * limitations under the License.
  */
 
-package com.web4enterprise.pdf.layout.document.command;
-
 /**
  * 
  * 
  * @author Régis Ramillien
  */
-public enum Command {
-	ADD_PAGE,
-	ADD_ELEMENT,
-	ADD_VERTICAL_STOP,
-	NEXT_VERTICAL_STOP,
-}
+package com.web4enterprise.pdf.layout.page.impl;

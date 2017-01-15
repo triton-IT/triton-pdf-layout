@@ -8,10 +8,10 @@ import java.util.Map;
 import com.web4enterprise.pdf.core.geometry.Point;
 import com.web4enterprise.pdf.core.geometry.Rect;
 import com.web4enterprise.pdf.core.path.StraightPath;
-import com.web4enterprise.pdf.layout.document.impl.Pager;
+import com.web4enterprise.pdf.layout.document.impl.PdfPager;
 import com.web4enterprise.pdf.layout.document.impl.PdfDocumentEmbeddable;
-import com.web4enterprise.pdf.layout.page.Page;
-import com.web4enterprise.pdf.layout.page.PageFootNotes;
+import com.web4enterprise.pdf.layout.page.impl.Page;
+import com.web4enterprise.pdf.layout.page.impl.PageFootNotes;
 import com.web4enterprise.pdf.layout.paragraph.Paragraph;
 import com.web4enterprise.pdf.layout.paragraph.impl.PdfParagraph;
 import com.web4enterprise.pdf.layout.placement.BorderStyle;
@@ -49,9 +49,9 @@ public class PdfTable implements Table, PdfDocumentEmbeddable {
 		return columnsWidths.get(index);
 	}
 	
-	public void computeInnerLayout(Pager pager) {
+	public void computeInnerLayout(PdfPager pdfPager) {
 		computeColumnWidths();
-		computeRowsHeights(pager);
+		computeRowsHeights(pdfPager);
 		computeCellsWidths();
 		computeCellsHeights();
 		
@@ -78,12 +78,12 @@ public class PdfTable implements Table, PdfDocumentEmbeddable {
 		this.nbHeaderRows = nbHeaderRows;
 	}
 
-	protected void computeRowsHeights(Pager pager) {
+	protected void computeRowsHeights(PdfPager pdfPager) {
 		for(TableRow row : rows) {
 			int columnIndex = 0;
 			float currentRowHeight = 0;
 			for(TableCell cell : row.getCells()) {
-				float currentCellHeight = cell.getHeight(pager, columnsWidths.get(columnIndex));
+				float currentCellHeight = cell.getHeight(pdfPager, columnsWidths.get(columnIndex));
 				if(currentCellHeight > currentRowHeight) {
 					currentRowHeight = currentCellHeight;
 				}
@@ -160,9 +160,9 @@ public class PdfTable implements Table, PdfDocumentEmbeddable {
 	}
 	
 	@Override
-	public float getHeight(Pager pager, float width) {
+	public float getHeight(PdfPager pdfPager, float width) {
 		if(!computed) {
-			computeInnerLayout(pager);
+			computeInnerLayout(pdfPager);
 		}
 		
 		float height = 0.0f;
@@ -175,31 +175,31 @@ public class PdfTable implements Table, PdfDocumentEmbeddable {
 	}
 
 	@Override
-	public void layout(Pager pager, Rect boundingBox, float startY, PageFootNotes pageFootNotes) {
+	public void layOut(PdfPager pdfPager, Rect boundingBox, float startY, PageFootNotes pageFootNotes) {
 		if(!computed) {
-			computeInnerLayout(pager);
+			computeInnerLayout(pdfPager);
 		}
 		
 		Map<Integer, Integer> rowMerges = new HashMap<>();
 		for(TableRow row : getRows()) {
-			float rowHeight = createRow(pager, boundingBox, startY, row, rowMerges, pageFootNotes);
+			float rowHeight = createRow(pdfPager, boundingBox, startY, row, rowMerges, pageFootNotes);
 			startY -= rowHeight;
 		}
 		
-		pager.getCursorPosition().setY(startY);
+		pdfPager.getCursorPosition().setY(startY);
 	}
 
-	protected float createRow(Pager pager, Rect boundingBox, float startY, TableRow row, Map<Integer, Integer> rowMerges, PageFootNotes pageFootNotes) {
-		Page currentPage = pager.getCurrentPage();
+	protected float createRow(PdfPager pdfPager, Rect boundingBox, float startY, TableRow row, Map<Integer, Integer> rowMerges, PageFootNotes pageFootNotes) {
+		Page currentPage = pdfPager.getCurrentPage();
 		float startX = boundingBox.getLeft();
 		
 		float rowHeight = row.getHeight();
 		if(startY - rowHeight < boundingBox.getBottom()) {
-			pager.addPage();
-			currentPage = pager.getCurrentPage();
+			pdfPager.addPage();
+			currentPage = pdfPager.getCurrentPage();
 			if(isRepeatHeader()) {
 				for(int i = 0; i < getNbHeaderRows(); i++) {
-					createRow(pager, boundingBox, startY, getRows().get(i), rowMerges, pageFootNotes);
+					createRow(pdfPager, boundingBox, startY, getRows().get(i), rowMerges, pageFootNotes);
 				}
 			}
 		}
@@ -234,10 +234,10 @@ public class PdfTable implements Table, PdfDocumentEmbeddable {
 				
 				float paragraphStartY = startY;
 				for(Paragraph paragraph : cell.getParagraphs()) {					
-					((PdfParagraph) paragraph).layout(pager, 
+					((PdfParagraph) paragraph).layOut(pdfPager, 
 							new Rect(paragraphStartY, startX, paragraphStartY - row.getHeight(), startX + width), 
 							paragraphStartY, pageFootNotes);
-					paragraphStartY -= ((PdfParagraph) paragraph).getHeight(pager, width);
+					paragraphStartY -= ((PdfParagraph) paragraph).getHeight(pdfPager, width);
 				}
 				
 				//Top border

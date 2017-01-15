@@ -3,7 +3,7 @@ package com.web4enterprise.pdf.layout.table;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.web4enterprise.pdf.layout.document.impl.Pager;
+import com.web4enterprise.pdf.layout.document.impl.PdfPager;
 import com.web4enterprise.pdf.layout.paragraph.Paragraph;
 import com.web4enterprise.pdf.layout.paragraph.impl.ParagraphEmbeddableLine;
 import com.web4enterprise.pdf.layout.paragraph.impl.PdfParagraph;
@@ -69,10 +69,10 @@ public class TableCell {
 		return width;
 	}
 	
-	public float getHeight(Pager pager, float width) {
+	public float getHeight(PdfPager pdfPager, float width) {
 		float height = 0;
 		for(Paragraph paragraph : paragraphs) {
-			height += ((PdfParagraph) paragraph).getHeight(pager, width);
+			height += ((PdfParagraph) paragraph).getHeight(pdfPager, width);
 		}
 		
 		return height;

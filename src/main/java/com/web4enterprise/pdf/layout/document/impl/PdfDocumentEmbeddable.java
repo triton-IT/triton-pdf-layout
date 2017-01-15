@@ -18,11 +18,11 @@ package com.web4enterprise.pdf.layout.document.impl;
 import com.web4enterprise.pdf.core.geometry.Rect;
 import com.web4enterprise.pdf.core.link.Linkable;
 import com.web4enterprise.pdf.layout.document.DocumentEmbeddable;
-import com.web4enterprise.pdf.layout.page.PageFootNotes;
+import com.web4enterprise.pdf.layout.page.impl.PageFootNotes;
 
 public interface PdfDocumentEmbeddable extends DocumentEmbeddable, Cloneable, Linkable {
-	float getHeight(Pager pager, float width);
-	void layout(Pager pager, Rect boundingBox, float startY, PageFootNotes pageFootNotes);
+	float getHeight(PdfPager pdfPager, float width);
+	void layOut(PdfPager pdfPager, Rect boundingBox, float startY, PageFootNotes pageFootNotes);
 	
 	PdfDocumentEmbeddable clone();
 }

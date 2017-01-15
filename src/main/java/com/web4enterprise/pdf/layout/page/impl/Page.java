@@ -1,7 +1,8 @@
-package com.web4enterprise.pdf.layout.page;
+package com.web4enterprise.pdf.layout.page.impl;
 
 import com.web4enterprise.pdf.core.geometry.Rect;
-import com.web4enterprise.pdf.layout.document.impl.Pager;
+import com.web4enterprise.pdf.layout.document.impl.PdfPager;
+import com.web4enterprise.pdf.layout.page.PageStyle;
 import com.web4enterprise.pdf.layout.page.footer.PageFooter;
 import com.web4enterprise.pdf.layout.page.footer.impl.PdfPageFooter;
 import com.web4enterprise.pdf.layout.page.header.PageHeader;
@@ -10,7 +11,7 @@ import com.web4enterprise.pdf.layout.page.header.impl.PdfPageHeader;
 public class Page {
 	protected com.web4enterprise.pdf.core.page.Page corePage;
 	
-	protected Pager pager;
+	protected PdfPager pdfPager;
 	
 	protected PageStyle style = PageStyle.A4_PORTRAIT;
 	protected PdfPageHeader header = null;
@@ -21,14 +22,14 @@ public class Page {
 	
 	protected int currentFootNoteId = 1;
 	
-	public Page(Pager pager, com.web4enterprise.pdf.core.page.Page corePage, PageStyle pageStyle) {
-		this(pager, corePage, pageStyle, null, null);
+	public Page(PdfPager pdfPager, com.web4enterprise.pdf.core.page.Page corePage, PageStyle pageStyle) {
+		this(pdfPager, corePage, pageStyle, null, null);
 	}
 	
-	public Page(Pager pager, com.web4enterprise.pdf.core.page.Page corePage, PageStyle pageStyle, PageHeader pageHeader, PageFooter pageFooter) {
+	public Page(PdfPager pdfPager, com.web4enterprise.pdf.core.page.Page corePage, PageStyle pageStyle, PageHeader pageHeader, PageFooter pageFooter) {
 		this.corePage = corePage;
 		
-		this.pager = pager;
+		this.pdfPager = pdfPager;
 		
 		this.style = pageStyle;
 		this.header = (PdfPageHeader) pageHeader;
@@ -63,25 +64,25 @@ public class Page {
 		return String.valueOf(currentFootNoteId++);
 	}
 	
-	public void layoutNewPage() {
+	public void layOutNewPage() {
 		float yPosition = style.getFormat().getHeight() - style.getMargins().getTop();
-		pager.getCursorPosition().setY(yPosition);
+		pdfPager.getCursorPosition().setY(yPosition);
 		
 		if(header != null) {
-			header.layout(pager, 
+			header.layOut(pdfPager, 
 					new Rect(style.getMargins().getTop(), 
 							style.getMargins().getLeft(),
 							style.getMargins().getBottom(),
 							style.getFormat().getWidth() - style.getMargins().getRight()),
-						pager.getCursorPosition().getY(),
+						pdfPager.getCursorPosition().getY(),
 						footNotes);
-			pager.getCursorPosition().setY(yPosition - header.getHeight(pager, pageWidth));
+			pdfPager.getCursorPosition().setY(yPosition - header.getHeight(pdfPager, pageWidth));
 		}
 	}
 	
-	public void layoutEndOfPage() {
-		layoutFootNotes();
-		layoutFooter();
+	public void layOutEndOfPage() {
+		layOutFootNotes();
+		layOutFooter();
 	}
 	
 	public float getInnerTop() {
@@ -89,7 +90,7 @@ public class Page {
 		
 		PdfPageFooter pageFooter = getFooter();
 		if(pageFooter != null) {
-			top -= pageFooter.getHeight(pager, style.getInnerWidth());
+			top -= pageFooter.getHeight(pdfPager, style.getInnerWidth());
 		}
 		
 		return top;
@@ -105,7 +106,7 @@ public class Page {
 
 		PdfPageFooter pageFooter = getFooter();
 		if(pageFooter != null) {
-			bottom += pageFooter.getHeight(pager, style.getInnerWidth());
+			bottom += pageFooter.getHeight(pdfPager, style.getInnerWidth());
 		}
 		
 		return bottom;
@@ -118,6 +119,11 @@ public class Page {
 	public float getInnerRight() {
 		return style.getInnerRight();
 	}
+	
+	public float getInnerWidth() {
+		return style.getInnerRight() - style.getInnerLeft();
+	}
+	
 	/**
 	 * Get inner rectangle of page. (i.e. use margins and header/footer in calculation. Foot notes are not used in calculation).
 	 * 
@@ -130,13 +136,13 @@ public class Page {
 				getInnerRight());
 	}
 	
-	protected void layoutFootNotes() {
-		///If we have a footer to layout.
+	protected void layOutFootNotes() {
+		///If we have a footer to lay out.
 		 if(!footNotes.isEmpty()) {
-			float footerHeight = footer.getHeight(pager, pageWidth);
-			float footNotesHeight = footNotes.getHeight(pager, pageWidth);
+			float footerHeight = footer.getHeight(pdfPager, pageWidth);
+			float footNotesHeight = footNotes.getHeight(pdfPager, pageWidth);
 
-			footNotes.layout(pager, 
+			footNotes.layOut(pdfPager, 
 					new Rect(style.getInnerBottom() + footerHeight + footNotesHeight, 
 							style.getInnerLeft(),
 							style.getInnerBottom() + footerHeight,
@@ -146,13 +152,13 @@ public class Page {
 		}
 	}
 	
-	protected void layoutFooter() {
-		///If we have a footer to layout.
+	protected void layOutFooter() {
+		///If we have a footer to lay out.
 		 if(footer != null) {
-			float footerHeight = footer.getHeight(pager, pageWidth);
+			float footerHeight = footer.getHeight(pdfPager, pageWidth);
 
 			//We do not allow footNotes on footers. This will change page layouting and its too late for this.
-			footer.layout(pager, 
+			footer.layOut(pdfPager, 
 					new Rect(style.getInnerBottom() + footerHeight, 
 							style.getInnerLeft(),
 							style.getInnerBottom(),

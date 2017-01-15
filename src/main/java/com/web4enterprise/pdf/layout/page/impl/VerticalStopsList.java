@@ -1,4 +1,4 @@
-package com.web4enterprise.pdf.layout.page;
+package com.web4enterprise.pdf.layout.page.impl;
 
 import java.util.ArrayList;
 
@@ -16,5 +16,11 @@ public class VerticalStopsList extends ArrayList<Float> {
 	
 	public void next() {
 		currentIndex++;
+	}
+	
+	public void add(float... stops) {
+		for(float stop : stops) {
+			add(stop);
+		}
 	}
 }

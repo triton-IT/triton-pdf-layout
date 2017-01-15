@@ -6,10 +6,11 @@ import java.util.List;
 
 import com.web4enterprise.pdf.core.geometry.Point;
 import com.web4enterprise.pdf.core.geometry.Rect;
-import com.web4enterprise.pdf.layout.document.impl.Pager;
+import com.web4enterprise.pdf.core.path.StraightPath;
+import com.web4enterprise.pdf.layout.document.impl.PdfPager;
 import com.web4enterprise.pdf.layout.document.impl.PdfDocumentEmbeddable;
 import com.web4enterprise.pdf.layout.image.Image;
-import com.web4enterprise.pdf.layout.page.PageFootNotes;
+import com.web4enterprise.pdf.layout.page.impl.PageFootNotes;
 import com.web4enterprise.pdf.layout.paragraph.Paragraph;
 import com.web4enterprise.pdf.layout.paragraph.ParagraphEmbeddable;
 import com.web4enterprise.pdf.layout.paragraph.ParagraphStyle;
@@ -201,10 +202,10 @@ public class PdfParagraph implements Paragraph, PdfDocumentEmbeddable {
 	}
 	
 	@Override
-	public float getHeight(Pager pager, float width) {
+	public float getHeight(PdfPager pdfPager, float width) {
 		float height = 0;
 		
-		for(ParagraphEmbeddableLine embeddableLine : getEmbeddableLines(pager, width)) {
+		for(ParagraphEmbeddableLine embeddableLine : getEmbeddableLines(pdfPager, width)) {
 			height += embeddableLine.getHeight(getStyle());
 		}
 		
@@ -214,7 +215,7 @@ public class PdfParagraph implements Paragraph, PdfDocumentEmbeddable {
 	}
 
 	@Override
-	public void layout(Pager pager, Rect boundingBox, float startY, PageFootNotes pageFootNotes) {
+	public void layOut(PdfPager pdfPager, Rect boundingBox, float startY, PageFootNotes pageFootNotes) {
 		//Get all lines of text (composed of text of different style).
 		List<ParagraphEmbeddableLine> embeddableLines = getEmbeddableLines();
 		
@@ -252,7 +253,7 @@ public class PdfParagraph implements Paragraph, PdfDocumentEmbeddable {
 				relativeStops.add(relativeStop);
 			}
 			//Split text to get-in maximum space.
-			List<ParagraphEmbeddableLine> embeddableSubLines = textLine.splitToMaxWidth(pager, paragraphStyle, textSize, firstLineMaxWidth, maxWidth, relativeStops);
+			List<ParagraphEmbeddableLine> embeddableSubLines = textLine.splitToMaxWidth(pdfPager, paragraphStyle, textSize, firstLineMaxWidth, maxWidth, relativeStops);
 			
 			boolean firstSubLine = true;
 			for(ParagraphEmbeddableLine embeddableSubLine : embeddableSubLines) {
@@ -263,20 +264,20 @@ public class PdfParagraph implements Paragraph, PdfDocumentEmbeddable {
 				float bottom = boundingBox.getBottom();
 				float existingFootNotesHeight = 0.0f;
 				if(pageFootNotes != null) {
-					existingFootNotesHeight = pageFootNotes.getHeight(pager, pageFootNotes.getWidth());
+					existingFootNotesHeight = pageFootNotes.getHeight(pdfPager, pageFootNotes.getWidth());
 					
 					//FootNote must be rendered on same page than line, add height of the footNote to the bottom of page.
 					for(PdfParagraphEmbeddable paragraphEmbeddable : embeddableSubLine) {
 						for(PdfFootNote footNote : paragraphEmbeddable.getFootNotes()) {
-							bottom += footNote.getHeight(pager, pageFootNotes.getWidth());
+							bottom += footNote.getHeight(pdfPager, pageFootNotes.getWidth());
 						}
 					}
 				}
 				
 				//If text and its footNote does not fit in page, add a new page.
-				if(baseLine < bottom + existingFootNotesHeight) {
-					pager.addPage();
-					startY = pager.getCursorPosition().getY();
+				if(baseLine <= bottom + existingFootNotesHeight) {
+					pdfPager.addPage();
+					startY = pdfPager.getCursorPosition().getY();
 					//Add page reinitialize blockStart, so calculate it again.
 					baseLine = startY - fontBaseLine;
 					nextY =  startY - paragraphStyle.getMargins().getTop();
@@ -292,12 +293,13 @@ public class PdfParagraph implements Paragraph, PdfDocumentEmbeddable {
 							pageFootNotes.addEmbeddable(footNote);
 						}
 					}
-					pageFootNotes.compute(pager, pageFootNotes.getWidth());
+					//Because an "empty" footNote has already been computed with this same size, we force it to re-compute with new content. 
+					pageFootNotes.compute(pdfPager, pageFootNotes.getWidth());
 				}
 				
 				//If this is the first line, set the link.
 				if(pageId == null) {
-					pageId = pager.getCurrentPage().getCorePage().getId();
+					pageId = pdfPager.getCurrentPage().getCorePage().getId();
 					linkX = boundingBox.getLeft();
 					linkY = startY;
 				}
@@ -369,7 +371,7 @@ public class PdfParagraph implements Paragraph, PdfDocumentEmbeddable {
 						}
 					}
 					
-					Point embeddableSize = paragraphEmbeddable.layout(pager.getCurrentPage(), paragraphStyle, textSize, startX, baseLine);
+					Point embeddableSize = paragraphEmbeddable.layOut(pdfPager.getCurrentPage(), paragraphStyle, textSize, startX, baseLine);
 					startX += embeddableSize.getX();
 					
 					//Keep greatest line spacing to not overlap embeddables of other lines.
@@ -389,7 +391,7 @@ public class PdfParagraph implements Paragraph, PdfDocumentEmbeddable {
 		//Apply bottom margin to paragraph.
 		nextY -= paragraphStyle.getMargins().getBottom();
 		
-		pager.getCursorPosition().setY(nextY);
+		pdfPager.getCursorPosition().setY(nextY);
 	}
 
 	@Override
@@ -428,7 +430,7 @@ public class PdfParagraph implements Paragraph, PdfDocumentEmbeddable {
 		return ParagraphEmbeddableLine.getEmbeddableLines(embeddables);
 	}
 	
-	public List<ParagraphEmbeddableLine> getEmbeddableLines(Pager pager, float maxWidth) {
+	public List<ParagraphEmbeddableLine> getEmbeddableLines(PdfPager pdfPager, float maxWidth) {
 		List<ParagraphEmbeddableLine> embeddableSubLines = new ArrayList<>();
 		
 		boolean isFirstLine = true;		
@@ -440,7 +442,7 @@ public class PdfParagraph implements Paragraph, PdfDocumentEmbeddable {
 			}
 			
 			//Split text to maximum space.
-			embeddableSubLines.addAll(embeddableLine.splitToMaxWidth(pager, getStyle(), getStyle().getFontSize(), firstLineMaxWidth, maxWidth, stops));
+			embeddableSubLines.addAll(embeddableLine.splitToMaxWidth(pdfPager, getStyle(), getStyle().getFontSize(), firstLineMaxWidth, maxWidth, stops));
 			
 			if(isFirstLine) {
 				isFirstLine = false;

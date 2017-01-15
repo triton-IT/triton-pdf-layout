@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import com.web4enterprise.pdf.layout.document.impl.Pager;
+import com.web4enterprise.pdf.layout.document.impl.PdfPager;
 import com.web4enterprise.pdf.layout.paragraph.ParagraphStyle;
 import com.web4enterprise.pdf.layout.paragraph.impl.PdfParagraphEmbeddable.SplitInformation;
 import com.web4enterprise.pdf.layout.placement.Stop;
@@ -66,7 +66,7 @@ public class ParagraphEmbeddableLine extends CompositeList<PdfParagraphEmbeddabl
 		//Empty constructor.
 	}
 	
-	public List<ParagraphEmbeddableLine> splitToMaxWidth(Pager pager, ParagraphStyle defaultStyle, float defaultFontSize, float firstLineMaxWidth, Float maxWidth, List<Stop> stops) {
+	public List<ParagraphEmbeddableLine> splitToMaxWidth(PdfPager pdfPager, ParagraphStyle defaultStyle, float defaultFontSize, float firstLineMaxWidth, Float maxWidth, List<Stop> stops) {
 		List<ParagraphEmbeddableLine> paragraphEmbeddableLines = new ArrayList<>();
 		
 		float currentX = 0.0f;
@@ -102,7 +102,7 @@ public class ParagraphEmbeddableLine extends CompositeList<PdfParagraphEmbeddabl
 				currentElementLine.addList(stopElementLine);
 			}
 			
-			SplitInformation splitInformation = element.split(pager, defaultStyle, defaultFontSize, currentX, firstLineMaxWidth, maxWidth);
+			SplitInformation splitInformation = element.split(pdfPager, defaultStyle, defaultFontSize, currentX, firstLineMaxWidth, maxWidth);
 			
 			//Insert end of line on current stop line.
 			Iterator<PdfParagraphEmbeddable> iterator = splitInformation.splitEmbeddables.iterator();

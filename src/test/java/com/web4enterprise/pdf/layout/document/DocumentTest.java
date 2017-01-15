@@ -112,12 +112,12 @@ public class DocumentTest {
 		logo.setHeight(16, true);
 		
 		//Add first blank empty page to add content to it.
-		document.addPage();
+		Section section = document.nextPage();
 		
 		//Title page.
-		document.addVerticalStop(550);
-		document.addVerticalStop(500);
-		document.addVerticalStop(400);
+		section.addVerticalStop(550);
+		section.addVerticalStop(500);
+		section.addVerticalStop(400);
 		
 		document.nextVerticalStop();
 		Image titleLogo = logo.clone();
@@ -143,14 +143,14 @@ public class DocumentTest {
 		pageFooter.addEmbeddables(footerParagraph);
 		
 		//Page for table of content
-		document.addPage(pageHeader, pageFooter);
+		document.nextPage(new Section(PageStyle.A4_PORTRAIT, pageHeader, pageFooter));
 		TableOfContent tableOfContent = document.createTableOfContent();
 		tableOfContent.addLevel(0, title1Style);
 		tableOfContent.addLevel(1, title2Style);
 		document.addEmbeddable(tableOfContent);
 		
 		//Page for paragraphs
-		document.addPage(pageHeader, pageFooter);
+		document.nextPage(new Section(PageStyle.A4_PORTRAIT, pageHeader, pageFooter));
 
 		//Creating a document.
 		paragraph = document.createParagraph(title1Style, "Creating a document");
@@ -261,7 +261,7 @@ public class DocumentTest {
 		document.addEmbeddable(paragraph);
 
 		//Page styles.
-		document.addPage(PageStyle.A8_LANDSCAPE);
+		document.nextPage(new Section(PageStyle.A6_LANDSCAPE, pageHeader, pageFooter));
 		
 		paragraph = document.createParagraph(title1Style, "Page styles");
 		document.addEmbeddable(paragraph);
@@ -281,7 +281,7 @@ public class DocumentTest {
 		pageFooter.addEmbeddables(footerParagraph);
 		
 		//Add a page with new header.
-		document.addPage(PageStyle.A4_PORTRAIT, pageHeader, pageFooter);
+		document.nextPage(new Section(PageStyle.A4_PORTRAIT, pageHeader, pageFooter));
 		
 		//Headers and footer title.
 		paragraph = document.createParagraph(title1Style, "Adding headers and footers");

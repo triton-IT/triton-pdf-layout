@@ -2,28 +2,28 @@ package com.web4enterprise.pdf.layout.document.impl;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 import java.util.logging.Logger;
 
 import com.web4enterprise.pdf.core.document.Pdf;
 import com.web4enterprise.pdf.core.exceptions.PdfGenerationException;
 import com.web4enterprise.pdf.layout.document.Document;
 import com.web4enterprise.pdf.layout.document.DocumentEmbeddable;
+import com.web4enterprise.pdf.layout.document.Section;
+import com.web4enterprise.pdf.layout.document.impl.command.PdfAddEmbeddableCommand;
+import com.web4enterprise.pdf.layout.document.impl.command.PdfNextVerticalStopCommand;
 import com.web4enterprise.pdf.layout.exception.BadOperationException;
 import com.web4enterprise.pdf.layout.exception.BadResourceException;
 import com.web4enterprise.pdf.layout.exception.DocumentGenerationException;
 import com.web4enterprise.pdf.layout.image.Image;
 import com.web4enterprise.pdf.layout.image.impl.PdfImage;
-import com.web4enterprise.pdf.layout.page.Page;
-import com.web4enterprise.pdf.layout.page.PageFootNotes;
-import com.web4enterprise.pdf.layout.page.PageStyle;
-import com.web4enterprise.pdf.layout.page.VerticalStopsList;
 import com.web4enterprise.pdf.layout.page.footer.PageFooter;
 import com.web4enterprise.pdf.layout.page.footer.impl.PdfPageFooter;
 import com.web4enterprise.pdf.layout.page.header.PageHeader;
 import com.web4enterprise.pdf.layout.page.header.impl.PdfPageHeader;
+import com.web4enterprise.pdf.layout.page.impl.Page;
 import com.web4enterprise.pdf.layout.paragraph.Paragraph;
 import com.web4enterprise.pdf.layout.paragraph.ParagraphEmbeddable;
 import com.web4enterprise.pdf.layout.paragraph.ParagraphStyle;
@@ -35,19 +35,32 @@ import com.web4enterprise.pdf.layout.toc.TableOfContent;
 import com.web4enterprise.pdf.layout.toc.impl.PdfTableOfContent;
 
 public class PdfDocument implements Document {
+	/**
+	 * Logger for document class.
+	 */
 	private static final Logger LOGGER = Logger.getLogger(PdfDocument.class.getName());
 	
+	/**
+	 * Document from low-level API.
+	 */
 	protected Pdf pdf = new Pdf();
 	
-	protected Pager pager = new Pager(pdf);
+	/**
+	 * Create pages.
+	 */
+	protected PdfPager pdfPager = new PdfPager(pdf);
 	
 	/**
-	 * List of stops per page.
+	 * Defines if last parts of document have been layouted.
 	 */
-	protected Map<Page, VerticalStopsList> pagesVerticalStops = new HashMap<>();
-	
 	protected boolean finished = false;
 	
+	protected List<PdfSection> pdfSections = new ArrayList<>();
+	protected PdfSection currentSection = null;
+	
+	/**
+	 * Create a document with default properties.
+	 */
 	public PdfDocument() {
 		pdf.setCreator("http://simplypdf-layout.web4enterprise.com");
 	}
@@ -98,67 +111,25 @@ public class PdfDocument implements Document {
 	}
 
 	@Override
-	public void addPage() {
-		Page currentPage = pager.getCurrentPage();
-		if(currentPage != null) {
-			addPage(currentPage.getStyle(), currentPage.getHeader(), currentPage.getFooter());
+	public Section nextPage() {
+		if(currentSection != null) {
+			nextPage(currentSection.getSection());
 		} else {
-			addPage(PageStyle.A4_PORTRAIT, null, null);
+			nextPage(new Section());
 		}
+		return currentSection.getSection();
 	}
 
 	@Override
-	public void addPage(PageStyle pageStyle) {
-		Page currentPage = pager.getCurrentPage();
-		if(currentPage != null) {
-			addPage(pageStyle, currentPage.getHeader(), currentPage.getFooter());
-		} else {
-			addPage(pageStyle, null, null);
-		}
-	}
-
-	@Override
-	public void addPage(PageHeader pageHeader, PageFooter pageFooter) {
-		Page currentPage = pager.getCurrentPage();
-		if(currentPage != null) {
-			addPage(currentPage.getStyle(), pageHeader, pageFooter);
-		} else {
-			addPage(null, pageHeader, pageFooter);
-		}
-	}
-
-	@Override
-	public void addPage(PageStyle pageStyle, PageHeader pageHeader, PageFooter pageFooter) {
-		pager.addPage(pageStyle, pageHeader, pageFooter);
-	}
-
-	@Override
-	public void addVerticalStop(float position) {
-		VerticalStopsList stops = pagesVerticalStops.get(pager.getCurrentPage());
-		
-		if(stops == null) {
-			stops = new VerticalStopsList();
-			pagesVerticalStops.put(pager.getCurrentPage(), stops);
-		}
-		
-		stops.add(position);
+	public Section nextPage(Section section) {
+		currentSection = new PdfSection(section);
+		pdfSections.add(currentSection);
+		return currentSection.getSection();
 	}
 	
 	@Override
 	public void nextVerticalStop() {
-		VerticalStopsList stops = pagesVerticalStops.get(pager.getCurrentPage());
-		int currentStopIndex = stops.getCurrentIndex();
-		
-		if(stops != null && stops.size() > currentStopIndex) {
-			float stopPosition = stops.get(currentStopIndex);
-			if(stopPosition < pager.getCursorPosition().getY()) {
-				pager.getCursorPosition().setY(stopPosition);
-			}
-		} else {
-			throw new BadOperationException("There is no vertical stop available.");
-		}
-		
-		stops.next();
+		currentSection.add(new PdfNextVerticalStopCommand());
 	}
 
 	@Override
@@ -234,20 +205,23 @@ public class PdfDocument implements Document {
 
 	@Override
 	public void addEmbeddable(DocumentEmbeddable embeddable) {
-		Page page = pager.getCurrentPage();
-		if(page == null) {
+		if(currentSection == null) {
 			throw new BadOperationException("You can't add an element without having created a page first.");
 		}
-
-		PageFootNotes pageFootNotes = page.getFootNotes();
-		((PdfDocumentEmbeddable) embeddable).layout(pager, 
-				page.getInnerRect(),
-				pager.getCursorPosition().getY(),
-				pageFootNotes);
+		if(!(embeddable instanceof PdfDocumentEmbeddable)) {
+			throw new BadOperationException("You must add an embeddable useable by this API.");
+		}
+		
+		currentSection.add(new PdfAddEmbeddableCommand((PdfDocumentEmbeddable) embeddable));
 	}
 
 	@Override
 	public void write(OutputStream out) throws DocumentGenerationException {
+		for(PdfSection pdfSection : pdfSections) {
+			pdfPager.nextPage(pdfSection);
+			pdfPager.layOut();
+		}
+		
 		//If write is called multiple times, call finish() only once.
 		if(!finished) {
 			finish();
@@ -262,11 +236,11 @@ public class PdfDocument implements Document {
 	}
 	
 	protected void finish() {
-		Page page = pager.getCurrentPage();
+		Page page = pdfPager.getCurrentPage();
 		if(page == null) {
 			LOGGER.warning("Finishing a document without any page.");
 		} else {
-			page.layoutEndOfPage();
+			page.layOutEndOfPage();
 		}
 	}
 }

@@ -6,9 +6,9 @@ import java.util.List;
 import com.web4enterprise.pdf.core.geometry.Rect;
 import com.web4enterprise.pdf.layout.document.DocumentEmbeddable;
 import com.web4enterprise.pdf.layout.document.impl.PdfDocumentEmbeddable;
-import com.web4enterprise.pdf.layout.document.impl.Pager;
-import com.web4enterprise.pdf.layout.page.PageFootNotes;
+import com.web4enterprise.pdf.layout.document.impl.PdfPager;
 import com.web4enterprise.pdf.layout.page.footer.PageFooter;
+import com.web4enterprise.pdf.layout.page.impl.PageFootNotes;
 
 public class PdfPageFooter implements PageFooter, PdfDocumentEmbeddable {
 	protected List<PdfDocumentEmbeddable> pdfDocumentEmbeddables = new ArrayList<>();
@@ -27,23 +27,23 @@ public class PdfPageFooter implements PageFooter, PdfDocumentEmbeddable {
 	}
 	
 	@Override
-	public float getHeight(Pager pager, float width) {
+	public float getHeight(PdfPager pdfPager, float width) {
 		if(computedWidth != width) {
-			compute(pager, width);
+			compute(pdfPager, width);
 		}
 		
 		return height;
 	}
 
 	@Override
-	public void layout(Pager pager, Rect boundingBox, float startY, PageFootNotes pageFootNotes) {
-		pageId = pager.getCurrentPage().getCorePage().getId();
+	public void layOut(PdfPager pdfPager, Rect boundingBox, float startY, PageFootNotes pageFootNotes) {
+		pageId = pdfPager.getCurrentPage().getCorePage().getId();
 		linkX = boundingBox.getLeft();
 		linkY = startY;
 		
 		for(PdfDocumentEmbeddable pdfDocumentEmbeddable : this.pdfDocumentEmbeddables) {
 			//Need to clone element because footer is repeated and changing any value of the element for a page will change it for each page.
-			pdfDocumentEmbeddable.clone().layout(pager, boundingBox, startY, pageFootNotes);
+			pdfDocumentEmbeddable.clone().layOut(pdfPager, boundingBox, startY, pageFootNotes);
 		}
 	}
 
@@ -68,10 +68,10 @@ public class PdfPageFooter implements PageFooter, PdfDocumentEmbeddable {
 		return linkY;
 	}
 
-	public void compute(Pager pager, float width) {
+	public void compute(PdfPager pdfPager, float width) {
 		height = 0.0f;
 		for(PdfDocumentEmbeddable pdfDocumentEmbeddable : pdfDocumentEmbeddables) {
-			height += pdfDocumentEmbeddable.getHeight(pager, width);
+			height += pdfDocumentEmbeddable.getHeight(pdfPager, width);
 		}
 		computedWidth = width;
 	}

@@ -6,10 +6,10 @@ import java.util.List;
 import com.web4enterprise.pdf.core.font.Font;
 import com.web4enterprise.pdf.core.geometry.Point;
 import com.web4enterprise.pdf.layout.document.DocumentEmbeddable;
-import com.web4enterprise.pdf.layout.document.impl.Pager;
+import com.web4enterprise.pdf.layout.document.impl.PdfPager;
 import com.web4enterprise.pdf.layout.document.impl.PdfDocumentEmbeddable;
 import com.web4enterprise.pdf.layout.image.Image;
-import com.web4enterprise.pdf.layout.page.Page;
+import com.web4enterprise.pdf.layout.page.impl.Page;
 import com.web4enterprise.pdf.layout.paragraph.FootNote;
 import com.web4enterprise.pdf.layout.paragraph.Paragraph;
 import com.web4enterprise.pdf.layout.paragraph.ParagraphStyle;
@@ -96,7 +96,7 @@ public class PdfImage implements Image, PdfParagraphEmbeddable {
 	}
 	
 	@Override
-	public SplitInformation split(Pager pager, ParagraphStyle defaultStyle, float fontSize,
+	public SplitInformation split(PdfPager pdfPager, ParagraphStyle defaultStyle, float fontSize,
 			float positionX, float firstLineMaxWidth, Float maxWidth) {
 		SplitInformation splitInformation = new SplitInformation();
 		
@@ -118,7 +118,7 @@ public class PdfImage implements Image, PdfParagraphEmbeddable {
 	}
 	
 	@Override
-	public Point layout(Page page, ParagraphStyle defaultStyle,
+	public Point layOut(Page page, ParagraphStyle defaultStyle,
 			float defaultFontSize, float positionX, float positionY) {
 		coreImage.setX(positionX);
 		coreImage.setY(positionY);

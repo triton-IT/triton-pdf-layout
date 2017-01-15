@@ -10,9 +10,9 @@ import com.web4enterprise.pdf.core.geometry.Point;
 import com.web4enterprise.pdf.core.styling.Color;
 import com.web4enterprise.pdf.core.text.TextScript;
 import com.web4enterprise.pdf.layout.document.DocumentEmbeddable;
-import com.web4enterprise.pdf.layout.document.impl.Pager;
+import com.web4enterprise.pdf.layout.document.impl.PdfPager;
 import com.web4enterprise.pdf.layout.document.impl.PdfDocumentEmbeddable;
-import com.web4enterprise.pdf.layout.page.Page;
+import com.web4enterprise.pdf.layout.page.impl.Page;
 import com.web4enterprise.pdf.layout.paragraph.FootNote;
 import com.web4enterprise.pdf.layout.paragraph.Paragraph;
 import com.web4enterprise.pdf.layout.paragraph.ParagraphStyle;
@@ -115,7 +115,7 @@ public class PdfText implements Text, PdfParagraphEmbeddable {
 	}
 	
 	@Override
-	public SplitInformation split(Pager pager, ParagraphStyle defaultStyle, float fontSize, float positionX, float firstLineMaxWidth, Float maxWidth) {
+	public SplitInformation split(PdfPager pdfPager, ParagraphStyle defaultStyle, float fontSize, float positionX, float firstLineMaxWidth, Float maxWidth) {
 		TextStyle textStyle = getStyle();
 		//Get font name between paragraph and text ones.
 		Font currentFont = (style.getFont() != null)?style.getFont():defaultStyle.getFont();
@@ -126,7 +126,7 @@ public class PdfText implements Text, PdfParagraphEmbeddable {
 		
 		//Split the text on max width.
 		SplitInformation splitInformation = new SplitInformation();
-		split(pager, getString(), currentFontVariant, currentTextSize, positionX, firstLineMaxWidth, maxWidth, splitInformation, true);
+		split(pdfPager, getString(), currentFontVariant, currentTextSize, positionX, firstLineMaxWidth, maxWidth, splitInformation, true);
 		
 		return splitInformation;
 	}
@@ -135,7 +135,7 @@ public class PdfText implements Text, PdfParagraphEmbeddable {
 		this.footNotes = footNotes;
 	}	
 	
-	protected void split(Pager pager, String stringToSplit, FontVariant font, float fontSize, float positionX, float firstLineMaxWidth, 
+	protected void split(PdfPager pdfPager, String stringToSplit, FontVariant font, float fontSize, float positionX, float firstLineMaxWidth, 
 			float maxWidth, SplitInformation splitInformation, boolean isFirstLine) {
 		//Calculate maximum size for final line.
 		float maximumLineWidth = maxWidth;
@@ -177,7 +177,7 @@ public class PdfText implements Text, PdfParagraphEmbeddable {
 						//Try to split the next lines of text.
 						String textLeft = stringToSplit.substring(keptString.length());
 						//We split on space earlier, we don't want to display it on new line, so remove it.
-						split(pager, textLeft.substring(1), font, fontSize, 0, firstLineMaxWidth, maxWidth, splitInformation, false);
+						split(pdfPager, textLeft.substring(1), font, fontSize, 0, firstLineMaxWidth, maxWidth, splitInformation, false);
 					}
 				}
 			}
@@ -187,7 +187,7 @@ public class PdfText implements Text, PdfParagraphEmbeddable {
 				float currentFootNoteSize = fontSize / 2.0f;
 				StringBuilder footNotesBuilder = new StringBuilder(stringToSplit);
 				for(PdfFootNote footNote : footNotes) {
-					footNotesBuilder.append(footNote.generateId(pager)).append(" ");
+					footNotesBuilder.append(footNote.generateId(pdfPager)).append(" ");
 				}
 				footNotesBuilder.deleteCharAt(footNotesBuilder.length() - 1);
 				String footNotesString = footNotesBuilder.toString();
@@ -231,7 +231,7 @@ public class PdfText implements Text, PdfParagraphEmbeddable {
 	}
 	
 	@Override
-	public Point layout(Page page, ParagraphStyle defaultStyle, float defaultFontSize, float positionX, float positionY) {
+	public Point layOut(Page page, ParagraphStyle defaultStyle, float defaultFontSize, float positionX, float positionY) {
 		Font currentFont = (style.getFont() != null)?style.getFont():defaultStyle.getFont();
 		FontVariant currentFontVariant = currentFont.getVariant((style.getFontStyle() != null)?
 				style.getFontStyle():defaultStyle.getFontStyle());

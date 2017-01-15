@@ -8,7 +8,6 @@ import com.web4enterprise.pdf.layout.exception.BadOperationException;
 import com.web4enterprise.pdf.layout.exception.BadResourceException;
 import com.web4enterprise.pdf.layout.exception.DocumentGenerationException;
 import com.web4enterprise.pdf.layout.image.Image;
-import com.web4enterprise.pdf.layout.page.PageStyle;
 import com.web4enterprise.pdf.layout.page.footer.PageFooter;
 import com.web4enterprise.pdf.layout.page.header.PageHeader;
 import com.web4enterprise.pdf.layout.paragraph.Paragraph;
@@ -84,47 +83,18 @@ public interface Document {
 	
 	/**
 	 * Add a page to the document.
-	 * All further layouting operation will starts on this new page.
+	 * All further operation of layout will starts on this new page.
 	 */
-	void addPage();
+	Section nextPage();
 	
 	/**
 	 * Add a page to the document.
-	 * All further layouting operation will starts on this new page.
-	 * All next pages will use the same styling than the one defined in parameter unless otherwise specified. 
-	 * 
-	 * @param pageStyle The style of page to set for this and subsequent pages.
-	 */
-	void addPage(PageStyle pageStyle);
-	
-	/**
-	 * Add a page to the document.
-	 * All further layouting operation will starts on this new page.
-	 * All next pages will use the same headers and footers than the one defined in parameter unless otherwise specified. 
-	 * 
-	 * @param pageHeader The page header to set to this page.
-	 * @param pageFooter The page footer to set to this page.
-	 */
-	void addPage(PageHeader pageHeader, PageFooter pageFooter);
-	
-	/**
-	 * Add a page to the document.
-	 * All further layouting operation will starts on this new page.
+	 * All further operation  of layout will starts on this new page.
 	 * All next pages will use the same styling, headers and footers than the one defined in parameter unless otherwise specified.
 	 * 
-	 * @param pageStyle The style of page to set for this and subsequent pages.
-	 * @param pageHeader The page header to set to this page.
-	 * @param pageFooter The page footer to set to this page.
+	 * @param pdfSection The section definition for next pages.
 	 */
-	void addPage(PageStyle pageStyle, PageHeader pageHeader, PageFooter pageFooter);
-	
-	/**
-	 * Add a vertical stop to the current page.
-	 * On a call to {@see nextVerticalStop}, the next element will be add to the next available vertical stop.
-	 * 
-	 * @param position The position in number of units of the vertical stopp to place.
-	 */
-	void addVerticalStop(float position);
+	Section nextPage(Section pdfSection);
 	
 	/**
 	 * Tell the document to place the next element on the next defined vertical stop.

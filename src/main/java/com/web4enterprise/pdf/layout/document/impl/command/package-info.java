@@ -15,8 +15,8 @@
  */
 
 /**
- * Defines all layouting commands.
+ * 
  * 
  * @author Régis Ramillien
  */
-package com.web4enterprise.pdf.layout.document.command;
+package com.web4enterprise.pdf.layout.document.impl.command;

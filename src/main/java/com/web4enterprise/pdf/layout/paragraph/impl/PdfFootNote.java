@@ -7,9 +7,9 @@ import java.util.logging.Logger;
 
 import com.web4enterprise.pdf.core.geometry.Rect;
 import com.web4enterprise.pdf.core.text.TextScript;
-import com.web4enterprise.pdf.layout.document.impl.Pager;
+import com.web4enterprise.pdf.layout.document.impl.PdfPager;
 import com.web4enterprise.pdf.layout.document.impl.PdfDocumentEmbeddable;
-import com.web4enterprise.pdf.layout.page.PageFootNotes;
+import com.web4enterprise.pdf.layout.page.impl.PageFootNotes;
 import com.web4enterprise.pdf.layout.paragraph.FootNote;
 import com.web4enterprise.pdf.layout.paragraph.Paragraph;
 import com.web4enterprise.pdf.layout.text.TextStyle;
@@ -39,7 +39,7 @@ public class PdfFootNote implements FootNote, PdfDocumentEmbeddable {
 		paragraphs.add((PdfParagraph) paragraph);
 	}
 
-	public void compute(Pager pager, float width) {
+	public void compute(PdfPager pdfPager, float width) {
 		//Prepend the foot note identifier to first element of paragraph.
 		//This can't be done in constructor because paragraphs can be added later and we need to get the first paragraph style.
 		PdfText footnoteIndex = new PdfText(getId() + " ");
@@ -52,7 +52,7 @@ public class PdfFootNote implements FootNote, PdfDocumentEmbeddable {
 			paragraphs.get(0).prependEmbeddable(footnoteIndex);
 
 			for(PdfParagraph paragraph : paragraphs) {
-				height += paragraph.getHeight(pager, width);
+				height += paragraph.getHeight(pdfPager, width);
 			}
 		} else {
 			LOGGER.warning("A footnote has been added without note.");
@@ -62,8 +62,8 @@ public class PdfFootNote implements FootNote, PdfDocumentEmbeddable {
 		computedWidth = width;
 	}
 	
-	public String generateId(Pager pager) {
-		id = pager.getCurrentPage().generateFootNoteId();
+	public String generateId(PdfPager pdfPager) {
+		id = pdfPager.getCurrentPage().generateFootNoteId();
 		return id;
 	}
 	
@@ -75,23 +75,23 @@ public class PdfFootNote implements FootNote, PdfDocumentEmbeddable {
 	}
 	
 	@Override
-	public float getHeight(Pager pager, float width) {
+	public float getHeight(PdfPager pdfPager, float width) {
 		if(computedWidth != width) {
-			compute(pager, width);
+			compute(pdfPager, width);
 		}
 		return height;
 	}
 
 	@Override
-	public void layout(Pager pager, Rect boundingBox, float startY, PageFootNotes pageFootNotes) {
+	public void layOut(PdfPager pdfPager, Rect boundingBox, float startY, PageFootNotes pageFootNotes) {
 		startY = boundingBox.getBottom() + height;
 		
-		pageId = pager.getCurrentPage().getCorePage().getId();
+		pageId = pdfPager.getCurrentPage().getCorePage().getId();
 		linkX = boundingBox.getLeft();
 		linkY = startY;
 		
 		for(PdfParagraph paragraph : this.paragraphs) {
-			paragraph.layout(pager, boundingBox, startY, pageFootNotes);
+			paragraph.layOut(pdfPager, boundingBox, startY, pageFootNotes);
 		}
 	}
 
