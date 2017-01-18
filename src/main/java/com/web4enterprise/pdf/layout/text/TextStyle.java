@@ -4,8 +4,9 @@ import com.web4enterprise.pdf.core.font.Font;
 import com.web4enterprise.pdf.core.font.FontsVariant;
 import com.web4enterprise.pdf.core.styling.Color;
 import com.web4enterprise.pdf.core.text.TextScript;
+import com.web4enterprise.pdf.layout.style.Style;
 
-public class TextStyle implements Cloneable {
+public class TextStyle implements Style, Cloneable {
 	protected Font font;
 	protected FontsVariant fontVariant;
 	protected Float fontSize;

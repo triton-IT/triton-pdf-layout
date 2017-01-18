@@ -5,6 +5,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.logging.Logger;
 
 import com.web4enterprise.pdf.core.document.Pdf;
@@ -57,6 +58,9 @@ public class PdfDocument implements Document {
 	
 	protected List<PdfSection> pdfSections = new ArrayList<>();
 	protected PdfSection currentSection = null;
+	
+	protected List<DocumentEmbeddable> embeddables = new ArrayList<>();
+	protected List<PdfTableOfContent> tablesOfContent = new ArrayList<>();
 	
 	/**
 	 * Create a document with default properties.
@@ -200,7 +204,9 @@ public class PdfDocument implements Document {
 
 	@Override
 	public TableOfContent createTableOfContent() {
-		return new PdfTableOfContent();
+		PdfTableOfContent toc = new PdfTableOfContent();
+		tablesOfContent.add(toc);
+		return toc;
 	}
 
 	@Override
@@ -212,11 +218,41 @@ public class PdfDocument implements Document {
 			throw new BadOperationException("You must add an embeddable useable by this API.");
 		}
 		
+		embeddables.add(embeddable);
 		currentSection.add(new PdfAddEmbeddableCommand((PdfDocumentEmbeddable) embeddable));
 	}
 
 	@Override
 	public void write(OutputStream out) throws DocumentGenerationException {
+		for(PdfTableOfContent toc : tablesOfContent) {
+			toc.addEmbeddables(embeddables);
+		}
+		
+		//TODO: Remove all preLayOut that does not serves any purpose now.
+//		for(PdfSection pdfSection : pdfSections) {
+//		    ListIterator<PdfSectionCommand> commandsIterator = pdfSection.listIterator();
+//			while(commandsIterator.hasNext()) {
+//				PdfSectionCommand command = commandsIterator.next();
+//				List<PdfSectionCommand> newCommands = command.preLayOut(this);
+//				if(newCommands != null) {
+//					for(PdfSectionCommand newCommand : newCommands) {
+//						commandsIterator.add(newCommand);
+//					}
+//				}
+//			}
+//		}
+		
+//		for(PdfSection pdfSection : pdfSections) {
+//			for(PdfSectionCommand command : pdfSection) {
+//				List<PdfSectionCommand> newCommands = command.preLayOut(this);
+//				if(newCommands != null) {
+//					for(PdfSectionCommand newCommand : newCommands) {
+//						pdfSection.add(newCommand);
+//					}
+//				}
+//			}
+//		}
+		
 		for(PdfSection pdfSection : pdfSections) {
 			pdfPager.nextPage(pdfSection);
 			pdfPager.layOut();

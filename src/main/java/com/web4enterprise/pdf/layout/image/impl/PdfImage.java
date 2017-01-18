@@ -137,4 +137,11 @@ public class PdfImage implements Image, PdfParagraphEmbeddable {
 	public PdfImage clone() {
 		return new PdfImage(coreImage);
 	}
+
+	@Override
+	public String getTOCText() {
+		//Image is not supported for now in TOC.
+		//TODO: Add a optional name to an image.
+		return null;
+	}
 }

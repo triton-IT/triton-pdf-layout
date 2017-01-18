@@ -13,16 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.web4enterprise.pdf.layout.document.impl;
 
-import com.web4enterprise.pdf.core.geometry.Rect;
-import com.web4enterprise.pdf.core.link.Linkable;
-import com.web4enterprise.pdf.layout.document.DocumentEmbeddable;
-import com.web4enterprise.pdf.layout.page.impl.PageFootNotes;
-
-public interface PdfDocumentEmbeddable extends DocumentEmbeddable, Cloneable, Linkable {
-	float getHeight(PdfPager pdfPager, float width);
-	void layOut(PdfPager pdfPager, Rect boundingBox, PageFootNotes pageFootNotes);
-	
-	PdfDocumentEmbeddable clone();
-}
+/**
+ * 
+ * 
+ * @author Régis Ramillien
+ */
+package com.web4enterprise.pdf.layout.style;

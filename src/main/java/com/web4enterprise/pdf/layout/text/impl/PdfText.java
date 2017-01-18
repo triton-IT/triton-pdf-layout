@@ -131,6 +131,11 @@ public class PdfText implements Text, PdfParagraphEmbeddable {
 		return splitInformation;
 	}
 
+	@Override
+	public String getTOCText() {
+		return this.coreText.getValue();
+	}
+
 	protected void setFootNotes(List<PdfFootNote> footNotes) {
 		this.footNotes = footNotes;
 	}	

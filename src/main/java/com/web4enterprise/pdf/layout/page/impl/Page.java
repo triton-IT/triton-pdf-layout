@@ -74,7 +74,6 @@ public class Page {
 							style.getMargins().getLeft(),
 							style.getMargins().getBottom(),
 							style.getFormat().getWidth() - style.getMargins().getRight()),
-						pdfPager.getCursorPosition().getY(),
 						footNotes);
 			pdfPager.getCursorPosition().setY(yPosition - header.getHeight(pdfPager, pageWidth));
 		}
@@ -147,7 +146,6 @@ public class Page {
 							style.getInnerLeft(),
 							style.getInnerBottom() + footerHeight,
 							style.getInnerRight()),
-					style.getInnerBottom() + footerHeight + footNotesHeight,
 					footNotes);
 		}
 	}
@@ -157,13 +155,13 @@ public class Page {
 		 if(footer != null) {
 			float footerHeight = footer.getHeight(pdfPager, pageWidth);
 
+			pdfPager.getCursorPosition().setY(style.getInnerBottom() + footerHeight);
 			//We do not allow footNotes on footers. This will change page layouting and its too late for this.
 			footer.layOut(pdfPager, 
 					new Rect(style.getInnerBottom() + footerHeight, 
 							style.getInnerLeft(),
 							style.getInnerBottom(),
 							style.getInnerRight()),
-					style.getInnerBottom() + footerHeight,
 					null);
 		}
 	}

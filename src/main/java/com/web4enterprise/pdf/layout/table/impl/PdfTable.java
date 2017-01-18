@@ -8,14 +8,15 @@ import java.util.Map;
 import com.web4enterprise.pdf.core.geometry.Point;
 import com.web4enterprise.pdf.core.geometry.Rect;
 import com.web4enterprise.pdf.core.path.StraightPath;
-import com.web4enterprise.pdf.layout.document.impl.PdfPager;
 import com.web4enterprise.pdf.layout.document.impl.PdfDocumentEmbeddable;
+import com.web4enterprise.pdf.layout.document.impl.PdfPager;
 import com.web4enterprise.pdf.layout.page.impl.Page;
 import com.web4enterprise.pdf.layout.page.impl.PageFootNotes;
 import com.web4enterprise.pdf.layout.paragraph.Paragraph;
 import com.web4enterprise.pdf.layout.paragraph.impl.PdfParagraph;
 import com.web4enterprise.pdf.layout.placement.BorderStyle;
 import com.web4enterprise.pdf.layout.placement.LineStyle;
+import com.web4enterprise.pdf.layout.style.Style;
 import com.web4enterprise.pdf.layout.table.Table;
 import com.web4enterprise.pdf.layout.table.TableCell;
 import com.web4enterprise.pdf.layout.table.TableCellStyle;
@@ -34,6 +35,99 @@ public class PdfTable implements Table, PdfDocumentEmbeddable {
 	protected float linkX = 0.0f;
 	protected float linkY = 0.0f;
 	protected Integer pageId = null;
+	
+	@Override
+	public float getHeight(PdfPager pdfPager, float width) {
+		if(!computed) {
+			computeInnerLayout(pdfPager);
+		}
+		
+		float height = 0.0f;
+		
+		for(TableRow row : getRows()) {
+			height += row.getHeight();
+		}
+		
+		return height;
+	}
+
+	@Override
+	public void layOut(PdfPager pdfPager, Rect boundingBox, PageFootNotes pageFootNotes) {
+		if(!computed) {
+			computeInnerLayout(pdfPager);
+		}
+		
+		float startY = pdfPager.getCursorPosition().getY();
+		
+		Map<Integer, Integer> rowMerges = new HashMap<>();
+		for(TableRow row : getRows()) {
+			float rowHeight = createRow(pdfPager, boundingBox, startY, row, rowMerges, pageFootNotes);
+			startY -= rowHeight;
+		}
+		
+		pdfPager.getCursorPosition().setY(startY);
+	}
+	
+	@Override
+	public PdfTable clone() {
+		//TODO: clone this.
+		return this;
+	}
+
+	@Override
+	public int getPage() {
+		return pageId;
+	}
+
+	@Override
+	public float getLinkX() {
+		return linkX;
+	}
+
+	@Override
+	public float getLinkY() {
+		return linkY;
+	}
+
+	@Override
+	public Style getStyle() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public TableCell createTableCell() {
+		return new PdfTableCell();		
+	}
+
+	@Override
+	public TableCell createTableCell(String... values) {
+		return new PdfTableCell(values);
+		
+	}
+
+	@Override
+	public TableCell createTableCell(Paragraph... paragraphs) {
+		return new PdfTableCell(paragraphs);
+		
+	}
+
+	@Override
+	public TableCell createTableCell(TableCellStyle style, String... values) {
+		return new PdfTableCell(style, values);
+		
+	}
+
+	@Override
+	public TableCell createTableCell(TableCellStyle style, Paragraph... paragraphs) {
+		return new PdfTableCell(style, paragraphs);
+	}
+
+	@Override
+	public String getTOCText() {
+		//Table is not supported in TOC.
+		return null;
+	}
 	
 	public TableRow addRow(TableCell...cells) {
 		TableRow row = new TableRow(cells);
@@ -83,7 +177,8 @@ public class PdfTable implements Table, PdfDocumentEmbeddable {
 			int columnIndex = 0;
 			float currentRowHeight = 0;
 			for(TableCell cell : row.getCells()) {
-				float currentCellHeight = cell.getHeight(pdfPager, columnsWidths.get(columnIndex));
+				PdfTableCell pdfCell = (PdfTableCell) cell;
+				float currentCellHeight = pdfCell.getHeight(pdfPager, columnsWidths.get(columnIndex));
 				if(currentCellHeight > currentRowHeight) {
 					currentRowHeight = currentCellHeight;
 				}
@@ -98,11 +193,12 @@ public class PdfTable implements Table, PdfDocumentEmbeddable {
 		for(TableRow row : rows) {
 			int columnIndex = 0;
 			for(TableCell cell : row.getCells()) {
+				PdfTableCell pdfCell = (PdfTableCell) cell;
 				Float fixedWidth = fixedColumnsWidths.get(columnIndex);
 				if(fixedWidth != null) {
 					currentColumnsWidths.add(fixedWidth);
 				} else {
-					float currentWidth = cell.getWidth();
+					float currentWidth = pdfCell.getWidth();
 					if(currentColumnsWidths.size() <= columnIndex) {
 						currentColumnsWidths.add(currentWidth);
 					} else if(currentWidth > currentColumnsWidths.get(columnIndex)) {
@@ -121,14 +217,15 @@ public class PdfTable implements Table, PdfDocumentEmbeddable {
 		for(TableRow row : rows) {
 			int columnIndex = 0;
 			int nbMergedCells = 0;
-			for(TableCell cell : row.getCells()) {	
+			for(TableCell cell : row.getCells()) {
+				PdfTableCell pdfCell = (PdfTableCell) cell;
 				if(nbMergedCells > 0) {
 					cell.setMerged(true);
 					nbMergedCells--;
 				} else {
 					//Get width for merged cells if any.
 					for(int i = 0; i <= cell.getMergedColumns(); i++) {
-						cell.setComputedWidth(cell.getComputedWidth() + getColumnWidth(columnIndex + i));
+						pdfCell.setComputedWidth(pdfCell.getComputedWidth() + getColumnWidth(columnIndex + i));
 					}
 				}
 				columnIndex++;
@@ -140,15 +237,16 @@ public class PdfTable implements Table, PdfDocumentEmbeddable {
 		int rowIndex = 0;
 		for(TableRow row : rows) {
 			int columnIndex = 0;
-			for(TableCell cell : row.getCells()) {	
+			for(TableCell cell : row.getCells()) {
+				PdfTableCell pdfCell = (PdfTableCell) cell;
 				if(!cell.isMerged()) {
-					cell.setComputedHeight(row.getHeight());
+					pdfCell.setComputedHeight(row.getHeight());
 					
 					//Get height for merged cells if any.
 					for(int i = 1; i <= cell.getMergedRows(); i++) {
 						TableRow mergedRow = rows.get(rowIndex + i);
 						if(mergedRow != null) {
-							cell.setComputedHeight(cell.getComputedHeight() + mergedRow.getHeight());
+							pdfCell.setComputedHeight(pdfCell.getComputedHeight() + mergedRow.getHeight());
 							mergedRow.getCells().get(columnIndex).setMerged(true);
 						}
 					}
@@ -157,36 +255,6 @@ public class PdfTable implements Table, PdfDocumentEmbeddable {
 			}
 			rowIndex++;
 		}
-	}
-	
-	@Override
-	public float getHeight(PdfPager pdfPager, float width) {
-		if(!computed) {
-			computeInnerLayout(pdfPager);
-		}
-		
-		float height = 0.0f;
-		
-		for(TableRow row : getRows()) {
-			height += row.getHeight();
-		}
-		
-		return height;
-	}
-
-	@Override
-	public void layOut(PdfPager pdfPager, Rect boundingBox, float startY, PageFootNotes pageFootNotes) {
-		if(!computed) {
-			computeInnerLayout(pdfPager);
-		}
-		
-		Map<Integer, Integer> rowMerges = new HashMap<>();
-		for(TableRow row : getRows()) {
-			float rowHeight = createRow(pdfPager, boundingBox, startY, row, rowMerges, pageFootNotes);
-			startY -= rowHeight;
-		}
-		
-		pdfPager.getCursorPosition().setY(startY);
 	}
 
 	protected float createRow(PdfPager pdfPager, Rect boundingBox, float startY, TableRow row, Map<Integer, Integer> rowMerges, PageFootNotes pageFootNotes) {
@@ -210,14 +278,18 @@ public class PdfTable implements Table, PdfDocumentEmbeddable {
 			linkX = startX;
 			linkY = startY;
 		}
-		
+
+		float cellStartY = pdfPager.getCursorPosition().getY();
+		float lowestCellY = cellStartY;
 		for(TableCell cell : row.getCells()) {
-			float width = cell.getComputedWidth();
+			pdfPager.getCursorPosition().setY(cellStartY);
+			PdfTableCell pdfCell = (PdfTableCell) cell;
+			float width = pdfCell.getComputedWidth();
 			
 			if(!cell.isMerged()) {
 				TableCellStyle cellStyle = cell.getStyle();
 	
-				float bottom = startY - cell.getComputedHeight();
+				float bottom = startY - pdfCell.getComputedHeight();
 				
 				//Fill background color.
 				if(cellStyle.getBackgroundColor() != null) {
@@ -232,12 +304,13 @@ public class PdfTable implements Table, PdfDocumentEmbeddable {
 					currentPage.getCorePage().add(path);
 				}
 				
-				float paragraphStartY = startY;
-				for(Paragraph paragraph : cell.getParagraphs()) {					
+				for(Paragraph paragraph : cell.getParagraphs()) {
 					((PdfParagraph) paragraph).layOut(pdfPager, 
-							new Rect(paragraphStartY, startX, paragraphStartY - row.getHeight(), startX + width), 
-							paragraphStartY, pageFootNotes);
-					paragraphStartY -= ((PdfParagraph) paragraph).getHeight(pdfPager, width);
+							new Rect(cellStartY, startX, cellStartY - row.getHeight(), startX + width), 
+							pageFootNotes);
+					if(pdfPager.getCursorPosition().getY() < lowestCellY) {
+						lowestCellY = pdfPager.getCursorPosition().getY();
+					}
 				}
 				
 				//Top border
@@ -279,28 +352,9 @@ public class PdfTable implements Table, PdfDocumentEmbeddable {
 			
 			startX += width;
 		}
+		
+		pdfPager.getCursorPosition().setY(lowestCellY);
 
 		return rowHeight;
-	}
-	
-	@Override
-	public PdfTable clone() {
-		//TODO: clone this.
-		return this;
-	}
-
-	@Override
-	public int getPage() {
-		return pageId;
-	}
-
-	@Override
-	public float getLinkX() {
-		return linkX;
-	}
-
-	@Override
-	public float getLinkY() {
-		return linkY;
 	}
 }

@@ -2,8 +2,9 @@ package com.web4enterprise.pdf.layout.table;
 
 import com.web4enterprise.pdf.core.styling.Color;
 import com.web4enterprise.pdf.layout.placement.BorderStyle;
+import com.web4enterprise.pdf.layout.style.Style;
 
-public class TableCellStyle {
+public class TableCellStyle implements Style {
 	protected BorderStyle[] bordersStyle = {BorderStyle.THIN_SOLID, BorderStyle.THIN_SOLID, BorderStyle.THIN_SOLID, BorderStyle.THIN_SOLID};
 	protected Color backgroundColor = null;
 	

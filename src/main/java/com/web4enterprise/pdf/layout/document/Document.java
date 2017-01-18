@@ -126,7 +126,7 @@ public interface Document {
 	Paragraph createParagraph(ParagraphStyle style, ParagraphEmbeddable... ParagraphEmbeddable);
 	
 	Table createTable();
-
+	
 	PageHeader createPageHeader();
 	
 	PageFooter createPageFooter();

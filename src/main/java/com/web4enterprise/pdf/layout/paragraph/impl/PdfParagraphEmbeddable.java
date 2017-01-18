@@ -16,6 +16,7 @@ public interface PdfParagraphEmbeddable extends ParagraphEmbeddable, Cloneable {
 	Point layOut(Page page, ParagraphStyle defaultStyle, float defaultFontSize, float positionX, float positionY);
 	float getLineSpacing(ParagraphStyle defaultStyle);
 	List<PdfFootNote> getFootNotes();
+	String getTOCText();
 	
 	class SplitInformation {
 		public float positionX;

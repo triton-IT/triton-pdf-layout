@@ -6,9 +6,8 @@ import java.util.List;
 
 import com.web4enterprise.pdf.core.geometry.Point;
 import com.web4enterprise.pdf.core.geometry.Rect;
-import com.web4enterprise.pdf.core.path.StraightPath;
-import com.web4enterprise.pdf.layout.document.impl.PdfPager;
 import com.web4enterprise.pdf.layout.document.impl.PdfDocumentEmbeddable;
+import com.web4enterprise.pdf.layout.document.impl.PdfPager;
 import com.web4enterprise.pdf.layout.image.Image;
 import com.web4enterprise.pdf.layout.page.impl.PageFootNotes;
 import com.web4enterprise.pdf.layout.paragraph.Paragraph;
@@ -205,7 +204,7 @@ public class PdfParagraph implements Paragraph, PdfDocumentEmbeddable {
 	public float getHeight(PdfPager pdfPager, float width) {
 		float height = 0;
 		
-		for(ParagraphEmbeddableLine embeddableLine : getEmbeddableLines(pdfPager, width)) {
+		for(PdfParagraphEmbeddableLine embeddableLine : getEmbeddableLines(pdfPager, width)) {
 			height += embeddableLine.getHeight(getStyle());
 		}
 		
@@ -215,15 +214,17 @@ public class PdfParagraph implements Paragraph, PdfDocumentEmbeddable {
 	}
 
 	@Override
-	public void layOut(PdfPager pdfPager, Rect boundingBox, float startY, PageFootNotes pageFootNotes) {
+	public void layOut(PdfPager pdfPager, Rect boundingBox, PageFootNotes pageFootNotes) {
 		//Get all lines of text (composed of text of different style).
-		List<ParagraphEmbeddableLine> embeddableLines = getEmbeddableLines();
+		List<PdfParagraphEmbeddableLine> embeddableLines = getEmbeddableLines();
 		
 		//Get the paragraph style which is the default style of text which compose it.
 		ParagraphStyle paragraphStyle = getStyle();
 
 		float fontBaseLine = paragraphStyle.getFontVariant().getBaseLine(paragraphStyle.getFontSize());
 
+		float startY = pdfPager.getCursorPosition().getY();
+		
 		//Apply top margin to paragraph.
 		float nextY = startY - paragraphStyle.getMargins().getTop();
 		
@@ -234,7 +235,7 @@ public class PdfParagraph implements Paragraph, PdfDocumentEmbeddable {
 		boolean isFirstLine = true;
 		
 		//Iterate of each line of text to display them.
-		for(ParagraphEmbeddableLine textLine : embeddableLines) {
+		for(PdfParagraphEmbeddableLine textLine : embeddableLines) {
 			//Calculate the maximum size allowed for text.
 			float maxWidth =  boundingBox.getWidth()
 					- (paragraphStyle.getMargins().getLeft() + paragraphStyle.getMargins().getRight());
@@ -253,10 +254,10 @@ public class PdfParagraph implements Paragraph, PdfDocumentEmbeddable {
 				relativeStops.add(relativeStop);
 			}
 			//Split text to get-in maximum space.
-			List<ParagraphEmbeddableLine> embeddableSubLines = textLine.splitToMaxWidth(pdfPager, paragraphStyle, textSize, firstLineMaxWidth, maxWidth, relativeStops);
+			List<PdfParagraphEmbeddableLine> embeddableSubLines = textLine.splitToMaxWidth(pdfPager, paragraphStyle, textSize, firstLineMaxWidth, maxWidth, relativeStops);
 			
 			boolean firstSubLine = true;
-			for(ParagraphEmbeddableLine embeddableSubLine : embeddableSubLines) {
+			for(PdfParagraphEmbeddableLine embeddableSubLine : embeddableSubLines) {
 				//Calculate text base line.
 				float baseLine = nextY - fontBaseLine;
 
@@ -413,6 +414,11 @@ public class PdfParagraph implements Paragraph, PdfDocumentEmbeddable {
 	    //Clone create a new Paragraph with clones.
 		return new PdfParagraph(style, listEmbeddablesClone);
 	}
+
+	@Override
+	public String getTOCText() {
+		return this.getEmbeddables().get(0).getTOCText();
+	}
 	
 	public CompositeList<PdfParagraphEmbeddable> getEmbeddables() {
 		return embeddables;
@@ -426,15 +432,15 @@ public class PdfParagraph implements Paragraph, PdfDocumentEmbeddable {
 		return style;
 	}
 	
-	public List<ParagraphEmbeddableLine> getEmbeddableLines() {
-		return ParagraphEmbeddableLine.getEmbeddableLines(embeddables);
+	public List<PdfParagraphEmbeddableLine> getEmbeddableLines() {
+		return PdfParagraphEmbeddableLine.getEmbeddableLines(embeddables);
 	}
 	
-	public List<ParagraphEmbeddableLine> getEmbeddableLines(PdfPager pdfPager, float maxWidth) {
-		List<ParagraphEmbeddableLine> embeddableSubLines = new ArrayList<>();
+	public List<PdfParagraphEmbeddableLine> getEmbeddableLines(PdfPager pdfPager, float maxWidth) {
+		List<PdfParagraphEmbeddableLine> embeddableSubLines = new ArrayList<>();
 		
 		boolean isFirstLine = true;		
-		for(ParagraphEmbeddableLine embeddableLine : getEmbeddableLines()) {
+		for(PdfParagraphEmbeddableLine embeddableLine : getEmbeddableLines()) {
 			float firstLineMaxWidth = maxWidth;
 	
 			if(isFirstLine) {

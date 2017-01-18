@@ -9,6 +9,7 @@ import com.web4enterprise.pdf.layout.document.impl.PdfDocumentEmbeddable;
 import com.web4enterprise.pdf.layout.document.impl.PdfPager;
 import com.web4enterprise.pdf.layout.page.footer.PageFooter;
 import com.web4enterprise.pdf.layout.page.impl.PageFootNotes;
+import com.web4enterprise.pdf.layout.style.Style;
 
 public class PdfPageFooter implements PageFooter, PdfDocumentEmbeddable {
 	protected List<PdfDocumentEmbeddable> pdfDocumentEmbeddables = new ArrayList<>();
@@ -36,14 +37,14 @@ public class PdfPageFooter implements PageFooter, PdfDocumentEmbeddable {
 	}
 
 	@Override
-	public void layOut(PdfPager pdfPager, Rect boundingBox, float startY, PageFootNotes pageFootNotes) {
+	public void layOut(PdfPager pdfPager, Rect boundingBox, PageFootNotes pageFootNotes) {
 		pageId = pdfPager.getCurrentPage().getCorePage().getId();
 		linkX = boundingBox.getLeft();
-		linkY = startY;
+		linkY = pdfPager.getCursorPosition().getY();
 		
 		for(PdfDocumentEmbeddable pdfDocumentEmbeddable : this.pdfDocumentEmbeddables) {
 			//Need to clone element because footer is repeated and changing any value of the element for a page will change it for each page.
-			pdfDocumentEmbeddable.clone().layOut(pdfPager, boundingBox, startY, pageFootNotes);
+			pdfDocumentEmbeddable.clone().layOut(pdfPager, boundingBox, pageFootNotes);
 		}
 	}
 
@@ -66,6 +67,18 @@ public class PdfPageFooter implements PageFooter, PdfDocumentEmbeddable {
 	@Override
 	public float getLinkY() {
 		return linkY;
+	}
+
+	@Override
+	public Style getStyle() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getTOCText() {
+		//Footer is not supported in TOC.
+		return null;
 	}
 
 	public void compute(PdfPager pdfPager, float width) {

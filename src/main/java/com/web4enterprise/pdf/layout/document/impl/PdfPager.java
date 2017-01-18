@@ -41,7 +41,7 @@ public class PdfPager {
 	
 	public void layOut() {
 		for(PdfSectionCommand command : currentSection) {
-			command.perform(this);
+			command.layout(this);
 		}
 	}
 	
