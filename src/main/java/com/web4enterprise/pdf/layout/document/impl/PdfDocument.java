@@ -5,8 +5,6 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.ListIterator;
-import java.util.logging.Logger;
 
 import com.web4enterprise.pdf.core.document.Pdf;
 import com.web4enterprise.pdf.core.exceptions.PdfGenerationException;
@@ -24,7 +22,6 @@ import com.web4enterprise.pdf.layout.page.footer.PageFooter;
 import com.web4enterprise.pdf.layout.page.footer.impl.PdfPageFooter;
 import com.web4enterprise.pdf.layout.page.header.PageHeader;
 import com.web4enterprise.pdf.layout.page.header.impl.PdfPageHeader;
-import com.web4enterprise.pdf.layout.page.impl.Page;
 import com.web4enterprise.pdf.layout.paragraph.Paragraph;
 import com.web4enterprise.pdf.layout.paragraph.ParagraphEmbeddable;
 import com.web4enterprise.pdf.layout.paragraph.ParagraphStyle;
@@ -35,12 +32,7 @@ import com.web4enterprise.pdf.layout.table.impl.PdfTable;
 import com.web4enterprise.pdf.layout.toc.TableOfContent;
 import com.web4enterprise.pdf.layout.toc.impl.PdfTableOfContent;
 
-public class PdfDocument implements Document {
-	/**
-	 * Logger for document class.
-	 */
-	private static final Logger LOGGER = Logger.getLogger(PdfDocument.class.getName());
-	
+public class PdfDocument implements Document {	
 	/**
 	 * Document from low-level API.
 	 */
@@ -50,14 +42,6 @@ public class PdfDocument implements Document {
 	 * Create pages.
 	 */
 	protected PdfPager pdfPager = new PdfPager(pdf);
-	
-	/**
-	 * Defines if last parts of document have been layouted.
-	 */
-	protected boolean finished = false;
-	
-	protected List<PdfSection> pdfSections = new ArrayList<>();
-	protected PdfSection currentSection = null;
 	
 	protected List<DocumentEmbeddable> embeddables = new ArrayList<>();
 	protected List<PdfTableOfContent> tablesOfContent = new ArrayList<>();
@@ -116,24 +100,17 @@ public class PdfDocument implements Document {
 
 	@Override
 	public Section nextPage() {
-		if(currentSection != null) {
-			nextPage(currentSection.getSection());
-		} else {
-			nextPage(new Section());
-		}
-		return currentSection.getSection();
+		return pdfPager.nextSection();
 	}
 
 	@Override
 	public Section nextPage(Section section) {
-		currentSection = new PdfSection(section);
-		pdfSections.add(currentSection);
-		return currentSection.getSection();
+		return pdfPager.nextSection(section);
 	}
 	
 	@Override
 	public void nextVerticalStop() {
-		currentSection.add(new PdfNextVerticalStopCommand());
+		pdfPager.getCurrentSection().add(new PdfNextVerticalStopCommand());
 	}
 
 	@Override
@@ -211,7 +188,7 @@ public class PdfDocument implements Document {
 
 	@Override
 	public void addEmbeddable(DocumentEmbeddable embeddable) {
-		if(currentSection == null) {
+		if(pdfPager.getCurrentSection() == null) {
 			throw new BadOperationException("You can't add an element without having created a page first.");
 		}
 		if(!(embeddable instanceof PdfDocumentEmbeddable)) {
@@ -219,7 +196,7 @@ public class PdfDocument implements Document {
 		}
 		
 		embeddables.add(embeddable);
-		currentSection.add(new PdfAddEmbeddableCommand((PdfDocumentEmbeddable) embeddable));
+		pdfPager.getCurrentSection().add(new PdfAddEmbeddableCommand((PdfDocumentEmbeddable) embeddable));
 	}
 
 	@Override
@@ -228,55 +205,12 @@ public class PdfDocument implements Document {
 			toc.addEmbeddables(embeddables);
 		}
 		
-		//TODO: Remove all preLayOut that does not serves any purpose now.
-//		for(PdfSection pdfSection : pdfSections) {
-//		    ListIterator<PdfSectionCommand> commandsIterator = pdfSection.listIterator();
-//			while(commandsIterator.hasNext()) {
-//				PdfSectionCommand command = commandsIterator.next();
-//				List<PdfSectionCommand> newCommands = command.preLayOut(this);
-//				if(newCommands != null) {
-//					for(PdfSectionCommand newCommand : newCommands) {
-//						commandsIterator.add(newCommand);
-//					}
-//				}
-//			}
-//		}
-		
-//		for(PdfSection pdfSection : pdfSections) {
-//			for(PdfSectionCommand command : pdfSection) {
-//				List<PdfSectionCommand> newCommands = command.preLayOut(this);
-//				if(newCommands != null) {
-//					for(PdfSectionCommand newCommand : newCommands) {
-//						pdfSection.add(newCommand);
-//					}
-//				}
-//			}
-//		}
-		
-		for(PdfSection pdfSection : pdfSections) {
-			pdfPager.nextPage(pdfSection);
-			pdfPager.layOut();
-		}
-		
-		//If write is called multiple times, call finish() only once.
-		if(!finished) {
-			finish();
-			finished = true;
-		}
+		pdfPager.layOut();
 		
 		try {
 			pdf.write(out);
 		} catch(PdfGenerationException e) {
 			throw new DocumentGenerationException("Cannot generate document", e);
-		}
-	}
-	
-	protected void finish() {
-		Page page = pdfPager.getCurrentPage();
-		if(page == null) {
-			LOGGER.warning("Finishing a document without any page.");
-		} else {
-			page.layOutEndOfPage();
 		}
 	}
 }

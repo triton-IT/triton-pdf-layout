@@ -24,8 +24,8 @@ public class PdfFootNote implements FootNote, PdfDocumentEmbeddable {
 	protected float computedWidth = 0.0f;
 	protected String id;
 
-	protected float linkX = 0.0f;
-	protected float linkY = 0.0f;
+	protected Float linkX = null;
+	protected Float linkY = null;
 	protected Integer pageId = null;
 	
 	public PdfFootNote(PdfParagraph... paragraphs) {		
@@ -69,17 +69,17 @@ public class PdfFootNote implements FootNote, PdfDocumentEmbeddable {
 	}
 
 	@Override
-	public int getPage() {
+	public Integer getPage() {
 		return pageId;
 	}
 
 	@Override
-	public float getLinkX() {
+	public Float getLinkX() {
 		return linkX;
 	}
 
 	@Override
-	public float getLinkY() {
+	public Float getLinkY() {
 		return linkY;
 	}
 

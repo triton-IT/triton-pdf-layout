@@ -2,5 +2,7 @@ package com.web4enterprise.pdf.layout.document.impl;
 
 
 public interface PdfSectionCommand {
-	void layout(PdfPager pdfPager);
+	void prepareNextLayOut(PdfPager pdfPager);
+	void layOut(PdfPager pdfPager);
+	boolean verifyLayOut(PdfPager pdfPager);
 }

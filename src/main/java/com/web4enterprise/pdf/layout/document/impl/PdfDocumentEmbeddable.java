@@ -22,7 +22,18 @@ import com.web4enterprise.pdf.layout.page.impl.PageFootNotes;
 
 public interface PdfDocumentEmbeddable extends DocumentEmbeddable, Cloneable, Linkable {
 	float getHeight(PdfPager pdfPager, float width);
+	
 	void layOut(PdfPager pdfPager, Rect boundingBox, PageFootNotes pageFootNotes);
+	
+	/**
+	 * Most embeddables are static, they do not need verification.
+	 * 
+	 * @param pdfPager
+	 * @return
+	 */
+	default boolean verifyLayOut(PdfPager pdfPager) {
+		return true;
+	}
 	
 	PdfDocumentEmbeddable clone();
 }

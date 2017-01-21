@@ -15,25 +15,27 @@ import com.web4enterprise.pdf.layout.style.Style;
 import com.web4enterprise.pdf.layout.toc.TableOfContent;
 
 public class PdfTableOfContent implements TableOfContent, PdfDocumentEmbeddable {
-	protected int pageId;
-	protected float linkX;
-	protected float linkY;
+	protected Float linkX = null;
+	protected Float linkY = null;
+	protected Integer pageId = null;
 	
 	protected Map<Style, Integer> styles = new HashMap<>();
-	protected ArrayList<DocumentEmbeddable> embeddables = new ArrayList<>();
+	protected ArrayList<PdfDocumentEmbeddable> embeddables = new ArrayList<>();
+	
+	protected boolean verified = false;
 
 	@Override
-	public int getPage() {
+	public Integer getPage() {
 		return pageId;
 	}
 
 	@Override
-	public float getLinkX() {
+	public Float getLinkX() {
 		return linkX;
 	}
 
 	@Override
-	public float getLinkY() {
+	public Float getLinkY() {
 		return linkY;
 	}
 
@@ -50,10 +52,25 @@ public class PdfTableOfContent implements TableOfContent, PdfDocumentEmbeddable 
 		linkX = boundingBox.getLeft();
 		linkY = pdfPager.getCursorPosition().getY();
 		
+		verified = true;
 		embeddables.forEach(embeddable -> {
-			PdfParagraph paragraph = new PdfParagraph(embeddable.getTOCText());
+			PdfParagraph paragraph;
+			
+			Integer embeddablePage = embeddable.getPage();
+			if(embeddablePage != null) {
+				paragraph = new PdfParagraph(embeddable.getTOCText(), " ", String.valueOf(embeddablePage));
+			} else {
+				//Prepare a default text to place further text the most accurately possible...
+				paragraph = new PdfParagraph(embeddable.getTOCText(), " 0");
+				verified = false;
+			}
 			paragraph.layOut(pdfPager, boundingBox, pageFootNotes);
 		});
+	}
+	
+	@Override
+	public boolean verifyLayOut(PdfPager pdfPager) {
+		return verified;
 	}
 
 	@Override
@@ -89,7 +106,7 @@ public class PdfTableOfContent implements TableOfContent, PdfDocumentEmbeddable 
 	public void addEmbeddables(List<DocumentEmbeddable> embeddables) {
 		for(DocumentEmbeddable embeddable : embeddables) {
 			if(embeddable != this && styles.containsKey(embeddable.getStyle())) {
-				this.embeddables.add(embeddable);
+				this.embeddables.add((PdfDocumentEmbeddable) embeddable);
 			}
 		}
 	}

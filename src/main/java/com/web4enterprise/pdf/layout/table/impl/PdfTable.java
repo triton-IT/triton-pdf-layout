@@ -32,8 +32,8 @@ public class PdfTable implements Table, PdfDocumentEmbeddable {
 	
 	protected boolean computed = false;
 
-	protected float linkX = 0.0f;
-	protected float linkY = 0.0f;
+	protected Float linkX = null;
+	protected Float linkY = null;
 	protected Integer pageId = null;
 	
 	@Override
@@ -75,17 +75,17 @@ public class PdfTable implements Table, PdfDocumentEmbeddable {
 	}
 
 	@Override
-	public int getPage() {
+	public Integer getPage() {
 		return pageId;
 	}
 
 	@Override
-	public float getLinkX() {
+	public Float getLinkX() {
 		return linkX;
 	}
 
 	@Override
-	public float getLinkY() {
+	public Float getLinkY() {
 		return linkY;
 	}
 

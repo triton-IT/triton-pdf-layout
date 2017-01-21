@@ -9,7 +9,17 @@ public class PdfNextVerticalStopCommand implements PdfSectionCommand {
 	protected VerticalStopsList verticalStops = new VerticalStopsList();
 
 	@Override
-	public void layout(PdfPager pdfPager) {
+	public void prepareNextLayOut(PdfPager pdfPager) {
+		verticalStops.reset();
+	}
+	
+	@Override
+	public boolean verifyLayOut(PdfPager pdfPager) {
+		return true;
+	}
+
+	@Override
+	public void layOut(PdfPager pdfPager) {
 		int currentStopIndex = verticalStops.getCurrentIndex();
 		
 		if(verticalStops.size() > currentStopIndex) {

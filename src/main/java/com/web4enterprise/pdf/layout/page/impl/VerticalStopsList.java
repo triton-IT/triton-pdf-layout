@@ -23,4 +23,8 @@ public class VerticalStopsList extends ArrayList<Float> {
 			add(stop);
 		}
 	}
+
+	public void reset() {
+		currentIndex = 0;
+	}
 }

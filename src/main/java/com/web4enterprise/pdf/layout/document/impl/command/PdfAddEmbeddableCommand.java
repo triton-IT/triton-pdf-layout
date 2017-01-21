@@ -12,13 +12,23 @@ public class PdfAddEmbeddableCommand implements PdfSectionCommand {
 	public PdfAddEmbeddableCommand(PdfDocumentEmbeddable embeddable) {
 		this.embeddable = embeddable;
 	}
+
+	@Override
+	public void prepareNextLayOut(PdfPager pdfPager) {
+		//Do nothing.
+	}
 	
 	@Override
-	public void layout(PdfPager pdfPager) {
+	public void layOut(PdfPager pdfPager) {
 		Page currentPage = pdfPager.getCurrentPage();
 		PageFootNotes pageFootNotes = currentPage.getFootNotes();
 		embeddable.layOut(pdfPager, 
 				currentPage.getInnerRect(),
 				pageFootNotes);
+	}
+	
+	@Override
+	public boolean verifyLayOut(PdfPager pdfPager) {
+		return embeddable.verifyLayOut(pdfPager);
 	}
 }

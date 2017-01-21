@@ -29,8 +29,8 @@ public class PdfParagraph implements Paragraph, PdfDocumentEmbeddable {
 	protected int currentStop = 0;
 	protected List<PdfParagraphEmbeddable> currentEmbeddables = new ArrayList<PdfParagraphEmbeddable>();
 
-	protected float linkX = 0.0f;
-	protected float linkY = 0.0f;
+	protected Float linkX = null;
+	protected Float linkY = null;
 	protected Integer pageId = null;
 	
 	public PdfParagraph() {
@@ -186,17 +186,17 @@ public class PdfParagraph implements Paragraph, PdfDocumentEmbeddable {
 	}
 
 	@Override
-	public int getPage() {
+	public Integer getPage() {
 		return pageId;
 	}
 
 	@Override
-	public float getLinkX() {
+	public Float getLinkX() {
 		return linkX;
 	}
 
 	@Override
-	public float getLinkY() {
+	public Float getLinkY() {
 		return linkY;
 	}
 	
