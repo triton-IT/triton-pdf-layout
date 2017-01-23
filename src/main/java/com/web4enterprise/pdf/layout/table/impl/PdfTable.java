@@ -36,6 +36,8 @@ public class PdfTable implements Table, PdfDocumentEmbeddable {
 	protected Float linkY = null;
 	protected Integer pageId = null;
 	
+	protected Integer pageNumber = null;
+	
 	@Override
 	public float getHeight(PdfPager pdfPager, float width) {
 		if(!computed) {
@@ -53,6 +55,7 @@ public class PdfTable implements Table, PdfDocumentEmbeddable {
 
 	@Override
 	public void layOut(PdfPager pdfPager, Rect boundingBox, PageFootNotes pageFootNotes) {
+		pageNumber = pdfPager.getCurrentPageNumber();
 		if(!computed) {
 			computeInnerLayout(pdfPager);
 		}
@@ -127,6 +130,11 @@ public class PdfTable implements Table, PdfDocumentEmbeddable {
 	public String getTOCText() {
 		//Table is not supported in TOC.
 		return null;
+	}
+	
+	@Override
+	public Integer getPageNumber() {
+		return pageNumber;
 	}
 	
 	public TableRow addRow(TableCell...cells) {

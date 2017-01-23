@@ -18,6 +18,8 @@ public class PageFootNotes implements PdfDocumentEmbeddable {
 	protected Float linkY = null;
 	protected Integer pageId = null;
 	
+	protected Integer pageNumber = null;
+	
 	@Override
 	public float getHeight(PdfPager pdfPager, float width) {
 		if(computedWidth != width) {
@@ -29,6 +31,7 @@ public class PageFootNotes implements PdfDocumentEmbeddable {
 
 	@Override
 	public void layOut(PdfPager pdfPager, Rect boundingBox, PageFootNotes pageFootNotes) {
+		pageNumber = pdfPager.getCurrentPageNumber();
 		pageId = pdfPager.getCurrentPage().getCorePage().getId();
 		linkX = boundingBox.getLeft();
 		linkY = pdfPager.getCursorPosition().getY();
@@ -72,6 +75,11 @@ public class PageFootNotes implements PdfDocumentEmbeddable {
 	public String getTOCText() {
 		//PageFootNotes is not supported in TOC.
 		return null;
+	}
+	
+	@Override
+	public Integer getPageNumber() {
+		return pageNumber;
 	}
 	
 	public void addEmbeddable(PdfDocumentEmbeddable pdfDocumentEmbeddable) {

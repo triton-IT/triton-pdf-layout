@@ -33,6 +33,8 @@ public class PdfParagraph implements Paragraph, PdfDocumentEmbeddable {
 	protected Float linkY = null;
 	protected Integer pageId = null;
 	
+	protected Integer pageNumber = null;
+	
 	public PdfParagraph() {
 		this((String[]) null);
 	}
@@ -215,6 +217,7 @@ public class PdfParagraph implements Paragraph, PdfDocumentEmbeddable {
 
 	@Override
 	public void layOut(PdfPager pdfPager, Rect boundingBox, PageFootNotes pageFootNotes) {
+		pageNumber = pdfPager.getCurrentPageNumber();
 		//Get all lines of text (composed of text of different style).
 		List<PdfParagraphEmbeddableLine> embeddableLines = getEmbeddableLines();
 		
@@ -418,6 +421,11 @@ public class PdfParagraph implements Paragraph, PdfDocumentEmbeddable {
 	@Override
 	public String getTOCText() {
 		return this.getEmbeddables().get(0).getTOCText();
+	}
+	
+	@Override
+	public Integer getPageNumber() {
+		return pageNumber;
 	}
 	
 	public CompositeList<PdfParagraphEmbeddable> getEmbeddables() {

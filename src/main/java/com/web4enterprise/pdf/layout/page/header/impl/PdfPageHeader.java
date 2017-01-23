@@ -19,6 +19,8 @@ public class PdfPageHeader implements PageHeader, PdfDocumentEmbeddable {
 	protected Float linkX = null;
 	protected Float linkY = null;
 	protected Integer pageId = null;
+	
+	protected Integer pageNumber = null;
 
 	@Override
 	public void addEmbeddables(DocumentEmbeddable... embeddables) {
@@ -39,6 +41,7 @@ public class PdfPageHeader implements PageHeader, PdfDocumentEmbeddable {
 
 	@Override
 	public void layOut(PdfPager pdfPager, Rect boundingBox, PageFootNotes pageFootNotes) {
+		pageNumber = pdfPager.getCurrentPageNumber();
 		pageId = pdfPager.getCurrentPage().getCorePage().getId();
 		linkX = boundingBox.getLeft();
 		linkY = pdfPager.getCursorPosition().getY();
@@ -80,6 +83,11 @@ public class PdfPageHeader implements PageHeader, PdfDocumentEmbeddable {
 	public String getTOCText() {
 		//Header is not supported in TOC.
 		return null;
+	}
+	
+	@Override
+	public Integer getPageNumber() {
+		return pageNumber;
 	}
 
 	protected void compute(PdfPager pdfPager, float width) {

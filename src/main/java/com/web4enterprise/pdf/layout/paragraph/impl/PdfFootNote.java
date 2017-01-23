@@ -28,6 +28,8 @@ public class PdfFootNote implements FootNote, PdfDocumentEmbeddable {
 	protected Float linkY = null;
 	protected Integer pageId = null;
 	
+	protected Integer pageNumber = null;
+	
 	public PdfFootNote(PdfParagraph... paragraphs) {		
 		if(paragraphs.length != 0) {
 			this.paragraphs.addAll(Arrays.asList(paragraphs));
@@ -49,6 +51,7 @@ public class PdfFootNote implements FootNote, PdfDocumentEmbeddable {
 
 	@Override
 	public void layOut(PdfPager pdfPager, Rect boundingBox, PageFootNotes pageFootNotes) {
+		pageNumber = pdfPager.getCurrentPageNumber();
 		float startY = boundingBox.getBottom() + height;
 		
 		pageId = pdfPager.getCurrentPage().getCorePage().getId();
@@ -92,6 +95,11 @@ public class PdfFootNote implements FootNote, PdfDocumentEmbeddable {
 	@Override
 	public String getTOCText() {
 		return paragraphs.get(0).getTOCText();
+	}
+	
+	@Override
+	public Integer getPageNumber() {
+		return pageNumber;
 	}
 
 	public void compute(PdfPager pdfPager, float width) {

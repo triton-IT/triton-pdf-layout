@@ -23,6 +23,7 @@ public class PdfPager {
 	protected PdfSection currentLayOutSection = null;
 	
 	protected Page currentPage = null;
+	protected int currentPageNumber = 0;
 	protected Point cursorPosition = new Point(0.0f, 0.0f);
 	
 	public PdfPager(Pdf pdf) {
@@ -68,11 +69,16 @@ public class PdfPager {
 		PageFormat currentPageFormat = section.getStyle().getFormat();
 		com.web4enterprise.pdf.core.page.Page corePage = pdf.createPage(currentPageFormat.getWidth(), currentPageFormat.getHeight());
 		
+		currentPageNumber++;
 		currentPage = new Page(this, corePage, section.getStyle(), section.getHeader(), section.getFooter());
 		
 		currentPage.getFootNotes().setWidth(currentPage.getInnerWidth());
 		
 		currentPage.layOutNewPage();
+	}
+	
+	public int getCurrentPageNumber() {
+		return currentPageNumber;
 	}
 	
 	public void layOut() {

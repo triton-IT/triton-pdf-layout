@@ -23,6 +23,8 @@ public class PdfTableOfContent implements TableOfContent, PdfDocumentEmbeddable 
 	protected ArrayList<PdfDocumentEmbeddable> embeddables = new ArrayList<>();
 	
 	protected boolean verified = false;
+	
+	protected Integer pageNumber = null;
 
 	@Override
 	public Integer getPage() {
@@ -48,6 +50,7 @@ public class PdfTableOfContent implements TableOfContent, PdfDocumentEmbeddable 
 	@Override
 	public void layOut(PdfPager pdfPager, Rect boundingBox,
 			PageFootNotes pageFootNotes) {
+		pageNumber = pdfPager.getCurrentPageNumber();
 		pageId = pdfPager.getCurrentPage().getCorePage().getId();
 		linkX = boundingBox.getLeft();
 		linkY = pdfPager.getCursorPosition().getY();
@@ -56,7 +59,7 @@ public class PdfTableOfContent implements TableOfContent, PdfDocumentEmbeddable 
 		embeddables.forEach(embeddable -> {
 			PdfParagraph paragraph;
 			
-			Integer embeddablePage = embeddable.getPage();
+			Integer embeddablePage = embeddable.getPageNumber();
 			if(embeddablePage != null) {
 				paragraph = new PdfParagraph(embeddable.getTOCText(), " ", String.valueOf(embeddablePage));
 			} else {
@@ -89,6 +92,11 @@ public class PdfTableOfContent implements TableOfContent, PdfDocumentEmbeddable 
 	public String getTOCText() {
 		//TOC is not supported in TOC.
 		return null;
+	}
+	
+	@Override
+	public Integer getPageNumber() {
+		return pageNumber;
 	}
 	
 	/**
