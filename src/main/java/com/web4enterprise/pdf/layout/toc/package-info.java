@@ -15,7 +15,7 @@
  */
 
 /**
- * Contains all elements related to the table of content.
+ * Contains interfaces related to the table of content.
  * 
  * @author Régis Ramillien
  */

@@ -15,7 +15,7 @@
  */
 
 /**
- * 
+ * Contains interface for creating texts.
  * 
  * @author Régis Ramillien
  */

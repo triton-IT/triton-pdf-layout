@@ -15,7 +15,7 @@
  */
 
 /**
- * 
+ * Contains interface of page related classes.
  * 
  * @author Régis Ramillien
  */

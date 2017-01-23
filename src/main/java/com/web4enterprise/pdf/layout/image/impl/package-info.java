@@ -15,7 +15,7 @@
  */
 
 /**
- * 
+ * Contains PDF implementation of image related classes.
  * 
  * @author Régis Ramillien
  */

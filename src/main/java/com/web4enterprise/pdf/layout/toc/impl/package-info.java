@@ -15,7 +15,7 @@
  */
 
 /**
- * 
+ * Contains implementation of a table of content.
  * 
  * @author Régis Ramillien
  */

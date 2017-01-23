@@ -15,7 +15,7 @@
  */
 
 /**
- * 
+ * Contains interface of paragraph related classes.
  * 
  * @author Régis Ramillien
  */

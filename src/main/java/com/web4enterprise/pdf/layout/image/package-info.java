@@ -15,7 +15,7 @@
  */
 
 /**
- * 
+ * Contains interfaces for using images.
  * 
  * @author Régis Ramillien
  */

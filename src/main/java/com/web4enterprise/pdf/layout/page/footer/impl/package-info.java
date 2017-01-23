@@ -15,7 +15,7 @@
  */
 
 /**
- * 
+ * Contains PDF implementation of a page footer.
  * 
  * @author Régis Ramillien
  */

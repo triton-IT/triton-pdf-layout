@@ -15,7 +15,7 @@
  */
 
 /**
- * 
+ * Contains PDF implementation of page related classes.
  * 
  * @author Régis Ramillien
  */

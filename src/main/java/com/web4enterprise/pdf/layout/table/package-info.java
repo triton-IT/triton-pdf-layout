@@ -15,7 +15,7 @@
  */
 
 /**
- * 
+ * Contains interfaces for creating tables.
  * 
  * @author Régis Ramillien
  */

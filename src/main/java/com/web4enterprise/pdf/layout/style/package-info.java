@@ -15,7 +15,7 @@
  */
 
 /**
- * 
+ * Contains interface for styling.
  * 
  * @author Régis Ramillien
  */

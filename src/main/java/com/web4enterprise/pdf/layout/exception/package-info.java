@@ -15,7 +15,7 @@
  */
 
 /**
- * Defines all exceptions for the library.
+ * Defines all exceptions of the API.
  * 
  * @author Régis Ramillien
  */

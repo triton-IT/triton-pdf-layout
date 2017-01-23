@@ -15,7 +15,7 @@
  */
 
 /**
- * 
+ * Contains interface for page footer related classes.
  * 
  * @author Régis Ramillien
  */

@@ -28,21 +28,39 @@ import com.web4enterprise.pdf.layout.document.impl.command.PdfNextVerticalStopCo
  */
 public class PdfSection extends ArrayList<PdfSectionCommand> {
 	/**
-	 * 
+	 * The UID for this version of class.
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	/**
+	 * The section definition (style).
+	 */
 	protected Section section;
 	
+	/**
+	 * Creates a new PDF section from a section.
+	 * 
+	 * @param section THe section to use for this PDF.
+	 */
 	public PdfSection(Section section) {
 		this.section = section;
 	}
 	
+	/**
+	 * Add a vertical stop to this section.
+	 * 
+	 * @param pdfNextVerticalStopCommand The command for next stop.
+	 */
 	public void add(PdfNextVerticalStopCommand pdfNextVerticalStopCommand) {
 		pdfNextVerticalStopCommand.setStops(section.getVerticalStops());
 		super.add(pdfNextVerticalStopCommand);
 	}
 
+	/**
+	 * Get section of this PDF.
+	 * 
+	 * @return The section.
+	 */
 	public Section getSection() {
 		return section;
 	}

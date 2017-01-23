@@ -15,7 +15,7 @@
  */
 
 /**
- * 
+ * Contains classes related to placement of elements of document.
  * 
  * @author Régis Ramillien
  */

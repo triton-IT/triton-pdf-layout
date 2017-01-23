@@ -15,7 +15,7 @@
  */
 
 /**
- * 
+ * Contains all interfaces from creating a PDF document
  * 
  * @author Régis Ramillien
  */

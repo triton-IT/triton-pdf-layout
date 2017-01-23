@@ -15,7 +15,7 @@
  */
 
 /**
- * 
+ * Contains PDF implementation of paragraph related classes.
  * 
  * @author Régis Ramillien
  */

@@ -15,7 +15,7 @@
  */
 
 /**
- * 
+ * Contains PDF implementation of a table.
  * 
  * @author Régis Ramillien
  */

@@ -15,7 +15,7 @@
  */
 
 /**
- * 
+ * Contains all PDF commands.
  * 
  * @author Régis Ramillien
  */
