@@ -21,9 +21,11 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
 
 import com.web4enterprise.pdf.core.document.Pdf;
 import com.web4enterprise.pdf.core.exceptions.PdfGenerationException;
+import com.web4enterprise.pdf.core.geometry.Point;
 import com.web4enterprise.pdf.layout.document.Document;
 import com.web4enterprise.pdf.layout.document.DocumentEmbeddable;
 import com.web4enterprise.pdf.layout.document.Section;
@@ -34,10 +36,12 @@ import com.web4enterprise.pdf.layout.exception.BadResourceException;
 import com.web4enterprise.pdf.layout.exception.DocumentGenerationException;
 import com.web4enterprise.pdf.layout.image.Image;
 import com.web4enterprise.pdf.layout.image.impl.PdfImage;
+import com.web4enterprise.pdf.layout.page.PageFormat;
 import com.web4enterprise.pdf.layout.page.footer.PageFooter;
 import com.web4enterprise.pdf.layout.page.footer.impl.PdfPageFooter;
 import com.web4enterprise.pdf.layout.page.header.PageHeader;
 import com.web4enterprise.pdf.layout.page.header.impl.PdfPageHeader;
+import com.web4enterprise.pdf.layout.page.impl.Page;
 import com.web4enterprise.pdf.layout.paragraph.Paragraph;
 import com.web4enterprise.pdf.layout.paragraph.ParagraphEmbeddable;
 import com.web4enterprise.pdf.layout.paragraph.ParagraphStyle;
@@ -54,15 +58,20 @@ import com.web4enterprise.pdf.layout.toc.impl.PdfTableOfContent;
  * 
  * @author Régis Ramillien
  */
-public class PdfDocument implements Document {	
+public class PdfDocument implements Document, PdfPager {
+	/**
+	 * Logger for class.
+	 */
+	private static final Logger LOGGER = Logger.getLogger(PdfDocument.class.getName());
+	
 	/**
 	 * Document from low-level API.
 	 */
 	protected Pdf pdf = new Pdf();
 	/**
-	 * Used for creating page and controlling lay-out.
+	 * The list images to embed in document.
 	 */
-	protected PdfPager pdfPager = new PdfPager(pdf);
+	protected List<com.web4enterprise.pdf.core.image.Image> images = new ArrayList<>();
 	/**
 	 * The list of embeddables for document.
 	 */
@@ -71,6 +80,30 @@ public class PdfDocument implements Document {
 	 * The list of table of content of document.
 	 */
 	protected List<PdfTableOfContent> tablesOfContent = new ArrayList<>();
+	/**
+	 * The list of sections of document.
+	 */
+	protected List<PdfSection> pdfSections = new ArrayList<>();
+	/**
+	 * The section where document is currently writing on.
+	 */
+	protected PdfSection currentWriteSection = null;
+	/**
+	 * The section which is currently layed-out. 
+	 */
+	protected PdfSection currentLayOutSection = null;
+	/**
+	 * The page currently layed-out.
+	 */
+	protected Page currentPage = null;
+	/**
+	 * The number of the page currently layed-out.
+	 */
+	protected int currentPageNumber = 0;
+	/**
+	 * The current position of cursor in current page.
+	 */
+	protected Point cursorPosition = new Point(0.0f, 0.0f);
 	
 	/**
 	 * Create a document with default properties.
@@ -126,23 +159,25 @@ public class PdfDocument implements Document {
 
 	@Override
 	public Section nextPage() {
-		return pdfPager.nextSection();
+		return nextSection();
 	}
 
 	@Override
 	public Section nextPage(Section section) {
-		return pdfPager.nextSection(section);
+		return nextSection(section);
 	}
 	
 	@Override
 	public void nextVerticalStop() {
-		pdfPager.getCurrentSection().add(new PdfNextVerticalStopCommand());
+		getCurrentSection().add(new PdfNextVerticalStopCommand());
 	}
 
 	@Override
 	public Image createImage(InputStream imageInputStream) throws BadResourceException {
 		try {
-			return new PdfImage(pdf.createImage(imageInputStream));
+			com.web4enterprise.pdf.core.image.Image image = pdf.createImage(imageInputStream);
+			images.add(image);
+			return new PdfImage(image);
 		} catch(PdfGenerationException e) {
 			throw new BadResourceException("Cannot read image.", e); 
 		}
@@ -214,7 +249,7 @@ public class PdfDocument implements Document {
 
 	@Override
 	public void addEmbeddable(DocumentEmbeddable embeddable) {
-		if(pdfPager.getCurrentSection() == null) {
+		if(getCurrentSection() == null) {
 			throw new BadOperationException("You can't add an element without having created a page first.");
 		}
 		if(!(embeddable instanceof PdfDocumentEmbeddable)) {
@@ -222,7 +257,7 @@ public class PdfDocument implements Document {
 		}
 		
 		embeddables.add(embeddable);
-		pdfPager.getCurrentSection().add(new PdfAddEmbeddableCommand((PdfDocumentEmbeddable) embeddable));
+		getCurrentSection().add(new PdfAddEmbeddableCommand((PdfDocumentEmbeddable) embeddable));
 	}
 
 	@Override
@@ -231,12 +266,160 @@ public class PdfDocument implements Document {
 			toc.addEmbeddables(embeddables);
 		}
 		
-		pdfPager.layOut();
+		layOut();
 		
 		try {
 			pdf.write(out);
 		} catch(PdfGenerationException e) {
 			throw new DocumentGenerationException("Cannot generate document", e);
+		}
+	}
+
+	@Override
+	public void addPage() {
+		//currentPage can never be null because first page of document is created using addPage(PageStyle style, PageHeader header, PageFooter footer). 
+		nextPage(currentLayOutSection);
+	}
+
+	@Override
+	public int getCurrentPageNumber() {
+		return currentPageNumber;
+	}
+
+	@Override
+	public Page getCurrentPage() {
+		return currentPage;
+	}
+
+	@Override
+	public Point getCursorPosition() {
+		return cursorPosition;
+	}
+
+	/**
+	 * Add a new section to document.
+	 * 
+	 * @param section The section to add.
+	 * @return The section added.
+	 */
+	public Section nextSection(Section section) {
+		//Create a new section from an existing one.
+		currentWriteSection = new PdfSection(section);
+		pdfSections.add(currentWriteSection);
+		return currentWriteSection.getSection();
+	}
+	
+	/**
+	 * Add a new section (based on previous section style) to document.
+	 * 
+	 * @return The new section.
+	 */
+	public Section nextSection() {
+		//If we already have a section, create one from existing one.
+		if(currentWriteSection != null) {
+			nextSection(currentWriteSection.getSection());
+		} else {
+			//Else create a default section.
+			nextSection(new Section());
+		}
+		
+		return currentWriteSection.getSection();
+	}
+	
+	/**
+	 * Get the section of document currently under write.
+	 * 
+	 * @return The current section.
+	 */
+	public PdfSection getCurrentSection() {
+		return currentWriteSection;
+	}
+	
+	/**
+	 * Finish to lay-out the current page and start to lay-out a new one.
+	 * 
+	 * @param pdfSection The current section under lay-out.
+	 */
+	public void nextPage(PdfSection pdfSection) {
+		if(currentPage != null) {
+			currentPage.layOutEndOfPage();
+		}
+		
+		currentLayOutSection = pdfSection;
+		Section section = currentLayOutSection.getSection();
+		
+		PageFormat currentPageFormat = section.getStyle().getFormat();
+		com.web4enterprise.pdf.core.page.Page corePage = pdf.createPage(currentPageFormat.getWidth(), currentPageFormat.getHeight());
+		
+		currentPageNumber++;
+		currentPage = new Page(this, corePage, section.getStyle(), section.getHeader(), section.getFooter());
+		
+		currentPage.getFootNotes().setWidth(currentPage.getInnerWidth());
+		
+		currentPage.layOutNewPage();
+	}
+	
+	/**
+	 * Lay-out the document document.
+	 * This method iterate over each embeddable of document for rendering them.
+	 * While the rendering of each embeddable is not verify, the rendering and verification is triggered again.
+	 */
+	public void layOut() {
+		//We layout until all references are up-to-date.
+		//Without TOC, it will be done in one run.
+		//With TOC or any other dynamic element, this could last 2 or more runs.
+		boolean verified = false;
+		while(!verified) {
+			//Clear all pages that could have been rendered on a previous run.
+			pdf.clear();
+			
+			for(com.web4enterprise.pdf.core.image.Image image : images) {
+				pdf.rebindImage(image);
+			}
+			
+			//Tell each embeddable to prepare for next layouting.
+			//They usually reset themselves.
+			for(PdfSection pdfSection : pdfSections) {
+				for(PdfSectionCommand command : pdfSection) {
+					command.prepareNextLayOut(this);
+				}
+			}
+			
+			//Render all embeddables of document.
+			for(PdfSection pdfSection : pdfSections) {
+				nextPage(pdfSection);
+				for(PdfSectionCommand command : pdfSection) {
+					command.layOut(this);
+				}
+			}
+			//Finish to lay-out document.
+			finish();
+		
+			//Tell all embeddables of document to verify if they have been layed-out correctly.
+			verified = true;
+			for(PdfSection pdfSection : pdfSections) {
+				for(PdfSectionCommand command : pdfSection) {
+					verified = command.verifyLayOut(this);
+					if(!verified) {
+						break;
+					}
+				}
+				if(!verified) {
+					break;
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Finish to lay-out document by rendering last footer.
+	 */
+	protected void finish() {
+		Page page = getCurrentPage();
+		if(page == null) {
+			LOGGER.warning("Finishing a document without any page.");
+		} else {
+			page.layOutEndOfPage();
 		}
 	}
 }
