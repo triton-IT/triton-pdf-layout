@@ -16,6 +16,12 @@
 
 package com.web4enterprise.pdf.layout.exception;
 
+/**
+ * Throw when a resource cannot be used.
+ * 
+ * 
+ * @author Régis Ramillien
+ */
 public class BadResourceException extends DocumentException {
     /**
 	 * Default serial version UID.

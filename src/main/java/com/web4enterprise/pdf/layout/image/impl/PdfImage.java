@@ -35,25 +35,40 @@ import com.web4enterprise.pdf.layout.paragraph.impl.PdfParagraphEmbeddable;
 import com.web4enterprise.pdf.layout.text.TextStyle;
 import com.web4enterprise.pdf.layout.text.impl.PdfText;
 
-public class PdfImage implements Image, PdfParagraphEmbeddable {	
+/**
+ * PDF Implementation of the Image API.
+ * 
+ * 
+ * @author Régis Ramillien
+ */
+public class PdfImage implements Image, PdfParagraphEmbeddable {
+	/**
+	 * The core PDF image.
+	 */
 	protected com.web4enterprise.pdf.core.image.Image coreImage;
-	
+	/**
+	 * The list of foot-notes of this image.
+	 */
 	protected List<PdfFootNote> footNotes = new ArrayList<>();
-	
+	/**
+	 * The element linked to this image
+	 */
 	protected PdfDocumentEmbeddable linkedElement;
-	
+	/**
+	 * Constructor from an existing image definition.
+	 * 
+	 * @param coreImage The existing image.
+	 */
 	public PdfImage(com.web4enterprise.pdf.core.image.Image coreImage) {
 		this.coreImage = coreImage.cloneReference();
 	}
 
-	public int getWidth() {
-		return coreImage.getWidth();
-	}
-	
+	@Override
 	public void setWidth(int width) {
 		this.coreImage.setWidth(width);
 	}
-	
+
+	@Override
 	public void setWidth(int width, boolean keepRatio) {
 		float oldWidth = this.coreImage.getWidth();
 		this.coreImage.setWidth(width);
@@ -61,15 +76,13 @@ public class PdfImage implements Image, PdfParagraphEmbeddable {
 			this.coreImage.setHeight((int) Math.round((width * this.coreImage.getHeight()) / oldWidth));
 		}
 	}
-	
-	public int getHeight() {
-		return coreImage.getHeight();
-	}
-	
+
+	@Override
 	public void setHeight(int height) {
 		this.coreImage.setHeight(height);
 	}
-	
+
+	@Override
 	public void setHeight(int height, boolean keepRatio) {
 		float oldHeight = this.coreImage.getHeight();
 		this.coreImage.setHeight(height);
@@ -164,5 +177,15 @@ public class PdfImage implements Image, PdfParagraphEmbeddable {
 	@Override
 	public boolean isLinked() {
 		return linkedElement != null;
+	}
+
+	@Override
+	public int getWidth() {
+		return coreImage.getWidth();
+	}
+
+	@Override
+	public int getHeight() {
+		return coreImage.getHeight();
 	}
 }

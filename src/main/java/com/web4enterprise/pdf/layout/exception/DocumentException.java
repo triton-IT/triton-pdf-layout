@@ -16,7 +16,7 @@
 package com.web4enterprise.pdf.layout.exception;
 
 /**
- * Exception thrown when PDF cannot be generated correctly.
+ * Parent exception for document's non-runtime exceptions.
  * 
  * @author Régis Ramillien
  */

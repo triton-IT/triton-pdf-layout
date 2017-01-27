@@ -16,6 +16,12 @@
 
 package com.web4enterprise.pdf.layout.exception;
 
+/**
+ * Throw when document cannot be generated.
+ * 
+ * 
+ * @author Régis Ramillien
+ */
 public class DocumentGenerationException extends DocumentException {
     /**
 	 * Default serial version UID.

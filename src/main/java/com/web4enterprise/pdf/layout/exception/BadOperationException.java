@@ -16,6 +16,12 @@
 
 package com.web4enterprise.pdf.layout.exception;
 
+/**
+ * Throw when an incorrect operation is performed.
+ * 
+ * 
+ * @author Régis Ramillien
+ */
 public class BadOperationException extends RuntimeException {
     /**
 	 * Default serial version UID.
