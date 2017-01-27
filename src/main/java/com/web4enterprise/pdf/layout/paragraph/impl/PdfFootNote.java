@@ -180,13 +180,10 @@ public class PdfFootNote implements FootNote, PdfDocumentEmbeddable {
 	@Override
 	public void layOut(PdfPager pdfPager, Rect boundingBox, PageFootNotes pageFootNotes) {
 		pageNumber = pdfPager.getCurrentPageNumber();
-		float startY = boundingBox.getBottom() + height;
 		
 		pageId = pdfPager.getCurrentPage().getCorePage().getId();
 		linkX = boundingBox.getLeft();
-		linkY = startY;
-		
-		pdfPager.getCursorPosition().setY(startY);
+		linkY = pdfPager.getCursorPosition().getY();
 		
 		for(PdfParagraph paragraph : this.paragraphs) {
 			paragraph.layOut(pdfPager, boundingBox, pageFootNotes);

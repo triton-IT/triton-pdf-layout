@@ -78,6 +78,7 @@ public class PdfTableOfContent implements TableOfContent, PdfDocumentEmbeddable 
 			Integer embeddablePage = embeddable.getPageNumber();
 			if(embeddablePage != null) {
 				paragraph = new PdfParagraph(embeddable.getTOCText(), " ", String.valueOf(embeddablePage));
+				paragraph.setLink(embeddable);
 			} else {
 				//Prepare a default text to place further text the most accurately possible...
 				paragraph = new PdfParagraph(embeddable.getTOCText(), " 0");

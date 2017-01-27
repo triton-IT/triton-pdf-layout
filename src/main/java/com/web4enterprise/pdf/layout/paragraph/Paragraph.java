@@ -42,4 +42,6 @@ public interface Paragraph extends DocumentEmbeddable {
 	void nextStop(String... texts);
 	
 	void nextStop(PdfParagraphEmbeddable... embeddables);
+	
+	void setLink(DocumentEmbeddable documentEmbeddable);
 }

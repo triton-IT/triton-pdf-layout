@@ -33,6 +33,7 @@ public interface PdfParagraphEmbeddable extends ParagraphEmbeddable, Cloneable {
 	float getLineSpacing(ParagraphStyle defaultStyle);
 	List<PdfFootNote> getFootNotes();
 	String getTOCText();
+	boolean isLinked();
 	
 	class SplitInformation {
 		public float positionX;

@@ -160,4 +160,9 @@ public class PdfImage implements Image, PdfParagraphEmbeddable {
 		//TODO: Add a optional name to an image.
 		return null;
 	}
+	
+	@Override
+	public boolean isLinked() {
+		return linkedElement != null;
+	}
 }

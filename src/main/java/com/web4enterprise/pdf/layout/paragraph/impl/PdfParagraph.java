@@ -22,6 +22,7 @@ import java.util.List;
 
 import com.web4enterprise.pdf.core.geometry.Point;
 import com.web4enterprise.pdf.core.geometry.Rect;
+import com.web4enterprise.pdf.layout.document.DocumentEmbeddable;
 import com.web4enterprise.pdf.layout.document.impl.PdfDocumentEmbeddable;
 import com.web4enterprise.pdf.layout.document.impl.PdfPager;
 import com.web4enterprise.pdf.layout.image.Image;
@@ -50,6 +51,8 @@ public class PdfParagraph implements Paragraph, PdfDocumentEmbeddable {
 	protected Integer pageId = null;
 	
 	protected Integer pageNumber = null;
+	
+	protected DocumentEmbeddable linkedElement;
 	
 	public PdfParagraph() {
 		this((String[]) null);
@@ -391,6 +394,9 @@ public class PdfParagraph implements Paragraph, PdfDocumentEmbeddable {
 						}
 					}
 					
+					if(!paragraphEmbeddable.isLinked()) {
+						paragraphEmbeddable.setLink(linkedElement);
+					}
 					Point embeddableSize = paragraphEmbeddable.layOut(pdfPager.getCurrentPage(), paragraphStyle, textSize, startX, baseLine);
 					startX += embeddableSize.getX();
 					
@@ -442,6 +448,11 @@ public class PdfParagraph implements Paragraph, PdfDocumentEmbeddable {
 	@Override
 	public Integer getPageNumber() {
 		return pageNumber;
+	}
+	
+	@Override
+	public void setLink(DocumentEmbeddable documentEmbeddable) {
+		linkedElement = documentEmbeddable;
 	}
 	
 	public CompositeList<PdfParagraphEmbeddable> getEmbeddables() {

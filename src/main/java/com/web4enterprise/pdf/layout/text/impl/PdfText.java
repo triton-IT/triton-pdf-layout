@@ -17,6 +17,7 @@
 package com.web4enterprise.pdf.layout.text.impl;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -44,7 +45,6 @@ public class PdfText implements Text, PdfParagraphEmbeddable {
 	protected TextStyle style = new TextStyle();	
 
 	protected com.web4enterprise.pdf.core.text.Text coreText;
-	protected com.web4enterprise.pdf.core.text.Text coreFootNoteTexts;
 	
 	protected List<PdfFootNote> footNotes = new ArrayList<>();
 	
@@ -279,17 +279,24 @@ public class PdfText implements Text, PdfParagraphEmbeddable {
 		
 		float footNotesWidth = 0.0f;
 		if(footNotes.size() > 0) {
-			StringBuilder footNotesBuilder = new StringBuilder();
-			
-			for(PdfFootNote footNote : footNotes) {
-				footNotesBuilder.append(footNote.getId()).append(" ");
-			}
-			footNotesBuilder.deleteCharAt(footNotesBuilder.length() - 1);
+			Iterator<PdfFootNote> footNoteIterator = footNotes.iterator();
 			float footNotePositionX = positionX + coreText.getWidth();
-			coreFootNoteTexts = new com.web4enterprise.pdf.core.text.Text(footNotePositionX, positionY, currentFontSize, currentFontVariant, color, footNotesBuilder.toString());
-			coreFootNoteTexts.setScript(TextScript.SUPER);
-			
-			page.getCorePage().add(coreFootNoteTexts);
+			while(footNoteIterator.hasNext()) {
+				PdfFootNote footNote = footNoteIterator.next();
+				com.web4enterprise.pdf.core.text.Text coreFootNoteText = new com.web4enterprise.pdf.core.text.Text(footNotePositionX, positionY, currentFontSize, currentFontVariant, color, footNote.getId());
+				coreFootNoteText.setScript(TextScript.SUPER);
+				coreFootNoteText.setLink(footNote);
+				
+				footNotePositionX += coreFootNoteText.getWidth();
+				
+				page.getCorePage().add(coreFootNoteText);
+				if(footNoteIterator.hasNext()) {
+					com.web4enterprise.pdf.core.text.Text spaceText = new com.web4enterprise.pdf.core.text.Text(footNotePositionX, positionY, currentFontSize, currentFontVariant, color, " ");
+					spaceText.setScript(TextScript.SUPER);
+					footNotePositionX += spaceText.getWidth();
+					page.getCorePage().add(spaceText);
+				}
+			}
 		}
 		
 		return new Point(coreText.getWidth() + footNotesWidth, currentFontSize);
@@ -306,11 +313,16 @@ public class PdfText implements Text, PdfParagraphEmbeddable {
 	public PdfText clone() {
 		//TODO: Clone style.
 		PdfText newTextLine = new PdfText(style, getString());
-		if(linkedElement != null) {
+		if(isLinked()) {
 			newTextLine.setLink(linkedElement);
 		}
 		newTextLine.setFootNotes(footNotes);
 		return newTextLine;
+	}
+	
+	@Override
+	public boolean isLinked() {
+		return linkedElement != null;
 	}
 	
 	protected PdfText spawn(String value) {
