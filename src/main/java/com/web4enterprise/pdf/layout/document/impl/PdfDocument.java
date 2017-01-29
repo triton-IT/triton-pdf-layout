@@ -41,7 +41,7 @@ import com.web4enterprise.pdf.layout.page.footer.PageFooter;
 import com.web4enterprise.pdf.layout.page.footer.impl.PdfPageFooter;
 import com.web4enterprise.pdf.layout.page.header.PageHeader;
 import com.web4enterprise.pdf.layout.page.header.impl.PdfPageHeader;
-import com.web4enterprise.pdf.layout.page.impl.Page;
+import com.web4enterprise.pdf.layout.page.impl.PdfPage;
 import com.web4enterprise.pdf.layout.paragraph.Paragraph;
 import com.web4enterprise.pdf.layout.paragraph.ParagraphEmbeddable;
 import com.web4enterprise.pdf.layout.paragraph.ParagraphStyle;
@@ -95,7 +95,7 @@ public class PdfDocument implements Document, PdfPager {
 	/**
 	 * The page currently layed-out.
 	 */
-	protected Page currentPage = null;
+	protected PdfPage currentPage = null;
 	/**
 	 * The number of the page currently layed-out.
 	 */
@@ -287,7 +287,7 @@ public class PdfDocument implements Document, PdfPager {
 	}
 
 	@Override
-	public Page getCurrentPage() {
+	public PdfPage getCurrentPage() {
 		return currentPage;
 	}
 
@@ -352,7 +352,7 @@ public class PdfDocument implements Document, PdfPager {
 		com.web4enterprise.pdf.core.page.Page corePage = pdf.createPage(currentPageFormat.getWidth(), currentPageFormat.getHeight());
 		
 		currentPageNumber++;
-		currentPage = new Page(this, corePage, section.getStyle(), section.getHeader(), section.getFooter());
+		currentPage = new PdfPage(this, corePage, section.getStyle(), (PdfPageHeader) section.getHeader(), (PdfPageFooter) section.getFooter());
 		
 		currentPage.getFootNotes().setWidth(currentPage.getInnerWidth());
 		
@@ -415,11 +415,11 @@ public class PdfDocument implements Document, PdfPager {
 	 * Finish to lay-out document by rendering last footer.
 	 */
 	protected void finish() {
-		Page page = getCurrentPage();
-		if(page == null) {
+		PdfPage pdfPage = getCurrentPage();
+		if(pdfPage == null) {
 			LOGGER.warning("Finishing a document without any page.");
 		} else {
-			page.layOutEndOfPage();
+			pdfPage.layOutEndOfPage();
 		}
 	}
 }

@@ -25,54 +25,27 @@ import com.web4enterprise.pdf.core.geometry.Rect;
 import com.web4enterprise.pdf.layout.document.DocumentEmbeddable;
 import com.web4enterprise.pdf.layout.document.impl.PdfDocumentEmbeddable;
 import com.web4enterprise.pdf.layout.document.impl.PdfPager;
-import com.web4enterprise.pdf.layout.page.impl.PageFootNotes;
+import com.web4enterprise.pdf.layout.page.impl.PdfPageFootNotes;
+import com.web4enterprise.pdf.layout.page.impl.PdfEmbeddableContainer;
 import com.web4enterprise.pdf.layout.paragraph.impl.PdfParagraph;
 import com.web4enterprise.pdf.layout.style.Style;
 import com.web4enterprise.pdf.layout.toc.TableOfContent;
 
-public class PdfTableOfContent implements TableOfContent, PdfDocumentEmbeddable {
-	protected Float linkX = null;
-	protected Float linkY = null;
-	protected Integer pageId = null;
-	
+public class PdfTableOfContent extends PdfEmbeddableContainer implements TableOfContent {	
 	protected Map<Style, Integer> styles = new HashMap<>();
-	protected ArrayList<PdfDocumentEmbeddable> embeddables = new ArrayList<>();
 	
 	protected boolean verified = false;
-	
-	protected Integer pageNumber = null;
-
-	@Override
-	public Integer getPage() {
-		return pageId;
-	}
-
-	@Override
-	public Float getLinkX() {
-		return linkX;
-	}
-
-	@Override
-	public Float getLinkY() {
-		return linkY;
-	}
-
-	@Override
-	public float getHeight(PdfPager pdfPager, float width) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	@Override
 	public void layOut(PdfPager pdfPager, Rect boundingBox,
-			PageFootNotes pageFootNotes) {
+			PdfPageFootNotes pdfPageFootNotes) {
 		pageNumber = pdfPager.getCurrentPageNumber();
 		pageId = pdfPager.getCurrentPage().getCorePage().getId();
 		linkX = boundingBox.getLeft();
 		linkY = pdfPager.getCursorPosition().getY();
 		
 		verified = true;
-		embeddables.forEach(embeddable -> {
+		pdfDocumentEmbeddables.forEach(embeddable -> {
 			PdfParagraph paragraph;
 			
 			Integer embeddablePage = embeddable.getPageNumber();
@@ -84,7 +57,7 @@ public class PdfTableOfContent implements TableOfContent, PdfDocumentEmbeddable 
 				paragraph = new PdfParagraph(embeddable.getTOCText(), " 0");
 				verified = false;
 			}
-			paragraph.layOut(pdfPager, boundingBox, pageFootNotes);
+			paragraph.layOut(pdfPager, boundingBox, pdfPageFootNotes);
 		});
 	}
 	
@@ -94,26 +67,9 @@ public class PdfTableOfContent implements TableOfContent, PdfDocumentEmbeddable 
 	}
 
 	@Override
-	public PdfDocumentEmbeddable clone() {
+	public PdfTableOfContent clone() {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public Style getStyle() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getTOCText() {
-		//TOC is not supported in TOC.
-		return null;
-	}
-	
-	@Override
-	public Integer getPageNumber() {
-		return pageNumber;
 	}
 	
 	/**
@@ -131,7 +87,7 @@ public class PdfTableOfContent implements TableOfContent, PdfDocumentEmbeddable 
 	public void addEmbeddables(List<DocumentEmbeddable> embeddables) {
 		for(DocumentEmbeddable embeddable : embeddables) {
 			if(embeddable != this && styles.containsKey(embeddable.getStyle())) {
-				this.embeddables.add((PdfDocumentEmbeddable) embeddable);
+				this.pdfDocumentEmbeddables.add((PdfDocumentEmbeddable) embeddable);
 			}
 		}
 	}

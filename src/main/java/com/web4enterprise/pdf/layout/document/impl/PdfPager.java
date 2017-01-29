@@ -17,7 +17,7 @@
 package com.web4enterprise.pdf.layout.document.impl;
 
 import com.web4enterprise.pdf.core.geometry.Point;
-import com.web4enterprise.pdf.layout.page.impl.Page;
+import com.web4enterprise.pdf.layout.page.impl.PdfPage;
 
 /**
  * The pager responsible for controlling layout of document.
@@ -44,7 +44,7 @@ public interface PdfPager {
 	 * 
 	 * @return The page currently under lay-out.
 	 */
-	public Page getCurrentPage();
+	public PdfPage getCurrentPage();
 	
 	/**
 	 * Get the cursor position on page.

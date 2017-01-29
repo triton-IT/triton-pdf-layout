@@ -18,6 +18,17 @@ package com.web4enterprise.pdf.layout.page.footer;
 
 import com.web4enterprise.pdf.layout.document.DocumentEmbeddable;
 
-public interface PageFooter {	
+/**
+ * Defines a page footer to embed in a page.
+ * 
+ * 
+ * @author Régis Ramillien
+ */
+public interface PageFooter {
+	/**
+	 * Add embeddables.
+	 * 
+	 * @param embeddables The embeddables to add.
+	 */
 	public void addEmbeddables(DocumentEmbeddable... embeddables);
 }

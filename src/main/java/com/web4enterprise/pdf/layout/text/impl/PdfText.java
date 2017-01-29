@@ -29,7 +29,7 @@ import com.web4enterprise.pdf.core.text.TextScript;
 import com.web4enterprise.pdf.layout.document.DocumentEmbeddable;
 import com.web4enterprise.pdf.layout.document.impl.PdfPager;
 import com.web4enterprise.pdf.layout.document.impl.PdfDocumentEmbeddable;
-import com.web4enterprise.pdf.layout.page.impl.Page;
+import com.web4enterprise.pdf.layout.page.impl.PdfPage;
 import com.web4enterprise.pdf.layout.paragraph.FootNote;
 import com.web4enterprise.pdf.layout.paragraph.Paragraph;
 import com.web4enterprise.pdf.layout.paragraph.ParagraphStyle;
@@ -252,7 +252,7 @@ public class PdfText implements Text, PdfParagraphEmbeddable {
 	}
 	
 	@Override
-	public Point layOut(Page page, ParagraphStyle defaultStyle, float defaultFontSize, float positionX, float positionY) {
+	public Point layOut(PdfPage pdfPage, ParagraphStyle defaultStyle, float defaultFontSize, float positionX, float positionY) {
 		Font currentFont = (style.getFont() != null)?style.getFont():defaultStyle.getFont();
 		FontVariant currentFontVariant = currentFont.getVariant((style.getFontStyle() != null)?
 				style.getFontStyle():defaultStyle.getFontStyle());
@@ -275,7 +275,7 @@ public class PdfText implements Text, PdfParagraphEmbeddable {
 			coreText.setUnderlineColor(underlineColor);
 		}
 		
-		page.getCorePage().add(coreText);
+		pdfPage.getCorePage().add(coreText);
 		
 		float footNotesWidth = 0.0f;
 		if(footNotes.size() > 0) {
@@ -289,12 +289,12 @@ public class PdfText implements Text, PdfParagraphEmbeddable {
 				
 				footNotePositionX += coreFootNoteText.getWidth();
 				
-				page.getCorePage().add(coreFootNoteText);
+				pdfPage.getCorePage().add(coreFootNoteText);
 				if(footNoteIterator.hasNext()) {
 					com.web4enterprise.pdf.core.text.Text spaceText = new com.web4enterprise.pdf.core.text.Text(footNotePositionX, positionY, currentFontSize, currentFontVariant, color, " ");
 					spaceText.setScript(TextScript.SUPER);
 					footNotePositionX += spaceText.getWidth();
-					page.getCorePage().add(spaceText);
+					pdfPage.getCorePage().add(spaceText);
 				}
 			}
 		}

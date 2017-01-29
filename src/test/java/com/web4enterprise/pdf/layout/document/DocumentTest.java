@@ -375,10 +375,10 @@ public class DocumentTest {
 		paragraph = document.createParagraph();
 		Text footNotedText = paragraph.createText("A footnote can be added simply by adding a footnote object to a paragraph element.");
 		paragraph.addEmbeddable(footNotedText);
-		Paragraph footNote = document.createParagraph(footNoteStyle, "Any paragraph with texts and images can be added to a footnote.", NEW_LINE, 
+		Paragraph footNote1 = document.createParagraph(footNoteStyle, "Any paragraph with texts and images can be added to a footnote.", NEW_LINE, 
 				"Footnotes indices are added to text automatically as super-scripts.");
 		Paragraph footNote2 = document.createParagraph(footNoteStyle, "Many foot-notes can be placed on the same text.");
-		footNotedText.addFootNote(footNote);
+		footNotedText.addFootNote(footNote1);
 		footNotedText.addFootNote(footNote2);
 		document.addEmbeddable(paragraph);
 		

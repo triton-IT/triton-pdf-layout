@@ -18,28 +18,51 @@ package com.web4enterprise.pdf.layout.page.impl;
 
 import java.util.ArrayList;
 
-public class VerticalStopsList extends ArrayList<Float> {
+/**
+ * List of vertical stops.
+ * 
+ * 
+ * @author Régis Ramillien
+ */
+public class PdfVerticalStopsList extends ArrayList<Float> {
 	/**
-	 * 
+	 * The default serial version UID.
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	/**
+	 * Index of the next stop to stop to.
+	 */
 	protected int currentIndex = 0;
 	
+	/*
+	 * Get the identifier of next stop to stop to.
+	 */
 	public int getCurrentIndex() {
 		return currentIndex;
 	}
 	
+	/**
+	 * Advance to next stop.
+	 */
 	public void next() {
 		currentIndex++;
 	}
 	
+	/**
+	 * Add a stop.
+	 * 
+	 * @param stops
+	 */
 	public void add(float... stops) {
 		for(float stop : stops) {
 			add(stop);
 		}
 	}
 
+	/**
+	 * Reset the index of current stop.
+	 */
 	public void reset() {
 		currentIndex = 0;
 	}

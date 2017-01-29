@@ -16,10 +16,14 @@
 
 package com.web4enterprise.pdf.layout.document.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.web4enterprise.pdf.core.geometry.Rect;
 import com.web4enterprise.pdf.core.link.Linkable;
 import com.web4enterprise.pdf.layout.document.DocumentEmbeddable;
-import com.web4enterprise.pdf.layout.page.impl.PageFootNotes;
+import com.web4enterprise.pdf.layout.page.impl.PdfPageFootNotes;
+import com.web4enterprise.pdf.layout.style.Style;
 
 /**
  * An object embeddable in a document.
@@ -27,8 +31,50 @@ import com.web4enterprise.pdf.layout.page.impl.PageFootNotes;
  * 
  * @author Régis Ramillien
  */
-public interface PdfDocumentEmbeddable extends DocumentEmbeddable, Cloneable,
+public abstract class PdfDocumentEmbeddable implements DocumentEmbeddable, Cloneable,
 		Linkable {
+	protected float width = 0.0f;
+	protected float height = 0.0f;
+	protected float computedWidth = 0.0f;
+
+	protected Float linkX = null;
+	protected Float linkY = null;
+	protected Integer pageId = null;
+	
+	protected Integer pageNumber = null;
+
+	@Override
+	public Integer getPage() {
+		return pageId;
+	}
+
+	@Override
+	public Float getLinkX() {
+		return linkX;
+	}
+
+	@Override
+	public Float getLinkY() {
+		return linkY;
+	}
+
+	@Override
+	public Style getStyle() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getTOCText() {
+		//Header is not supported in TOC.
+		return null;
+	}
+	
+	@Override
+	public Integer getPageNumber() {
+		return pageNumber;
+	}
+	
 	/**
 	 * Get height of embeddable.
 	 * 
@@ -38,7 +84,21 @@ public interface PdfDocumentEmbeddable extends DocumentEmbeddable, Cloneable,
 	 *            The maximum available width for embeddable.
 	 * @return The height of embeddable.
 	 */
-	float getHeight(PdfPager pdfPager, float width);
+	public float getHeight(PdfPager pdfPager, float width) {
+		if(computedWidth != width) {
+			compute(pdfPager, width);
+		}
+		
+		return height;
+	}
+	
+	public float getWidth() {
+		return width;
+	}
+
+	public void setWidth(float width) {
+		this.width = width;
+	}
 
 	/**
 	 * Lay-out the embeddable based on best effort. The layout must be
@@ -48,13 +108,18 @@ public interface PdfDocumentEmbeddable extends DocumentEmbeddable, Cloneable,
 	 * each embeddable returns true.
 	 * 
 	 * @param pdfPager
-	 *            THe pager to get information from.
+	 *            The pager to get information from.
 	 * @param boundingBox
 	 *            The bounding box available for component.
-	 * @param pageFootNotes
+	 * @param pdfPageFootNotes
 	 *            The foot-notes used of page.
 	 */
-	void layOut(PdfPager pdfPager, Rect boundingBox, PageFootNotes pageFootNotes);
+	public void layOut(PdfPager pdfPager, Rect boundingBox, PdfPageFootNotes pdfPageFootNotes) {
+		pageNumber = pdfPager.getCurrentPageNumber();
+		pageId = pdfPager.getCurrentPage().getCorePage().getId();
+		linkX = boundingBox.getLeft();
+		linkY = pdfPager.getCursorPosition().getY();
+	}
 
 	/**
 	 * 
@@ -64,7 +129,7 @@ public interface PdfDocumentEmbeddable extends DocumentEmbeddable, Cloneable,
 	 * @return {@code true} if embeddable is ok, {@code false} is embeddable
 	 *         needs to be re-layed-out.
 	 */
-	default boolean verifyLayOut(PdfPager pdfPager) {
+	public boolean verifyLayOut(PdfPager pdfPager) {
 		return true;
 	}
 
@@ -73,5 +138,14 @@ public interface PdfDocumentEmbeddable extends DocumentEmbeddable, Cloneable,
 	 * 
 	 * @return A clone to this embeddable.
 	 */
-	PdfDocumentEmbeddable clone();
+	@Override
+	public PdfDocumentEmbeddable clone() {
+		//TODO:
+		return null;
+	}
+	
+	/**
+	 * Compute height of embeddable for the given width.
+	 */
+	public abstract void compute(PdfPager pdfPager, float width);
 }

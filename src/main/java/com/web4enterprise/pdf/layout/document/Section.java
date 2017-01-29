@@ -19,7 +19,7 @@ package com.web4enterprise.pdf.layout.document;
 import com.web4enterprise.pdf.layout.page.PageStyle;
 import com.web4enterprise.pdf.layout.page.footer.PageFooter;
 import com.web4enterprise.pdf.layout.page.header.PageHeader;
-import com.web4enterprise.pdf.layout.page.impl.VerticalStopsList;
+import com.web4enterprise.pdf.layout.page.impl.PdfVerticalStopsList;
 
 /**
  * Defines a section in the document.
@@ -43,7 +43,7 @@ public class Section {
 	/**
 	 * The list of stops of this section.
 	 */
-	protected VerticalStopsList verticalStops = new VerticalStopsList();
+	protected PdfVerticalStopsList verticalStops = new PdfVerticalStopsList();
 
 	/**
 	 * Create a new section nowith default values.
@@ -110,7 +110,7 @@ public class Section {
 	 * 
 	 * @return The list of stops of this section.
 	 */
-	public VerticalStopsList getVerticalStops() {
+	public PdfVerticalStopsList getVerticalStops() {
 		return verticalStops;
 	}
 }

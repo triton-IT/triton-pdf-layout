@@ -14,118 +14,6 @@
  * limitations under the License.
  */
 
-/*
- * Copyright 2017 web4enterprise.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-/*
- * Copyright 2017 web4enterprise.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-/*
- * Copyright 2017 web4enterprise.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-/*
- * Copyright 2017 web4enterprise.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-/*
- * Copyright 2017 web4enterprise.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-/*
- * Copyright 2017 web4enterprise.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-/*
- * Copyright 2017 web4enterprise.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.web4enterprise.pdf.layout.paragraph.impl;
 
 import java.util.ArrayList;
@@ -135,28 +23,19 @@ import java.util.logging.Logger;
 
 import com.web4enterprise.pdf.core.geometry.Rect;
 import com.web4enterprise.pdf.core.text.TextScript;
-import com.web4enterprise.pdf.layout.document.impl.PdfDocumentEmbeddable;
 import com.web4enterprise.pdf.layout.document.impl.PdfPager;
-import com.web4enterprise.pdf.layout.page.impl.PageFootNotes;
+import com.web4enterprise.pdf.layout.page.impl.PdfPageFootNotes;
+import com.web4enterprise.pdf.layout.page.impl.PdfEmbeddableContainer;
 import com.web4enterprise.pdf.layout.paragraph.FootNote;
 import com.web4enterprise.pdf.layout.paragraph.Paragraph;
-import com.web4enterprise.pdf.layout.style.Style;
 import com.web4enterprise.pdf.layout.text.TextStyle;
 import com.web4enterprise.pdf.layout.text.impl.PdfText;
 
-public class PdfFootNote implements FootNote, PdfDocumentEmbeddable {
+public class PdfFootNote extends PdfEmbeddableContainer implements FootNote {
 	private static final Logger LOGGER = Logger.getLogger(PdfFootNote.class.getName());
 	
 	protected List<PdfParagraph> paragraphs = new ArrayList<>();
-	protected float height = 0.0f;
-	protected float computedWidth = 0.0f;
 	protected String id;
-
-	protected Float linkX = null;
-	protected Float linkY = null;
-	protected Integer pageId = null;
-	
-	protected Integer pageNumber = null;
 	
 	public PdfFootNote(PdfParagraph... paragraphs) {		
 		if(paragraphs.length != 0) {
@@ -168,25 +47,13 @@ public class PdfFootNote implements FootNote, PdfDocumentEmbeddable {
 	public void addEmbeddable(Paragraph paragraph) {
 		paragraphs.add((PdfParagraph) paragraph);
 	}
-	
-	@Override
-	public float getHeight(PdfPager pdfPager, float width) {
-		if(computedWidth != width) {
-			compute(pdfPager, width);
-		}
-		return height;
-	}
 
 	@Override
-	public void layOut(PdfPager pdfPager, Rect boundingBox, PageFootNotes pageFootNotes) {
-		pageNumber = pdfPager.getCurrentPageNumber();
-		
-		pageId = pdfPager.getCurrentPage().getCorePage().getId();
-		linkX = boundingBox.getLeft();
-		linkY = pdfPager.getCursorPosition().getY();
+	public void layOut(PdfPager pdfPager, Rect boundingBox, PdfPageFootNotes pdfPageFootNotes) {
+		super.layOut(pdfPager, boundingBox, pdfPageFootNotes);
 		
 		for(PdfParagraph paragraph : this.paragraphs) {
-			paragraph.layOut(pdfPager, boundingBox, pageFootNotes);
+			paragraph.layOut(pdfPager, boundingBox, pdfPageFootNotes);
 		}
 	}
 
@@ -194,37 +61,6 @@ public class PdfFootNote implements FootNote, PdfDocumentEmbeddable {
 	public PdfFootNote clone() {
 		//TODO: clone this.
 		return this;
-	}
-
-	@Override
-	public Integer getPage() {
-		return pageId;
-	}
-
-	@Override
-	public Float getLinkX() {
-		return linkX;
-	}
-
-	@Override
-	public Float getLinkY() {
-		return linkY;
-	}
-
-	@Override
-	public Style getStyle() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getTOCText() {
-		return paragraphs.get(0).getTOCText();
-	}
-	
-	@Override
-	public Integer getPageNumber() {
-		return pageNumber;
 	}
 
 	public void compute(PdfPager pdfPager, float width) {
@@ -261,5 +97,4 @@ public class PdfFootNote implements FootNote, PdfDocumentEmbeddable {
 		}
 		return id;
 	}
-	
 }

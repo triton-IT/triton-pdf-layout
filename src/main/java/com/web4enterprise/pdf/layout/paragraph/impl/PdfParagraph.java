@@ -26,7 +26,7 @@ import com.web4enterprise.pdf.layout.document.DocumentEmbeddable;
 import com.web4enterprise.pdf.layout.document.impl.PdfDocumentEmbeddable;
 import com.web4enterprise.pdf.layout.document.impl.PdfPager;
 import com.web4enterprise.pdf.layout.image.Image;
-import com.web4enterprise.pdf.layout.page.impl.PageFootNotes;
+import com.web4enterprise.pdf.layout.page.impl.PdfPageFootNotes;
 import com.web4enterprise.pdf.layout.paragraph.Paragraph;
 import com.web4enterprise.pdf.layout.paragraph.ParagraphEmbeddable;
 import com.web4enterprise.pdf.layout.paragraph.ParagraphStyle;
@@ -38,19 +38,13 @@ import com.web4enterprise.pdf.layout.text.impl.PdfText;
 import com.web4enterprise.pdf.layout.utils.CompositeList;
 import com.web4enterprise.pdf.layout.utils.CompositeList.CompositeListIterator;
 
-public class PdfParagraph implements Paragraph, PdfDocumentEmbeddable {
+public class PdfParagraph extends PdfDocumentEmbeddable implements Paragraph {
 	protected ParagraphStyle style = null;
 	protected List<Stop> stops = new ArrayList<>();
 	//List of stops and theirs paragraph embeddables.
 	protected CompositeList<PdfParagraphEmbeddable> embeddables = new CompositeList<>();
 	protected int currentStop = 0;
 	protected List<PdfParagraphEmbeddable> currentEmbeddables = new ArrayList<PdfParagraphEmbeddable>();
-
-	protected Float linkX = null;
-	protected Float linkY = null;
-	protected Integer pageId = null;
-	
-	protected Integer pageNumber = null;
 	
 	protected DocumentEmbeddable linkedElement;
 	
@@ -207,36 +201,15 @@ public class PdfParagraph implements Paragraph, PdfDocumentEmbeddable {
 	}
 
 	@Override
-	public Integer getPage() {
-		return pageId;
+	public String getTOCText() {
+		return this.getEmbeddables().get(0).getTOCText();
 	}
 
 	@Override
-	public Float getLinkX() {
-		return linkX;
-	}
-
-	@Override
-	public Float getLinkY() {
-		return linkY;
-	}
-	
-	@Override
-	public float getHeight(PdfPager pdfPager, float width) {
-		float height = 0;
-		
-		for(PdfParagraphEmbeddableLine embeddableLine : getEmbeddableLines(pdfPager, width)) {
-			height += embeddableLine.getHeight(getStyle());
-		}
-		
-		height += getStyle().getMargins().getTop() + getStyle().getMargins().getBottom();
-		
-		return height;
-	}
-
-	@Override
-	public void layOut(PdfPager pdfPager, Rect boundingBox, PageFootNotes pageFootNotes) {
+	public void layOut(PdfPager pdfPager, Rect boundingBox, PdfPageFootNotes pdfPageFootNotes) {
+		//super.layOut(pdfPager, boundingBox, pageFootNotes);
 		pageNumber = pdfPager.getCurrentPageNumber();
+		
 		//Get all lines of text (composed of text of different style).
 		List<PdfParagraphEmbeddableLine> embeddableLines = getEmbeddableLines();
 		
@@ -286,13 +259,13 @@ public class PdfParagraph implements Paragraph, PdfDocumentEmbeddable {
 				//Calculate page bottom with already added footnotes  
 				float bottom = boundingBox.getBottom();
 				float existingFootNotesHeight = 0.0f;
-				if(pageFootNotes != null) {
-					existingFootNotesHeight = pageFootNotes.getHeight(pdfPager, pageFootNotes.getWidth());
+				if(pdfPageFootNotes != null) {
+					existingFootNotesHeight = pdfPageFootNotes.getHeight(pdfPager, pdfPageFootNotes.getWidth());
 					
 					//FootNote must be rendered on same page than line, add height of the footNote to the bottom of page.
 					for(PdfParagraphEmbeddable paragraphEmbeddable : embeddableSubLine) {
 						for(PdfFootNote footNote : paragraphEmbeddable.getFootNotes()) {
-							bottom += footNote.getHeight(pdfPager, pageFootNotes.getWidth());
+							bottom += footNote.getHeight(pdfPager, pdfPageFootNotes.getWidth());
 						}
 					}
 				}
@@ -310,14 +283,14 @@ public class PdfParagraph implements Paragraph, PdfDocumentEmbeddable {
 				}
 
 				//Add footNotes of the line to page.
-				if(pageFootNotes != null) {
+				if(pdfPageFootNotes != null) {
 					for(PdfParagraphEmbeddable paragraphEmbeddable : embeddableSubLine) {
 						for(PdfFootNote footNote : paragraphEmbeddable.getFootNotes()) {
-							pageFootNotes.addEmbeddable(footNote);
+							pdfPageFootNotes.addEmbeddables(footNote);
 						}
 					}
 					//Because an "empty" footNote has already been computed with this same size, we force it to re-compute with new content. 
-					pageFootNotes.compute(pdfPager, pageFootNotes.getWidth());
+					pdfPageFootNotes.compute(pdfPager, pdfPageFootNotes.getWidth());
 				}
 				
 				//If this is the first line, set the link.
@@ -439,17 +412,6 @@ public class PdfParagraph implements Paragraph, PdfDocumentEmbeddable {
 	    //Clone create a new Paragraph with clones.
 		return new PdfParagraph(style, listEmbeddablesClone);
 	}
-
-	@Override
-	public String getTOCText() {
-		return this.getEmbeddables().get(0).getTOCText();
-	}
-	
-	@Override
-	public Integer getPageNumber() {
-		return pageNumber;
-	}
-	
 	@Override
 	public void setLink(DocumentEmbeddable documentEmbeddable) {
 		linkedElement = documentEmbeddable;
@@ -491,5 +453,18 @@ public class PdfParagraph implements Paragraph, PdfDocumentEmbeddable {
 		}
 		
 		return embeddableSubLines;
+	}
+
+	@Override
+	public void compute(PdfPager pdfPager, float width) {
+		height = 0.0f;
+		
+		for(PdfParagraphEmbeddableLine embeddableLine : getEmbeddableLines(pdfPager, width)) {
+			height += embeddableLine.getHeight(getStyle());
+		}
+		
+		height += getStyle().getMargins().getTop() + getStyle().getMargins().getBottom();
+		
+		computedWidth = width;
 	}
 }

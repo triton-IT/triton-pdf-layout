@@ -25,7 +25,7 @@ import com.web4enterprise.pdf.layout.document.DocumentEmbeddable;
 import com.web4enterprise.pdf.layout.document.impl.PdfPager;
 import com.web4enterprise.pdf.layout.document.impl.PdfDocumentEmbeddable;
 import com.web4enterprise.pdf.layout.image.Image;
-import com.web4enterprise.pdf.layout.page.impl.Page;
+import com.web4enterprise.pdf.layout.page.impl.PdfPage;
 import com.web4enterprise.pdf.layout.paragraph.FootNote;
 import com.web4enterprise.pdf.layout.paragraph.Paragraph;
 import com.web4enterprise.pdf.layout.paragraph.ParagraphStyle;
@@ -147,12 +147,12 @@ public class PdfImage implements Image, PdfParagraphEmbeddable {
 	}
 	
 	@Override
-	public Point layOut(Page page, ParagraphStyle defaultStyle,
+	public Point layOut(PdfPage pdfPage, ParagraphStyle defaultStyle,
 			float defaultFontSize, float positionX, float positionY) {
 		coreImage.setX(positionX);
 		coreImage.setY(positionY);
 		
-		page.getCorePage().add(coreImage);
+		pdfPage.getCorePage().add(coreImage);
 		
 		return new Point(coreImage.getWidth(), coreImage.getHeight());
 	}	

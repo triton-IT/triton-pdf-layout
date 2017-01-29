@@ -19,7 +19,7 @@ package com.web4enterprise.pdf.layout.image;
 import com.web4enterprise.pdf.layout.paragraph.ParagraphEmbeddable;
 
 /**
- * Defines an Image to embed in document.
+ * Defines an image to embed in document.
  * 
  * 
  * @author Régis Ramillien

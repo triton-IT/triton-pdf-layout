@@ -26,8 +26,8 @@ import com.web4enterprise.pdf.core.geometry.Rect;
 import com.web4enterprise.pdf.core.path.StraightPath;
 import com.web4enterprise.pdf.layout.document.impl.PdfDocumentEmbeddable;
 import com.web4enterprise.pdf.layout.document.impl.PdfPager;
-import com.web4enterprise.pdf.layout.page.impl.Page;
-import com.web4enterprise.pdf.layout.page.impl.PageFootNotes;
+import com.web4enterprise.pdf.layout.page.impl.PdfPage;
+import com.web4enterprise.pdf.layout.page.impl.PdfPageFootNotes;
 import com.web4enterprise.pdf.layout.paragraph.Paragraph;
 import com.web4enterprise.pdf.layout.paragraph.impl.PdfParagraph;
 import com.web4enterprise.pdf.layout.placement.BorderStyle;
@@ -38,7 +38,7 @@ import com.web4enterprise.pdf.layout.table.TableCell;
 import com.web4enterprise.pdf.layout.table.TableCellStyle;
 import com.web4enterprise.pdf.layout.table.TableRow;
 
-public class PdfTable implements Table, PdfDocumentEmbeddable {
+public class PdfTable extends PdfDocumentEmbeddable implements Table {
 	protected List<TableRow> rows = new ArrayList<>();
 
 	protected Map<Integer, Float> fixedColumnsWidths = new HashMap<>();
@@ -48,29 +48,8 @@ public class PdfTable implements Table, PdfDocumentEmbeddable {
 	
 	protected boolean computed = false;
 
-	protected Float linkX = null;
-	protected Float linkY = null;
-	protected Integer pageId = null;
-	
-	protected Integer pageNumber = null;
-	
 	@Override
-	public float getHeight(PdfPager pdfPager, float width) {
-		if(!computed) {
-			computeInnerLayout(pdfPager);
-		}
-		
-		float height = 0.0f;
-		
-		for(TableRow row : getRows()) {
-			height += row.getHeight();
-		}
-		
-		return height;
-	}
-
-	@Override
-	public void layOut(PdfPager pdfPager, Rect boundingBox, PageFootNotes pageFootNotes) {
+	public void layOut(PdfPager pdfPager, Rect boundingBox, PdfPageFootNotes pdfPageFootNotes) {
 		pageNumber = pdfPager.getCurrentPageNumber();
 		if(!computed) {
 			computeInnerLayout(pdfPager);
@@ -80,7 +59,7 @@ public class PdfTable implements Table, PdfDocumentEmbeddable {
 		
 		Map<Integer, Integer> rowMerges = new HashMap<>();
 		for(TableRow row : getRows()) {
-			float rowHeight = createRow(pdfPager, boundingBox, startY, row, rowMerges, pageFootNotes);
+			float rowHeight = createRow(pdfPager, boundingBox, startY, row, rowMerges, pdfPageFootNotes);
 			startY -= rowHeight;
 		}
 		
@@ -91,27 +70,6 @@ public class PdfTable implements Table, PdfDocumentEmbeddable {
 	public PdfTable clone() {
 		//TODO: clone this.
 		return this;
-	}
-
-	@Override
-	public Integer getPage() {
-		return pageId;
-	}
-
-	@Override
-	public Float getLinkX() {
-		return linkX;
-	}
-
-	@Override
-	public Float getLinkY() {
-		return linkY;
-	}
-
-	@Override
-	public Style getStyle() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 	
 	@Override
@@ -140,17 +98,6 @@ public class PdfTable implements Table, PdfDocumentEmbeddable {
 	@Override
 	public TableCell createTableCell(TableCellStyle style, Paragraph... paragraphs) {
 		return new PdfTableCell(style, paragraphs);
-	}
-
-	@Override
-	public String getTOCText() {
-		//Table is not supported in TOC.
-		return null;
-	}
-	
-	@Override
-	public Integer getPageNumber() {
-		return pageNumber;
 	}
 	
 	public TableRow addRow(TableCell...cells) {
@@ -281,8 +228,8 @@ public class PdfTable implements Table, PdfDocumentEmbeddable {
 		}
 	}
 
-	protected float createRow(PdfPager pdfPager, Rect boundingBox, float startY, TableRow row, Map<Integer, Integer> rowMerges, PageFootNotes pageFootNotes) {
-		Page currentPage = pdfPager.getCurrentPage();
+	protected float createRow(PdfPager pdfPager, Rect boundingBox, float startY, TableRow row, Map<Integer, Integer> rowMerges, PdfPageFootNotes pdfPageFootNotes) {
+		PdfPage currentPage = pdfPager.getCurrentPage();
 		float startX = boundingBox.getLeft();
 		
 		float rowHeight = row.getHeight();
@@ -291,7 +238,7 @@ public class PdfTable implements Table, PdfDocumentEmbeddable {
 			currentPage = pdfPager.getCurrentPage();
 			if(isRepeatHeader()) {
 				for(int i = 0; i < getNbHeaderRows(); i++) {
-					createRow(pdfPager, boundingBox, startY, getRows().get(i), rowMerges, pageFootNotes);
+					createRow(pdfPager, boundingBox, startY, getRows().get(i), rowMerges, pdfPageFootNotes);
 				}
 			}
 		}
@@ -331,7 +278,7 @@ public class PdfTable implements Table, PdfDocumentEmbeddable {
 				for(Paragraph paragraph : cell.getParagraphs()) {
 					((PdfParagraph) paragraph).layOut(pdfPager, 
 							new Rect(cellStartY, startX, cellStartY - row.getHeight(), startX + width), 
-							pageFootNotes);
+							pdfPageFootNotes);
 					if(pdfPager.getCursorPosition().getY() < lowestCellY) {
 						lowestCellY = pdfPager.getCursorPosition().getY();
 					}
@@ -380,5 +327,16 @@ public class PdfTable implements Table, PdfDocumentEmbeddable {
 		pdfPager.getCursorPosition().setY(lowestCellY);
 
 		return rowHeight;
+	}
+
+	@Override
+	public void compute(PdfPager pdfPager, float width) {
+		computeInnerLayout(pdfPager);
+		
+		height = 0.0f;
+		
+		for(TableRow row : getRows()) {
+			height += row.getHeight();
+		}
 	}
 }

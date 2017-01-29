@@ -19,7 +19,7 @@ package com.web4enterprise.pdf.layout.document.impl.command;
 import com.web4enterprise.pdf.layout.document.impl.PdfPager;
 import com.web4enterprise.pdf.layout.document.impl.PdfSectionCommand;
 import com.web4enterprise.pdf.layout.exception.BadOperationException;
-import com.web4enterprise.pdf.layout.page.impl.VerticalStopsList;
+import com.web4enterprise.pdf.layout.page.impl.PdfVerticalStopsList;
 
 /**
  * PDF command to go to next vertical stop of section.
@@ -31,7 +31,7 @@ public class PdfNextVerticalStopCommand implements PdfSectionCommand {
 	/**
 	 * The list of vertical stop to add to section.
 	 */
-	protected VerticalStopsList verticalStops = new VerticalStopsList();
+	protected PdfVerticalStopsList verticalStops = new PdfVerticalStopsList();
 
 	@Override
 	public void prepareNextLayOut(PdfPager pdfPager) {
@@ -64,7 +64,7 @@ public class PdfNextVerticalStopCommand implements PdfSectionCommand {
 	 * 
 	 * @param verticalStops The vertial stops to set for section.
 	 */
-	public void setStops(VerticalStopsList verticalStops) {
+	public void setStops(PdfVerticalStopsList verticalStops) {
 		this.verticalStops = verticalStops;
 	}
 }

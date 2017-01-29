@@ -18,6 +18,17 @@ package com.web4enterprise.pdf.layout.page.header;
 
 import com.web4enterprise.pdf.layout.document.DocumentEmbeddable;
 
-public interface PageHeader {	
+/**
+ * Defines a page header to embed in a page.
+ * 
+ * 
+ * @author Régis Ramillien
+ */
+public interface PageHeader {
+	/**
+	 * Add embeddables.
+	 * 
+	 * @param embeddables The embeddables to add.
+	 */
 	public void addEmbeddables(DocumentEmbeddable... embeddables);
 }
