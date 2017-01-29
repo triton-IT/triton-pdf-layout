@@ -67,11 +67,11 @@ public class TextStyle implements Style, Cloneable {
 		this.font = font;
 	}
 	
-	public FontsVariant getFontStyle() {
+	public FontsVariant getFontsVariant() {
 		return fontVariant;
 	}
 
-	public void setFontStyle(FontsVariant fontVariant) {
+	public void setFontsVariant(FontsVariant fontVariant) {
 		this.fontVariant = fontVariant;
 	}
 

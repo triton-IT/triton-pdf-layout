@@ -51,7 +51,7 @@ public class PdfImage implements Image, PdfParagraphEmbeddable {
 	 */
 	protected List<PdfFootNote> footNotes = new ArrayList<>();
 	/**
-	 * The element linked to this image
+	 * The element linked to this image.
 	 */
 	protected PdfDocumentEmbeddable linkedElement;
 	/**
@@ -120,7 +120,7 @@ public class PdfImage implements Image, PdfParagraphEmbeddable {
 	}
 	
 	@Override
-	public float getWidth(ParagraphStyle defaultStyle, float defaultTextSize) {
+	public float getWidth(ParagraphStyle defaultStyle, float defaultFontSize) {
 		return getWidth();
 	}
 	

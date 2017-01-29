@@ -120,7 +120,7 @@ public class PdfText implements Text, PdfParagraphEmbeddable {
 	public void addFootNote(Paragraph... paragraphs) {
 		PdfFootNote footNote = new PdfFootNote();
 		for(Paragraph paragraph : paragraphs) {
-			footNote.addEmbeddable((PdfParagraph) paragraph);
+			footNote.addEmbeddables((PdfParagraph) paragraph);
 		}
 		footNotes.add(footNote);
 	}
@@ -135,8 +135,8 @@ public class PdfText implements Text, PdfParagraphEmbeddable {
 		TextStyle textStyle = getStyle();
 		//Get font name between paragraph and text ones.
 		Font currentFont = (style.getFont() != null)?style.getFont():defaultStyle.getFont();
-		FontVariant currentFontVariant = currentFont.getVariant((style.getFontStyle() != null)?
-				style.getFontStyle():defaultStyle.getFontStyle());
+		FontVariant currentFontVariant = currentFont.getVariant((style.getFontsVariant() != null)?
+				style.getFontsVariant():defaultStyle.getFontsVariant());
 		//Get font size between paragraph and text ones.
 		float currentTextSize = (textStyle.getFontSize() != null)?textStyle.getFontSize():fontSize;
 		
@@ -240,11 +240,11 @@ public class PdfText implements Text, PdfParagraphEmbeddable {
 	}
 	
 	@Override
-	public float getWidth(ParagraphStyle defaultStyle, float defaultTextSize) {
+	public float getWidth(ParagraphStyle defaultStyle, float defaultFontSize) {
 		Font currentFont = (style.getFont() != null)?style.getFont():defaultStyle.getFont();
-		FontVariant currentFontVariant = currentFont.getVariant((style.getFontStyle() != null)?
-				style.getFontStyle():defaultStyle.getFontStyle());
-		float currentTextSize = (style.getFontSize() != null)?style.getFontSize():defaultTextSize;
+		FontVariant currentFontVariant = currentFont.getVariant((style.getFontsVariant() != null)?
+				style.getFontsVariant():defaultStyle.getFontsVariant());
+		float currentTextSize = (style.getFontSize() != null)?style.getFontSize():defaultFontSize;
 		
 		coreText.setFontVariant(currentFontVariant);
 		coreText.setSize(currentTextSize);
@@ -254,8 +254,8 @@ public class PdfText implements Text, PdfParagraphEmbeddable {
 	@Override
 	public Point layOut(PdfPage pdfPage, ParagraphStyle defaultStyle, float defaultFontSize, float positionX, float positionY) {
 		Font currentFont = (style.getFont() != null)?style.getFont():defaultStyle.getFont();
-		FontVariant currentFontVariant = currentFont.getVariant((style.getFontStyle() != null)?
-				style.getFontStyle():defaultStyle.getFontStyle());
+		FontVariant currentFontVariant = currentFont.getVariant((style.getFontsVariant() != null)?
+				style.getFontsVariant():defaultStyle.getFontsVariant());
 		float currentFontSize = (style.getFontSize() != null)?style.getFontSize():defaultFontSize;
 		
 		Color color = (style.getFontColor() != null)?style.getFontColor():defaultStyle.getFontColor();

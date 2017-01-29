@@ -18,6 +18,7 @@ package com.web4enterprise.pdf.layout.paragraph.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 import com.web4enterprise.pdf.core.geometry.Point;
@@ -26,79 +27,132 @@ import com.web4enterprise.pdf.layout.document.DocumentEmbeddable;
 import com.web4enterprise.pdf.layout.document.impl.PdfDocumentEmbeddable;
 import com.web4enterprise.pdf.layout.document.impl.PdfPager;
 import com.web4enterprise.pdf.layout.image.Image;
+import com.web4enterprise.pdf.layout.image.ImageData;
 import com.web4enterprise.pdf.layout.page.impl.PdfPageFootNotes;
 import com.web4enterprise.pdf.layout.paragraph.Paragraph;
 import com.web4enterprise.pdf.layout.paragraph.ParagraphEmbeddable;
 import com.web4enterprise.pdf.layout.paragraph.ParagraphStyle;
 import com.web4enterprise.pdf.layout.placement.Alignment;
 import com.web4enterprise.pdf.layout.placement.Stop;
+import com.web4enterprise.pdf.layout.style.Style;
 import com.web4enterprise.pdf.layout.text.Text;
 import com.web4enterprise.pdf.layout.text.TextStyle;
 import com.web4enterprise.pdf.layout.text.impl.PdfText;
 import com.web4enterprise.pdf.layout.utils.CompositeList;
-import com.web4enterprise.pdf.layout.utils.CompositeList.CompositeListIterator;
 
+/**
+ * Implements a Paragraph for a PDF document.
+ * 
+ * 
+ * @author Régis Ramillien
+ */
 public class PdfParagraph extends PdfDocumentEmbeddable implements Paragraph {
+	/**
+	 * The style of this paragraph.
+	 */
 	protected ParagraphStyle style = null;
+	/**
+	 * The list of stops of this paragraph.
+	 */
 	protected List<Stop> stops = new ArrayList<>();
-	//List of stops and theirs paragraph embeddables.
-	protected CompositeList<PdfParagraphEmbeddable> embeddables = new CompositeList<>();
-	protected int currentStop = 0;
-	protected List<PdfParagraphEmbeddable> currentEmbeddables = new ArrayList<PdfParagraphEmbeddable>();
-	
+	/**
+	 * List of stops and theirs paragraph embeddables.
+	 */
+	protected CompositeList<PdfParagraphEmbeddable> embeddablesByStop = new CompositeList<>();
+	/**
+	 * The next stop identifier to meet.
+	 */
+	protected int nextStop = 0;
+	/**
+	 * A cache of embeddables for the current stop.
+	 */
+	protected List<PdfParagraphEmbeddable> stopEmbeddables = new ArrayList<PdfParagraphEmbeddable>();
+	/**
+	 * The element linked to this paragraph.
+	 */
 	protected DocumentEmbeddable linkedElement;
 	
+	/**
+	 * Constrcuts a empty paragraph.
+	 */
 	public PdfParagraph() {
 		this((String[]) null);
 	}
 	
+	/**
+	 * Constructs a paragraphs from given strings.
+	 * 
+	 * @param texts The strings to add to this paragraph.
+	 */
 	public PdfParagraph(String... texts) {
 		this(new ParagraphStyle(), texts);
 	}
 	
+	/**
+	 * Constructs a paragraph from given {@link Style}.
+	 * 
+	 * @param style The {@link Style} to set to paragraph.
+	 */
 	public PdfParagraph(ParagraphStyle style) {
 		this(style, (String[]) null);
 	}
 	
+	/**
+	 * Constructs a pararaph from {@link Style} and strings.
+	 * 
+	 * @param style The {@link Style} to set to paragraph.
+	 * @param texts The strings to add to this paragraph.
+	 */
 	public PdfParagraph(ParagraphStyle style, String... texts) {
-		embeddables.addList(currentEmbeddables);
+		embeddablesByStop.addList(stopEmbeddables);
 		this.style = style;
 		if(texts != null) {
 			for(String text : texts) {
-				this.currentEmbeddables.add(new PdfText(text));
+				this.stopEmbeddables.add(new PdfText(text));
 			}
 		}
 	}
 	
+	/**
+	 * Constructs a paragraph from a list of {@link ParagraphEmbeddable}
+	 * 
+	 * @param paragraphEmbeddables The list of {@link ParagraphEmbeddable} to add to paragraph.
+	 */
 	public PdfParagraph(PdfParagraphEmbeddable... paragraphEmbeddables) {
 		this(new ParagraphStyle(), paragraphEmbeddables);
 	}
 	
+	/**
+	 * Construct a paragraph from a {@link Style} and a list of {@link ParagraphEmbeddable}.
+	 * 
+	 * @param style The {@link Style} to set to paragraph.
+	 * @param paragraphEmbeddables The list of {@link ParagraphEmbeddable} to add to paragraph.
+	 */
 	public PdfParagraph(ParagraphStyle style, PdfParagraphEmbeddable... paragraphEmbeddables) {
-		embeddables.addList(currentEmbeddables);
+		embeddablesByStop.addList(stopEmbeddables);
 		this.style = style;
-		this.currentEmbeddables.addAll(Arrays.asList(paragraphEmbeddables));
+		this.stopEmbeddables.addAll(Arrays.asList(paragraphEmbeddables));
 	}
 	
 	/**
 	 * Used only for cloning.
 	 * 
-	 * @param style The style of paragraph.
-	 * @param embeddables The embeddables to reference.
+	 * @param style The {@link Style} of paragraph.
+	 * @param embeddables The list of {@link ParagraphEmbeddable} to reference.
 	 */
 	private PdfParagraph(ParagraphStyle style, CompositeList<PdfParagraphEmbeddable> embeddables) {
 		this.style = style;
-		this.embeddables = embeddables;
+		this.embeddablesByStop = embeddables;
 	}
 
 	@Override
-	public Image createImage(Image image) {
-		return image.clone();
+	public Image createImage(ImageData imageData) {
+		return imageData.createImage();
 	}
 
 	@Override
-	public Image createImage(Image image, int width, int height) {
-		Image clone = image.clone();
+	public Image createImage(ImageData imageData, int width, int height) {
+		Image clone = imageData.createImage();
 		
 		clone.setWidth(width);
 		clone.setHeight(height);
@@ -107,8 +161,8 @@ public class PdfParagraph extends PdfDocumentEmbeddable implements Paragraph {
 	}
 
 	@Override
-	public Image createImageForWidth(Image image, int width) {
-		Image clone = image.clone();
+	public Image createImageForWidth(ImageData imageData, int width) {
+		Image clone = imageData.createImage();
 		
 		clone.setWidth(width, true);
 		
@@ -116,8 +170,8 @@ public class PdfParagraph extends PdfDocumentEmbeddable implements Paragraph {
 	}
 
 	@Override
-	public Image createImageForHeight(Image image, int height) {
-		Image clone = image.clone();
+	public Image createImageForHeight(ImageData imageData, int height) {
+		Image clone = imageData.createImage();
 		
 		clone.setHeight(height, true);
 		
@@ -169,7 +223,7 @@ public class PdfParagraph extends PdfDocumentEmbeddable implements Paragraph {
 	@Override
 	public void addEmbeddable(ParagraphEmbeddable... embeddables) {
 		for(ParagraphEmbeddable embeddable : embeddables) {
-			currentEmbeddables.add((PdfParagraphEmbeddable) embeddable);
+			stopEmbeddables.add((PdfParagraphEmbeddable) embeddable);
 		}		
 	}
 
@@ -181,23 +235,23 @@ public class PdfParagraph extends PdfDocumentEmbeddable implements Paragraph {
 	@Override
 	public void addStop(Stop stop) {
 		stops.add(stop);
-		embeddables.addList(new ArrayList<PdfParagraphEmbeddable>());
+		embeddablesByStop.addList(new ArrayList<PdfParagraphEmbeddable>());
 	}
 
 	@Override
 	public void nextStop(String... values) {
-		currentStop++;
-		currentEmbeddables = embeddables.getList(currentStop);
+		nextStop++;
+		stopEmbeddables = embeddablesByStop.getList(nextStop);
 		for(String value : values) {
-			currentEmbeddables.add((PdfText) createText(value));
+			stopEmbeddables.add((PdfText) createText(value));
 		}
 	}
 
 	@Override
 	public void nextStop(PdfParagraphEmbeddable... embeddables) {
-		currentStop++;
-		currentEmbeddables = this.embeddables.getList(currentStop);
-		currentEmbeddables.addAll(Arrays.asList(embeddables));
+		nextStop++;
+		stopEmbeddables = this.embeddablesByStop.getList(nextStop);
+		stopEmbeddables.addAll(Arrays.asList(embeddables));
 	}
 
 	@Override
@@ -224,7 +278,7 @@ public class PdfParagraph extends PdfDocumentEmbeddable implements Paragraph {
 		float nextY = startY - paragraphStyle.getMargins().getTop();
 		
 		//Get this paragraph style. 
-		float textSize = paragraphStyle.getFontSize();
+		float fontSize = paragraphStyle.getFontSize();
 		
 		//If this is the first line, some special behavior will have to be performed, so set it to true for now.
 		boolean isFirstLine = true;
@@ -249,7 +303,7 @@ public class PdfParagraph extends PdfDocumentEmbeddable implements Paragraph {
 				relativeStops.add(relativeStop);
 			}
 			//Split text to get-in maximum space.
-			List<PdfParagraphEmbeddableLine> embeddableSubLines = textLine.splitToMaxWidth(pdfPager, paragraphStyle, textSize, firstLineMaxWidth, maxWidth, relativeStops);
+			List<PdfParagraphEmbeddableLine> embeddableSubLines = textLine.splitToMaxWidth(pdfPager, paragraphStyle, fontSize, firstLineMaxWidth, maxWidth, relativeStops);
 			
 			boolean firstSubLine = true;
 			for(PdfParagraphEmbeddableLine embeddableSubLine : embeddableSubLines) {
@@ -309,7 +363,7 @@ public class PdfParagraph extends PdfDocumentEmbeddable implements Paragraph {
 				} else if(paragraphStyle.getAlignment() == Alignment.RIGHT) {
 					startX = boundingBox.getRight() 
 							- paragraphStyle.getMargins().getRight()
-							- embeddableSubLine.getWidth(paragraphStyle, textSize);
+							- embeddableSubLine.getWidth(paragraphStyle, fontSize);
 				} else if(paragraphStyle.getAlignment() == Alignment.CENTER) {
 					//Calculate the maximum free space for paragraph.
 					float freeSpace = boundingBox.getWidth()
@@ -322,7 +376,7 @@ public class PdfParagraph extends PdfDocumentEmbeddable implements Paragraph {
 					// Then calculate the position based to left constraints and text centered on free space.
 					startX = boundingBox.getLeft()
 							+ paragraphStyle.getMargins().getLeft()
-							+ (freeSpace - embeddableSubLine.getWidth(paragraphStyle, textSize)) / 2;
+							+ (freeSpace - embeddableSubLine.getWidth(paragraphStyle, fontSize)) / 2;
 				}
 				
 				if(isFirstLine) {
@@ -337,7 +391,7 @@ public class PdfParagraph extends PdfDocumentEmbeddable implements Paragraph {
 				int currentStopIndex = 0;
 				float lineSpacing = 0;
 				//Iterate over each paragraphEmbeddable to display new lines.
-				CompositeListIterator paragraphIterator = embeddableSubLine.iterator();
+				CompositeList<PdfParagraphEmbeddable>.CompositeListIterator paragraphIterator = embeddableSubLine.iterator();
 				while(paragraphIterator.hasNext()) {
 					PdfParagraphEmbeddable paragraphEmbeddable = (PdfParagraphEmbeddable) paragraphIterator.next();
 
@@ -350,11 +404,11 @@ public class PdfParagraph extends PdfDocumentEmbeddable implements Paragraph {
 
 						switch(currentStop.getType()) {
 						case LEFT:
-							float paragraphWidth = paragraphEmbeddable.getWidth(paragraphStyle, textSize);;
+							float paragraphWidth = paragraphEmbeddable.getWidth(paragraphStyle, fontSize);;
 							stopX -= paragraphWidth;
 							break;
 						case CENTER:
-							paragraphWidth = paragraphEmbeddable.getWidth(paragraphStyle, textSize);
+							paragraphWidth = paragraphEmbeddable.getWidth(paragraphStyle, fontSize);
 							stopX -= (paragraphWidth / 2.0f);
 							break;
 						default:
@@ -370,7 +424,7 @@ public class PdfParagraph extends PdfDocumentEmbeddable implements Paragraph {
 					if(!paragraphEmbeddable.isLinked()) {
 						paragraphEmbeddable.setLink(linkedElement);
 					}
-					Point embeddableSize = paragraphEmbeddable.layOut(pdfPager.getCurrentPage(), paragraphStyle, textSize, startX, baseLine);
+					Point embeddableSize = paragraphEmbeddable.layOut(pdfPager.getCurrentPage(), paragraphStyle, fontSize, startX, baseLine);
 					startX += embeddableSize.getX();
 					
 					//Keep greatest line spacing to not overlap embeddables of other lines.
@@ -398,8 +452,8 @@ public class PdfParagraph extends PdfDocumentEmbeddable implements Paragraph {
 		int index = 0;
 		CompositeList<PdfParagraphEmbeddable> listEmbeddablesClone = new CompositeList<>();
 		
-		while(index < embeddables.getLists().size()) {
-			List<PdfParagraphEmbeddable> currentEmbeddables = embeddables.getList(index);
+		while(index < embeddablesByStop.getLists().size()) {
+			List<PdfParagraphEmbeddable> currentEmbeddables = embeddablesByStop.getList(index);
 			//Start by cloning embeddables.
 			List<PdfParagraphEmbeddable> embeddablesClones = new ArrayList<PdfParagraphEmbeddable>(currentEmbeddables.size());
 		    for (PdfParagraphEmbeddable embeddable : currentEmbeddables) {
@@ -412,27 +466,51 @@ public class PdfParagraph extends PdfDocumentEmbeddable implements Paragraph {
 	    //Clone create a new Paragraph with clones.
 		return new PdfParagraph(style, listEmbeddablesClone);
 	}
+	
 	@Override
 	public void setLink(DocumentEmbeddable documentEmbeddable) {
 		linkedElement = documentEmbeddable;
 	}
 	
+	/**
+	 * Get the list of {@link ParagraphEmbeddable}.
+	 * 
+	 * @return The list of {@link ParagraphEmbeddable}.
+	 */
 	public CompositeList<PdfParagraphEmbeddable> getEmbeddables() {
-		return embeddables;
+		return embeddablesByStop;
 	}
 	
+	/**
+	 * Prepend a liist of {@link ParagraphEmbeddable} to this paragraph.
+	 * 
+	 * @param embeddables The list of {@link ParagraphEmbeddable} to prepend.
+	 */
 	public void prependEmbeddable(PdfParagraphEmbeddable... embeddables) {
-		this.embeddables.getList(0).addAll(0, Arrays.asList(embeddables));
+		this.embeddablesByStop.getList(0).addAll(0, Arrays.asList(embeddables));
 	}
 	
+	@Override
 	public ParagraphStyle getStyle() {
 		return style;
 	}
 	
+	/**
+	 * Get the a list of {@link PdfParagraphEmbeddableLine} for this paragraph.
+	 * 
+	 * @return
+	 */
 	public List<PdfParagraphEmbeddableLine> getEmbeddableLines() {
-		return PdfParagraphEmbeddableLine.getEmbeddableLines(embeddables);
+		return getEmbeddableLines(embeddablesByStop);
 	}
 	
+	/**
+	 * Get the list of {@link PdfParagraphEmbeddableLine} of this paragraph. 
+	 * 
+	 * @param pdfPager The pager to use to split lines.
+	 * @param maxWidth The maximum width of the line.
+	 * @return The list of {@link PdfParagraphEmbeddableLine}.
+	 */
 	public List<PdfParagraphEmbeddableLine> getEmbeddableLines(PdfPager pdfPager, float maxWidth) {
 		List<PdfParagraphEmbeddableLine> embeddableSubLines = new ArrayList<>();
 		
@@ -466,5 +544,48 @@ public class PdfParagraph extends PdfDocumentEmbeddable implements Paragraph {
 		height += getStyle().getMargins().getTop() + getStyle().getMargins().getBottom();
 		
 		computedWidth = width;
+	}
+	
+	/**
+	 * Convert a list of elements to a list of ElementLine.
+	 * List of elements is parsed to search for new line in each Element. 
+	 * Elements are added to ElementLine elements until a new line is found.
+	 * If a new line is found in an element, a new ElementLine is created and following elements are added until new line.
+	 * @param elements The elements to parse.
+	 * @return The list of ElementLine.
+	 */
+	private List<PdfParagraphEmbeddableLine> getEmbeddableLines(CompositeList<PdfParagraphEmbeddable> elements) {
+		//Initialize the array of lines of elements.
+		List<PdfParagraphEmbeddableLine> pdfParagraphEmbeddableLines = new ArrayList<>();
+		//Create a new element line and add it to array. This will contain the elements of the first line, within a different list for each stop.
+		PdfParagraphEmbeddableLine pdfParagraphEmbeddableLine = new PdfParagraphEmbeddableLine();
+		ArrayList<PdfParagraphEmbeddable> stopElementLine = new ArrayList<PdfParagraphEmbeddable>();
+		pdfParagraphEmbeddableLine.addList(stopElementLine);
+		pdfParagraphEmbeddableLines.add(pdfParagraphEmbeddableLine);
+		
+		//Iterate over each paragraphEmbeddable to search for new lines and create a new List on a new Stop.
+		CompositeList<PdfParagraphEmbeddable>.CompositeListIterator paragraphIterator = elements.iterator();
+		while(paragraphIterator.hasNext()) {
+			PdfParagraphEmbeddable element = paragraphIterator.next();
+			//If list has changed, it means that a stop has been inserted. So, do the same for line, insert a new List to simulate Stop.
+			if(paragraphIterator.hasListChanged()) {
+				stopElementLine = new ArrayList<PdfParagraphEmbeddable>();
+				pdfParagraphEmbeddableLine.addList(stopElementLine);
+			}
+			List<PdfParagraphEmbeddable> currentElementLines = element.getLines();
+			Iterator<PdfParagraphEmbeddable> currentElementLinesIterator = currentElementLines.iterator();
+			while(currentElementLinesIterator.hasNext()) {
+				PdfParagraphEmbeddable currentElement = currentElementLinesIterator.next();
+				stopElementLine.add(currentElement);
+				if(currentElementLinesIterator.hasNext()) {
+					pdfParagraphEmbeddableLine = new PdfParagraphEmbeddableLine();
+					stopElementLine = new ArrayList<PdfParagraphEmbeddable>();
+					pdfParagraphEmbeddableLine.addList(stopElementLine);
+					pdfParagraphEmbeddableLines.add(pdfParagraphEmbeddableLine);
+				}				
+			}
+		}
+		
+		return pdfParagraphEmbeddableLines;
 	}
 }

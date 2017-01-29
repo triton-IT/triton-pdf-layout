@@ -27,7 +27,6 @@ public class PdfEmbeddableContainer extends PdfDocumentEmbeddable implements Pag
 		for(DocumentEmbeddable embeddable : embeddables) {
 			pdfDocumentEmbeddables.add((PdfDocumentEmbeddable) embeddable);
 		}
-		
 	}
 	
 	@Override
@@ -46,9 +45,6 @@ public class PdfEmbeddableContainer extends PdfDocumentEmbeddable implements Pag
 		return this;
 	}
 	
-	/**
-	 * Compute height of embeddable for the given width.
-	 */
 	@Override
 	public void compute(PdfPager pdfPager, float width) {
 		height = 0.0f;
@@ -58,6 +54,11 @@ public class PdfEmbeddableContainer extends PdfDocumentEmbeddable implements Pag
 		computedWidth = width;
 	}
 	
+	/**
+	 * Check if container contains embeddables.
+	 * 
+	 * @return true if container contains embeddable, false otherwise.
+	 */
 	public boolean isEmpty() {
 		return pdfDocumentEmbeddables.isEmpty();
 	}

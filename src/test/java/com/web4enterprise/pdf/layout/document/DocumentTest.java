@@ -31,6 +31,7 @@ import com.web4enterprise.pdf.core.styling.Color;
 import com.web4enterprise.pdf.core.text.TextScript;
 import com.web4enterprise.pdf.layout.exception.DocumentException;
 import com.web4enterprise.pdf.layout.image.Image;
+import com.web4enterprise.pdf.layout.image.ImageData;
 import com.web4enterprise.pdf.layout.page.PageStyle;
 import com.web4enterprise.pdf.layout.page.footer.PageFooter;
 import com.web4enterprise.pdf.layout.page.header.PageHeader;
@@ -123,7 +124,8 @@ public class DocumentTest {
 		document.addKeyword("Documentation");
 		document.addMetaData("Customer-specific", "meta-data");
 		
-		Image logo = document.createImage(this.getClass().getResourceAsStream("/logo.png"));
+		ImageData logoBody = document.createImage(this.getClass().getResourceAsStream("/logo.png"));
+		Image logo = logoBody.createImage();
 		logo.setHeight(16, true);
 		
 		//Add first blank empty page to add content to it.
@@ -211,17 +213,15 @@ public class DocumentTest {
 			"For others, getters and setters can be used.", NEW_LINE,
 			"The same applies to most of the classes (Page, Text, etc.)."));
 		document.addEmbeddable(paragraph);
-
+		
 		//Adding images and graphics
 		paragraph = document.createParagraph(title1Style, "Adding images and graphics");
 		document.addEmbeddable(paragraph);
 		
-		paragraph = document.createParagraph("A paragraph can contain text but also images like this one:");
-		paragraph.addEmbeddable(paragraph.createImage(logo));
-		paragraph.addEmbeddable(paragraph.createText(" and this one:"));
-		paragraph.addEmbeddable(paragraph.createImage(logo));
+		paragraph = document.createParagraph("A paragraph can contain texts but also images like this one:");
+		paragraph.addEmbeddable(logo.clone());
 		document.addEmbeddable(paragraph);
-
+		
 		//Text styles.
 		paragraph = document.createParagraph(title1Style, "Text styles");
 		document.addEmbeddable(paragraph);
@@ -230,7 +230,7 @@ public class DocumentTest {
 		paragraph.addEmbeddable(paragraph.createText(codeStyle, "a subset "));
 		paragraph.addEmbeddable(paragraph.createText("of the same paragraph."));
 		document.addEmbeddable(paragraph);
-
+		
 		TextStyle plainUnderlined = new TextStyle(FontsVariant.PLAIN);
 		plainUnderlined.setFontColor(emphaseColor);
 		plainUnderlined.setUnderlined(true);

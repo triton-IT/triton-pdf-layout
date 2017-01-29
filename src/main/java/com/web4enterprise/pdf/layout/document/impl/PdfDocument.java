@@ -34,8 +34,8 @@ import com.web4enterprise.pdf.layout.document.impl.command.PdfNextVerticalStopCo
 import com.web4enterprise.pdf.layout.exception.BadOperationException;
 import com.web4enterprise.pdf.layout.exception.BadResourceException;
 import com.web4enterprise.pdf.layout.exception.DocumentGenerationException;
-import com.web4enterprise.pdf.layout.image.Image;
-import com.web4enterprise.pdf.layout.image.impl.PdfImage;
+import com.web4enterprise.pdf.layout.image.ImageData;
+import com.web4enterprise.pdf.layout.image.impl.PdfImageData;
 import com.web4enterprise.pdf.layout.page.PageFormat;
 import com.web4enterprise.pdf.layout.page.footer.PageFooter;
 import com.web4enterprise.pdf.layout.page.footer.impl.PdfPageFooter;
@@ -173,11 +173,11 @@ public class PdfDocument implements Document, PdfPager {
 	}
 
 	@Override
-	public Image createImage(InputStream imageInputStream) throws BadResourceException {
+	public ImageData createImage(InputStream imageInputStream) throws BadResourceException {
 		try {
 			com.web4enterprise.pdf.core.image.Image image = pdf.createImage(imageInputStream);
 			images.add(image);
-			return new PdfImage(image);
+			return new PdfImageData(image);
 		} catch(PdfGenerationException e) {
 			throw new BadResourceException("Cannot read image.", e); 
 		}

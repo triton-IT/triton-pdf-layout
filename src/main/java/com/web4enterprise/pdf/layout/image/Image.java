@@ -71,7 +71,7 @@ public interface Image extends ParagraphEmbeddable {
 	
 	/**
 	 * Partially clone the image.
-	 * This clone does not clone raw data but jjust meta-data to save memory.
+	 * This clone does not clone raw data but just meta-data to save memory.
 	 * 
 	 * @return The image's with only meta-data.
 	 */

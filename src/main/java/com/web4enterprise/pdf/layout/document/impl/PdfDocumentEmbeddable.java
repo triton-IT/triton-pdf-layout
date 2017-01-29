@@ -16,9 +16,6 @@
 
 package com.web4enterprise.pdf.layout.document.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.web4enterprise.pdf.core.geometry.Rect;
 import com.web4enterprise.pdf.core.link.Linkable;
 import com.web4enterprise.pdf.layout.document.DocumentEmbeddable;

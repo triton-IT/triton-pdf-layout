@@ -18,9 +18,30 @@ package com.web4enterprise.pdf.layout.paragraph;
 
 import com.web4enterprise.pdf.layout.document.DocumentEmbeddable;
 
+/**
+ * Defines an element which can be embedde ina {@link Paragraph}.
+ * 
+ * 
+ * @author Régis Ramillien
+ */
 public interface ParagraphEmbeddable {
+	/**
+	 * Defines a link to a target {@link DocumentEmbeddable}.
+	 * 
+	 * @param documentEmbeddable The target of the link.
+	 */
 	void setLink(DocumentEmbeddable documentEmbeddable);
 	
+	/**
+	 * Add a foot-note to this paragraph embeddable.
+	 * 
+	 * @param footNote The foot-note to add.
+	 */
 	void addFootNote(FootNote footNote);
+	/**
+	 * Add a foot-note to this paragraph embeddable.
+	 * 
+	 * @param paragraphs The lists of {@link Paragraph} to add as foot-note.
+	 */
 	void addFootNote(Paragraph... paragraphs);
 }

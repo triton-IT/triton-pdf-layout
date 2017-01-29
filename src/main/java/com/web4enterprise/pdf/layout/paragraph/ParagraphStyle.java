@@ -26,69 +26,155 @@ import com.web4enterprise.pdf.layout.placement.Alignment;
 import com.web4enterprise.pdf.layout.placement.Margins;
 import com.web4enterprise.pdf.layout.text.TextStyle;
 
+/**
+ * Defines the style of a {@link Paragraph}.
+ * 
+ * 
+ * @author Régis Ramillien
+ */
 public class ParagraphStyle extends TextStyle {
+	/**
+	 * The alignment of the {@link Paragraph}.
+	 * Defaults to {@link Alignment.LEFT}
+	 */
 	protected Alignment alignment = Alignment.LEFT;
+	/**
+	 * The line spacing of the {@link Paragraph}.
+	 * Defaults to 1.0.
+	 */
 	protected float lineSpacing = 1.0f;
+	/**
+	 * The margins to apply on the {@link Paragraph}.
+	 * Defaults to 0 for each margin.
+	 */
 	protected Margins margins = new Margins(0);
+	/**
+	 * The margin of first line of the {@link Paragraph}.
+	 * Defaults to 0;
+	 */
 	protected int firstLineMargin = 0;
 	
+	/**
+	 * Creates a paragraph style with default values.
+	 * Font defaults to Times-new-roman.
+	 * Variant defaults to plain.
+	 * Color defaults to black.
+	 */
 	public ParagraphStyle() {
 		super(TIMES_ROMAN, FontsVariant.PLAIN, 12, Color.BLACK);
 	}
 	
+	/**
+	 * Creates a paragraph style with given {@link Font} and font size.
+	 * 
+	 * @param font The {@link Font} to set to style.
+	 * @param fontSize The font size to set to style.
+	 */
 	public ParagraphStyle(Font font, float fontSize) {
 		super(font, FontsVariant.PLAIN, fontSize, Color.BLACK);
 	}
-	
+
+	/**
+	 * Creates a paragraph style with given {@link Font}, {@link FontVariant} and font size.
+	 * 
+	 * @param font The {@link Font} to set to style.
+	 * @param style The {@link FontVariant} to set to paragraph style.
+	 * @param fontSize The font size to set to style.
+	 */
 	public ParagraphStyle(Font font, FontsVariant style, float fontSize) {
 		super(font, style, fontSize, Color.BLACK);
 	}
-	
+
+	/**
+	 * Creates a paragraph style with given {@link Font}, {@link FontVariant}, font size and font {@link Color}.
+	 * 
+	 * @param font The {@link Font} to set to style.
+	 * @param style The {@link FontVariant} to set to paragraph style.
+	 * @param fontSize The font size to set to style.
+	 * @param fontColor The font {@link Color} to set to style.
+	 */
 	public ParagraphStyle(Font font, FontsVariant style, float fontSize, Color fontColor) {
 		super(font, style, fontSize, fontColor);
 	}
 
+	/**
+	 * Get the {@link Alignment} of this style.
+	 * 
+	 * @return The {@link Alignment} of this style.
+	 */
 	public Alignment getAlignment() {
 		return alignment;
 	}
 
+	/**
+	 * Set the {@link Alignment} of this style.
+	 * 
+	 * @param alignment The {@link Alignment} to set.
+	 */
 	public void setAlignment(Alignment alignment) {
 		this.alignment = alignment;
 	}
 
+	/**
+	 * Get the line spacing of this style.
+	 * 
+	 * @return The line spacing
+	 */
 	public float getLineSpacing() {
 		return lineSpacing;
 	}
 
+	/**
+	 * Set line spacing of this style.
+	 * 
+	 * @param lineSpacing The line spacing.
+	 */
 	public void setLineSpacing(float lineSpacing) {
 		this.lineSpacing = lineSpacing;
 	}
 
+	/**
+	 * Get the {@link Margins} of this style.
+	 * 
+	 * @return The {@link Margins}.
+	 */
 	public Margins getMargins() {
 		return margins;
 	}
 
+	/**
+	 * Set the {@link Margins} of this style.
+	 * 
+	 * @param margins The {@link Margins} to set to this style.
+	 */
 	public void setMargins(Margins margins) {
 		this.margins = margins;
 	}
-
+	
+	/**
+	 * Get the left margin of the first line of this paragraph.
+	 * 
+	 * @return The margin.
+	 */
 	public int getFirstLineMargin() {
 		return firstLineMargin;
 	}
 
+	/**
+	 * Set the left margin of first line.
+	 * 
+	 * @param firstLineMargin The margin.
+	 */
 	public void setFirstLineMargin(int firstLineMargin) {
 		this.firstLineMargin = firstLineMargin;
 	}
 	
+	/**
+	 * Get the font variant of this style.
+	 * 
+	 * @return The font variant.
+	 */
 	public FontVariant getFontVariant() {
 		return font.getVariant(fontVariant);
-	}
-	
-	/**
-	 * Do not let null as default style but PLAIN.
-	 */
-	@Override
-	public FontsVariant getFontStyle() {
-		return (fontVariant!=null)?fontVariant:FontsVariant.PLAIN;
 	}
 }

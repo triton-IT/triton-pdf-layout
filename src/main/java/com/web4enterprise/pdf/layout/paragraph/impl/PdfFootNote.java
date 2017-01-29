@@ -16,44 +16,40 @@
 
 package com.web4enterprise.pdf.layout.paragraph.impl;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.logging.Logger;
 
-import com.web4enterprise.pdf.core.geometry.Rect;
 import com.web4enterprise.pdf.core.text.TextScript;
+import com.web4enterprise.pdf.layout.document.impl.PdfDocumentEmbeddable;
 import com.web4enterprise.pdf.layout.document.impl.PdfPager;
-import com.web4enterprise.pdf.layout.page.impl.PdfPageFootNotes;
 import com.web4enterprise.pdf.layout.page.impl.PdfEmbeddableContainer;
 import com.web4enterprise.pdf.layout.paragraph.FootNote;
-import com.web4enterprise.pdf.layout.paragraph.Paragraph;
 import com.web4enterprise.pdf.layout.text.TextStyle;
 import com.web4enterprise.pdf.layout.text.impl.PdfText;
 
+/**
+ * Implements a foot-note for a PDF document
+ * 
+ * 
+ * @author Régis Ramillien
+ */
 public class PdfFootNote extends PdfEmbeddableContainer implements FootNote {
+	/**
+	 * Logger for class.
+	 */
 	private static final Logger LOGGER = Logger.getLogger(PdfFootNote.class.getName());
-	
-	protected List<PdfParagraph> paragraphs = new ArrayList<>();
+	/**
+	 * The identifier of this foot-note.
+	 */
 	protected String id;
 	
+	/**
+	 * Constructs a foot-note from a list of paragraphs.
+	 * 
+	 * @param paragraphs The paragraphs to add to this foot-note.
+	 */
 	public PdfFootNote(PdfParagraph... paragraphs) {		
 		if(paragraphs.length != 0) {
-			this.paragraphs.addAll(Arrays.asList(paragraphs));
-		}
-	}
-
-	@Override
-	public void addEmbeddable(Paragraph paragraph) {
-		paragraphs.add((PdfParagraph) paragraph);
-	}
-
-	@Override
-	public void layOut(PdfPager pdfPager, Rect boundingBox, PdfPageFootNotes pdfPageFootNotes) {
-		super.layOut(pdfPager, boundingBox, pdfPageFootNotes);
-		
-		for(PdfParagraph paragraph : this.paragraphs) {
-			paragraph.layOut(pdfPager, boundingBox, pdfPageFootNotes);
+			addEmbeddables(paragraphs);
 		}
 	}
 
@@ -63,6 +59,7 @@ public class PdfFootNote extends PdfEmbeddableContainer implements FootNote {
 		return this;
 	}
 
+	@Override
 	public void compute(PdfPager pdfPager, float width) {
 		//Prepend the foot note identifier to first element of paragraph.
 		//This can't be done in constructor because paragraphs can be added later and we need to get the first paragraph style.
@@ -72,25 +69,42 @@ public class PdfFootNote extends PdfEmbeddableContainer implements FootNote {
 		footnoteIndex.setStyle(footnoteIndexStyle);
 		
 		height = 0.0f;
-		if(paragraphs.size() > 0) {
-			paragraphs.get(0).prependEmbeddable(footnoteIndex);
+		if(pdfDocumentEmbeddables.size() > 0) {
+			//If first element is a paragraph, then we can prepend foot-note identifier on the same line.
+			if(pdfDocumentEmbeddables.get(0) instanceof PdfParagraph) {
+				((PdfParagraph) pdfDocumentEmbeddables.get(0)).prependEmbeddable(footnoteIndex);
+			} else {
+				//Else we insert the identifier at start of the element.
+				pdfDocumentEmbeddables.add(0, new PdfParagraph(footnoteIndex));
+			}
 
-			for(PdfParagraph paragraph : paragraphs) {
-				height += paragraph.getHeight(pdfPager, width);
+			for(PdfDocumentEmbeddable embeddable : pdfDocumentEmbeddables) {
+				height += embeddable.getHeight(pdfPager, width);
 			}
 		} else {
 			LOGGER.warning("A footnote has been added without note.");
-			paragraphs.add(new PdfParagraph(footnoteIndex));
+			addEmbeddables(new PdfParagraph(footnoteIndex));
 		}
 		
 		computedWidth = width;
 	}
 	
+	/**
+	 * Generate and set an identifier to this footNote.
+	 * 
+	 * @param pdfPager The pager to use for this footNote.
+	 * @return The identifier of this footNote.
+	 */
 	public String generateId(PdfPager pdfPager) {
 		id = pdfPager.getCurrentPage().generateFootNoteId();
 		return id;
 	}
 	
+	/**
+	 * Return the identifier of this foot-note.
+	 * 
+	 * @return The identifier of this foot-note.
+	 */
 	public String getId() {
 		if(id == null) {
 			LOGGER.severe("FootNote id is asked but has not been generated.");

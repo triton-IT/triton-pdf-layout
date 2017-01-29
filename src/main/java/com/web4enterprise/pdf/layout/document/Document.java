@@ -23,7 +23,7 @@ import java.util.Date;
 import com.web4enterprise.pdf.layout.exception.BadOperationException;
 import com.web4enterprise.pdf.layout.exception.BadResourceException;
 import com.web4enterprise.pdf.layout.exception.DocumentGenerationException;
-import com.web4enterprise.pdf.layout.image.Image;
+import com.web4enterprise.pdf.layout.image.ImageData;
 import com.web4enterprise.pdf.layout.page.footer.PageFooter;
 import com.web4enterprise.pdf.layout.page.header.PageHeader;
 import com.web4enterprise.pdf.layout.paragraph.Paragraph;
@@ -129,13 +129,13 @@ public interface Document {
 	void nextVerticalStop() throws BadOperationException;
 	
 	/**
-	 * Create an image from an input stream.
+	 * Create an {@link ImageData} from an input stream.
 	 * 
 	 * @param imageStream The input stream where image data is available.
-	 * @return The PdfImage created in document.
+	 * @return The {@link ImageData} created in document.
 	 * @throws BadResourceException When image input stream cannot be read correctly.
 	 */
-	Image createImage(InputStream imageInputStream) throws BadResourceException;
+	ImageData createImage(InputStream imageInputStream) throws BadResourceException;
 	
 	/**
 	 * Create a paragraph with default values.
