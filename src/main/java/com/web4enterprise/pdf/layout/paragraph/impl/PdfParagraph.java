@@ -404,7 +404,7 @@ public class PdfParagraph extends PdfDocumentEmbeddable implements Paragraph {
 
 						switch(currentStop.getType()) {
 						case LEFT:
-							float paragraphWidth = paragraphEmbeddable.getWidth(paragraphStyle, fontSize);;
+							float paragraphWidth = paragraphEmbeddable.getWidth(paragraphStyle, fontSize);
 							stopX -= paragraphWidth;
 							break;
 						case CENTER:

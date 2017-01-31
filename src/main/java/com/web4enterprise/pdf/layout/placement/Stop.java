@@ -16,27 +16,65 @@
 
 package com.web4enterprise.pdf.layout.placement;
 
+/**
+ * Defines a stop on an element.
+ * 
+ * 
+ * @author Régis Ramillien
+ */
 public class Stop {
+	/**
+	 * The type of stop.
+	 */
 	StopType type;
+	/**
+	 * The position on the stop on element.
+	 */
 	float position;
 	
+	/**
+	 * Create a stop from the type.
+	 * 
+	 * @param type The type of stop.
+	 * @param position The position of stop on element.
+	 */
 	public Stop(StopType type, float position) {
 		this.type = type;
 		this.position = position;
 	}
 
+	/**
+	 * Get the type of stop.
+	 * 
+	 * @return The type.
+	 */
 	public StopType getType() {
 		return type;
 	}
 
+	/**
+	 * Set the type of stop.
+	 * 
+	 * @param type The type to set.
+	 */
 	public void setType(StopType type) {
 		this.type = type;
 	}
 
+	/**
+	 * Get the position of stop.
+	 * 
+	 * @return The position.
+	 */
 	public float getPosition() {
 		return position;
 	}
 
+	/**
+	 * Set the position of stop.
+	 * 
+	 * @param position The position to set.
+	 */
 	public void setPosition(float position) {
 		this.position = position;
 	}

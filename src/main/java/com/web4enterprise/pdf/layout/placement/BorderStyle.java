@@ -18,69 +18,158 @@ package com.web4enterprise.pdf.layout.placement;
 
 import com.web4enterprise.pdf.core.styling.Color;
 
+/**
+ * Definens a style for borders.
+ * 
+ * 
+ * @author Régis Ramillien
+ */
 public class BorderStyle {
-	public static final BorderStyle NONE = new BorderStyle();
-	static {
-		NONE.width = 0;
-		NONE.lineStyle = LineStyle.NONE;
-	}
+	/**
+	 * No border.
+	 */
+	public static final BorderStyle NONE = new BorderStyle(0, LineStyle.NONE);
+
+	/**
+	 * Thin and solid borders.
+	 */
 	public static final BorderStyle THIN_SOLID = new BorderStyle();
 	
+	/**
+	 * The width of a border.
+	 * Defaults to 1.0.
+	 */
 	public float width = 1.0f;
+	/**
+	 * The line style of the border
+	 * Defaults to {@link LineStyle#SOLID}.
+	 */
 	public LineStyle lineStyle = LineStyle.SOLID;
+	/**
+	 * The color of the border.
+	 * Defaults to {@link Color#BLACK}.
+	 */
 	public Color color = Color.BLACK;
 	
+	/**
+	 * Creates a border style with default values.
+	 * Equivalent to {@see BorderStyle#THIN_SOLID}.
+	 */
 	public BorderStyle() {
 	}
 	
+	/**
+	 * Creates a border style with default color and line style.
+	 * 
+	 * @param width The width of the border.
+	 */
 	public BorderStyle(float width) {
 		this.width = width;
 	}
 
+	/**
+	 * Creates a border with default width and line style.
+	 * 
+	 * @param color The color of border.
+	 */
 	public BorderStyle(Color color) {
 		this.color = color;
 	}
 
+	/**
+	 * Creates a border with default width and color.
+	 * 
+	 * @param lineStyle The line style of the border.
+	 */
 	public BorderStyle(LineStyle lineStyle) {
 		this.lineStyle = lineStyle;
 	}
 
+	/**
+	 * Creates a border with default line style.
+	 * 
+	 * @param width The width of the border.
+	 * @param color The color of border.
+	 */
 	public BorderStyle(float width, Color color) {
 		this.width = width;
 		this.color = color;
 	}
 
+	/**
+	 * Creates a border with default color.
+	 * 
+	 * @param width The width of the border.
+	 * @param lineStyle The line style of the border.
+	 */
 	public BorderStyle(float width, LineStyle lineStyle) {
 		this.width = width;
 		this.lineStyle = lineStyle;
 	}
 
+	/**
+	 * Creates a border with specified width, color and line style.
+	 * 
+	 * @param width The width of the border.
+	 * @param color The color of border.
+	 * @param lineStyle The line style of the border.
+	 */
 	public BorderStyle(float width, Color color, LineStyle lineStyle) {
 		this.width = width;
 		this.lineStyle = lineStyle;
 		this.color = color;
 	}
 
+	/**
+	 * Get the width of the border.
+	 * 
+	 * @return The width.
+	 */
 	public float getWidth() {
 		return width;
 	}
 
+	/**
+	 * Set the width of the border.
+	 * 
+	 * @param width The width.
+	 */
 	public void setWidth(float width) {
 		this.width = width;
 	}
 
+	/**
+	 * Get the line style of the border.
+	 * 
+	 * @return The line style.
+	 */
 	public LineStyle getLineStyle() {
 		return lineStyle;
 	}
 
+	/**
+	 * Set the line style of the border.
+	 * 
+	 * @param lineStyle The line style.
+	 */
 	public void setLineStyle(LineStyle lineStyle) {
 		this.lineStyle = lineStyle;
 	}
 
+	/**
+	 * Get the color of the border.
+	 * 
+	 * @return The color.
+	 */
 	public Color getColor() {
 		return color;
 	}
 
+	/**
+	 * Set the color of the border.
+	 * 
+	 * @param color The color.
+	 */
 	public void setColor(Color color) {
 		this.color = color;
 	}

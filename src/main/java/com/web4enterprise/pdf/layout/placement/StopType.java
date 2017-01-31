@@ -16,8 +16,23 @@
 
 package com.web4enterprise.pdf.layout.placement;
 
+/**
+ * Defines the type of stop.
+ * 
+ * 
+ * @author Régis Ramillien
+ */
 public enum StopType {
-	LEFT,
+	/**
+	 * Stop is a right one. Subsequent elements will be rendered on the right of this stop (normal flow).
+	 */
+	RIGHT,
+	/**
+	 * Stop is a center one. Subsequent elements will be rendered centered on this stop.
+	 */
 	CENTER,
-	RIGHT
+	/**
+	 * Stop is a left one. Subsequent elements will be rendered on the left of this stop.
+	 */
+	LEFT
 }

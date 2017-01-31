@@ -16,5 +16,12 @@
 
 package com.web4enterprise.pdf.layout.style;
 
+/**
+ * Interface for defining a generic style.
+ * This interface is used by table of content to map to its levels.
+ * 
+ * 
+ * @author Régis Ramillien
+ */
 public interface Style {
 }

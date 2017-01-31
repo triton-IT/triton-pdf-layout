@@ -16,8 +16,23 @@
 
 package com.web4enterprise.pdf.layout.placement;
 
+/**
+ * Defines the alignment of any element.
+ * 
+ * 
+ * @author Régis Ramillien
+ */
 public enum Alignment {
+	/**
+	 * Element is aligned on left.
+	 */
 	LEFT,
+	/**
+	 * Element is aligned on center.
+	 */
 	CENTER,
+	/**
+	 * Element is aligned on right.
+	 */
 	RIGHT
 }

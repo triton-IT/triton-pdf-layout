@@ -16,8 +16,23 @@
 
 package com.web4enterprise.pdf.layout.placement;
 
+/**
+ * Defines a style of line.
+ * 
+ * 
+ * @author Régis Ramillien
+ */
 public enum LineStyle {
+	/**
+	 * Line is not displayed.
+	 */
 	NONE,
+	/**
+	 * Line is display continuously.
+	 */
 	SOLID,
+	/**
+	 * Line is displayed with dashes.
+	 */
 	DASHED
 }
