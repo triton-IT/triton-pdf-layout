@@ -144,7 +144,7 @@ public class PageFormat {
 	/**
 	 * Set width of the format.
 	 * 
-	 * @param width The width.
+	 * @param height The height.
 	 */
 	public void setHeight(int height) {
 		this.height = height;

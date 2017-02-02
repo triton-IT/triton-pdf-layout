@@ -32,20 +32,41 @@ import com.web4enterprise.pdf.layout.paragraph.Paragraph;
 import com.web4enterprise.pdf.layout.paragraph.impl.PdfParagraph;
 import com.web4enterprise.pdf.layout.placement.BorderStyle;
 import com.web4enterprise.pdf.layout.placement.LineStyle;
-import com.web4enterprise.pdf.layout.style.Style;
 import com.web4enterprise.pdf.layout.table.Table;
 import com.web4enterprise.pdf.layout.table.TableCell;
 import com.web4enterprise.pdf.layout.table.TableCellStyle;
 import com.web4enterprise.pdf.layout.table.TableRow;
 
+/**
+ * Implements a table for PDF document.
+ * 
+ * 
+ * @author Régis Ramillien
+ */
 public class PdfTable extends PdfDocumentEmbeddable implements Table {
+	/**
+	 * The rows of this table.
+	 */
 	protected List<TableRow> rows = new ArrayList<>();
-
+	/**
+	 * The fixed column widths mapped by column number.
+	 */
 	protected Map<Integer, Float> fixedColumnsWidths = new HashMap<>();
+	/**
+	 * The widths of each column.
+	 */
 	protected List<Float> columnsWidths = new ArrayList<>();
+	/**
+	 * Defines if the header should be repeated on each page.
+	 */
 	protected boolean repeatHeader = true;
+	/**
+	 * The number of rows which defines the table's header.
+	 */
 	protected int nbHeaderRows = 1;
-	
+	/**
+	 * Defines if computation has been done.
+	 */
 	protected boolean computed = false;
 
 	@Override
@@ -100,20 +121,63 @@ public class PdfTable extends PdfDocumentEmbeddable implements Table {
 		return new PdfTableCell(style, paragraphs);
 	}
 	
+	@Override
 	public TableRow addRow(TableCell...cells) {
 		TableRow row = new TableRow(cells);
 		rows.add(row);
 		return row;
 	}
 	
+	@Override
+	public void setColumnWidth(int columnIndex, float columnWidth) {
+		fixedColumnsWidths.put(columnIndex, columnWidth);
+	}
+
+	@Override
+	public void setRepeatHeader(boolean repeatHeader) {
+		this.repeatHeader = repeatHeader;
+	}
+
+	@Override
+	public void setNbHeaderRows(int nbHeaderRows) {
+		this.nbHeaderRows = nbHeaderRows;
+	}
+
+	@Override
+	public void compute(PdfPager pdfPager, float width) {
+		computeInnerLayout(pdfPager);
+		
+		height = 0.0f;
+		
+		for(TableRow row : getRows()) {
+			height += row.getHeight();
+		}
+	}
+	
+	/**
+	 * Get rows of table.
+	 * 
+	 * @return The rows.
+	 */
 	public List<TableRow> getRows() {
 		return rows;
 	}
 	
+	/**
+	 * Get the width of the specified column.
+	 * 
+	 * @param index The index of column to get.
+	 * @return The width of column.
+	 */
 	public float getColumnWidth(int index) {
 		return columnsWidths.get(index);
 	}
 	
+	/**
+	 * Compute the layout of inner elements.
+	 * 
+	 * @param pdfPager THe pager to get information from.
+	 */
 	public void computeInnerLayout(PdfPager pdfPager) {
 		computeColumnWidths();
 		computeRowsHeights(pdfPager);
@@ -123,26 +187,29 @@ public class PdfTable extends PdfDocumentEmbeddable implements Table {
 		computed = true;
 	}
 	
-	public void setColumnWidth(int columnIndex, float columnWidth) {
-		fixedColumnsWidths.put(columnIndex, columnWidth);
-	}
-	
+	/**
+	 * Check if header must be repeated on each page.
+	 * 
+	 * @return True if header must be repeated
+	 */
 	public boolean isRepeatHeader() {
 		return repeatHeader;
 	}
 
-	public void setRepeatHeader(boolean repeatHeader) {
-		this.repeatHeader = repeatHeader;
-	}
-
+	/**
+	 * Get the number of rows in table.
+	 * 
+	 * @return The number of rows in table.
+	 */
 	public int getNbHeaderRows() {
 		return nbHeaderRows;
 	}
 
-	public void setNbHeaderRows(int nbHeaderRows) {
-		this.nbHeaderRows = nbHeaderRows;
-	}
-
+	/**
+	 * Compute the height of rows of table.
+	 * 
+	 * @param pdfPager The pager to get information from.
+	 */
 	protected void computeRowsHeights(PdfPager pdfPager) {
 		for(TableRow row : rows) {
 			int columnIndex = 0;
@@ -159,6 +226,9 @@ public class PdfTable extends PdfDocumentEmbeddable implements Table {
 		}
 	}
 	
+	/**
+	 * Compute the width of rows of table.
+	 */
 	protected void computeColumnWidths() {
 		List<Float> currentColumnsWidths = new ArrayList<>();
 		for(TableRow row : rows) {
@@ -184,6 +254,9 @@ public class PdfTable extends PdfDocumentEmbeddable implements Table {
 		}
 	}
 	
+	/**
+	 * Compute the width of cells of table.
+	 */
 	protected void computeCellsWidths() {
 		for(TableRow row : rows) {
 			int columnIndex = 0;
@@ -203,7 +276,10 @@ public class PdfTable extends PdfDocumentEmbeddable implements Table {
 			}
 		}
 	}
-	
+
+	/**
+	 * Compute the height of cells of table.
+	 */
 	protected void computeCellsHeights() {
 		int rowIndex = 0;
 		for(TableRow row : rows) {
@@ -228,6 +304,17 @@ public class PdfTable extends PdfDocumentEmbeddable implements Table {
 		}
 	}
 
+	/**
+	 * Create a row.
+	 * 
+	 * @param pdfPager The pager to get information from.
+	 * @param boundingBox The bounding box of parent element.
+	 * @param startY The Y position to start table from.
+	 * @param row The row to create.
+	 * @param rowMerges The list of merges.
+	 * @param pdfPageFootNotes The foot-notes on the page.
+	 * @return The height of row.
+	 */
 	protected float createRow(PdfPager pdfPager, Rect boundingBox, float startY, TableRow row, Map<Integer, Integer> rowMerges, PdfPageFootNotes pdfPageFootNotes) {
 		PdfPage currentPage = pdfPager.getCurrentPage();
 		float startX = boundingBox.getLeft();
@@ -327,16 +414,5 @@ public class PdfTable extends PdfDocumentEmbeddable implements Table {
 		pdfPager.getCursorPosition().setY(lowestCellY);
 
 		return rowHeight;
-	}
-
-	@Override
-	public void compute(PdfPager pdfPager, float width) {
-		computeInnerLayout(pdfPager);
-		
-		height = 0.0f;
-		
-		for(TableRow row : getRows()) {
-			height += row.getHeight();
-		}
 	}
 }

@@ -39,40 +39,84 @@ import com.web4enterprise.pdf.layout.paragraph.impl.PdfParagraphEmbeddable;
 import com.web4enterprise.pdf.layout.text.Text;
 import com.web4enterprise.pdf.layout.text.TextStyle;
 
+/**
+ * Defines a text for a PDF document.
+ * 
+ * 
+ * @author Régis Ramillien
+ */
 public class PdfText implements Text, PdfParagraphEmbeddable {
+	/**
+	 * The logger used for this class.
+	 */
 	private static final Logger LOGGER = Logger.getLogger(PdfParagraphEmbeddable.class.getName());
 
+	/**
+	 * The style of this text.
+	 */
 	protected TextStyle style = new TextStyle();	
-
+	/**
+	 * The core PDF text.
+	 */
 	protected com.web4enterprise.pdf.core.text.Text coreText;
-	
+	/**
+	 * The list of foot-notes.
+	 */
 	protected List<PdfFootNote> footNotes = new ArrayList<>();
-	
+	/**
+	 * The linked element.
+	 */
 	protected PdfDocumentEmbeddable linkedElement;
-	
+	/**
+	 * The list of spawns.
+	 * A spawn is a "physical" subLine of this text. It is produce when this has to be split to fit in its allocated area.
+	 */
 	protected List<PdfText> spawns = new ArrayList<PdfText>();
 	
+	/**
+	 * Create a PDFText from given String.
+	 * 
+	 * @param string The string of this text.
+	 */
 	public PdfText(String string) {
 		coreText = new com.web4enterprise.pdf.core.text.Text(0.0f, 0.0f, 0.0f, string);
 	}
 	
+	/**
+	 * Create a PDF text with given style and string.
+	 * 
+	 * @param style The style of text.
+	 * @param string The string of this text
+	 */
 	public PdfText(TextStyle style, String string) {
 		coreText = new com.web4enterprise.pdf.core.text.Text(0.0f, 0.0f, 0.0f, string);
 		this.style = style;
 	}
 
+	/**
+	 * Get the style of this text.
+	 * 
+	 * @return The style.
+	 */
 	public TextStyle getStyle() {
 		return style;
 	}
 
+	@Override
 	public void setStyle(TextStyle style) {
 		this.style = style;
 	}
 
+	/**
+	 * Get the string of this text.
+	 * 
+	 * @return The string.
+	 */
 	public String getString() {
 		return coreText.getValue();
 	}
 
+	@Override
 	public void setString(String string) {
 		coreText.setValue(string);
 	}
@@ -152,10 +196,28 @@ public class PdfText implements Text, PdfParagraphEmbeddable {
 		return this.coreText.getValue();
 	}
 
+	/**
+	 * Link foot-notes of this text.
+	 * 
+	 * @param footNotes The footNotes to link to this text.
+	 */
 	protected void setFootNotes(List<PdfFootNote> footNotes) {
 		this.footNotes = footNotes;
 	}	
 	
+	/**
+	 * Split text to fit-in its allocated width.
+	 * 
+	 * @param pdfPager The pager to get information from.
+	 * @param stringToSplit The string to split.
+	 * @param font The font of string to split.
+	 * @param fontSize The size of font of string to split.
+	 * @param positionX The X position where text must start from.
+	 * @param firstLineMaxWidth The maximum width allocated to first line.
+	 * @param maxWidth The maximum width allocated to line other than the first one.
+	 * @param splitInformation The information on splitting to fill.
+	 * @param isFirstLine True if this is the first line.
+	 */
 	protected void split(PdfPager pdfPager, String stringToSplit, FontVariant font, float fontSize, float positionX, float firstLineMaxWidth, 
 			float maxWidth, SplitInformation splitInformation, boolean isFirstLine) {
 		//Calculate maximum size for final line.
@@ -325,6 +387,13 @@ public class PdfText implements Text, PdfParagraphEmbeddable {
 		return linkedElement != null;
 	}
 	
+	/**
+	 * Create a spawn of this text.
+	 * The spawn inherits its characteristics from this text.
+	 * 
+	 * @param value The string to set to this spawn.
+	 * @return The spawn of this text.
+	 */
 	protected PdfText spawn(String value) {
 		PdfText spawn = new PdfText(style, value);
 		if(linkedElement != null) {

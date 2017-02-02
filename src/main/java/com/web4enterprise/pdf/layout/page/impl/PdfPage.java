@@ -202,7 +202,7 @@ public class PdfPage {
 	/**
 	 * Get inner rectangle of page. (e.g. use margins and header/footer in calculation. Foot notes are not used in calculation).
 	 * 
-	 * @return
+	 * @return The inner rectangle.
 	 */
 	public Rect getInnerRect() {		
 		return new Rect(getInnerTop(), 

@@ -50,9 +50,9 @@ public class PdfVerticalStopsList extends ArrayList<Float> {
 	}
 	
 	/**
-	 * Add a stop.
+	 * Add stops.
 	 * 
-	 * @param stops
+	 * @param stops The stops to add.
 	 */
 	public void add(float... stops) {
 		for(float stop : stops) {

@@ -16,7 +16,6 @@
 
 package com.web4enterprise.pdf.layout.toc.impl;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,15 +24,28 @@ import com.web4enterprise.pdf.core.geometry.Rect;
 import com.web4enterprise.pdf.layout.document.DocumentEmbeddable;
 import com.web4enterprise.pdf.layout.document.impl.PdfDocumentEmbeddable;
 import com.web4enterprise.pdf.layout.document.impl.PdfPager;
-import com.web4enterprise.pdf.layout.page.impl.PdfPageFootNotes;
 import com.web4enterprise.pdf.layout.page.impl.PdfEmbeddableContainer;
+import com.web4enterprise.pdf.layout.page.impl.PdfPageFootNotes;
 import com.web4enterprise.pdf.layout.paragraph.impl.PdfParagraph;
 import com.web4enterprise.pdf.layout.style.Style;
 import com.web4enterprise.pdf.layout.toc.TableOfContent;
 
-public class PdfTableOfContent extends PdfEmbeddableContainer implements TableOfContent {	
+/**
+ * Defines the table of content for a PDF document.
+ * 
+ * 
+ * @author Régis Ramillien
+ */
+public class PdfTableOfContent extends PdfEmbeddableContainer implements TableOfContent {
+	/**
+	 * The mapping between level of this table of content and the styles used across the document.
+	 */
 	protected Map<Style, Integer> styles = new HashMap<>();
-	
+	/**
+	 * Defines the state of verification of the layout.
+	 * If the layout is done and valid, then this property will be set to true.
+	 * If the layout is not done or invalid, then this property is set to false. 
+	 */
 	protected boolean verified = false;
 
 	@Override
@@ -72,18 +84,18 @@ public class PdfTableOfContent extends PdfEmbeddableContainer implements TableOf
 		return null;
 	}
 	
-	/**
-	 * Associate a level to a paragraph style.
-	 * 
-	 * @param level
-	 * @param style
-	 */
+	@Override
 	public void addLevel(int level, Style... styles) {
 		for(Style style : styles) {
 			this.styles.putIfAbsent(style, level);
 		}
 	}
 	
+	/**
+	 * Add embeddables to this TOC to be able to generate it.
+	 * 
+	 * @param embeddables The list of embeddables to add to this TOC.
+	 */
 	public void addEmbeddables(List<DocumentEmbeddable> embeddables) {
 		for(DocumentEmbeddable embeddable : embeddables) {
 			if(embeddable != this && styles.containsKey(embeddable.getStyle())) {

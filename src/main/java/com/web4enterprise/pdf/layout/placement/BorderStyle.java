@@ -53,7 +53,7 @@ public class BorderStyle {
 	
 	/**
 	 * Creates a border style with default values.
-	 * Equivalent to {@see BorderStyle#THIN_SOLID}.
+	 * Equivalent to {@link BorderStyle#THIN_SOLID}.
 	 */
 	public BorderStyle() {
 	}

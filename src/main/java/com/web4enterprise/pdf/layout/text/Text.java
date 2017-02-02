@@ -18,10 +18,29 @@ package com.web4enterprise.pdf.layout.text;
 
 import com.web4enterprise.pdf.layout.paragraph.ParagraphEmbeddable;
 
-public interface Text extends ParagraphEmbeddable {	
+/**
+ * Defines a Text taht can be embedded in any containers.
+ * 
+ * 
+ * @author Régis Ramillien
+ */
+public interface Text extends ParagraphEmbeddable {
+	/**
+	 * Constant for a new line.
+	 */
 	public static final String NEW_LINE = "\n";	
 	
+	/**
+	 * Set the style of this text.
+	 * 
+	 * @param style The style to set.
+	 */
 	void setStyle(TextStyle style);
 	
+	/**
+	 * Set the string value of this text.
+	 * 
+	 * @param string The value as string to set to this text.
+	 */
 	void setString(String string);	
 }

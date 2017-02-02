@@ -19,23 +19,54 @@ package com.web4enterprise.pdf.layout.table;
 import java.util.Arrays;
 import java.util.List;
 
-public class TableRow {	
+/**
+ * Defines a table row on a table.
+ * 
+ * 
+ * @author Régis Ramillien
+ */
+public class TableRow {
+	/**
+	 * The height of row.
+	 */
 	protected float height;
-	
+	/**
+	 * The list of cells of this row.
+	 */
 	public List<TableCell> cells;
 	
+	/**
+	 * Create a row with the specified cells.
+	 * 
+	 * @param cells The cells to add to this row.
+	 */
 	public TableRow(TableCell... cells) {		
 		this.cells = Arrays.asList(cells);
 	}
 
+	/**
+	 * Get the list of cells of this row.
+	 * 
+	 * @return The list of cells.
+	 */
 	public List<TableCell> getCells() {
 		return cells;
 	}
 	
+	/**
+	 * Get the height of this row.
+	 * 
+	 * @return The height of this row.
+	 */
 	public float getHeight() {
 		return height;
 	}
 	
+	/**
+	 * Set the height of this row.
+	 * 
+	 * @param height The height of this row.
+	 */
 	public void setHeight(float height) {
 		this.height = height;
 	}

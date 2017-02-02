@@ -35,7 +35,7 @@ import com.web4enterprise.pdf.layout.text.TextStyle;
 public class ParagraphStyle extends TextStyle {
 	/**
 	 * The alignment of the {@link Paragraph}.
-	 * Defaults to {@link Alignment.LEFT}
+	 * Defaults to {@link Alignment#LEFT}
 	 */
 	protected Alignment alignment = Alignment.LEFT;
 	/**

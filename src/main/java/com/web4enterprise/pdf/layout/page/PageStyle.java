@@ -116,7 +116,7 @@ public class PageStyle {
 	/**
 	 * Generally, if page format, margins also change, so create a constructor with both.
 	 * @param format The page format (width and height).
-	 * @param margins
+	 * @param margins The margins to set to this style.
 	 */
 	public PageStyle(PageFormat format, Margins margins) {
 		this.format = format;

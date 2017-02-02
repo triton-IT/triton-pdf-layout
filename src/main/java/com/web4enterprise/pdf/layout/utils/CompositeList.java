@@ -21,17 +21,45 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+/**
+ * Defines a "meta list" that can contain many list of the same type of element.
+ * 
+ * 
+ * @author Régis Ramillien
+ * @param <E> the type of elements in this list
+ */
 public class CompositeList<E> implements List<E> {
+	/**
+	 * The list contained in this one.
+	 */
 	protected List<List<E>> lists = new ArrayList<>();
 	
+	/**
+	 * Add a list this meta one.
+	 * 
+	 * @param list The list to add.
+	 */
 	public void addList(List<E> list) {
 		lists.add(list);
 	}
 	
+	/**
+	 * Returns the element at the specified position in this list.
+	 * 
+	 * @param index index of the element to return.
+	 * @return the element at the specified position in this list.
+     * @throws IndexOutOfBoundsException if the index is out of range
+     *         (<tt>index &lt; 0 || index &gt;= size()</tt>)
+	 */
 	public List<E> getList(int index) {
 		return lists.get(index);
 	}
 	
+	/**
+	 * Returns all the elements in this meta-list.
+	 * 
+	 * @return All elements.
+	 */
 	public List<List<E>> getLists() {
 		return lists;
 	}
@@ -188,19 +216,49 @@ public class CompositeList<E> implements List<E> {
 		throw new UnsupportedOperationException("Implement when needed.");
 	}
 	
+	/**
+	 * Iterator to iterate over all elements of all inner lists.
+	 * 
+	 * 
+	 * @author Régis Ramillien
+	 */
 	public class CompositeListIterator implements Iterator<E> {
+		/**
+		 * Index of previous list.
+		 */
 		protected int previousListIndex = 0;
+		/**
+		 * Index of current list.
+		 */
 		protected int currentListIndex = 0;
+		/**
+		 * Iterator on current list.
+		 */
 		protected Iterator<E> currentListIterator = CompositeList.this.getList(0).iterator();
 		
+		/**
+		 * Get the current list.
+		 * 
+		 * @return The current list.
+		 */
 		public List<E> getCurrentList() {
 			return CompositeList.this.getList(currentListIndex);
 		}
 		
+		/**
+		 * Get the index of current list.
+		 * 
+		 * @return The index of current list.
+		 */
 		public int getCurrentListIndex() {
 			return currentListIndex;
 		}
 		
+		/**
+		 * Check if list has changed.
+		 * 
+		 * @return True if list has changed.
+		 */
 		public boolean hasListChanged() {
 			if(previousListIndex != currentListIndex) {
 				previousListIndex = currentListIndex;

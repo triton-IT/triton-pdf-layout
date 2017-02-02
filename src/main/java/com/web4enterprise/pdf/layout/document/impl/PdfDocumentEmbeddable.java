@@ -122,7 +122,7 @@ public abstract class PdfDocumentEmbeddable implements DocumentEmbeddable, Clone
 	 * 
 	 * Most embeddables are static, they do not need verification.
 	 * 
-	 * @param pdfPager
+	 * @param pdfPager The pager to get information from.
 	 * @return {@code true} if embeddable is ok, {@code false} is embeddable
 	 *         needs to be re-layed-out.
 	 */
@@ -130,11 +130,6 @@ public abstract class PdfDocumentEmbeddable implements DocumentEmbeddable, Clone
 		return true;
 	}
 
-	/**
-	 * Clone this embedable.
-	 * 
-	 * @return A clone to this embeddable.
-	 */
 	@Override
 	public PdfDocumentEmbeddable clone() {
 		//TODO:
@@ -142,7 +137,11 @@ public abstract class PdfDocumentEmbeddable implements DocumentEmbeddable, Clone
 	}
 	
 	/**
+	 * 
 	 * Compute height of embeddable for the given width.
+	 * 
+	 * @param pdfPager The pager to get information from.
+	 * @param width The width to compute for.
 	 */
 	public abstract void compute(PdfPager pdfPager, float width);
 }

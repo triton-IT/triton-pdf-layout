@@ -19,12 +19,18 @@ package com.web4enterprise.pdf.layout.toc;
 import com.web4enterprise.pdf.layout.document.DocumentEmbeddable;
 import com.web4enterprise.pdf.layout.style.Style;
 
+/**
+ * Defines a Table of content for a document.
+ * 
+ * 
+ * @author Régis Ramillien
+ */
 public interface TableOfContent extends DocumentEmbeddable {	
 	/**
 	 * Associate a level to a paragraph style.
 	 * 
-	 * @param level
-	 * @param style
+	 * @param level The level to associate styles to.
+	 * @param style The styles to associate to this level.
 	 */
 	public void addLevel(int level, Style... style);
 }

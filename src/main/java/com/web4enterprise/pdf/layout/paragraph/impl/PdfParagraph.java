@@ -498,7 +498,7 @@ public class PdfParagraph extends PdfDocumentEmbeddable implements Paragraph {
 	/**
 	 * Get the a list of {@link PdfParagraphEmbeddableLine} for this paragraph.
 	 * 
-	 * @return
+	 * @return The list of {@link PdfParagraphEmbeddableLine} for this paragraph.
 	 */
 	public List<PdfParagraphEmbeddableLine> getEmbeddableLines() {
 		return getEmbeddableLines(embeddablesByStop);

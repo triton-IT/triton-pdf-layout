@@ -74,9 +74,9 @@ public interface Document {
 	void setProducer(String producer);
 
 	/**
-	 * Add a keyword to document.
+	 * Add a date of creation to document meta-data.
 	 * 
-	 * @param keyword The keyword to add to document meta-data.
+	 * @param creationDate The date of creation to add to document meta-data.
 	 */
 	void setCreationDate(Date creationDate);
 
@@ -131,7 +131,7 @@ public interface Document {
 	/**
 	 * Create an {@link ImageData} from an input stream.
 	 * 
-	 * @param imageStream The input stream where image data is available.
+	 * @param imageInputStream The input stream where image data is available.
 	 * @return The {@link ImageData} created in document.
 	 * @throws BadResourceException When image input stream cannot be read correctly.
 	 */
@@ -221,6 +221,7 @@ public interface Document {
 	 * Write document to an outputStream.
 	 * 
 	 * @param out The output stream to write document to.
+	 * @throws DocumentGenerationException When document cannot be generated.
 	 */
 	void write(OutputStream out) throws DocumentGenerationException;
 }

@@ -20,20 +20,68 @@ import java.util.List;
 
 import com.web4enterprise.pdf.layout.paragraph.Paragraph;
 
-public interface TableCell {	
+/**
+ * Defines a table cell on a table.
+ * 
+ * 
+ * @author Régis Ramillien
+ */
+public interface TableCell {
+	/**
+	 * Get style to cell.
+	 * 
+	 * @return The style of this cell.
+	 */
 	TableCellStyle getStyle();
 	
+	/**
+	 * Get the paragraphs conttained in this cell.
+	 * 
+	 * @return The paragraphs of this cell.
+	 */
 	List<Paragraph> getParagraphs();
 
+	/**
+	 * Get the number of rows merged after this cell.
+	 * 
+	 * @return The number of merged rows.
+	 */
 	int getMergedRows();
 
+	/**
+	 * Set the number of rows to merge after this cell.
+	 * 
+	 * @param mergedRows The number of rows merged after this cell.
+	 * @return This table cell.
+	 */
 	TableCell setMergedRows(int mergedRows);
 
+	/**
+	 * Get the number of columns merged belo this cell.
+	 * 
+	 * @return The number of columns merged.
+	 */
 	int getMergedColumns();
 
+	/**
+	 * Set the number of columns to merge below this cell.
+	 * 
+	 * @param mergedColumns The number of columns to merge.
+	 * @return This cell.
+	 */
 	TableCell setMergedColumns(int mergedColumns);
 
+	/**
+	 * Check if this cell is merged.
+	 * 
+	 * @return True if this cell is merged, false otherwise.
+	 */
 	boolean isMerged();
 
+	/**
+	 * Set the merge state of this cell.
+	 * 
+	 * @param merged True if this cell is merged.
+	 */
 	void setMerged(boolean merged);
 }
