@@ -73,7 +73,7 @@ public class PdfParagraph extends PdfDocumentEmbeddable implements Paragraph {
 	protected DocumentEmbeddable linkedElement;
 	
 	/**
-	 * Constrcuts a empty paragraph.
+	 * Constructs an empty paragraph.
 	 */
 	public PdfParagraph() {
 		this((String[]) null);

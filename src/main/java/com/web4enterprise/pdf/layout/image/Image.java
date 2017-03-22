@@ -30,7 +30,7 @@ public interface Image extends ParagraphEmbeddable {
 	 * 
 	 * @param width The new width of image.
 	 */
-	void setWidth(int width);
+	void setWidth(float width);
 	
 	/***
 	 * Set width of image with or without keeping ratio for height.
@@ -38,14 +38,14 @@ public interface Image extends ParagraphEmbeddable {
 	 * @param width The new width of image.
 	 * @param keepRatio True if ratio must be kept on height.
 	 */
-	void setWidth(int width, boolean keepRatio);
+	void setWidth(float width, boolean keepRatio);
 	
 	/**
 	 * Set height of image without keeping ratio.
 	 * 
 	 * @param height The new height of image.
 	 */
-	void setHeight(int height);	
+	void setHeight(float height);	
 	
 	/**
 	 * Set the height of image with or without keeping ratio for width.
@@ -53,21 +53,21 @@ public interface Image extends ParagraphEmbeddable {
 	 * @param height The height of image.
 	 * @param keepRatio True if ratio must be kept on width.
 	 */
-	void setHeight(int height, boolean keepRatio);
+	void setHeight(float height, boolean keepRatio);
 
 	/**
 	 * Get the width of the image.
 	 * 
 	 * @return The width in PDF unit.
 	 */
-	int getWidth();
+	float getWidth();
 
 	/**
 	 * Get the height of the image.
 	 * 
 	 * @return The height in PDF unit.
 	 */
-	int getHeight();
+	float getHeight();
 	
 	/**
 	 * Partially clone the image.

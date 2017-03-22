@@ -370,6 +370,9 @@ public class PdfDocument implements Document, PdfPager {
 		//With TOC or any other dynamic element, this could last 2 or more runs.
 		boolean verified = false;
 		while(!verified) {
+			//Reset current page number to 0 before layouting again.
+			currentPageNumber = 0;
+			
 			//Clear all pages that could have been rendered on a previous run.
 			pdf.clear();
 			

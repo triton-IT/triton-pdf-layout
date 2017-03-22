@@ -310,7 +310,7 @@ public class PdfText implements Text, PdfParagraphEmbeddable {
 		
 		coreText.setFontVariant(currentFontVariant);
 		coreText.setSize(currentTextSize);
-		return coreText.getWidth();
+		return coreText.getBoundingBox().getWidth();
 	}
 	
 	@Override
@@ -342,26 +342,26 @@ public class PdfText implements Text, PdfParagraphEmbeddable {
 		float footNotesWidth = 0.0f;
 		if(footNotes.size() > 0) {
 			Iterator<PdfFootNote> footNoteIterator = footNotes.iterator();
-			float footNotePositionX = positionX + coreText.getWidth();
+			float footNotePositionX = positionX + coreText.getBoundingBox().getWidth();
 			while(footNoteIterator.hasNext()) {
 				PdfFootNote footNote = footNoteIterator.next();
 				com.web4enterprise.pdf.core.text.Text coreFootNoteText = new com.web4enterprise.pdf.core.text.Text(footNotePositionX, positionY, currentFontSize, currentFontVariant, color, footNote.getId());
 				coreFootNoteText.setScript(TextScript.SUPER);
 				coreFootNoteText.setLink(footNote);
 				
-				footNotePositionX += coreFootNoteText.getWidth();
+				footNotePositionX += coreFootNoteText.getBoundingBox().getWidth();
 				
 				pdfPage.getCorePage().add(coreFootNoteText);
 				if(footNoteIterator.hasNext()) {
 					com.web4enterprise.pdf.core.text.Text spaceText = new com.web4enterprise.pdf.core.text.Text(footNotePositionX, positionY, currentFontSize, currentFontVariant, color, " ");
 					spaceText.setScript(TextScript.SUPER);
-					footNotePositionX += spaceText.getWidth();
+					footNotePositionX += spaceText.getBoundingBox().getWidth();
 					pdfPage.getCorePage().add(spaceText);
 				}
 			}
 		}
 		
-		return new Point(coreText.getWidth() + footNotesWidth, currentFontSize);
+		return new Point(coreText.getBoundingBox().getWidth() + footNotesWidth, currentFontSize);
 	}
 
 	@Override

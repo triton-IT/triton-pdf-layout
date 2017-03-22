@@ -64,12 +64,12 @@ public class PdfImage implements Image, PdfParagraphEmbeddable {
 	}
 
 	@Override
-	public void setWidth(int width) {
+	public void setWidth(float width) {
 		this.coreImage.setWidth(width);
 	}
 
 	@Override
-	public void setWidth(int width, boolean keepRatio) {
+	public void setWidth(float width, boolean keepRatio) {
 		float oldWidth = this.coreImage.getWidth();
 		this.coreImage.setWidth(width);
 		if(keepRatio) {
@@ -78,12 +78,12 @@ public class PdfImage implements Image, PdfParagraphEmbeddable {
 	}
 
 	@Override
-	public void setHeight(int height) {
+	public void setHeight(float height) {
 		this.coreImage.setHeight(height);
 	}
 
 	@Override
-	public void setHeight(int height, boolean keepRatio) {
+	public void setHeight(float height, boolean keepRatio) {
 		float oldHeight = this.coreImage.getHeight();
 		this.coreImage.setHeight(height);
 		if(keepRatio) {
@@ -180,12 +180,12 @@ public class PdfImage implements Image, PdfParagraphEmbeddable {
 	}
 
 	@Override
-	public int getWidth() {
+	public float getWidth() {
 		return coreImage.getWidth();
 	}
 
 	@Override
-	public int getHeight() {
+	public float getHeight() {
 		return coreImage.getHeight();
 	}
 }

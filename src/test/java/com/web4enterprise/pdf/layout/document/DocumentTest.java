@@ -159,15 +159,19 @@ public class DocumentTest {
 		Paragraph footerParagraph = document.createParagraph(paragraphFooterStyle, new Date().toString());
 		pageFooter.addEmbeddables(footerParagraph);
 		
-		//Page for table of content
 		document.nextPage(new Section(PageStyle.A4_PORTRAIT, pageHeader, pageFooter));
+		
+		//Page for table of content
+		paragraph = document.createParagraph(title1Style, "Table of content");
+		document.addEmbeddable(paragraph);
+		
 		TableOfContent tableOfContent = document.createTableOfContent();
 		tableOfContent.addLevel(0, title1Style);
 		tableOfContent.addLevel(1, title2Style);
 		document.addEmbeddable(tableOfContent);
 		
 		//Page for paragraphs
-		document.nextPage(new Section(PageStyle.A4_PORTRAIT, pageHeader, pageFooter));
+		//document.nextPage(new Section(PageStyle.A4_PORTRAIT, pageHeader, pageFooter));
 
 		//Creating a document.
 		paragraph = document.createParagraph(title1Style, "Creating a document");
