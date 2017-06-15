@@ -30,7 +30,7 @@ public class DocumentFactory {
 	 * 
 	 * @return The empty PDF document.
 	 */
-	static Document createPdfDocument() {
+	public static Document createPdfDocument() {
 		return new PdfDocument();
 	}
 }
