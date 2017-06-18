@@ -6,7 +6,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 
 	<name>Simply PDF layout</name>
-	<description>Simple API to create and layout PDF.</description>
+	<description>Simple API to create and layout PDF files.</description>
 	<url>https://github.com/rramillien/simplypdf-layout</url>
 
 	<licenses>

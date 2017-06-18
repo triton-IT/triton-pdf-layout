@@ -360,7 +360,7 @@ public class PdfDocument implements Document, PdfPager {
 	}
 	
 	/**
-	 * Lay-out the document document.
+	 * Lay-out the document.
 	 * This method iterate over each embeddable of document for rendering them.
 	 * While the rendering of each embeddable is not verify, the rendering and verification is triggered again.
 	 */
