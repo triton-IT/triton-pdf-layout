@@ -19,7 +19,6 @@ package com.web4enterprise.pdf.layout.paragraph;
 import com.web4enterprise.pdf.layout.document.DocumentEmbeddable;
 import com.web4enterprise.pdf.layout.image.Image;
 import com.web4enterprise.pdf.layout.image.ImageData;
-import com.web4enterprise.pdf.layout.paragraph.impl.PdfParagraphEmbeddable;
 import com.web4enterprise.pdf.layout.placement.Stop;
 import com.web4enterprise.pdf.layout.style.Style;
 import com.web4enterprise.pdf.layout.text.Text;
@@ -130,7 +129,7 @@ public interface Paragraph extends DocumentEmbeddable {
 	 * 
 	 * @param embeddables Paragraph embeddables to add after next stop.
 	 */
-	void nextStop(PdfParagraphEmbeddable... embeddables);
+	void nextStop(ParagraphEmbeddable... embeddables);
 	
 	/**
 	 * Defines a link to a {@link DocumentEmbeddable}.

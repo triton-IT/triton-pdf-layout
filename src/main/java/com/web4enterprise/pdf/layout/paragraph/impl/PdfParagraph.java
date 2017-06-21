@@ -26,6 +26,7 @@ import com.web4enterprise.pdf.core.geometry.Rect;
 import com.web4enterprise.pdf.layout.document.DocumentEmbeddable;
 import com.web4enterprise.pdf.layout.document.impl.PdfDocumentEmbeddable;
 import com.web4enterprise.pdf.layout.document.impl.PdfPager;
+import com.web4enterprise.pdf.layout.exception.BadOperationException;
 import com.web4enterprise.pdf.layout.image.Image;
 import com.web4enterprise.pdf.layout.image.ImageData;
 import com.web4enterprise.pdf.layout.page.impl.PdfPageFootNotes;
@@ -223,6 +224,9 @@ public class PdfParagraph extends PdfDocumentEmbeddable implements Paragraph {
 	@Override
 	public void addEmbeddable(ParagraphEmbeddable... embeddables) {
 		for(ParagraphEmbeddable embeddable : embeddables) {
+			if(!(embeddable instanceof PdfParagraphEmbeddable)) {
+				throw new BadOperationException("You must add an embeddable useable by this API.");
+			}
 			stopEmbeddables.add((PdfParagraphEmbeddable) embeddable);
 		}		
 	}
@@ -248,10 +252,15 @@ public class PdfParagraph extends PdfDocumentEmbeddable implements Paragraph {
 	}
 
 	@Override
-	public void nextStop(PdfParagraphEmbeddable... embeddables) {
+	public void nextStop(ParagraphEmbeddable... embeddables) {
 		nextStop++;
 		stopEmbeddables = this.embeddablesByStop.getList(nextStop);
-		stopEmbeddables.addAll(Arrays.asList(embeddables));
+		for(ParagraphEmbeddable embeddable : embeddables) {
+			if(!(embeddable instanceof PdfParagraphEmbeddable)) {
+				throw new BadOperationException("You must add an embeddable useable by this API.");
+			}
+			stopEmbeddables.add((PdfParagraphEmbeddable) embeddable);
+		}
 	}
 
 	@Override
