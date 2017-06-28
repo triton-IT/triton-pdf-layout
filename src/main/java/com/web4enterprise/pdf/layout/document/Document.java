@@ -20,9 +20,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Date;
 
-import com.web4enterprise.pdf.layout.exception.BadOperationException;
-import com.web4enterprise.pdf.layout.exception.BadResourceException;
-import com.web4enterprise.pdf.layout.exception.DocumentGenerationException;
 import com.web4enterprise.pdf.layout.image.ImageData;
 import com.web4enterprise.pdf.layout.page.footer.PageFooter;
 import com.web4enterprise.pdf.layout.page.header.PageHeader;
@@ -31,6 +28,9 @@ import com.web4enterprise.pdf.layout.paragraph.ParagraphEmbeddable;
 import com.web4enterprise.pdf.layout.paragraph.ParagraphStyle;
 import com.web4enterprise.pdf.layout.table.Table;
 import com.web4enterprise.pdf.layout.toc.TableOfContent;
+import com.web4enterprise.report.commons.exception.BadOperationException;
+import com.web4enterprise.report.commons.exception.BadResourceException;
+import com.web4enterprise.report.commons.exception.DocumentGenerationException;
 
 /**
  * The interface defining a whole document. 

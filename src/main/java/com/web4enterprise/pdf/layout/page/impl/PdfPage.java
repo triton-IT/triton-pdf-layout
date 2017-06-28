@@ -16,12 +16,12 @@
 
 package com.web4enterprise.pdf.layout.page.impl;
 
-import com.web4enterprise.pdf.core.geometry.Rect;
 import com.web4enterprise.pdf.core.page.Page;
 import com.web4enterprise.pdf.layout.document.impl.PdfPager;
 import com.web4enterprise.pdf.layout.page.PageStyle;
 import com.web4enterprise.pdf.layout.page.footer.impl.PdfPageFooter;
 import com.web4enterprise.pdf.layout.page.header.impl.PdfPageHeader;
+import com.web4enterprise.report.commons.geometry.Rect;
 
 /**
  * Represents a page in a PDF document.

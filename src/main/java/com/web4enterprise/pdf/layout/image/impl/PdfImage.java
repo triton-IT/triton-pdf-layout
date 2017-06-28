@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 web4enterprise.
+q * Copyright 2017 web4enterprise.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,11 +19,9 @@ package com.web4enterprise.pdf.layout.image.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.web4enterprise.pdf.core.font.Font;
-import com.web4enterprise.pdf.core.geometry.Point;
 import com.web4enterprise.pdf.layout.document.DocumentEmbeddable;
-import com.web4enterprise.pdf.layout.document.impl.PdfPager;
 import com.web4enterprise.pdf.layout.document.impl.PdfDocumentEmbeddable;
+import com.web4enterprise.pdf.layout.document.impl.PdfPager;
 import com.web4enterprise.pdf.layout.image.Image;
 import com.web4enterprise.pdf.layout.page.impl.PdfPage;
 import com.web4enterprise.pdf.layout.paragraph.FootNote;
@@ -34,6 +32,8 @@ import com.web4enterprise.pdf.layout.paragraph.impl.PdfParagraph;
 import com.web4enterprise.pdf.layout.paragraph.impl.PdfParagraphEmbeddable;
 import com.web4enterprise.pdf.layout.text.TextStyle;
 import com.web4enterprise.pdf.layout.text.impl.PdfText;
+import com.web4enterprise.report.commons.font.FontCache;
+import com.web4enterprise.report.commons.geometry.Point;
 
 /**
  * PDF Implementation of the Image API.
@@ -134,7 +134,7 @@ public class PdfImage implements Image, PdfParagraphEmbeddable {
 		//If image does not fit in left space (and if we are not at the start of a line).
 		if(positionX != 0 && positionX + getWidth() > firstLineMaxWidth) {
 			//Add a new line but with an invisible text to not change previous line shape.
-			TextStyle textStyle = new TextStyle(Font.TIMES_ROMAN, 0);
+			TextStyle textStyle = new TextStyle(FontCache.TIMES_ROMAN, 0);
 			lines.add(new PdfText(textStyle, ""));
 			positionX = 0;
 		}

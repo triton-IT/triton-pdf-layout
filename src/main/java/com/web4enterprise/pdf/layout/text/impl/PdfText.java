@@ -21,14 +21,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
 
-import com.web4enterprise.pdf.core.font.Font;
-import com.web4enterprise.pdf.core.font.FontVariant;
-import com.web4enterprise.pdf.core.geometry.Point;
 import com.web4enterprise.pdf.core.styling.Color;
 import com.web4enterprise.pdf.core.text.TextScript;
 import com.web4enterprise.pdf.layout.document.DocumentEmbeddable;
-import com.web4enterprise.pdf.layout.document.impl.PdfPager;
 import com.web4enterprise.pdf.layout.document.impl.PdfDocumentEmbeddable;
+import com.web4enterprise.pdf.layout.document.impl.PdfPager;
 import com.web4enterprise.pdf.layout.page.impl.PdfPage;
 import com.web4enterprise.pdf.layout.paragraph.FootNote;
 import com.web4enterprise.pdf.layout.paragraph.Paragraph;
@@ -38,6 +35,9 @@ import com.web4enterprise.pdf.layout.paragraph.impl.PdfParagraph;
 import com.web4enterprise.pdf.layout.paragraph.impl.PdfParagraphEmbeddable;
 import com.web4enterprise.pdf.layout.text.Text;
 import com.web4enterprise.pdf.layout.text.TextStyle;
+import com.web4enterprise.report.commons.font.Font;
+import com.web4enterprise.report.commons.font.FontVariant;
+import com.web4enterprise.report.commons.geometry.Point;
 
 /**
  * Defines a text for a PDF document.
@@ -179,8 +179,8 @@ public class PdfText implements Text, PdfParagraphEmbeddable {
 		TextStyle textStyle = getStyle();
 		//Get font name between paragraph and text ones.
 		Font currentFont = (style.getFont() != null)?style.getFont():defaultStyle.getFont();
-		FontVariant currentFontVariant = currentFont.getVariant((style.getFontsVariant() != null)?
-				style.getFontsVariant():defaultStyle.getFontsVariant());
+		FontVariant currentFontVariant = currentFont.getVariant((style.getFontVariantId() != null)?
+				style.getFontVariantId():defaultStyle.getFontVariantId());
 		//Get font size between paragraph and text ones.
 		float currentTextSize = (textStyle.getFontSize() != null)?textStyle.getFontSize():fontSize;
 		
@@ -304,8 +304,8 @@ public class PdfText implements Text, PdfParagraphEmbeddable {
 	@Override
 	public float getWidth(ParagraphStyle defaultStyle, float defaultFontSize) {
 		Font currentFont = (style.getFont() != null)?style.getFont():defaultStyle.getFont();
-		FontVariant currentFontVariant = currentFont.getVariant((style.getFontsVariant() != null)?
-				style.getFontsVariant():defaultStyle.getFontsVariant());
+		FontVariant currentFontVariant = currentFont.getVariant((style.getFontVariantId() != null)?
+				style.getFontVariantId():defaultStyle.getFontVariantId());
 		float currentTextSize = (style.getFontSize() != null)?style.getFontSize():defaultFontSize;
 		
 		coreText.setFontVariant(currentFontVariant);
@@ -316,8 +316,8 @@ public class PdfText implements Text, PdfParagraphEmbeddable {
 	@Override
 	public Point layOut(PdfPage pdfPage, ParagraphStyle defaultStyle, float defaultFontSize, float positionX, float positionY) {
 		Font currentFont = (style.getFont() != null)?style.getFont():defaultStyle.getFont();
-		FontVariant currentFontVariant = currentFont.getVariant((style.getFontsVariant() != null)?
-				style.getFontsVariant():defaultStyle.getFontsVariant());
+		FontVariant currentFontVariant = currentFont.getVariant((style.getFontVariantId() != null)?
+				style.getFontVariantId():defaultStyle.getFontVariantId());
 		float currentFontSize = (style.getFontSize() != null)?style.getFontSize():defaultFontSize;
 		
 		Color color = (style.getFontColor() != null)?style.getFontColor():defaultStyle.getFontColor();

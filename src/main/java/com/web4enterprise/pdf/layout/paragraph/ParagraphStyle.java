@@ -16,15 +16,15 @@
 
 package com.web4enterprise.pdf.layout.paragraph;
 
-import static com.web4enterprise.pdf.core.font.Font.TIMES_ROMAN;
+import static com.web4enterprise.report.commons.font.FontCache.TIMES_ROMAN;
 
-import com.web4enterprise.pdf.core.font.Font;
-import com.web4enterprise.pdf.core.font.FontsVariant;
-import com.web4enterprise.pdf.core.font.FontVariant;
 import com.web4enterprise.pdf.core.styling.Color;
 import com.web4enterprise.pdf.layout.placement.Alignment;
 import com.web4enterprise.pdf.layout.placement.Margins;
 import com.web4enterprise.pdf.layout.text.TextStyle;
+import com.web4enterprise.report.commons.font.Font;
+import com.web4enterprise.report.commons.font.FontCache;
+import com.web4enterprise.report.commons.font.FontVariant;
 
 /**
  * Defines the style of a {@link Paragraph}.
@@ -61,39 +61,39 @@ public class ParagraphStyle extends TextStyle {
 	 * Color defaults to black.
 	 */
 	public ParagraphStyle() {
-		super(TIMES_ROMAN, FontsVariant.PLAIN, 12, Color.BLACK);
+		super(TIMES_ROMAN, FontVariant.PLAIN, 12, Color.BLACK);
 	}
 	
 	/**
-	 * Creates a paragraph style with given {@link Font} and font size.
+	 * Creates a paragraph style with given {@link FontCache} and font size.
 	 * 
-	 * @param font The {@link Font} to set to style.
+	 * @param font The {@link FontCache} to set to style.
 	 * @param fontSize The font size to set to style.
 	 */
 	public ParagraphStyle(Font font, float fontSize) {
-		super(font, FontsVariant.PLAIN, fontSize, Color.BLACK);
+		super(font, FontVariant.PLAIN, fontSize, Color.BLACK);
 	}
 
 	/**
-	 * Creates a paragraph style with given {@link Font}, {@link FontVariant} and font size.
+	 * Creates a paragraph style with given {@link FontCache}, {@link FontVariant} and font size.
 	 * 
-	 * @param font The {@link Font} to set to style.
+	 * @param font The {@link FontCache} to set to style.
 	 * @param style The {@link FontVariant} to set to paragraph style.
 	 * @param fontSize The font size to set to style.
 	 */
-	public ParagraphStyle(Font font, FontsVariant style, float fontSize) {
+	public ParagraphStyle(Font font, int style, float fontSize) {
 		super(font, style, fontSize, Color.BLACK);
 	}
 
 	/**
-	 * Creates a paragraph style with given {@link Font}, {@link FontVariant}, font size and font {@link Color}.
+	 * Creates a paragraph style with given {@link FontCache}, {@link FontVariant}, font size and font {@link Color}.
 	 * 
-	 * @param font The {@link Font} to set to style.
+	 * @param font The {@link FontCache} to set to style.
 	 * @param style The {@link FontVariant} to set to paragraph style.
 	 * @param fontSize The font size to set to style.
 	 * @param fontColor The font {@link Color} to set to style.
 	 */
-	public ParagraphStyle(Font font, FontsVariant style, float fontSize, Color fontColor) {
+	public ParagraphStyle(Font font, int style, float fontSize, Color fontColor) {
 		super(font, style, fontSize, fontColor);
 	}
 
@@ -175,6 +175,6 @@ public class ParagraphStyle extends TextStyle {
 	 * @return The font variant.
 	 */
 	public FontVariant getFontVariant() {
-		return font.getVariant(fontVariant);
+		return font.getVariant(fontVariantId);
 	}
 }

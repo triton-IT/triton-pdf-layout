@@ -16,8 +16,8 @@
 
 package com.web4enterprise.pdf.layout.document.impl;
 
-import com.web4enterprise.pdf.core.geometry.Point;
 import com.web4enterprise.pdf.layout.page.impl.PdfPage;
+import com.web4enterprise.report.commons.geometry.Point;
 
 /**
  * The pager responsible for controlling layout of document.

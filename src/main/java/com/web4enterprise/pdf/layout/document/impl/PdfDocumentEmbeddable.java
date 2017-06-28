@@ -16,11 +16,11 @@
 
 package com.web4enterprise.pdf.layout.document.impl;
 
-import com.web4enterprise.pdf.core.geometry.Rect;
 import com.web4enterprise.pdf.core.link.Linkable;
 import com.web4enterprise.pdf.layout.document.DocumentEmbeddable;
 import com.web4enterprise.pdf.layout.page.impl.PdfPageFootNotes;
 import com.web4enterprise.pdf.layout.style.Style;
+import com.web4enterprise.report.commons.geometry.Rect;
 
 /**
  * An object embeddable in a document.

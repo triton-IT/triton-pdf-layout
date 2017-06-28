@@ -20,7 +20,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.web4enterprise.pdf.core.geometry.Rect;
 import com.web4enterprise.pdf.layout.document.DocumentEmbeddable;
 import com.web4enterprise.pdf.layout.document.impl.PdfDocumentEmbeddable;
 import com.web4enterprise.pdf.layout.document.impl.PdfPager;
@@ -29,6 +28,7 @@ import com.web4enterprise.pdf.layout.page.impl.PdfPageFootNotes;
 import com.web4enterprise.pdf.layout.paragraph.impl.PdfParagraph;
 import com.web4enterprise.pdf.layout.style.Style;
 import com.web4enterprise.pdf.layout.toc.TableOfContent;
+import com.web4enterprise.report.commons.geometry.Rect;
 
 /**
  * Defines the table of content for a PDF document.

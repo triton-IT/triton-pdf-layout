@@ -3,12 +3,12 @@ package com.web4enterprise.pdf.layout.page.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.web4enterprise.pdf.core.geometry.Rect;
 import com.web4enterprise.pdf.layout.document.DocumentEmbeddable;
 import com.web4enterprise.pdf.layout.document.impl.PdfDocumentEmbeddable;
 import com.web4enterprise.pdf.layout.document.impl.PdfPager;
 import com.web4enterprise.pdf.layout.page.footer.PageFooter;
 import com.web4enterprise.pdf.layout.page.header.PageHeader;
+import com.web4enterprise.report.commons.geometry.Rect;
 
 /**
  * Defines a container for embeddables.

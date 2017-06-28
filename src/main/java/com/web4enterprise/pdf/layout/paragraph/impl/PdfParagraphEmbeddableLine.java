@@ -24,7 +24,7 @@ import com.web4enterprise.pdf.layout.document.impl.PdfPager;
 import com.web4enterprise.pdf.layout.paragraph.ParagraphStyle;
 import com.web4enterprise.pdf.layout.paragraph.impl.PdfParagraphEmbeddable.SplitInformation;
 import com.web4enterprise.pdf.layout.placement.Stop;
-import com.web4enterprise.pdf.layout.utils.CompositeList;
+import com.web4enterprise.report.commons.utils.CompositeList;
 
 /**
  * An ElementLine is a line of different Elements without any line return.

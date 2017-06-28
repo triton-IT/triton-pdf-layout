@@ -16,8 +16,8 @@
 
 package com.web4enterprise.pdf.layout.document;
 
-import static com.web4enterprise.pdf.core.font.Font.TIMES_ROMAN;
 import static com.web4enterprise.pdf.layout.text.Text.NEW_LINE;
+import static com.web4enterprise.report.commons.font.FontCache.TIMES_ROMAN;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -26,10 +26,8 @@ import java.util.Date;
 
 import org.junit.Test;
 
-import com.web4enterprise.pdf.core.font.FontsVariant;
 import com.web4enterprise.pdf.core.styling.Color;
 import com.web4enterprise.pdf.core.text.TextScript;
-import com.web4enterprise.pdf.layout.exception.DocumentException;
 import com.web4enterprise.pdf.layout.image.Image;
 import com.web4enterprise.pdf.layout.image.ImageData;
 import com.web4enterprise.pdf.layout.page.PageStyle;
@@ -47,6 +45,8 @@ import com.web4enterprise.pdf.layout.table.TableCellStyle;
 import com.web4enterprise.pdf.layout.text.Text;
 import com.web4enterprise.pdf.layout.text.TextStyle;
 import com.web4enterprise.pdf.layout.toc.TableOfContent;
+import com.web4enterprise.report.commons.exception.DocumentException;
+import com.web4enterprise.report.commons.font.FontVariant;
 
 public class DocumentTest {
 	@Test
@@ -64,29 +64,29 @@ public class DocumentTest {
 		Color darkEmphaseColor = new Color(100, 100, 0);
 		
 		//Defines paragraph styles used in document.
-		ParagraphStyle codeStyle = new ParagraphStyle(TIMES_ROMAN, FontsVariant.ITALIC, 10, codeColor);
+		ParagraphStyle codeStyle = new ParagraphStyle(TIMES_ROMAN, FontVariant.ITALIC, 10, codeColor);
 		
-		ParagraphStyle titleStyle = new ParagraphStyle(TIMES_ROMAN, FontsVariant.BOLD, 24, titleColor);
+		ParagraphStyle titleStyle = new ParagraphStyle(TIMES_ROMAN, FontVariant.BOLD, 24, titleColor);
 		titleStyle.setAlignment(Alignment.CENTER);
 		
-		ParagraphStyle subTitleStyle = new ParagraphStyle(TIMES_ROMAN, FontsVariant.BOLD, 18, emphaseColor);
+		ParagraphStyle subTitleStyle = new ParagraphStyle(TIMES_ROMAN, FontVariant.BOLD, 18, emphaseColor);
 		subTitleStyle.setAlignment(Alignment.CENTER);
 		
-		ParagraphStyle title1Style = new ParagraphStyle(TIMES_ROMAN, FontsVariant.BOLD, 14, titleColor);
+		ParagraphStyle title1Style = new ParagraphStyle(TIMES_ROMAN, FontVariant.BOLD, 14, titleColor);
 		title1Style.setMargins(new Margins(20, 0, 10, 0));
 		
-		ParagraphStyle title2Style = new ParagraphStyle(TIMES_ROMAN, FontsVariant.BOLD, 12, titleColor);
+		ParagraphStyle title2Style = new ParagraphStyle(TIMES_ROMAN, FontVariant.BOLD, 12, titleColor);
 		title2Style.setMargins(new Margins(10, 0, 5, 0));
 		
 		ParagraphStyle emphaseStyle = new ParagraphStyle();
 		emphaseStyle.setFontColor(emphaseColor);
 		
-		ParagraphStyle footNoteStyle = new ParagraphStyle(TIMES_ROMAN, FontsVariant.ITALIC, 10, codeColor);
+		ParagraphStyle footNoteStyle = new ParagraphStyle(TIMES_ROMAN, FontVariant.ITALIC, 10, codeColor);
 		footNoteStyle.setFontColor(darkEmphaseColor);
 		ParagraphStyle internalLinkStyle = new ParagraphStyle();
 		internalLinkStyle.setUnderlined(true);
 		
-		ParagraphStyle simpleBoldStyle = new ParagraphStyle(TIMES_ROMAN, FontsVariant.BOLD_ITALIC, 12);
+		ParagraphStyle simpleBoldStyle = new ParagraphStyle(TIMES_ROMAN, FontVariant.BOLD_ITALIC, 12);
 		ParagraphStyle marginsStyle = new ParagraphStyle(TIMES_ROMAN, 14);
 		marginsStyle.setMargins(new Margins(20));
 		marginsStyle.setFirstLineMargin(20);
@@ -104,7 +104,7 @@ public class DocumentTest {
 		ParagraphStyle lineSpacingStyle = new ParagraphStyle();
 		lineSpacingStyle.setLineSpacing(1.5f);
 
-		ParagraphStyle tableHeaderStyle = new ParagraphStyle(TIMES_ROMAN, FontsVariant.PLAIN, 12, titleColor);
+		ParagraphStyle tableHeaderStyle = new ParagraphStyle(TIMES_ROMAN, FontVariant.PLAIN, 12, titleColor);
 		
 		ParagraphStyle paragraphHeaderStyle = new ParagraphStyle();
 		paragraphHeaderStyle.setMargins(new Margins(0.0f, 0.0f, 15.0f, 0.0f));
@@ -235,15 +235,15 @@ public class DocumentTest {
 		paragraph.addEmbeddable(paragraph.createText("of the same paragraph."));
 		document.addEmbeddable(paragraph);
 		
-		TextStyle plainUnderlined = new TextStyle(FontsVariant.PLAIN);
+		TextStyle plainUnderlined = new TextStyle(FontVariant.PLAIN);
 		plainUnderlined.setFontColor(emphaseColor);
 		plainUnderlined.setUnderlined(true);
 		
-		TextStyle italicUnderlined = new TextStyle(FontsVariant.ITALIC);
+		TextStyle italicUnderlined = new TextStyle(FontVariant.ITALIC);
 		italicUnderlined.setUnderlined(true);
 		
 		paragraph = document.createParagraph(simpleBoldStyle, "This paragraph demonstrate that text can simply be put in ");
-		paragraph.addEmbeddable(paragraph.createText(new TextStyle(FontsVariant.BOLD), "bold,"));
+		paragraph.addEmbeddable(paragraph.createText(new TextStyle(FontVariant.BOLD), "bold,"));
 		paragraph.addEmbeddable(paragraph.createText(italicUnderlined, " italic"));
 		paragraph.addEmbeddable(paragraph.createText(plainUnderlined, " and underlined."));
 		paragraph.addEmbeddable(paragraph.createText(new TextStyle(TIMES_ROMAN, 14), " Text size can also be changed within a paragraph."));

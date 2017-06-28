@@ -16,9 +16,9 @@
 
 package com.web4enterprise.pdf.layout.page.impl;
 
-import com.web4enterprise.pdf.core.geometry.Rect;
 import com.web4enterprise.pdf.layout.document.impl.PdfDocumentEmbeddable;
 import com.web4enterprise.pdf.layout.document.impl.PdfPager;
+import com.web4enterprise.report.commons.geometry.Rect;
 
 /**
  * Container for page foo-notes.

@@ -21,12 +21,9 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-import com.web4enterprise.pdf.core.geometry.Point;
-import com.web4enterprise.pdf.core.geometry.Rect;
 import com.web4enterprise.pdf.layout.document.DocumentEmbeddable;
 import com.web4enterprise.pdf.layout.document.impl.PdfDocumentEmbeddable;
 import com.web4enterprise.pdf.layout.document.impl.PdfPager;
-import com.web4enterprise.pdf.layout.exception.BadOperationException;
 import com.web4enterprise.pdf.layout.image.Image;
 import com.web4enterprise.pdf.layout.image.ImageData;
 import com.web4enterprise.pdf.layout.page.impl.PdfPageFootNotes;
@@ -39,7 +36,10 @@ import com.web4enterprise.pdf.layout.style.Style;
 import com.web4enterprise.pdf.layout.text.Text;
 import com.web4enterprise.pdf.layout.text.TextStyle;
 import com.web4enterprise.pdf.layout.text.impl.PdfText;
-import com.web4enterprise.pdf.layout.utils.CompositeList;
+import com.web4enterprise.report.commons.exception.BadOperationException;
+import com.web4enterprise.report.commons.geometry.Point;
+import com.web4enterprise.report.commons.geometry.Rect;
+import com.web4enterprise.report.commons.utils.CompositeList;
 
 /**
  * Implements a Paragraph for a PDF document.

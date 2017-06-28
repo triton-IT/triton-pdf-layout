@@ -24,16 +24,11 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import com.web4enterprise.pdf.core.document.Pdf;
-import com.web4enterprise.pdf.core.exceptions.PdfGenerationException;
-import com.web4enterprise.pdf.core.geometry.Point;
 import com.web4enterprise.pdf.layout.document.Document;
 import com.web4enterprise.pdf.layout.document.DocumentEmbeddable;
 import com.web4enterprise.pdf.layout.document.Section;
 import com.web4enterprise.pdf.layout.document.impl.command.PdfAddEmbeddableCommand;
 import com.web4enterprise.pdf.layout.document.impl.command.PdfNextVerticalStopCommand;
-import com.web4enterprise.pdf.layout.exception.BadOperationException;
-import com.web4enterprise.pdf.layout.exception.BadResourceException;
-import com.web4enterprise.pdf.layout.exception.DocumentGenerationException;
 import com.web4enterprise.pdf.layout.image.ImageData;
 import com.web4enterprise.pdf.layout.image.impl.PdfImageData;
 import com.web4enterprise.pdf.layout.page.PageFormat;
@@ -51,6 +46,10 @@ import com.web4enterprise.pdf.layout.table.Table;
 import com.web4enterprise.pdf.layout.table.impl.PdfTable;
 import com.web4enterprise.pdf.layout.toc.TableOfContent;
 import com.web4enterprise.pdf.layout.toc.impl.PdfTableOfContent;
+import com.web4enterprise.report.commons.exception.BadOperationException;
+import com.web4enterprise.report.commons.exception.BadResourceException;
+import com.web4enterprise.report.commons.exception.DocumentGenerationException;
+import com.web4enterprise.report.commons.geometry.Point;
 
 /**
  * PDF implementation of Document API.
@@ -178,7 +177,7 @@ public class PdfDocument implements Document, PdfPager {
 			com.web4enterprise.pdf.core.image.Image image = pdf.createImage(imageInputStream);
 			images.add(image);
 			return new PdfImageData(image);
-		} catch(PdfGenerationException e) {
+		} catch(DocumentGenerationException e) {
 			throw new BadResourceException("Cannot read image.", e); 
 		}
 	}
@@ -270,7 +269,7 @@ public class PdfDocument implements Document, PdfPager {
 		
 		try {
 			pdf.write(out);
-		} catch(PdfGenerationException e) {
+		} catch(DocumentGenerationException e) {
 			throw new DocumentGenerationException("Cannot generate document", e);
 		}
 	}

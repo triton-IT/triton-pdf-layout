@@ -19,7 +19,6 @@ package com.web4enterprise.pdf.layout.paragraph.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.web4enterprise.pdf.core.geometry.Point;
 import com.web4enterprise.pdf.layout.document.impl.PdfDocumentEmbeddable;
 import com.web4enterprise.pdf.layout.document.impl.PdfPager;
 import com.web4enterprise.pdf.layout.page.impl.PdfPage;
@@ -27,6 +26,7 @@ import com.web4enterprise.pdf.layout.paragraph.FootNote;
 import com.web4enterprise.pdf.layout.paragraph.ParagraphEmbeddable;
 import com.web4enterprise.pdf.layout.paragraph.ParagraphStyle;
 import com.web4enterprise.pdf.layout.toc.TableOfContent;
+import com.web4enterprise.report.commons.geometry.Point;
 
 /**
  * Implementation of {@link ParagraphEmbeddable} for a PDF.

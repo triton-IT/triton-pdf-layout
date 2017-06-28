@@ -21,8 +21,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.web4enterprise.pdf.core.geometry.Point;
-import com.web4enterprise.pdf.core.geometry.Rect;
 import com.web4enterprise.pdf.core.path.StraightPath;
 import com.web4enterprise.pdf.layout.document.impl.PdfDocumentEmbeddable;
 import com.web4enterprise.pdf.layout.document.impl.PdfPager;
@@ -36,6 +34,8 @@ import com.web4enterprise.pdf.layout.table.Table;
 import com.web4enterprise.pdf.layout.table.TableCell;
 import com.web4enterprise.pdf.layout.table.TableCellStyle;
 import com.web4enterprise.pdf.layout.table.TableRow;
+import com.web4enterprise.report.commons.geometry.Point;
+import com.web4enterprise.report.commons.geometry.Rect;
 
 /**
  * Implements a table for PDF document.
