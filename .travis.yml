@@ -1,0 +1,9 @@
+language: java
+jdk:
+  - oraclejdk8
+env:
+  global:
+  #SONAR_TOKEN
+  - secure: PZH8NGV2DiqUu3p45z6SQ+5/oPuT6YZUaE1Ky+Fu8GStbURK/ay/8Hf8gdOw0CHGYGrCruV4GoX56k8IEeVG920KTh7kDh6B3riyCrN1WVhXn6L2fiNq4+eGZtalsEJAv6/D5lBZoT/iW7cEEzpkfcsw8C8hoV3QvvgXP4HSYWrOqcTTT602E9mzU5NFN4AhgT7s9Y7Idgsb1OudByD2jRRRae1m/TWeu0dt4oEowF7K1GBeOq2KZu59rUGs818LEPaoZnbiTfwWdbjPK/ghb4TBbuzmW/ApXcZ69nfG3Rnk9sXs/U5+n1S/Xbf6Su5E1GLnrIHJnuFgFZkwugJ4twsRHbqBzW8CzNPLE63ZWR6IEhJWbYNRhP++fVF6ysysqUTlxla0Rb4/A5jGKb97p+0lAR29bOxnSpcTLQ7urDxIBw1M57P6tHHq871xcP3MMgJAllb1HmxkWIsYhWEBRojhTYnwcteM36MfTNGzUrIpv5ev2wxIpZ07JQJ8JoL/N8e58kVBV81fi1K8kKOS33OlPb4b3BNAJ4XvMDaoPNwwQWtcpJx1a5iqbvvimTS9N71r4lWYSnrC05EK8cffA5TkcqQ0ab1j3Y8p3XrgoKUpcPJLOzrMRaL9A7O+Ni9b3QAGfPyFGsgrK/1dErTiW81TXg6WCj1K+YidyY8Yj7A=
+install: mvn install -DskipTests=true -Dmaven.source.skip=true -Dmaven.javadoc.skip=true -B -V
+script: mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent test sonar:sonar -Dsonar.login=$SONAR_TOKEN -Dsonar.host.url=https://sonarqube.com
